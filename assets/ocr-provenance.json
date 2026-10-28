@@ -1,0 +1,29 @@
+{
+  "source": "MaaXYZ/MaaCommonAssets",
+  "revision": "dabcd4681ac990dc4361de26416d986abd80e4aa",
+  "model": "ppocr_v3/en_us",
+  "files": [
+    {
+      "file": "det.onnx",
+      "url": "https://raw.githubusercontent.com/MaaXYZ/MaaCommonAssets/dabcd4681ac990dc4361de26416d986abd80e4aa/OCR/ppocr_v3/en_us/det.onnx",
+      "bytes": 2423224,
+      "git_blob": "a9cb036094854df191b5d381fcde5dd41ac6d944",
+      "sha256": "8fe4bf6abfb20402357827f2efc964c8b28cf980e29fe09a99b742ae29725fa9"
+    },
+    {
+      "file": "rec.onnx",
+      "url": "https://raw.githubusercontent.com/MaaXYZ/MaaCommonAssets/dabcd4681ac990dc4361de26416d986abd80e4aa/OCR/ppocr_v3/en_us/rec.onnx",
+      "bytes": 8956702,
+      "git_blob": "ebd507e4ddd722c9046529cbc0ac3ba656f16cc3",
+      "sha256": "da12c6e863761d774b07d3bd40fbaaa55516f90570e0b1dd9dc112e457301cc9"
+    },
+    {
+      "file": "keys.txt",
+      "url": "https://raw.githubusercontent.com/MaaXYZ/MaaCommonAssets/dabcd4681ac990dc4361de26416d986abd80e4aa/OCR/ppocr_v3/en_us/keys.txt",
+      "bytes": 190,
+      "git_blob": "7677d31b9d3f08eef2823c2cf051beeab1f0470b",
+      "sha256": "5662df9d2d03f0e8ca0d3b0649d6acbab904b6a14b3d3521463c71c37c668ce3"
+    }
+  ],
+  "license_url": "https://github.com/MaaXYZ/MaaCommonAssets/blob/dabcd4681ac990dc4361de26416d986abd80e4aa/LICENSE"
+}

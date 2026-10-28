@@ -1,0 +1,5 @@
+{
+  "Default": {"timeout": 6000, "rate_limit": 100, "pre_delay": 0, "post_delay": 100},
+  "Click": {"action": "Click", "target": true},
+  "TemplateMatch": {"recognition": "TemplateMatch", "threshold": 0.88}
+}

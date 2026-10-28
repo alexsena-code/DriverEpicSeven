@@ -1,0 +1,495 @@
+{
+  "version": "2.1.0.0",
+  "nodes": [
+    {
+      "name": "Layer",
+      "class": "Node",
+      "path": "/Layer",
+      "declared_local_position": [
+        0.0,
+        0.0
+      ],
+      "declared_size": [
+        920.0,
+        130.0
+      ],
+      "declared_scale": [
+        1.0,
+        1.0
+      ],
+      "declared_anchor": [
+        0.0,
+        0.0
+      ],
+      "declared_visible": true,
+      "declared_touch_enabled": false
+    },
+    {
+      "name": "n_quest",
+      "class": "SingleNode",
+      "path": "/Layer/n_quest",
+      "declared_local_position": [
+        0.0,
+        0.0
+      ],
+      "declared_size": [
+        0.0,
+        0.0
+      ],
+      "declared_scale": [
+        1.0,
+        1.0
+      ],
+      "declared_anchor": [
+        0.0,
+        0.0
+      ],
+      "declared_visible": true,
+      "declared_touch_enabled": false
+    },
+    {
+      "name": "n_left",
+      "class": "SingleNode",
+      "path": "/Layer/n_quest/n_left",
+      "declared_local_position": [
+        0.0,
+        0.0
+      ],
+      "declared_size": [
+        0.0,
+        0.0
+      ],
+      "declared_scale": [
+        1.0,
+        1.0
+      ],
+      "declared_anchor": [
+        0.0,
+        0.0
+      ],
+      "declared_visible": true,
+      "declared_touch_enabled": false
+    },
+    {
+      "name": "bg",
+      "class": "ImageView",
+      "path": "/Layer/n_quest/n_left/bg",
+      "declared_local_position": [
+        0.0,
+        0.0
+      ],
+      "declared_size": [
+        920.0,
+        128.0
+      ],
+      "declared_scale": [
+        1.0,
+        1.0
+      ],
+      "declared_anchor": [
+        0.0,
+        0.0
+      ],
+      "declared_visible": true,
+      "declared_touch_enabled": false
+    },
+    {
+      "name": "bg_progress",
+      "class": "ImageView",
+      "path": "/Layer/n_quest/n_left/bg_progress",
+      "declared_local_position": [
+        20.999399185180664,
+        15.996000289916992
+      ],
+      "declared_size": [
+        450.0,
+        12.0
+      ],
+      "declared_scale": [
+        1.0,
+        1.0
+      ],
+      "declared_anchor": [
+        0.0,
+        0.0
+      ],
+      "declared_visible": true,
+      "declared_touch_enabled": false
+    },
+    {
+      "name": "progress",
+      "class": "LoadingBar",
+      "path": "/Layer/n_quest/n_left/progress",
+      "declared_local_position": [
+        23.0,
+        17.995399475097656
+      ],
+      "declared_size": [
+        446.0,
+        8.0
+      ],
+      "declared_scale": [
+        1.0,
+        1.0
+      ],
+      "declared_anchor": [
+        0.0,
+        0.0
+      ],
+      "declared_visible": true,
+      "declared_touch_enabled": false
+    },
+    {
+      "name": "txt_progress",
+      "class": "Text",
+      "path": "/Layer/n_quest/n_left/txt_progress",
+      "declared_local_position": [
+        246.0,
+        23.0
+      ],
+      "declared_size": [
+        107.0,
+        26.0
+      ],
+      "declared_scale": [
+        0.6000000238418579,
+        0.6000000238418579
+      ],
+      "declared_anchor": [
+        0.5,
+        0.5
+      ],
+      "declared_visible": true,
+      "declared_touch_enabled": false
+    },
+    {
+      "name": "txt_name",
+      "class": "Text",
+      "path": "/Layer/n_quest/n_left/txt_name",
+      "declared_local_position": [
+        20.0,
+        75.0
+      ],
+      "declared_size": [
+        650.0,
+        65.0
+      ],
+      "declared_scale": [
+        0.7099999785423279,
+        0.7099999785423279
+      ],
+      "declared_anchor": [
+        0.0,
+        1.0
+      ],
+      "declared_visible": true,
+      "declared_touch_enabled": false
+    },
+    {
+      "name": "txt_title",
+      "class": "Text",
+      "path": "/Layer/n_quest/n_left/txt_title",
+      "declared_local_position": [
+        20.0,
+        110.0
+      ],
+      "declared_size": [
+        640.0,
+        80.0
+      ],
+      "declared_scale": [
+        0.7099999785423279,
+        0.7099999785423279
+      ],
+      "declared_anchor": [
+        0.0,
+        1.0
+      ],
+      "declared_visible": true,
+      "declared_touch_enabled": false
+    },
+    {
+      "name": "line",
+      "class": "ImageView",
+      "path": "/Layer/line",
+      "declared_local_position": [
+        694.0,
+        24.0
+      ],
+      "declared_size": [
+        85.0,
+        4.0
+      ],
+      "declared_scale": [
+        1.0,
+        1.0
+      ],
+      "declared_anchor": [
+        1.0,
+        0.5
+      ],
+      "declared_visible": true,
+      "declared_touch_enabled": false
+    },
+    {
+      "name": "n_complete",
+      "class": "SingleNode",
+      "path": "/Layer/n_complete",
+      "declared_local_position": [
+        755.5,
+        38.0
+      ],
+      "declared_size": [
+        0.0,
+        0.0
+      ],
+      "declared_scale": [
+        1.0,
+        1.0
+      ],
+      "declared_anchor": [
+        0.0,
+        0.0
+      ],
+      "declared_visible": false,
+      "declared_touch_enabled": false
+    },
+    {
+      "name": "bg",
+      "class": "ImageView",
+      "path": "/Layer/n_complete/bg",
+      "declared_local_position": [
+        -25.0,
+        1.0
+      ],
+      "declared_size": [
+        169.0,
+        61.0
+      ],
+      "declared_scale": [
+        0.949999988079071,
+        0.949999988079071
+      ],
+      "declared_anchor": [
+        0.0,
+        0.0
+      ],
+      "declared_visible": true,
+      "declared_touch_enabled": false
+    },
+    {
+      "name": "icon",
+      "class": "Sprite",
+      "path": "/Layer/n_complete/bg/icon",
+      "declared_local_position": [
+        84.5,
+        33.0
+      ],
+      "declared_size": [
+        26.0,
+        18.0
+      ],
+      "declared_scale": [
+        1.0,
+        1.0
+      ],
+      "declared_anchor": [
+        0.5,
+        0.5
+      ],
+      "declared_visible": true,
+      "declared_touch_enabled": false
+    },
+    {
+      "name": "n_reward",
+      "class": "SingleNode",
+      "path": "/Layer/n_reward",
+      "declared_local_position": [
+        0.0,
+        0.0
+      ],
+      "declared_size": [
+        0.0,
+        0.0
+      ],
+      "declared_scale": [
+        1.0,
+        1.0
+      ],
+      "declared_anchor": [
+        0.0,
+        0.0
+      ],
+      "declared_visible": true,
+      "declared_touch_enabled": false
+    },
+    {
+      "name": "n_reward1",
+      "class": "SingleNode",
+      "path": "/Layer/n_reward/n_reward1",
+      "declared_local_position": [
+        635.0,
+        64.0
+      ],
+      "declared_size": [
+        0.0,
+        0.0
+      ],
+      "declared_scale": [
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "declared_anchor": [
+        0.0,
+        0.0
+      ],
+      "declared_visible": true,
+      "declared_touch_enabled": false
+    },
+    {
+      "name": "n_reward2",
+      "class": "SingleNode",
+      "path": "/Layer/n_reward/n_reward2",
+      "declared_local_position": [
+        545.0,
+        64.0
+      ],
+      "declared_size": [
+        0.0,
+        0.0
+      ],
+      "declared_scale": [
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "declared_anchor": [
+        0.0,
+        0.0
+      ],
+      "declared_visible": true,
+      "declared_touch_enabled": false
+    },
+    {
+      "name": "btn_go",
+      "class": "Button",
+      "path": "/Layer/btn_go",
+      "declared_local_position": [
+        730.0,
+        68.0
+      ],
+      "declared_size": [
+        360.0,
+        128.0
+      ],
+      "declared_scale": [
+        0.44999998807907104,
+        0.44999998807907104
+      ],
+      "declared_anchor": [
+        0.0,
+        0.5
+      ],
+      "declared_visible": true,
+      "declared_touch_enabled": true,
+      "declared_button_text": "",
+      "normal_texture": "img/_btn_gold_r_2.png",
+      "pressed_texture": "img/_btn_gold_r_p_2.png"
+    },
+    {
+      "name": "cm_icon_etcarrow2",
+      "class": "Sprite",
+      "path": "/Layer/btn_go/cm_icon_etcarrow2",
+      "declared_local_position": [
+        305.0,
+        68.0
+      ],
+      "declared_size": [
+        15.0,
+        24.0
+      ],
+      "declared_scale": [
+        1.399999976158142,
+        1.399999976158142
+      ],
+      "declared_anchor": [
+        0.5,
+        0.5
+      ],
+      "declared_visible": true,
+      "declared_touch_enabled": false
+    },
+    {
+      "name": "btn_label",
+      "class": "Text",
+      "path": "/Layer/btn_go/btn_label",
+      "declared_local_position": [
+        172.8000030517578,
+        68.0
+      ],
+      "declared_size": [
+        90.0,
+        52.0
+      ],
+      "declared_scale": [
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "declared_anchor": [
+        0.5,
+        0.5
+      ],
+      "declared_visible": true,
+      "declared_touch_enabled": false
+    },
+    {
+      "name": "btn_reward",
+      "class": "Button",
+      "path": "/Layer/btn_reward",
+      "declared_local_position": [
+        730.0,
+        68.0
+      ],
+      "declared_size": [
+        360.0,
+        128.0
+      ],
+      "declared_scale": [
+        0.44999998807907104,
+        0.44999998807907104
+      ],
+      "declared_anchor": [
+        0.0,
+        0.5
+      ],
+      "declared_visible": false,
+      "declared_touch_enabled": true,
+      "declared_button_text": "",
+      "normal_texture": "img/_btn_green_r_2.png",
+      "pressed_texture": "img/_btn_green_r_p_2.png"
+    },
+    {
+      "name": "btn_label",
+      "class": "Text",
+      "path": "/Layer/btn_reward/btn_label",
+      "declared_local_position": [
+        180.0,
+        68.0
+      ],
+      "declared_size": [
+        87.0,
+        52.0
+      ],
+      "declared_scale": [
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "declared_anchor": [
+        0.5,
+        0.5
+      ],
+      "declared_visible": true,
+      "declared_touch_enabled": false
+    }
+  ],
+  "scope": "Static file declarations; no runtime tree or screen coordinates observed."
+}

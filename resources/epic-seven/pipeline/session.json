@@ -1,0 +1,382 @@
+{
+  "$scope": "Native Maa; only disable recognized checked boxes; never send chat or visit keyword tab.",
+  "Session.Entry": {
+    "recognition": "DirectHit",
+    "action": "DoNothing",
+    "next": [
+      "Session.SelectPublic",
+      "Session.OpenSettings",
+      "Session.OpenChat",
+      "Session.WakeLobby"
+    ]
+  },
+  "Session.OpenChat": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "lobby",
+      "target": "chat_open",
+      "session": true
+    },
+    "action": "LongPress",
+    "max_hit": 2,
+    "post_delay": 400,
+    "timeout": 6000,
+    "next": [
+      "Session.OpenSettings",
+      "Session.OpenChat"
+    ],
+    "duration": 100
+  },
+  "Session.OpenSettings": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "chat_panel",
+      "target": "chat_settings_open",
+      "session": true
+    },
+    "action": "LongPress",
+    "max_hit": 2,
+    "post_delay": 400,
+    "timeout": 6000,
+    "next": [
+      "Session.SelectPublic",
+      "Session.OpenSettings"
+    ],
+    "duration": 100
+  },
+  "Session.SelectPublic": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "chat_notifications",
+      "target": "notifications_public",
+      "session": true
+    },
+    "action": "LongPress",
+    "max_hit": 3,
+    "post_delay": 300,
+    "timeout": 6000,
+    "next": [
+      "Session.PublicAllOff",
+      "Session.PublicItemOff",
+      "Session.PublicVerified",
+      "Session.SelectPublic"
+    ],
+    "duration": 100
+  },
+  "Session.PublicAllOff": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "chat_notifications",
+      "target": "notifications_all_on",
+      "session": true,
+      "category": "public"
+    },
+    "action": "Click",
+    "max_hit": 1,
+    "post_delay": 300,
+    "timeout": 6000,
+    "next": [
+      "Session.PublicItemOff",
+      "Session.PublicVerified"
+    ]
+  },
+  "Session.PublicItemOff": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "chat_notifications",
+      "target": "notification_item_on",
+      "session": true,
+      "category": "public"
+    },
+    "action": "Click",
+    "max_hit": 4,
+    "post_delay": 300,
+    "timeout": 6000,
+    "next": [
+      "Session.PublicItemOff",
+      "Session.PublicVerified"
+    ]
+  },
+  "Session.PublicVerified": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "chat_notifications",
+      "target": "public_off_verified",
+      "session": true,
+      "category": "public"
+    },
+    "action": "DoNothing",
+    "max_hit": 1,
+    "post_delay": 300,
+    "timeout": 6000,
+    "next": [
+      "Session.SelectGuild"
+    ]
+  },
+  "Session.SelectGuild": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "chat_notifications",
+      "target": "notifications_guild",
+      "session": true,
+      "category": "public"
+    },
+    "action": "LongPress",
+    "max_hit": 3,
+    "post_delay": 300,
+    "timeout": 6000,
+    "next": [
+      "Session.GuildAllOff",
+      "Session.GuildItemOff",
+      "Session.GuildVerified",
+      "Session.SelectGuild"
+    ],
+    "duration": 100
+  },
+  "Session.GuildAllOff": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "chat_notifications",
+      "target": "notifications_all_on",
+      "session": true,
+      "category": "guild"
+    },
+    "action": "Click",
+    "max_hit": 1,
+    "post_delay": 300,
+    "timeout": 6000,
+    "next": [
+      "Session.GuildItemOff",
+      "Session.GuildVerified"
+    ]
+  },
+  "Session.GuildItemOff": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "chat_notifications",
+      "target": "notification_item_on",
+      "session": true,
+      "category": "guild"
+    },
+    "action": "Click",
+    "max_hit": 4,
+    "post_delay": 300,
+    "timeout": 6000,
+    "next": [
+      "Session.GuildItemOff",
+      "Session.GuildVerified"
+    ]
+  },
+  "Session.GuildVerified": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "chat_notifications",
+      "target": "guild_off_verified",
+      "session": true,
+      "category": "guild"
+    },
+    "action": "LongPressKey",
+    "max_hit": 2,
+    "post_delay": 400,
+    "timeout": 6000,
+    "next": [
+      "Session.CloseChat",
+      "Session.GuildVerified"
+    ],
+    "key": [
+      27
+    ],
+    "duration": 100,
+    "pre_wait_freezes": {
+      "time": 300,
+      "target": [
+        870,
+        120,
+        320,
+        320
+      ],
+      "threshold": 0.995,
+      "method": 10001,
+      "rate_limit": 100,
+      "timeout": 3000
+    }
+  },
+  "Session.CloseChat": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "chat_panel",
+      "target": null,
+      "session": true
+    },
+    "action": "LongPressKey",
+    "max_hit": 2,
+    "post_delay": 400,
+    "timeout": 6000,
+    "next": [
+      "Session.ReturnToLobby",
+      "Session.CloseChat"
+    ],
+    "key": [
+      27
+    ],
+    "duration": 100
+  },
+  "Session.ReturnToLobby": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "lobby",
+      "target": null,
+      "session": true
+    },
+    "action": "DoNothing",
+    "max_hit": 1,
+    "post_delay": 300,
+    "timeout": 6000,
+    "next": [
+      "Notice.Entry"
+    ]
+  },
+  "Session.OffDone": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "lobby",
+      "target": null,
+      "session": true
+    },
+    "action": "DoNothing",
+    "max_hit": 1,
+    "post_delay": 300,
+    "timeout": 6000
+  },
+  "Notice.Entry": {
+    "recognition": "DirectHit",
+    "action": "DoNothing",
+    "next": [
+      "Notice.Confirm",
+      "Notice.Click",
+      "Notice.Empty",
+      "Notice.WakeLobby"
+    ]
+  },
+  "Notice.Click": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "lobby",
+      "target": "demo_notice",
+      "session": true
+    },
+    "action": "Click",
+    "max_hit": 6,
+    "post_delay": 400,
+    "timeout": 6000,
+    "next": [
+      "Notice.Confirm"
+    ]
+  },
+  "Notice.Confirm": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "notice_disable_confirmation",
+      "target": "notice_disable_confirm",
+      "session": true
+    },
+    "action": "Click",
+    "max_hit": 6,
+    "post_delay": 600,
+    "timeout": 6000,
+    "next": [
+      "Notice.Click",
+      "Notice.Empty"
+    ],
+    "pre_wait_freezes": {
+      "time": 400,
+      "target": [
+        650,
+        405,
+        170,
+        65
+      ],
+      "threshold": 0.995,
+      "method": 10001,
+      "timeout": 3000
+    }
+  },
+  "Notice.Empty": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "lobby",
+      "target": "no_known_notice",
+      "session": true
+    },
+    "action": "DoNothing",
+    "max_hit": 6,
+    "post_delay": 1500,
+    "timeout": 6000,
+    "next": [
+      "Notice.Click",
+      "Notice.Done"
+    ]
+  },
+  "Notice.Done": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "lobby",
+      "target": "no_known_notice",
+      "session": true
+    },
+    "action": "DoNothing",
+    "max_hit": 1,
+    "post_delay": 300,
+    "timeout": 6000
+  },
+  "Session.WakeLobby": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "lobby_idle",
+      "target": "wake_lobby"
+    },
+    "action": "LongPress",
+    "max_hit": 2,
+    "timeout": 6000,
+    "next": [
+      "Session.OpenChat",
+      "Session.WakeLobby"
+    ],
+    "duration": 100,
+    "post_delay": 600
+  },
+  "Notice.WakeLobby": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "lobby_idle",
+      "target": "wake_lobby"
+    },
+    "action": "LongPress",
+    "max_hit": 2,
+    "timeout": 6000,
+    "next": [
+      "Notice.Entry"
+    ],
+    "duration": 100,
+    "post_delay": 600
+  }
+}

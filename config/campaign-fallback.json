@@ -1,0 +1,7 @@
+{
+  "stage_file": "data/stages/campaign.json",
+  "campaign_ledger": "var/campaign_attempts.json",
+  "attempt_limit": 3,
+  "mouse_method": 64,
+  "keyboard_method": 4
+}

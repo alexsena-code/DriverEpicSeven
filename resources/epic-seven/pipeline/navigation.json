@@ -1,0 +1,117 @@
+{
+  "$description": "Entrada começa com DoNothing: o Maa reconhece os próximos nós antes de agir.",
+  "Orbis.Start": {
+    "recognition": "DirectHit",
+    "action": "DoNothing",
+    "next": [
+      "Orbis.WakeLobby",
+      "Orbis.Open"
+    ]
+  },
+  "Orbis.WakeLobby": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "lobby_idle",
+      "target": "wake_lobby"
+    },
+    "action": "LongPress",
+    "max_hit": 2,
+    "next": [
+      "Orbis.Open",
+      "Orbis.WakeLobby"
+    ],
+    "post_delay": 600,
+    "duration": 100
+  },
+  "Orbis.Open": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "lobby",
+      "target": "orbis_button"
+    },
+    "action": "LongPress",
+    "max_hit": 2,
+    "next": [
+      "Orbis.Back",
+      "Orbis.Open"
+    ],
+    "post_delay": 600,
+    "duration": 100
+  },
+  "Orbis.Back": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "orbis_guide",
+      "target": "orbis_heir_tab",
+      "read_text": true
+    },
+    "action": "LongPressKey",
+    "key": [
+      27
+    ],
+    "max_hit": 2,
+    "next": [
+      "Orbis.Done",
+      "Orbis.Back"
+    ],
+    "pre_wait_freezes": {
+      "time": 400,
+      "target": [
+        275,
+        60,
+        850,
+        565
+      ],
+      "threshold": 0.995,
+      "method": 10001,
+      "rate_limit": 100,
+      "timeout": 3000
+    },
+    "duration": 100,
+    "post_delay": 400
+  },
+  "Orbis.Done": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "lobby"
+    },
+    "action": "DoNothing",
+    "max_hit": 1
+  },
+  "Wake.Start": {
+    "recognition": "DirectHit",
+    "action": "DoNothing",
+    "next": [
+      "Wake.Click"
+    ]
+  },
+  "Wake.Click": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "lobby_idle",
+      "target": "wake_lobby"
+    },
+    "action": "LongPress",
+    "max_hit": 2,
+    "next": [
+      "Wake.Done",
+      "Wake.Click"
+    ],
+    "duration": 100,
+    "post_delay": 600
+  },
+  "Wake.Done": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "lobby"
+    },
+    "action": "DoNothing",
+    "max_hit": 1
+  }
+}

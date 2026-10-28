@@ -1,0 +1,40 @@
+{
+  "target": {
+    "window_title": "Epic Seven",
+    "window_class": "GLFW30",
+    "process_names": [
+      "EpicSeven.exe",
+      "EpicSeven_Steam.exe"
+    ]
+  },
+  "reference_size": [
+    1212,
+    682
+  ],
+  "screencap_method": 2,
+  "mouse_method": 4,
+  "keyboard_method": 4,
+  "resource_dir": "resources/epic-seven",
+  "vision_file": "resources/epic-seven/vision.json",
+  "registry_file": "routines/registry.json",
+  "stage_file": "data/stages/campaign-initial.json",
+  "runs_dir": "var/runs",
+  "path_ledger": "var/current-account/path-actions.json",
+  "stop_file": "var/STOP",
+  "session_lock": "var/session.lock",
+  "sentry_root": "var/current-account/sentry-disabled",
+  "sentry_fresh_seconds": 10,
+  "job_timeout_seconds": 30,
+  "supported_client_sizes": [
+    [
+      1212,
+      682
+    ]
+  ],
+  "window_policy": {
+    "resize_on_connect": true,
+    "lock_resize_while_connected": true
+  },
+  "campaign_ledger": "var/current-account/campaign-attempts.json",
+  "quest_file": "data/catalogs/quests.json"
+}

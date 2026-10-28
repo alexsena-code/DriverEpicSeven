@@ -1,0 +1,1648 @@
+{
+  "Stove.Template.StorySkip": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "story_skip.png",
+      "story_skip_light_room.png",
+      "story_skip_dialogue_gray.png"
+    ],
+    "roi": [
+      1100,
+      8,
+      108,
+      65
+    ],
+    "threshold": 0.93,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.StoryHistory": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "story_history.png",
+      "story_history_camp.png",
+      "story_history_dialogue_gray.png"
+    ],
+    "roi": [
+      1010,
+      8,
+      70,
+      65
+    ],
+    "threshold": 0.93,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.StoryConfirmQuestion": {
+    "recognition": "TemplateMatch",
+    "template": "story_confirm_question.png",
+    "roi": [
+      410,
+      275,
+      395,
+      65
+    ],
+    "threshold": 0.93,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.StoryConfirmButton": {
+    "recognition": "TemplateMatch",
+    "template": "story_confirm_button.png",
+    "roi": [
+      650,
+      405,
+      120,
+      65
+    ],
+    "threshold": 0.93,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.TutorialSkip": {
+    "recognition": "TemplateMatch",
+    "template": "tutorial_skip.png",
+    "roi": [
+      1020,
+      8,
+      165,
+      55
+    ],
+    "threshold": 0.93,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.TutorialEpisodeInstruction": {
+    "recognition": "TemplateMatch",
+    "template": "tutorial_episode_instruction.png",
+    "roi": [
+      665,
+      140,
+      340,
+      95
+    ],
+    "threshold": 0.93,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.EpisodeButton": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "episode_button.png",
+      "episode_button_normal.png"
+    ],
+    "roi": [
+      1040,
+      140,
+      165,
+      75
+    ],
+    "threshold": 0.93,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.LobbyStainedWindow": {
+    "recognition": "TemplateMatch",
+    "template": "lobby_stained_window.png",
+    "roi": [
+      742,
+      72,
+      96,
+      61
+    ],
+    "threshold": 0.95,
+    "action": "DoNothing"
+  },
+  "Stove.Template.LobbyIdleUpperLeft": {
+    "recognition": "TemplateMatch",
+    "template": "lobby_idle_upper_left.png",
+    "roi": [
+      22,
+      12,
+      76,
+      56
+    ],
+    "threshold": 0.95,
+    "action": "DoNothing"
+  },
+  "Stove.Template.LobbyMenuGrid": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "lobby_menu_grid.png",
+      "lobby_menu_grid_badge_masked.png"
+    ],
+    "roi": [
+      1148,
+      5,
+      55,
+      55
+    ],
+    "threshold": 0.95,
+    "action": "DoNothing",
+    "green_mask": true
+  },
+  "Stove.Template.PrequelEpisodeHeader": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "prequel_episode_header.png",
+      "prequel_episode_header_tutorial.png",
+      "prequel_episode_header_tenebria.png"
+    ],
+    "roi": [
+      45,
+      8,
+      235,
+      55
+    ],
+    "threshold": 0.93,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.PrequelViewStory": {
+    "recognition": "TemplateMatch",
+    "template": "prequel_view_story.png",
+    "roi": [
+      980,
+      590,
+      145,
+      75
+    ],
+    "threshold": 0.93,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.BattleHelp": {
+    "recognition": "TemplateMatch",
+    "template": "battle_help.png",
+    "roi": [
+      920,
+      0,
+      120,
+      70
+    ],
+    "action": "DoNothing"
+  },
+  "Stove.Template.BattlePause": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "battle_pause.png",
+      "battle_pause_tar002.png"
+    ],
+    "roi": [
+      1145,
+      0,
+      60,
+      70
+    ],
+    "action": "DoNothing",
+    "threshold": [
+      0.84,
+      0.94
+    ]
+  },
+  "Stove.Template.NightmareKeeperBody": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "nightmare_keeper_body_007.png",
+      "nightmare_keeper_body_009.png",
+      "nightmare_keeper_body_011.png",
+      "nightmare_keeper_body_013.png",
+      "nightmare_keeper_body_016.png",
+      "nightmare_keeper_body_019.png",
+      "nightmare_keeper_body_postattack_006.png",
+      "nightmare_keeper_body_postattack_007.png",
+      "nightmare_keeper_body_postattack_009.png"
+    ],
+    "roi": [
+      955,
+      245,
+      210,
+      195
+    ],
+    "threshold": 0.94,
+    "action": "DoNothing"
+  },
+  "Stove.Template.NightmareKeeperName": {
+    "recognition": "TemplateMatch",
+    "template": "nightmare_keeper_name.png",
+    "roi": [
+      275,
+      0,
+      200,
+      38
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.StoryRewardHeader": {
+    "recognition": "TemplateMatch",
+    "template": "story_reward_header.png",
+    "roi": [
+      480,
+      135,
+      260,
+      65
+    ],
+    "action": "DoNothing"
+  },
+  "Stove.Template.StoryRewardClose": {
+    "recognition": "TemplateMatch",
+    "template": "story_reward_close.png",
+    "roi": [
+      510,
+      425,
+      200,
+      65
+    ],
+    "action": "DoNothing"
+  },
+  "Stove.Template.MapReadyLabel": {
+    "recognition": "TemplateMatch",
+    "template": "map_ready_label.png",
+    "roi": [
+      1000,
+      595,
+      120,
+      65
+    ],
+    "action": "DoNothing"
+  },
+  "Stove.Template.PrequelReadyHeader": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "prequel_ready_header.png",
+      "prequel_ready_header_normal.png"
+    ],
+    "roi": [
+      45,
+      5,
+      110,
+      55
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.PrequelStoryTeam": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "prequel_story_team.png",
+      "prequel_story_team_normal.png"
+    ],
+    "roi": [
+      155,
+      65,
+      130,
+      55
+    ],
+    "threshold": 0.94,
+    "green_mask": false,
+    "action": "DoNothing"
+  },
+  "Stove.Template.ClearInitial": {
+    "recognition": "TemplateMatch",
+    "template": "clear_initial.png",
+    "roi": [
+      210,
+      520,
+      240,
+      85
+    ],
+    "action": "DoNothing"
+  },
+  "Stove.Template.ClearContinue": {
+    "recognition": "TemplateMatch",
+    "template": "clear_continue.png",
+    "roi": [
+      1140,
+      605,
+      68,
+      70
+    ],
+    "action": "DoNothing"
+  },
+  "Stove.Template.ResultHeading": {
+    "recognition": "TemplateMatch",
+    "template": "result_heading.png",
+    "roi": [
+      1020,
+      15,
+      180,
+      60
+    ],
+    "action": "DoNothing"
+  },
+  "Stove.Template.ResultConfirm": {
+    "recognition": "TemplateMatch",
+    "template": "result_confirm.png",
+    "roi": [
+      1030,
+      590,
+      150,
+      70
+    ],
+    "action": "DoNothing"
+  },
+  "Stove.Template.ReceivedRewardHeader": {
+    "recognition": "TemplateMatch",
+    "template": "received_reward_header.png",
+    "roi": [
+      460,
+      125,
+      300,
+      75
+    ],
+    "action": "DoNothing"
+  },
+  "Stove.Template.ReceivedRewardClose": {
+    "recognition": "TemplateMatch",
+    "template": "received_reward_close.png",
+    "roi": [
+      520,
+      470,
+      180,
+      75
+    ],
+    "action": "DoNothing"
+  },
+  "Stove.OCR.ClearHeading": {
+    "recognition": "OCR",
+    "roi": [
+      440,
+      380,
+      340,
+      90
+    ],
+    "model": "en_us",
+    "expected": "C\\s*L\\s*E\\s*A\\s*R",
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "Stove.Template.MercenaryLydiaBody": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "mercenary_lydia_body_004.png",
+      "mercenary_lydia_body_013.png",
+      "mercenary_lydia_body_020.png",
+      "mercenary_lydia_body_022.png",
+      "mercenary_lydia_body_024.png"
+    ],
+    "roi": [
+      856,
+      286,
+      168,
+      253
+    ],
+    "threshold": 0.94,
+    "action": "DoNothing"
+  },
+  "Stove.Template.MercenaryLydiaName": {
+    "recognition": "TemplateMatch",
+    "template": "mercenary_lydia_name.png",
+    "roi": [
+      275,
+      0,
+      195,
+      40
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.SkillHighlight1": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "skill_highlight_frame_1.png",
+      "skill_highlight_frame_2.png",
+      "skill_highlight_frame_3.png",
+      "skill_highlight_frame_hugo_s1.png",
+      "skill_highlight_frame_hugo_s2.png"
+    ],
+    "roi": [
+      910,
+      565,
+      110,
+      117
+    ],
+    "threshold": 0.9,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.SkillHighlight2": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "skill_highlight_frame_1.png",
+      "skill_highlight_frame_2.png",
+      "skill_highlight_frame_3.png",
+      "skill_highlight_frame_hugo_s1.png",
+      "skill_highlight_frame_hugo_s2.png"
+    ],
+    "roi": [
+      1006,
+      565,
+      110,
+      117
+    ],
+    "threshold": 0.9,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.SkillHighlight3": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "skill_highlight_frame_1.png",
+      "skill_highlight_frame_2.png",
+      "skill_highlight_frame_3.png",
+      "skill_highlight_frame_hugo_s1.png",
+      "skill_highlight_frame_hugo_s2.png"
+    ],
+    "roi": [
+      1102,
+      565,
+      110,
+      117
+    ],
+    "threshold": 0.9,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.ClearObjectiveCheck1": {
+    "recognition": "TemplateMatch",
+    "template": "clear_objective_check.png",
+    "roi": [
+      200,
+      525,
+      45,
+      40
+    ],
+    "threshold": 0.94,
+    "action": "DoNothing"
+  },
+  "Stove.Template.ClearObjectiveCheck2": {
+    "recognition": "TemplateMatch",
+    "template": "clear_objective_check.png",
+    "roi": [
+      518,
+      525,
+      45,
+      40
+    ],
+    "threshold": 0.94,
+    "action": "DoNothing"
+  },
+  "Stove.Template.ClearObjectiveCheck3": {
+    "recognition": "TemplateMatch",
+    "template": "clear_objective_check.png",
+    "roi": [
+      836,
+      525,
+      45,
+      40
+    ],
+    "threshold": 0.94,
+    "action": "DoNothing"
+  },
+  "Stove.Template.ClearThreeStars": {
+    "recognition": "TemplateMatch",
+    "template": "clear_three_stars.png",
+    "roi": [
+      480,
+      235,
+      250,
+      155
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.HeroJoinedTitle": {
+    "recognition": "TemplateMatch",
+    "template": "hero_joined_title.png",
+    "roi": [
+      350,
+      150,
+      510,
+      65
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.HeroJoinedDescription": {
+    "recognition": "TemplateMatch",
+    "template": "hero_joined_description.png",
+    "roi": [
+      345,
+      355,
+      525,
+      75
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.HeroJoinedOK": {
+    "recognition": "TemplateMatch",
+    "template": "hero_joined_ok.png",
+    "roi": [
+      495,
+      445,
+      220,
+      85
+    ],
+    "threshold": 0.94,
+    "green_mask": false,
+    "action": "DoNothing"
+  },
+  "Stove.Template.FormationDestinationRight": {
+    "recognition": "TemplateMatch",
+    "template": "formation_destination_right.png",
+    "roi": [
+      488,
+      287,
+      98,
+      99
+    ],
+    "threshold": 0.94,
+    "action": "DoNothing"
+  },
+  "Stove.Template.FormationDestinationLower": {
+    "recognition": "TemplateMatch",
+    "template": "formation_destination_lower.png",
+    "roi": [
+      371,
+      360,
+      99,
+      99
+    ],
+    "threshold": 0.94,
+    "action": "DoNothing"
+  },
+  "Stove.Template.FormationVictorikaRight": {
+    "recognition": "TemplateMatch",
+    "template": "formation_victorika_right.png",
+    "roi": [
+      486,
+      222,
+      101,
+      120
+    ],
+    "threshold": 0.94,
+    "action": "DoNothing"
+  },
+  "Stove.Template.Dap005PreparationIdentity": {
+    "recognition": "TemplateMatch",
+    "template": "dap005_preparation_identity.png",
+    "roi": [
+      865,
+      65,
+      205,
+      85
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.OCR.Dap005Location": {
+    "recognition": "OCR",
+    "roi": [
+      870,
+      70,
+      190,
+      36
+    ],
+    "expected": "Corrupted Forest",
+    "threshold": 0.95,
+    "model": "en_us",
+    "action": "DoNothing"
+  },
+  "Stove.OCR.Dap005StageTitle": {
+    "recognition": "OCR",
+    "roi": [
+      870,
+      108,
+      220,
+      38
+    ],
+    "expected": "An Unpermitted Future",
+    "threshold": 0.95,
+    "model": "en_us",
+    "action": "DoNothing"
+  },
+  "Stove.OCR.Dap005EnergyCost": {
+    "recognition": "OCR",
+    "roi": [
+      920,
+      605,
+      90,
+      40
+    ],
+    "expected": "8\\s*/\\s*(?:[89]|[1-9]\\d+)",
+    "threshold": 0.98,
+    "model": "en_us",
+    "action": "DoNothing"
+  },
+  "Stove.OCR.Dap005StartQuest": {
+    "recognition": "OCR",
+    "roi": [
+      1028,
+      610,
+      111,
+      31
+    ],
+    "expected": "Start\\s+Quest",
+    "threshold": 0.98,
+    "model": "en_us",
+    "action": "DoNothing"
+  },
+  "Stove.Template.VictorikaAcquisitionName": {
+    "recognition": "TemplateMatch",
+    "template": "victorika_acquisition_name.png",
+    "roi": [
+      19,
+      52,
+      211,
+      68
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.VictorikaAcquisitionTraits": {
+    "recognition": "TemplateMatch",
+    "template": "victorika_acquisition_traits.png",
+    "roi": [
+      21,
+      10,
+      230,
+      53
+    ],
+    "threshold": 0.94,
+    "green_mask": false,
+    "action": "DoNothing"
+  },
+  "Stove.Template.VictorikaAcquisitionNew": {
+    "recognition": "TemplateMatch",
+    "template": "victorika_acquisition_new.png",
+    "roi": [
+      247,
+      101,
+      88,
+      89
+    ],
+    "threshold": 0.94,
+    "green_mask": false,
+    "action": "DoNothing"
+  },
+  "Stove.Template.VictorikaAcquisitionFourStars": {
+    "recognition": "TemplateMatch",
+    "template": "victorika_acquisition_four_stars.png",
+    "roi": [
+      217,
+      63,
+      105,
+      53
+    ],
+    "threshold": 0.94,
+    "green_mask": false,
+    "action": "DoNothing"
+  },
+  "Stove.Template.VictorikaAcquisitionConfirmNormal": {
+    "recognition": "TemplateMatch",
+    "template": "victorika_acquisition_confirm_normal.png",
+    "roi": [
+      1007,
+      596,
+      137,
+      61
+    ],
+    "threshold": 0.94,
+    "green_mask": false,
+    "action": "DoNothing"
+  },
+  "Stove.Template.VictorikaAcquisitionSpeechName": {
+    "recognition": "TemplateMatch",
+    "template": "victorika_acquisition_speech_name.png",
+    "roi": [
+      545,
+      478,
+      124,
+      53
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.OCR.VictorikaAcquisitionConfirm": {
+    "recognition": "OCR",
+    "roi": [
+      1025,
+      606,
+      103,
+      40
+    ],
+    "expected": "Confirm",
+    "model": "en_us",
+    "threshold": 0.98,
+    "action": "DoNothing"
+  },
+  "Stove.Template.RenoaPromoTraits": {
+    "recognition": "TemplateMatch",
+    "template": "renoa_promo_traits.png",
+    "roi": [
+      198,
+      71,
+      203,
+      52
+    ],
+    "threshold": 0.94,
+    "green_mask": false,
+    "action": "DoNothing"
+  },
+  "Stove.Template.RenoaPromoDescription": {
+    "recognition": "TemplateMatch",
+    "template": "renoa_promo_description.png",
+    "roi": [
+      124,
+      283,
+      374,
+      63
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.OCR.RenoaPromoName": {
+    "recognition": "OCR",
+    "roi": [
+      228,
+      128,
+      152,
+      61
+    ],
+    "expected": "^Renoa$",
+    "model": "en_us",
+    "threshold": 0.98,
+    "action": "DoNothing"
+  },
+  "Stove.OCR.RenoaPromotionalConfirm": {
+    "recognition": "OCR",
+    "roi": [
+      1025,
+      606,
+      103,
+      40
+    ],
+    "expected": "^Confirm$",
+    "model": "en_us",
+    "threshold": 0.98,
+    "action": "DoNothing"
+  },
+  "Stove.Template.MilestoneLobbyEntry": {
+    "recognition": "TemplateMatch",
+    "template": "milestone_lobby_entry.png",
+    "roi": [
+      0,
+      135,
+      112,
+      89
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.AutoHudOnFourChecks": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "auto_hud_on.png"
+    ],
+    "roi": [
+      922,
+      640,
+      278,
+      42
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.AutoHudOff": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "auto_hud_off.png"
+    ],
+    "roi": [
+      930,
+      589,
+      268,
+      76
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.AutoUnlockedOff": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "stove_auto_unlocked_off.png"
+    ],
+    "roi": [
+      1038,
+      4,
+      60,
+      63
+    ],
+    "threshold": 0.94,
+    "green_mask": false,
+    "action": "DoNothing"
+  },
+  "Stove.Template.VictorikaEquipmentTab": {
+    "recognition": "TemplateMatch",
+    "template": "victorika_equipment_tab.png",
+    "roi": [
+      0,
+      127,
+      89,
+      74
+    ],
+    "threshold": 0.94,
+    "action": "DoNothing"
+  },
+  "Stove.Template.VictorikaThreeHeroRoster": {
+    "recognition": "TemplateMatch",
+    "template": "victorika_three_hero_roster.png",
+    "roi": [
+      929,
+      211,
+      283,
+      212
+    ],
+    "threshold": 0.94,
+    "action": "DoNothing"
+  },
+  "Stove.Template.ArbiterRosterRow10": {
+    "recognition": "TemplateMatch",
+    "template": "arbiter_roster_row_10.png",
+    "roi": [
+      950,
+      299,
+      262,
+      66
+    ],
+    "threshold": 0.94,
+    "action": "DoNothing"
+  },
+  "Stove.OCR.VictorikaEquipmentCurrentName": {
+    "recognition": "OCR",
+    "roi": [
+      98,
+      104,
+      162,
+      47
+    ],
+    "expected": "^Victorika$",
+    "model": "en_us",
+    "threshold": 0.98,
+    "action": "DoNothing"
+  },
+  "Stove.OCR.VictorikaEquipmentCurrentLevel": {
+    "recognition": "OCR",
+    "roi": [
+      96,
+      176,
+      141,
+      40
+    ],
+    "expected": "^Lv[.]?\\s*15\\s*/\\s*40$",
+    "model": "en_us",
+    "threshold": 0.98,
+    "action": "DoNothing"
+  },
+  "Stove.Template.MilestoneReadHeader": {
+    "recognition": "TemplateMatch",
+    "template": "milestone_read_header.png",
+    "roi": [
+      51,
+      6,
+      263,
+      53
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.MilestoneReadReceive": {
+    "recognition": "TemplateMatch",
+    "template": "milestone_read_receive.png",
+    "roi": [
+      565,
+      553,
+      344,
+      60
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.MilestoneReadReceiveLimited": {
+    "recognition": "TemplateMatch",
+    "template": "milestone_read_receive_limited.png",
+    "roi": [
+      565,
+      553,
+      344,
+      60
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.MilestoneReadCurrencies": {
+    "recognition": "TemplateMatch",
+    "template": "milestone_read_currencies.png",
+    "roi": [
+      783,
+      5,
+      110,
+      53
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.CoreloopSelectorPrompt": {
+    "recognition": "TemplateMatch",
+    "template": "coreloop_selector_prompt.png",
+    "roi": [
+      617,
+      598,
+      264,
+      48
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.CoreloopSelectorReceiveNormal": {
+    "recognition": "TemplateMatch",
+    "template": "coreloop_selector_receive_normal.png",
+    "roi": [
+      999,
+      590,
+      124,
+      61
+    ],
+    "threshold": 0.94,
+    "green_mask": false,
+    "action": "DoNothing"
+  },
+  "Stove.Template.CoreloopSelectorTenebriaBright": {
+    "recognition": "TemplateMatch",
+    "template": "coreloop_selector_tenebria_bright.png",
+    "roi": [
+      890,
+      290,
+      128,
+      103
+    ],
+    "threshold": 0.94,
+    "green_mask": false,
+    "action": "DoNothing"
+  },
+  "Stove.Template.CoreloopSelectorConfirmation": {
+    "recognition": "TemplateMatch",
+    "template": "coreloop_selector_confirmation.png",
+    "roi": [
+      507,
+      160,
+      197,
+      56
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.CoreloopSelectorTenebriaQuestion": {
+    "recognition": "TemplateMatch",
+    "template": "coreloop_selector_tenebria_question.png",
+    "roi": [
+      439,
+      247,
+      332,
+      65
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.CoreloopObtained": {
+    "recognition": "TemplateMatch",
+    "template": "coreloop_obtained.png",
+    "roi": [
+      23,
+      589,
+      249,
+      81
+    ],
+    "threshold": 0.94,
+    "green_mask": false,
+    "action": "DoNothing"
+  },
+  "Stove.Template.CoreloopCatalystReceipt": {
+    "recognition": "TemplateMatch",
+    "template": "coreloop_catalyst_receipt.png",
+    "roi": [
+      230,
+      148,
+      753,
+      61
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.CoreloopCatalystIcon": {
+    "recognition": "TemplateMatch",
+    "template": "coreloop_catalyst_icon.png",
+    "roi": [
+      530,
+      240,
+      155,
+      152
+    ],
+    "threshold": 0.94,
+    "green_mask": false,
+    "action": "DoNothing"
+  },
+  "Stove.OCR.MilestoneReadCost": {
+    "recognition": "OCR",
+    "roi": [
+      637,
+      568,
+      34,
+      29
+    ],
+    "expected": "^\\d+$",
+    "model": "en_us",
+    "threshold": 0.98,
+    "action": "DoNothing"
+  },
+  "Stove.OCR.MilestoneReadEssence": {
+    "recognition": "OCR",
+    "roi": [
+      819,
+      17,
+      31,
+      31
+    ],
+    "expected": "^\\d+$",
+    "model": "en_us",
+    "threshold": 0.98,
+    "action": "DoNothing"
+  },
+  "Stove.OCR.MilestoneReadOrigin": {
+    "recognition": "OCR",
+    "roi": [
+      886,
+      17,
+      22,
+      31
+    ],
+    "expected": "^\\d+$",
+    "model": "en_us",
+    "threshold": 0.98,
+    "action": "DoNothing"
+  },
+  "Stove.OCR.CoreloopReadRewardQuantity": {
+    "recognition": "OCR",
+    "roi": [
+      561,
+      428,
+      88,
+      49
+    ],
+    "expected": "^\\+\\s*\\d+$",
+    "model": "en_us",
+    "threshold": 0.98,
+    "action": "DoNothing"
+  },
+  "Stove.Template.EquipmentTutorialInstruction": {
+    "recognition": "TemplateMatch",
+    "template": "equipment_tutorial_instruction.png",
+    "roi": [
+      586,
+      226,
+      322,
+      90
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.EquipmentTutorialVictorikaCard": {
+    "recognition": "TemplateMatch",
+    "template": "equipment_tutorial_victorika_card.png",
+    "roi": [
+      933,
+      222,
+      156,
+      85
+    ],
+    "threshold": 0.94,
+    "green_mask": false,
+    "action": "DoNothing"
+  },
+  "Stove.Template.VictorikaHeroTab": {
+    "recognition": "TemplateMatch",
+    "template": "victorika_hero_tab.png",
+    "roi": [
+      0,
+      54,
+      88,
+      77
+    ],
+    "threshold": 0.94,
+    "action": "DoNothing"
+  },
+  "Stove.Template.FriendshipResultTitle": {
+    "recognition": "TemplateMatch",
+    "template": "friendship_result_title.png",
+    "roi": [
+      499,
+      127,
+      436,
+      58
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.FriendshipLevelOne": {
+    "recognition": "TemplateMatch",
+    "template": "friendship_level_one.png",
+    "roi": [
+      433,
+      289,
+      39,
+      42
+    ],
+    "threshold": 0.94,
+    "green_mask": false,
+    "action": "DoNothing"
+  },
+  "Stove.Template.FriendshipLevelTwo": {
+    "recognition": "TemplateMatch",
+    "template": "friendship_level_two.png",
+    "roi": [
+      765,
+      289,
+      39,
+      42
+    ],
+    "threshold": 0.94,
+    "green_mask": false,
+    "action": "DoNothing"
+  },
+  "Stove.Template.FriendshipResultClose": {
+    "recognition": "TemplateMatch",
+    "template": "friendship_result_close.png",
+    "roi": [
+      646,
+      505,
+      142,
+      70
+    ],
+    "threshold": 0.94,
+    "green_mask": false,
+    "action": "DoNothing"
+  },
+  "Stove.Template.SummonQuickmenuTitle": {
+    "recognition": "TemplateMatch",
+    "template": "summon_quickmenu_title.png",
+    "roi": [
+      54,
+      10,
+      115,
+      45
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.SummonQuickmenuClose": {
+    "recognition": "TemplateMatch",
+    "template": "summon_quickmenu_close.png",
+    "roi": [
+      1150,
+      6,
+      49,
+      50
+    ],
+    "threshold": 0.94,
+    "green_mask": false,
+    "action": "DoNothing"
+  },
+  "Stove.Template.SummonQuickmenuComposition": {
+    "recognition": "TemplateMatch",
+    "template": "summon_quickmenu_composition.png",
+    "roi": [
+      986,
+      100,
+      187,
+      86
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.SummonQuickmenuRecruit": {
+    "recognition": "TemplateMatch",
+    "template": "summon_quickmenu_recruit.png",
+    "roi": [
+      1105,
+      216,
+      70,
+      81
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.TieriaDialogueName": {
+    "recognition": "TemplateMatch",
+    "template": "tieria_dialogue_name.png",
+    "roi": [
+      511,
+      482,
+      191,
+      48
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.TieriaDialogueLine": {
+    "recognition": "TemplateMatch",
+    "template": "tieria_dialogue_line.png",
+    "roi": [
+      236,
+      551,
+      744,
+      49
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.TieriaDialogueHistory": {
+    "recognition": "TemplateMatch",
+    "template": "tieria_dialogue_history.png",
+    "roi": [
+      1015,
+      12,
+      52,
+      49
+    ],
+    "threshold": 0.94,
+    "green_mask": false,
+    "action": "DoNothing"
+  },
+  "Stove.Template.TieriaAcquisitionTraits": {
+    "recognition": "TemplateMatch",
+    "template": "tieria_acquisition_traits.png",
+    "roi": [
+      20,
+      13,
+      269,
+      49
+    ],
+    "threshold": 0.94,
+    "green_mask": false,
+    "action": "DoNothing"
+  },
+  "Stove.Template.TieriaAcquisitionDescription": {
+    "recognition": "TemplateMatch",
+    "template": "tieria_acquisition_description.png",
+    "roi": [
+      19,
+      106,
+      224,
+      80
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.OCR.TieriaAcquisitionName": {
+    "recognition": "OCR",
+    "roi": [
+      23,
+      55,
+      353,
+      59
+    ],
+    "expected": "^Free Spirit Tieria$",
+    "model": "en_us",
+    "threshold": 0.98,
+    "action": "DoNothing"
+  },
+  "Stove.Template.TieriaHeroTraits": {
+    "recognition": "TemplateMatch",
+    "template": "tieria_hero_traits.png",
+    "roi": [
+      90,
+      69,
+      262,
+      45
+    ],
+    "threshold": 0.94,
+    "green_mask": false,
+    "action": "DoNothing"
+  },
+  "Stove.Template.TieriaHeroAwakenEntry": {
+    "recognition": "TemplateMatch",
+    "template": "tieria_hero_awaken_entry.png",
+    "roi": [
+      764,
+      569,
+      64,
+      63
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.Template.TieriaHeroLevelUpEntry": {
+    "recognition": "TemplateMatch",
+    "template": "tieria_hero_level_up_entry.png",
+    "roi": [
+      560,
+      570,
+      67,
+      61
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Stove.OCR.TieriaHeroName": {
+    "recognition": "OCR",
+    "roi": [
+      94,
+      106,
+      282,
+      44
+    ],
+    "expected": "^Free Spirit Tieria$",
+    "model": "en_us",
+    "threshold": 0.98,
+    "action": "DoNothing"
+  },
+  "Stove.Template.CoreloopChestPresentation": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "coreloop_chest_presentation_16.png",
+      "coreloop_chest_presentation_19.png",
+      "coreloop_chest_presentation_22.png"
+    ],
+    "roi": [
+      510,
+      260,
+      195,
+      160
+    ],
+    "threshold": 0.96,
+    "action": "DoNothing"
+  },
+  "Path.Template.HeirTabInactive": {
+    "recognition": "TemplateMatch",
+    "template": "path_heir_tab_inactive.png",
+    "roi": [
+      100,
+      185,
+      115,
+      45
+    ],
+    "threshold": 0.96,
+    "action": "DoNothing"
+  },
+  "Path.Template.CovenantTab": {
+    "recognition": "TemplateMatch",
+    "template": "path_covenant_tab.png",
+    "roi": [
+      40,
+      575,
+      145,
+      60
+    ],
+    "threshold": 0.94,
+    "action": "DoNothing"
+  },
+  "Path.Template.FreeSummon": {
+    "recognition": "TemplateMatch",
+    "template": "path_free_summon.png",
+    "roi": [
+      735,
+      600,
+      100,
+      55
+    ],
+    "threshold": 0.96,
+    "action": "DoNothing"
+  },
+  "Path.Template.PrequelAvailable": {
+    "recognition": "TemplateMatch",
+    "template": "path_prequel_available.png",
+    "roi": [
+      10,
+      125,
+      85,
+      430
+    ],
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "Path.Template.StorySkipGray": {
+    "recognition": "TemplateMatch",
+    "template": "story_skip_dialogue_gray.png",
+    "roi": [
+      1100,
+      8,
+      108,
+      65
+    ],
+    "threshold": 0.93,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Path.Template.StoryHistoryGray": {
+    "recognition": "TemplateMatch",
+    "template": "story_history_dialogue_gray.png",
+    "roi": [
+      1010,
+      8,
+      70,
+      65
+    ],
+    "threshold": 0.93,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Path.Template.ReceiveRow1": {
+    "recognition": "TemplateMatch",
+    "template": "path_receive_ready.png",
+    "roi": [
+      975,
+      285,
+      170,
+      125
+    ],
+    "threshold": 0.94,
+    "action": "DoNothing"
+  },
+  "Path.Template.ReceiveRow2": {
+    "recognition": "TemplateMatch",
+    "template": "path_receive_ready.png",
+    "roi": [
+      975,
+      410,
+      170,
+      125
+    ],
+    "threshold": 0.94,
+    "action": "DoNothing"
+  },
+  "Path.Template.ReceiveRow3": {
+    "recognition": "TemplateMatch",
+    "template": "path_receive_ready.png",
+    "roi": [
+      975,
+      535,
+      170,
+      87
+    ],
+    "threshold": 0.94,
+    "action": "DoNothing"
+  },
+  "Path.Template.ClaimedRow1": {
+    "recognition": "TemplateMatch",
+    "template": "path_claimed_tick.png",
+    "roi": [
+      975,
+      285,
+      170,
+      125
+    ],
+    "threshold": 0.94,
+    "action": "DoNothing"
+  },
+  "Path.Template.ClaimedRow2": {
+    "recognition": "TemplateMatch",
+    "template": "path_claimed_tick.png",
+    "roi": [
+      975,
+      410,
+      170,
+      125
+    ],
+    "threshold": 0.94,
+    "action": "DoNothing"
+  },
+  "Path.Template.ClaimedRow3": {
+    "recognition": "TemplateMatch",
+    "template": "path_claimed_tick.png",
+    "roi": [
+      975,
+      535,
+      170,
+      87
+    ],
+    "threshold": 0.94,
+    "action": "DoNothing"
+  },
+  "Path.Template.BattleClearHeading": {
+    "recognition": "TemplateMatch",
+    "template": "path_battle_clear_heading.png",
+    "roi": [
+      450,
+      220,
+      310,
+      110
+    ],
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "Path.Template.BattleClearDimHud": {
+    "recognition": "TemplateMatch",
+    "template": "path_battle_clear_dim_hud.png",
+    "roi": [
+      925,
+      5,
+      65,
+      60
+    ],
+    "threshold": 0.94,
+    "action": "DoNothing"
+  },
+  "Path.Template.BattleExitLobby": {
+    "recognition": "TemplateMatch",
+    "template": "path_battle_exit_lobby.png",
+    "roi": [
+      175,
+      585,
+      160,
+      82
+    ],
+    "threshold": 0.92,
+    "action": "DoNothing"
+  },
+  "Path.Template.ReceiveGroup": {
+    "recognition": "TemplateMatch",
+    "template": "path_receive_group.png",
+    "roi": [
+      975,
+      190,
+      170,
+      75
+    ],
+    "threshold": 0.94,
+    "action": "DoNothing"
+  },
+  "Path.Template.GroupNext": {
+    "recognition": "TemplateMatch",
+    "template": "path_group_next.png",
+    "roi": [
+      1045,
+      45,
+      80,
+      70
+    ],
+    "threshold": 0.92,
+    "action": "DoNothing"
+  },
+  "Path.Template.PrequelBossAvailable": {
+    "recognition": "TemplateMatch",
+    "template": "path_prequel_boss_available.png",
+    "roi": [
+      10,
+      125,
+      85,
+      430
+    ],
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "Template.EquipAllControl": {
+    "recognition": "TemplateMatch",
+    "template": "equip_all_control.png",
+    "roi": [
+      554,
+      555,
+      88,
+      88
+    ],
+    "threshold": 0.94,
+    "action": "DoNothing"
+  }
+}

@@ -1,0 +1,768 @@
+{
+  "Template.OrbisButton": {
+    "recognition": "TemplateMatch",
+    "template": "orbis_button.png",
+    "roi": [
+      700,
+      530,
+      350,
+      150
+    ],
+    "action": "DoNothing",
+    "threshold": 0.94
+  },
+  "Template.LobbyLabel": {
+    "recognition": "TemplateMatch",
+    "template": "lobby_label.png",
+    "roi": [
+      1030,
+      380,
+      180,
+      100
+    ],
+    "action": "DoNothing"
+  },
+  "Template.OrbisHeader": {
+    "recognition": "TemplateMatch",
+    "template": "orbis_header.png",
+    "roi": [
+      40,
+      40,
+      240,
+      80
+    ],
+    "action": "DoNothing"
+  },
+  "Template.TavernWall": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "tavern_wall.png",
+      "tavern_wall_day.png"
+    ],
+    "roi": [
+      850,
+      60,
+      250,
+      200
+    ],
+    "action": "DoNothing",
+    "order_by": "Score"
+  },
+  "Template.TavernShelf": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "tavern_shelf.png",
+      "tavern_barrel_day.png"
+    ],
+    "roi": [
+      560,
+      60,
+      320,
+      200
+    ],
+    "action": "DoNothing",
+    "order_by": "Score"
+  },
+  "Template.MapEpisodeHeader": {
+    "recognition": "TemplateMatch",
+    "template": "map_episode_header.png",
+    "roi": [
+      55,
+      8,
+      140,
+      48
+    ],
+    "action": "DoNothing"
+  },
+  "Template.MapReadyLabel": {
+    "recognition": "TemplateMatch",
+    "template": "map_ready_label.png",
+    "roi": [
+      1000,
+      595,
+      120,
+      65
+    ],
+    "action": "DoNothing"
+  },
+  "Template.ReadyHeader": {
+    "recognition": "TemplateMatch",
+    "template": "ready_header.png",
+    "roi": [
+      55,
+      8,
+      120,
+      48
+    ],
+    "action": "DoNothing"
+  },
+  "Template.StartQuestLabel": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "start_quest_label.png",
+      "start_quest_small.png"
+    ],
+    "roi": [
+      1020,
+      596,
+      170,
+      65
+    ],
+    "action": "DoNothing",
+    "order_by": "Score"
+  },
+  "Template.SupporterTitle": {
+    "recognition": "TemplateMatch",
+    "template": "supporter_title.png",
+    "roi": [
+      200,
+      65,
+      310,
+      65
+    ],
+    "action": "DoNothing"
+  },
+  "Template.StorySkip": {
+    "recognition": "TemplateMatch",
+    "template": "story_skip_masked.png",
+    "roi": [
+      1100,
+      8,
+      108,
+      65
+    ],
+    "action": "DoNothing",
+    "green_mask": true,
+    "threshold": 0.9
+  },
+  "Template.StoryHistory": {
+    "recognition": "TemplateMatch",
+    "template": "classic_story_history.png",
+    "roi": [
+      1010,
+      8,
+      70,
+      65
+    ],
+    "action": "DoNothing"
+  },
+  "Template.StoryConfirmQuestion": {
+    "recognition": "TemplateMatch",
+    "template": "classic_story_confirm_question.png",
+    "roi": [
+      400,
+      270,
+      420,
+      75
+    ],
+    "action": "DoNothing"
+  },
+  "Template.StoryConfirmButton": {
+    "recognition": "TemplateMatch",
+    "template": "classic_story_confirm_button.png",
+    "roi": [
+      640,
+      400,
+      150,
+      65
+    ],
+    "action": "DoNothing"
+  },
+  "Template.ClearInitial": {
+    "recognition": "TemplateMatch",
+    "template": "clear_initial.png",
+    "roi": [
+      210,
+      520,
+      240,
+      85
+    ],
+    "action": "DoNothing"
+  },
+  "Template.ClearStory": {
+    "recognition": "TemplateMatch",
+    "template": "clear_story.png",
+    "roi": [
+      530,
+      520,
+      230,
+      85
+    ],
+    "action": "DoNothing"
+  },
+  "Template.ClearContinue": {
+    "recognition": "TemplateMatch",
+    "template": "clear_continue.png",
+    "roi": [
+      1140,
+      605,
+      68,
+      70
+    ],
+    "action": "DoNothing"
+  },
+  "Template.ResultHeading": {
+    "recognition": "TemplateMatch",
+    "template": "result_heading.png",
+    "roi": [
+      1020,
+      15,
+      180,
+      60
+    ],
+    "action": "DoNothing"
+  },
+  "Template.ResultConfirm": {
+    "recognition": "TemplateMatch",
+    "template": "result_confirm.png",
+    "roi": [
+      1030,
+      590,
+      150,
+      70
+    ],
+    "action": "DoNothing"
+  },
+  "Template.StoryRewardHeader": {
+    "recognition": "TemplateMatch",
+    "template": "story_reward_header.png",
+    "roi": [
+      480,
+      135,
+      260,
+      65
+    ],
+    "action": "DoNothing"
+  },
+  "Template.StoryRewardClose": {
+    "recognition": "TemplateMatch",
+    "template": "story_reward_close.png",
+    "roi": [
+      510,
+      425,
+      200,
+      65
+    ],
+    "action": "DoNothing"
+  },
+  "Template.BattlePause": {
+    "recognition": "TemplateMatch",
+    "template": "battle_pause.png",
+    "roi": [
+      1145,
+      0,
+      60,
+      70
+    ],
+    "action": "DoNothing",
+    "threshold": 0.84
+  },
+  "Template.BattleHelp": {
+    "recognition": "TemplateMatch",
+    "template": "battle_help.png",
+    "roi": [
+      920,
+      0,
+      120,
+      70
+    ],
+    "action": "DoNothing"
+  },
+  "Template.MapPadlock": {
+    "recognition": "TemplateMatch",
+    "template": "map_padlock.png",
+    "roi": [
+      40,
+      110,
+      60,
+      450
+    ],
+    "action": "DoNothing"
+  },
+  "Template.StartRegularLabel": {
+    "recognition": "TemplateMatch",
+    "template": "start_regular_label.png",
+    "roi": [
+      1010,
+      594,
+      180,
+      65
+    ],
+    "action": "DoNothing"
+  },
+  "Template.ReadyCompletedFlag": {
+    "recognition": "TemplateMatch",
+    "template": "ready_completed_flag.png",
+    "roi": [
+      870,
+      150,
+      200,
+      70
+    ],
+    "action": "DoNothing"
+  },
+  "Template.SideAlertHeader": {
+    "recognition": "TemplateMatch",
+    "template": "side_alert_header.png",
+    "roi": [
+      480,
+      120,
+      260,
+      75
+    ],
+    "action": "DoNothing"
+  },
+  "Template.SideAlertClose": {
+    "recognition": "TemplateMatch",
+    "template": "side_alert_close.png",
+    "roi": [
+      520,
+      490,
+      180,
+      80
+    ],
+    "action": "DoNothing"
+  },
+  "Template.FriendHeader": {
+    "recognition": "TemplateMatch",
+    "template": "friend_header.png",
+    "roi": [
+      530,
+      125,
+      160,
+      75
+    ],
+    "action": "DoNothing"
+  },
+  "Template.FriendPrompt": {
+    "recognition": "TemplateMatch",
+    "template": "friend_prompt.png",
+    "roi": [
+      390,
+      210,
+      430,
+      75
+    ],
+    "action": "DoNothing"
+  },
+  "Template.FriendCancel": {
+    "recognition": "TemplateMatch",
+    "template": "friend_cancel.png",
+    "roi": [
+      410,
+      470,
+      190,
+      60
+    ],
+    "action": "DoNothing"
+  },
+  "Template.ReceivedRewardHeader": {
+    "recognition": "TemplateMatch",
+    "template": "received_reward_header.png",
+    "roi": [
+      460,
+      125,
+      300,
+      75
+    ],
+    "action": "DoNothing"
+  },
+  "Template.ReceivedRewardClose": {
+    "recognition": "TemplateMatch",
+    "template": "received_reward_close.png",
+    "roi": [
+      520,
+      470,
+      180,
+      75
+    ],
+    "action": "DoNothing"
+  },
+  "OCR.TapToClose": {
+    "recognition": "OCR",
+    "roi": [
+      300,
+      380,
+      750,
+      215
+    ],
+    "model": "en_us",
+    "expected": "[Tt]ap to close[.]?",
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "Template.EpisodeButton": {
+    "recognition": "TemplateMatch",
+    "template": "classic_episode_button.png",
+    "roi": [
+      1040,
+      135,
+      160,
+      85
+    ],
+    "action": "DoNothing"
+  },
+  "OCR.RankUpHeading": {
+    "recognition": "OCR",
+    "roi": [
+      500,
+      165,
+      230,
+      100
+    ],
+    "model": "en_us",
+    "expected": "RANK\\s*UP",
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "OCR.RankUpFooter": {
+    "recognition": "OCR",
+    "roi": [
+      230,
+      560,
+      800,
+      75
+    ],
+    "model": "en_us",
+    "expected": ".*Energy.*Ranking up.*",
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "OCR.ConnectionUnlocked": {
+    "recognition": "OCR",
+    "roi": [
+      320,
+      130,
+      570,
+      110
+    ],
+    "model": "en_us",
+    "expected": "Connection Unlocked",
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "OCR.ConnectionOK": {
+    "recognition": "OCR",
+    "roi": [
+      450,
+      440,
+      320,
+      90
+    ],
+    "model": "en_us",
+    "expected": "OK",
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "OCR.SelectSupporter": {
+    "recognition": "OCR",
+    "roi": [
+      195,
+      65,
+      300,
+      65
+    ],
+    "model": "en_us",
+    "expected": "Select Supporter",
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "OCR.ClearHeading": {
+    "recognition": "OCR",
+    "roi": [
+      440,
+      380,
+      340,
+      90
+    ],
+    "model": "en_us",
+    "expected": "C\\s*L\\s*E\\s*A\\s*R",
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "OCR.FailedHeading": {
+    "recognition": "OCR",
+    "roi": [
+      660,
+      90,
+      240,
+      85
+    ],
+    "model": "en_us",
+    "expected": "(?:F\\s*A\\s*I\\s*L\\s*E\\s*D|FAIVLED)",
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "OCR.DefeatLeave": {
+    "recognition": "OCR",
+    "roi": [
+      55,
+      590,
+      125,
+      65
+    ],
+    "model": "en_us",
+    "expected": "Leave",
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "OCR.DefeatRetry": {
+    "recognition": "OCR",
+    "roi": [
+      1030,
+      590,
+      170,
+      66
+    ],
+    "model": "en_us",
+    "expected": "Try again",
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "OCR.ChatHeading": {
+    "recognition": "OCR",
+    "model": "en_us",
+    "roi": [
+      675,
+      5,
+      250,
+      50
+    ],
+    "expected": [
+      "Channel\\s*#\\s*\\d+"
+    ],
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "OCR.ChatInputHint": {
+    "recognition": "OCR",
+    "model": "en_us",
+    "roi": [
+      725,
+      609,
+      320,
+      60
+    ],
+    "expected": [
+      "Tap here to type[.]?"
+    ],
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "OCR.ChatNotificationHeading": {
+    "recognition": "OCR",
+    "model": "en_us",
+    "roi": [
+      865,
+      60,
+      330,
+      60
+    ],
+    "expected": [
+      "Chat Notification Settings"
+    ],
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "OCR.NoticeDisableQuestion": {
+    "recognition": "OCR",
+    "model": "en_us",
+    "roi": [
+      305,
+      270,
+      600,
+      85
+    ],
+    "expected": [
+      ".*These notices will no longer be displayed.*"
+    ],
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "OCR.NoticeDisableConfirm": {
+    "recognition": "OCR",
+    "model": "en_us",
+    "roi": [
+      650,
+      405,
+      170,
+      65
+    ],
+    "expected": [
+      "Confirm"
+    ],
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "Template.QuickMenuMusic": {
+    "recognition": "TemplateMatch",
+    "template": "quick_menu_music.png",
+    "roi": [
+      850,
+      590,
+      250,
+      70
+    ],
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "Template.QuickMenuClose": {
+    "recognition": "TemplateMatch",
+    "template": "quick_menu_close.png",
+    "roi": [
+      1145,
+      0,
+      65,
+      65
+    ],
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "Template.OptionsHeader": {
+    "recognition": "TemplateMatch",
+    "template": "options_header.png",
+    "roi": [
+      50,
+      8,
+      140,
+      55
+    ],
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "Template.OptionsBack": {
+    "recognition": "TemplateMatch",
+    "template": "options_back.png",
+    "roi": [
+      10,
+      4,
+      55,
+      60
+    ],
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "Template.HeroSearch": {
+    "recognition": "TemplateMatch",
+    "template": "hero_search.png",
+    "roi": [
+      840,
+      60,
+      140,
+      55
+    ],
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "Template.HeroTransmissionLabel": {
+    "recognition": "TemplateMatch",
+    "template": "hero_transmission_label.png",
+    "roi": [
+      1010,
+      600,
+      195,
+      65
+    ],
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "Template.BattleMenuHeader": {
+    "recognition": "TemplateMatch",
+    "template": "battle_menu_header.png",
+    "roi": [
+      50,
+      8,
+      140,
+      55
+    ],
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "Template.BattleSeasonalTab": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "battle_seasonal_tab.png",
+      "battle_seasonal_tab_normal_view.png"
+    ],
+    "roi": [
+      225,
+      88,
+      135,
+      50
+    ],
+    "threshold": 0.9,
+    "action": "DoNothing",
+    "order_by": "Score"
+  },
+  "Template.BattleNormalTab": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "battle_normal_tab.png",
+      "battle_normal_tab_normal_view.png"
+    ],
+    "roi": [
+      55,
+      88,
+      135,
+      50
+    ],
+    "threshold": 0.9,
+    "action": "DoNothing",
+    "order_by": "Score"
+  },
+  "Template.auto_hud_on": {
+    "recognition": "TemplateMatch",
+    "template": "classic_auto_hud_on.png",
+    "roi": [
+      800,
+      645,
+      412,
+      37
+    ],
+    "threshold": 0.94,
+    "green_mask": false,
+    "action": "DoNothing"
+  },
+  "Template.auto_hud_off": {
+    "recognition": "TemplateMatch",
+    "template": [
+      "classic_auto_hud_off.png",
+      "auto_hud_off_pulse.png",
+      "auto_hud_off_arena.png",
+      "auto_hud_off_arena_glow.png"
+    ],
+    "roi": [
+      910,
+      570,
+      110,
+      112
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing"
+  },
+  "Template.formation_remove": {
+    "recognition": "TemplateMatch",
+    "template": "formation_remove.png",
+    "roi": [
+      145,
+      140,
+      540,
+      400
+    ],
+    "threshold": 0.94,
+    "action": "DoNothing"
+  },
+  "Template.formation_details": {
+    "recognition": "TemplateMatch",
+    "template": "formation_details.png",
+    "roi": [
+      145,
+      140,
+      540,
+      400
+    ],
+    "threshold": 0.94,
+    "action": "DoNothing"
+  }
+}

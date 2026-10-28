@@ -1,0 +1,202 @@
+{
+  "routines": {
+    "orbis_roundtrip": {
+      "status": "validated",
+      "entry": "Orbis.Start",
+      "success_node": "Orbis.Done",
+      "initial_states": [
+        "lobby",
+        "lobby_idle"
+      ],
+      "final_state": "lobby",
+      "max_seconds": 25,
+      "description": "Restaurar HUD se necessÃ¡rio, abrir Orbis Guide e voltar ao lobby; sem coletar nada."
+    },
+    "wake_lobby": {
+      "status": "validated",
+      "entry": "Wake.Start",
+      "success_node": "Wake.Done",
+      "initial_states": [
+        "lobby_idle"
+      ],
+      "final_state": "lobby",
+      "max_seconds": 10,
+      "description": "Restaurar os controles do lobby ocioso apÃ³s reconhecer a taverna e ausÃªncia do HUD."
+    },
+    "start_battle": {
+      "status": "draft",
+      "entry": "Battle.Start",
+      "success_node": "Battle.Running",
+      "initial_states": [
+        "battle_ready"
+      ],
+      "final_state": "battle_running",
+      "max_seconds": 30,
+      "pending": [
+        "calibrar tela de preparaÃ§Ã£o e botÃ£o",
+        "identificar fase/equipe/custo conforme plano",
+        "confirmar inÃ­cio e registrar consumo"
+      ],
+      "description": "Contrato legado desabilitado; usar stage start com identidade e limite de energia."
+    },
+    "skip_story": {
+      "status": "draft",
+      "entry": "Story.Start",
+      "success_node": "Story.Done",
+      "initial_states": [
+        "story"
+      ],
+      "final_state": "battle_running",
+      "max_seconds": 20,
+      "pending": [
+        "capturar histÃ³ria e botÃ£o skip",
+        "verificar se hÃ¡ confirmaÃ§Ã£o",
+        "mapear tambÃ©m retornos para mapa ou preparaÃ§Ã£o"
+      ],
+      "description": "Contrato legado desabilitado; Skip recorrente está no pipeline finish_battle."
+    },
+    "next_battle": {
+      "status": "draft",
+      "entry": "NextBattle.Start",
+      "success_node": "NextBattle.Ready",
+      "initial_states": [
+        "battle_result"
+      ],
+      "final_state": "battle_ready",
+      "max_seconds": 30,
+      "pending": [
+        "calibrar resultado e botÃ£o de prÃ³xima fase",
+        "confirmar fase seguinte contra plano",
+        "tratar bloqueio, derrota, energia e fim de capÃ­tulo"
+      ],
+      "description": "Contrato genérico legado desabilitado; o comando chapter encadeia fases conhecidas."
+    },
+    "prepare_stage": {
+      "status": "validated",
+      "parameterized": true,
+      "operation": "prepare",
+      "entry": "Stage.Entry",
+      "success_node": "Stage.CheckReady",
+      "initial_states": [
+        "episode_map",
+        "supporter_selection",
+        "battle_ready"
+      ],
+      "final_state": "battle_ready",
+      "max_seconds": 45,
+      "pending": [],
+      "description": "Selecionar e preparar por identidade; percurso completo validado em pen002, episódio 2/capítulo 5, sem iniciar batalha.",
+      "validation_scope": {
+        "stage_id": "pen002",
+        "episode": 2,
+        "chapter": 5,
+        "client_size": [
+          1212,
+          682
+        ],
+        "evidence": "var/runs/20261026T003826Z_75f0c2dc/full_stage_selection_validation.json"
+      }
+    },
+    "start_stage": {
+      "status": "validated",
+      "parameterized": true,
+      "operation": "start",
+      "entry": "Stage.Entry",
+      "success_node": "Stage.EnteredStory",
+      "initial_states": [
+        "episode_map",
+        "supporter_selection",
+        "battle_ready"
+      ],
+      "final_state": "story_or_battle",
+      "max_seconds": 120,
+      "pending": [],
+      "description": "Início parametrizado por identidade e custo, com no máximo um início; testado ao vivo em fases do episódio 2/capítulo 5.",
+      "validation_scope": {
+        "episode": 2,
+        "chapter": 5,
+        "stage_ids": [
+          "pen002",
+          "pen003",
+          "pen004",
+          "pen005",
+          "pen006",
+          "pes001",
+          "pes002",
+          "pes004"
+        ],
+        "profile": "Steam demo em inglês, 1212x682"
+      }
+    },
+    "finish_battle": {
+      "status": "validated",
+      "entry": "Finish.Entry",
+      "success_node": "Finish.VerifyDone",
+      "initial_states": [
+        "story",
+        "story_confirmation",
+        "battle_running",
+        "stage_clear",
+        "battle_rewards",
+        "story_reward",
+        "side_story_alert",
+        "friend_request",
+        "received_reward",
+        "tap_to_close_notice",
+        "rank_up",
+        "connection_unlocked",
+        "story_intro"
+      ],
+      "final_state": "episode_map",
+      "max_seconds": 300,
+      "description": "Concluir uma batalha já iniciada; Skip repetido, confirmar com estabilidade/retries, cancelar amizade, fechar banners e confirmar mapa estável. Não inicia outra batalha.",
+      "validation_scope": {
+        "episode": 2,
+        "chapter": 5,
+        "complete_runs": [
+          "pen005",
+          "pen006",
+          "pes001",
+          "pes002"
+        ],
+        "additional_cases": [
+          "Side Story Alert",
+          "Received Reward",
+          "Friend Cancel",
+          "Tap to close por OCR",
+          "Rank Up (38)",
+          "Connection Unlocked (Tamarinne)",
+          "Cutscene LongPress 1500 ms",
+          "CLEAR com objetivo No Continues"
+        ]
+      }
+    },
+    "chapter": {
+      "status": "validated",
+      "parameterized": true,
+      "compiler": "chapter",
+      "entry": "Chapter.Entry",
+      "success_node": "Chapter.Done",
+      "initial_states": [
+        "episode_map",
+        "supporter_selection",
+        "battle_ready"
+      ],
+      "final_state": "episode_map",
+      "max_seconds": 3600,
+      "description": "Compilar as fases restantes em um único grafo Maa, com um início por fase e orçamento total; pode concluir o resultado atual antes do trecho.",
+      "pending": [],
+      "validation_scope": {
+        "episode": 2,
+        "chapter": 5,
+        "stages": [
+          "pes005",
+          "pes006"
+        ],
+        "resume_from": "Aviso informativo do resultado da fase 10",
+        "single_task": true,
+        "evidence": "var/runs/20261026T015611Z_7e9079d7/chapter_result.json"
+      }
+    }
+  }
+}

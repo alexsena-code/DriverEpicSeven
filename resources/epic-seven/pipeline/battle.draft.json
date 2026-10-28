@@ -1,0 +1,111 @@
+{
+  "$status": "Rascunho desabilitado. O registry também impede sua execução.",
+  "Battle.Start": {
+    "enabled": false,
+    "recognition": "DirectHit",
+    "action": "DoNothing",
+    "next": [
+      "Battle.Confirm"
+    ]
+  },
+  "Battle.Confirm": {
+    "enabled": false,
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "battle_ready",
+      "target": "battle_start"
+    },
+    "action": "Click",
+    "max_hit": 1,
+    "next": [
+      "Battle.Running"
+    ]
+  },
+  "Battle.Running": {
+    "enabled": false,
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "battle_running"
+    },
+    "action": "DoNothing"
+  },
+  "Story.Start": {
+    "enabled": false,
+    "recognition": "DirectHit",
+    "action": "DoNothing",
+    "next": [
+      "Story.Skip"
+    ]
+  },
+  "Story.Skip": {
+    "enabled": false,
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "story",
+      "target": "story_skip"
+    },
+    "action": "Click",
+    "max_hit": 1,
+    "next": [
+      "Story.Confirm",
+      "Story.Done"
+    ]
+  },
+  "Story.Confirm": {
+    "enabled": false,
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "story_skip_confirmation",
+      "target": "story_skip_confirm"
+    },
+    "action": "Click",
+    "max_hit": 1,
+    "next": [
+      "Story.Done"
+    ]
+  },
+  "Story.Done": {
+    "enabled": false,
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "battle_running"
+    },
+    "action": "DoNothing"
+  },
+  "NextBattle.Start": {
+    "enabled": false,
+    "recognition": "DirectHit",
+    "action": "DoNothing",
+    "next": [
+      "NextBattle.Click"
+    ]
+  },
+  "NextBattle.Click": {
+    "enabled": false,
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "battle_result",
+      "target": "next_battle"
+    },
+    "action": "Click",
+    "max_hit": 1,
+    "next": [
+      "NextBattle.Ready"
+    ]
+  },
+  "NextBattle.Ready": {
+    "enabled": false,
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "battle_ready"
+    },
+    "action": "DoNothing"
+  }
+}

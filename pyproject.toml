@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "driver-epic-seven"
+version = "0.1.0"
+description = "Controle verificável do Epic Seven com pipelines MaaFramework"
+requires-python = ">=3.11,<3.13"
+dependencies = ["maafw==5.14.3", "Pillow>=10.4,<13", "msgpack>=1.0,<2"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<9"]
+audit = ["lz4>=4,<5"]
+
+[project.scripts]
+driver-epic-seven = "driver_epic_seven.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["fixtures: reconhecimento em capturas locais do jogo"]

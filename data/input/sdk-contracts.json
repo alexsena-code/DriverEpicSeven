@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "package": "maafw",
+  "installed_version": "v5.14.3",
+  "scope": "Read-only inspection of installed SDK; API presence is not in-game delivery proof.",
+  "dataclasses": {
+    "RecognitionDetail": [
+      "reco_id",
+      "name",
+      "algorithm",
+      "hit",
+      "box",
+      "all_results",
+      "filtered_results",
+      "best_result",
+      "raw_detail",
+      "raw_image",
+      "draw_images"
+    ]
+  },
+  "methods": {
+    "Controller.post_click_key": "(self, key: int) -> maa.job.Job",
+    "Tasker.post_action": "(self, action_type: maa.pipeline.JActionType, action_param: Union[maa.pipeline.JDoNothing, maa.pipeline.JClick, maa.pipeline.JLongPress, maa.pipeline.JSwipe, maa.pipeline.JMultiSwipe, maa.pipeline.JTouch, maa.pipeline.JTouchUp, maa.pipeline.JClickKey, maa.pipeline.JLongPressKey, maa.pipeline.JKey, maa.pipeline.JInputText, maa.pipeline.JStartApp, maa.pipeline.JStopApp, maa.pipeline.JStopTask, maa.pipeline.JScroll, maa.pipeline.JCommand, maa.pipeline.JShell, maa.pipeline.JScreencap, maa.pipeline.JCustomAction], box: Union[maa.define.Rect, list[int], numpy.ndarray, tuple[int, int, int, int]] = (0, 0, 0, 0), reco_detail: str = '') -> maa.job.TaskJob",
+    "Context.run_recognition": "(self, entry: str, image: numpy.ndarray, pipeline_override: Optional[dict[str, Any]] = None) -> Optional[maa.define.RecognitionDetail]"
+  },
+  "module_sha256": {
+    "define.py": "24c56437b7bcbb2a77d881ba0ec003a313fd7d1bc6c85f7a8993d8b55298ae61",
+    "controller.py": "0ed7e27ccd3db0839a9c76f3f81e27fbcb132352492f580f1222576ff59bf924",
+    "tasker.py": "2c9b0ed4116c82af9d44f6c5fc81974dcccdb56189678027616358cad2544e04",
+    "context.py": "e0aacc34ffe717be20112e40f1b37b49e1bed1f302a2e266dc3f503ffedd0c77"
+  },
+  "documentation": [
+    "https://github.com/MaaXYZ/MaaFramework/blob/v5.14.3/docs/en_us/3.1-PipelineProtocol.md",
+    "https://github.com/MaaXYZ/MaaFramework/blob/v5.14.3/docs/en_us/2.4-ControlMethods.md"
+  ]
+}

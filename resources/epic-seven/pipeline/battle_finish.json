@@ -1,0 +1,579 @@
+{
+  "$description": "Uma batalha já iniciada: Skip/confirmar, reconhecer vitória e retornar ao mapa. Não inicia outra fase.",
+  "Finish.Entry": {
+    "recognition": "DirectHit",
+    "action": "DoNothing",
+    "timeout": 600000,
+    "next": [
+      "Finish.Defeat",
+      "Finish.EnableAuto",
+      "Finish.ConnectionUnlocked",
+      "Finish.HoldIntro",
+      "Finish.RankUp",
+      "Finish.WakeLobby",
+      "Finish.OpenEpisode",
+      "Finish.ReceivedReward",
+      "Finish.CancelFriend",
+      "Finish.SideAlert",
+      "Finish.Skip",
+      "Finish.ConfirmSkip",
+      "Finish.Clear",
+      "Finish.Rewards",
+      "Finish.StoryReward",
+      "Finish.TapToClose",
+      "Finish.Done"
+    ]
+  },
+  "Finish.Skip": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "story",
+      "target": "story_skip"
+    },
+    "action": "Click",
+    "max_hit": 12,
+    "post_delay": 300,
+    "timeout": 600000,
+    "next": [
+      "Finish.Defeat",
+      "Finish.EnableAuto",
+      "Finish.ConnectionUnlocked",
+      "Finish.HoldIntro",
+      "Finish.RankUp",
+      "Finish.WakeLobby",
+      "Finish.OpenEpisode",
+      "Finish.ReceivedReward",
+      "Finish.CancelFriend",
+      "Finish.SideAlert",
+      "Finish.ConfirmSkip",
+      "Finish.Clear",
+      "Finish.Skip",
+      "Finish.Rewards",
+      "Finish.StoryReward",
+      "Finish.TapToClose",
+      "Finish.Done"
+    ]
+  },
+  "Finish.ConfirmSkip": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "story_confirmation",
+      "target": "story_confirm_button"
+    },
+    "action": "Click",
+    "max_hit": 12,
+    "post_delay": 800,
+    "timeout": 600000,
+    "next": [
+      "Finish.Defeat",
+      "Finish.EnableAuto",
+      "Finish.ConnectionUnlocked",
+      "Finish.HoldIntro",
+      "Finish.RankUp",
+      "Finish.WakeLobby",
+      "Finish.OpenEpisode",
+      "Finish.ReceivedReward",
+      "Finish.CancelFriend",
+      "Finish.SideAlert",
+      "Finish.Clear",
+      "Finish.Skip",
+      "Finish.Rewards",
+      "Finish.StoryReward",
+      "Finish.TapToClose",
+      "Finish.Done",
+      "Finish.ConfirmSkip"
+    ],
+    "pre_wait_freezes": {
+      "time": 350,
+      "target": [
+        640,
+        400,
+        150,
+        65
+      ],
+      "threshold": 0.995,
+      "method": 10001,
+      "rate_limit": 100,
+      "timeout": 4000
+    },
+    "pre_delay": 250
+  },
+  "Finish.Clear": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "stage_clear",
+      "target": "clear_continue"
+    },
+    "action": "Click",
+    "max_hit": 3,
+    "post_delay": 800,
+    "timeout": 15000,
+    "next": [
+      "Finish.Defeat",
+      "Finish.EnableAuto",
+      "Finish.ConnectionUnlocked",
+      "Finish.HoldIntro",
+      "Finish.RankUp",
+      "Finish.WakeLobby",
+      "Finish.OpenEpisode",
+      "Finish.ReceivedReward",
+      "Finish.CancelFriend",
+      "Finish.SideAlert",
+      "Finish.ConfirmSkip",
+      "Finish.Skip",
+      "Finish.Rewards",
+      "Finish.StoryReward",
+      "Finish.TapToClose",
+      "Finish.Done",
+      "Finish.Clear"
+    ],
+    "pre_wait_freezes": {
+      "time": 400,
+      "target": [
+        1140,
+        605,
+        68,
+        70
+      ],
+      "threshold": 0.995,
+      "method": 10001,
+      "rate_limit": 100,
+      "timeout": 4000
+    },
+    "pre_delay": 250
+  },
+  "Finish.Rewards": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "battle_rewards",
+      "target": "result_confirm"
+    },
+    "action": "Click",
+    "max_hit": 3,
+    "post_delay": 800,
+    "timeout": 15000,
+    "next": [
+      "Finish.Defeat",
+      "Finish.EnableAuto",
+      "Finish.ConnectionUnlocked",
+      "Finish.HoldIntro",
+      "Finish.RankUp",
+      "Finish.WakeLobby",
+      "Finish.OpenEpisode",
+      "Finish.ReceivedReward",
+      "Finish.CancelFriend",
+      "Finish.SideAlert",
+      "Finish.ConfirmSkip",
+      "Finish.Skip",
+      "Finish.StoryReward",
+      "Finish.TapToClose",
+      "Finish.Done",
+      "Finish.Rewards"
+    ],
+    "pre_wait_freezes": {
+      "time": 700,
+      "target": [
+        1030,
+        590,
+        160,
+        75
+      ],
+      "threshold": 0.995,
+      "method": 10001,
+      "rate_limit": 100,
+      "timeout": 4000
+    },
+    "pre_delay": 250
+  },
+  "Finish.StoryReward": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "story_reward",
+      "target": "story_reward_close"
+    },
+    "action": "Click",
+    "max_hit": 10,
+    "post_delay": 800,
+    "timeout": 15000,
+    "next": [
+      "Finish.Defeat",
+      "Finish.EnableAuto",
+      "Finish.ConnectionUnlocked",
+      "Finish.HoldIntro",
+      "Finish.RankUp",
+      "Finish.WakeLobby",
+      "Finish.OpenEpisode",
+      "Finish.ReceivedReward",
+      "Finish.CancelFriend",
+      "Finish.SideAlert",
+      "Finish.ConfirmSkip",
+      "Finish.Skip",
+      "Finish.TapToClose",
+      "Finish.Done",
+      "Finish.StoryReward"
+    ],
+    "pre_wait_freezes": {
+      "time": 400,
+      "target": [
+        480,
+        435,
+        260,
+        55
+      ],
+      "threshold": 0.995,
+      "method": 10001,
+      "rate_limit": 100,
+      "timeout": 4000
+    },
+    "pre_delay": 250
+  },
+  "Finish.Done": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "episode_map"
+    },
+    "action": "DoNothing",
+    "max_hit": 10,
+    "post_delay": 1200,
+    "timeout": 15000,
+    "next": [
+      "Finish.Defeat",
+      "Finish.EnableAuto",
+      "Finish.ConnectionUnlocked",
+      "Finish.HoldIntro",
+      "Finish.RankUp",
+      "Finish.WakeLobby",
+      "Finish.OpenEpisode",
+      "Finish.ReceivedReward",
+      "Finish.CancelFriend",
+      "Finish.SideAlert",
+      "Finish.Skip",
+      "Finish.ConfirmSkip",
+      "Finish.StoryReward",
+      "Finish.TapToClose",
+      "Finish.VerifyDone"
+    ]
+  },
+  "Finish.SideAlert": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "side_story_alert",
+      "target": "side_alert_close"
+    },
+    "action": "Click",
+    "max_hit": 3,
+    "pre_delay": 300,
+    "post_delay": 800,
+    "timeout": 15000,
+    "next": [
+      "Finish.Defeat",
+      "Finish.EnableAuto",
+      "Finish.ConnectionUnlocked",
+      "Finish.HoldIntro",
+      "Finish.RankUp",
+      "Finish.WakeLobby",
+      "Finish.OpenEpisode",
+      "Finish.ReceivedReward",
+      "Finish.CancelFriend",
+      "Finish.SideAlert",
+      "Finish.Skip",
+      "Finish.ConfirmSkip",
+      "Finish.Rewards",
+      "Finish.StoryReward",
+      "Finish.TapToClose",
+      "Finish.Done"
+    ]
+  },
+  "Finish.CancelFriend": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "friend_request",
+      "target": "friend_cancel"
+    },
+    "action": "Click",
+    "max_hit": 3,
+    "pre_delay": 300,
+    "post_delay": 800,
+    "timeout": 15000,
+    "next": [
+      "Finish.Defeat",
+      "Finish.EnableAuto",
+      "Finish.ConnectionUnlocked",
+      "Finish.HoldIntro",
+      "Finish.RankUp",
+      "Finish.WakeLobby",
+      "Finish.OpenEpisode",
+      "Finish.ReceivedReward",
+      "Finish.CancelFriend",
+      "Finish.SideAlert",
+      "Finish.Skip",
+      "Finish.ConfirmSkip",
+      "Finish.Rewards",
+      "Finish.StoryReward",
+      "Finish.TapToClose",
+      "Finish.Done"
+    ]
+  },
+  "Finish.ReceivedReward": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "received_reward",
+      "target": "received_reward_close"
+    },
+    "action": "Click",
+    "max_hit": 10,
+    "pre_delay": 300,
+    "post_delay": 800,
+    "timeout": 15000,
+    "next": [
+      "Finish.Defeat",
+      "Finish.EnableAuto",
+      "Finish.ConnectionUnlocked",
+      "Finish.HoldIntro",
+      "Finish.RankUp",
+      "Finish.WakeLobby",
+      "Finish.OpenEpisode",
+      "Finish.ReceivedReward",
+      "Finish.CancelFriend",
+      "Finish.SideAlert",
+      "Finish.Skip",
+      "Finish.ConfirmSkip",
+      "Finish.StoryReward",
+      "Finish.TapToClose",
+      "Finish.Done"
+    ]
+  },
+  "Finish.VerifyDone": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "episode_map"
+    },
+    "action": "DoNothing",
+    "max_hit": 1
+  },
+  "Finish.TapToClose": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "tap_to_close_notice",
+      "target": "tap_close_text"
+    },
+    "action": "Click",
+    "max_hit": 10,
+    "pre_delay": 300,
+    "post_delay": 800,
+    "timeout": 15000,
+    "next": [
+      "Finish.Defeat",
+      "Finish.EnableAuto",
+      "Finish.Clear",
+      "Finish.ConnectionUnlocked",
+      "Finish.HoldIntro",
+      "Finish.RankUp",
+      "Finish.WakeLobby",
+      "Finish.OpenEpisode",
+      "Finish.CancelFriend",
+      "Finish.SideAlert",
+      "Finish.ReceivedReward",
+      "Finish.Skip",
+      "Finish.ConfirmSkip",
+      "Finish.Rewards",
+      "Finish.StoryReward",
+      "Finish.TapToClose",
+      "Finish.Done"
+    ]
+  },
+  "Finish.OpenEpisode": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "lobby",
+      "target": "episode_button"
+    },
+    "action": "Click",
+    "max_hit": 1,
+    "post_delay": 800,
+    "timeout": 15000,
+    "next": [
+      "Finish.Defeat",
+      "Finish.EnableAuto",
+      "Finish.ConnectionUnlocked",
+      "Finish.HoldIntro",
+      "Finish.RankUp",
+      "Finish.WakeLobby",
+      "Finish.SideAlert",
+      "Finish.CancelFriend",
+      "Finish.ReceivedReward",
+      "Finish.StoryReward",
+      "Finish.TapToClose",
+      "Finish.Done"
+    ]
+  },
+  "Finish.WakeLobby": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "lobby_idle",
+      "target": "wake_lobby"
+    },
+    "action": "Click",
+    "max_hit": 1,
+    "post_delay": 300,
+    "timeout": 6000,
+    "next": [
+      "Finish.Defeat",
+      "Finish.EnableAuto",
+      "Finish.ConnectionUnlocked",
+      "Finish.HoldIntro",
+      "Finish.RankUp",
+      "Finish.OpenEpisode"
+    ]
+  },
+  "Finish.RankUp": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "rank_up",
+      "target": "rankup_footer"
+    },
+    "action": "Click",
+    "max_hit": 3,
+    "pre_delay": 500,
+    "post_delay": 800,
+    "timeout": 15000,
+    "next": [
+      "Finish.Defeat",
+      "Finish.EnableAuto",
+      "Finish.ConnectionUnlocked",
+      "Finish.HoldIntro",
+      "Finish.RankUp",
+      "Finish.WakeLobby",
+      "Finish.OpenEpisode",
+      "Finish.SideAlert",
+      "Finish.CancelFriend",
+      "Finish.ReceivedReward",
+      "Finish.Skip",
+      "Finish.ConfirmSkip",
+      "Finish.Clear",
+      "Finish.Rewards",
+      "Finish.StoryReward",
+      "Finish.TapToClose",
+      "Finish.Done"
+    ]
+  },
+  "Finish.HoldIntro": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "story_intro",
+      "target": "story_intro_hold"
+    },
+    "action": "LongPress",
+    "duration": 1500,
+    "max_hit": 3,
+    "post_delay": 400,
+    "timeout": 600000,
+    "next": [
+      "Finish.Defeat",
+      "Finish.EnableAuto",
+      "Finish.ConnectionUnlocked",
+      "Finish.RankUp",
+      "Finish.WakeLobby",
+      "Finish.OpenEpisode",
+      "Finish.SideAlert",
+      "Finish.CancelFriend",
+      "Finish.ReceivedReward",
+      "Finish.Skip",
+      "Finish.ConfirmSkip",
+      "Finish.HoldIntro",
+      "Finish.Clear",
+      "Finish.Rewards",
+      "Finish.StoryReward",
+      "Finish.TapToClose",
+      "Finish.Done"
+    ]
+  },
+  "Finish.ConnectionUnlocked": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "connection_unlocked",
+      "target": "connection_ok_text"
+    },
+    "action": "Click",
+    "max_hit": 3,
+    "pre_delay": 400,
+    "post_delay": 800,
+    "timeout": 15000,
+    "next": [
+      "Finish.Defeat",
+      "Finish.EnableAuto",
+      "Finish.RankUp",
+      "Finish.WakeLobby",
+      "Finish.OpenEpisode",
+      "Finish.SideAlert",
+      "Finish.CancelFriend",
+      "Finish.ReceivedReward",
+      "Finish.Skip",
+      "Finish.ConfirmSkip",
+      "Finish.HoldIntro",
+      "Finish.Clear",
+      "Finish.Rewards",
+      "Finish.StoryReward",
+      "Finish.TapToClose",
+      "Finish.Done"
+    ]
+  },
+  "Finish.Defeat": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "battle_failed"
+    },
+    "action": "DoNothing",
+    "max_hit": 1,
+    "next": []
+  },
+  "Finish.EnableAuto": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "battle_running",
+      "auto_state": false,
+      "target": "battle_auto"
+    },
+    "action": "Click",
+    "max_hit": 1,
+    "post_delay": 250,
+    "timeout": 600000,
+    "next": [
+      "Finish.Defeat",
+      "Finish.EnableAuto",
+      "Finish.ConnectionUnlocked",
+      "Finish.HoldIntro",
+      "Finish.RankUp",
+      "Finish.WakeLobby",
+      "Finish.OpenEpisode",
+      "Finish.ReceivedReward",
+      "Finish.CancelFriend",
+      "Finish.SideAlert",
+      "Finish.Skip",
+      "Finish.ConfirmSkip",
+      "Finish.Clear",
+      "Finish.Rewards",
+      "Finish.StoryReward",
+      "Finish.TapToClose",
+      "Finish.Done"
+    ]
+  }
+}

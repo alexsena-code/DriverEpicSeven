@@ -1,0 +1,154 @@
+{
+  "$parameters": "O CLI stage injeta stage_id em todos os reconhecedores de fase antes da execução.",
+  "Stage.Entry": {
+    "recognition": "DirectHit",
+    "action": "DoNothing",
+    "next": [
+      "Stage.CheckReady",
+      "Stage.Supporter",
+      "Stage.OpenReady",
+      "Stage.Row",
+      "Stage.ScrollTop",
+      "Stage.ScrollDown"
+    ]
+  },
+  "Stage.Row": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "episode_map",
+      "target": "stage_row"
+    },
+    "action": "Click",
+    "max_hit": 1,
+    "next": [
+      "Stage.OpenReady"
+    ]
+  },
+  "Stage.ScrollTop": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "episode_map",
+      "target": "scroll_top"
+    },
+    "action": "Swipe",
+    "begin": [
+      250,
+      180
+    ],
+    "end": [
+      250,
+      500
+    ],
+    "duration": 400,
+    "max_hit": 3,
+    "next": [
+      "Stage.Row",
+      "Stage.ScrollTop",
+      "Stage.ScrollDown"
+    ],
+    "post_delay": 400
+  },
+  "Stage.OpenReady": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "episode_map",
+      "target": "stage_ready"
+    },
+    "action": "Click",
+    "max_hit": 1,
+    "next": [
+      "Stage.Supporter",
+      "Stage.CheckReady"
+    ]
+  },
+  "Stage.Supporter": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "supporter_selection",
+      "target": "stage_select_team"
+    },
+    "action": "Click",
+    "max_hit": 1,
+    "next": [
+      "Stage.CheckReady"
+    ],
+    "pre_wait_freezes": {
+      "time": 600,
+      "target": [
+        870,
+        590,
+        330,
+        75
+      ],
+      "threshold": 0.995,
+      "method": 10001,
+      "rate_limit": 100,
+      "timeout": 4000
+    }
+  },
+  "Stage.CheckReady": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "battle_ready"
+    },
+    "action": "DoNothing",
+    "max_hit": 1
+  },
+  "Stage.EnteredStory": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "story"
+    },
+    "action": "DoNothing",
+    "max_hit": 1
+  },
+  "Stage.EnteredBattle": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "battle_running"
+    },
+    "action": "DoNothing",
+    "max_hit": 1
+  },
+  "Stage.ScrollDown": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "episode_map",
+      "target": "scroll_down"
+    },
+    "action": "Swipe",
+    "begin": [
+      250,
+      500
+    ],
+    "end": [
+      250,
+      180
+    ],
+    "duration": 400,
+    "max_hit": 3,
+    "next": [
+      "Stage.Row",
+      "Stage.ScrollDown",
+      "Stage.ScrollTop"
+    ],
+    "post_delay": 400
+  },
+  "Stage.EnteredIntro": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "story_intro"
+    },
+    "action": "DoNothing",
+    "max_hit": 1
+  }
+}

@@ -1,0 +1,1161 @@
+{
+  "schema_version": 1,
+  "prepared_date": "2026-10-26",
+  "status": "static_analysis_only",
+  "runtime_enabled": false,
+  "live_measurements_performed": false,
+  "scope": "Análise de apoio estático às 33 famílias; não valida telas ativas, disponibilidade nem estado da conta.",
+  "source_pack": "Epic Seven Demo/data.pack",
+  "inventory": {
+    "entries": 94583,
+    "csb": 2287,
+    "db": 1037,
+    "png": 29594,
+    "atlas": 12299,
+    "gamepad_maps": 42
+  },
+  "sample": {
+    "decoded_layouts": 32,
+    "decoded_databases": 25,
+    "decoded_gamepad_maps": 9,
+    "button_nodes": 634,
+    "raw_images_inspected": 4,
+    "failed_databases": [
+      "db/pvp_npcbattle.db",
+      "db/pvp_npcbattle_team.db"
+    ]
+  },
+  "decoded_layouts": {
+    "wnd/growth_masterbook.csb": {
+      "sha256": "04d21194fafdb2a3df6bf147924c42c377456f9bee0e9b53b7ca39e3e072036d",
+      "node_count": 478,
+      "button_count": 30
+    },
+    "wnd/growth_masterbook_quest_item.csb": {
+      "sha256": "5804fa6d4ac1ff991cc0e7e4c7e824311dbd4bdf6291a507e5deb115a330a3fd",
+      "node_count": 21,
+      "button_count": 2
+    },
+    "wnd/growth_masterbook_challenge_item.csb": {
+      "sha256": "87accc083ea37d9077d6e48961c397319ba2f0ffd6c008c2d64c0de9ed30a152",
+      "node_count": 24,
+      "button_count": 3
+    },
+    "wnd/battle_ready.csb": {
+      "sha256": "f1e28e75e656675684fd0d0542ae883d1cf27a35683986c3e7137789c82a9104",
+      "node_count": 647,
+      "button_count": 46
+    },
+    "wnd/result_base.csb": {
+      "sha256": "ef5d2886d91e8df3cab4bc7578485f27c14394e6bf5b693841ee3d33c9101e0e",
+      "node_count": 1762,
+      "button_count": 79
+    },
+    "wnd/pvp_base.csb": {
+      "sha256": "b93628c24ca94df4359c467a5dd034aa91d0204c52b630b0cf605e580524e915",
+      "node_count": 189,
+      "button_count": 23
+    },
+    "wnd/pvp_npc_chall.csb": {
+      "sha256": "dcad38c19de81bea53e514e53beddf8c55e9ae6cf7f528a731a5ab6715d023bc",
+      "node_count": 72,
+      "button_count": 11
+    },
+    "wnd/pvp_ready.csb": {
+      "sha256": "f262afa14c4b44dfe6ce8616c19d4236af28c33b50c8651e2c7e137e51f74861",
+      "node_count": 96,
+      "button_count": 13
+    },
+    "wnd/unit_detail.csb": {
+      "sha256": "d254e31e4311087178040347d7ace1aed95dc606eed05c33b260f5f39954b336",
+      "node_count": 530,
+      "button_count": 72
+    },
+    "wnd/unit_up.csb": {
+      "sha256": "74b8361125fdf063f67c8ab5cc907df0da8de8003196d4ea1312f82f66753d21",
+      "node_count": 194,
+      "button_count": 7
+    },
+    "wnd/unit_upgrade.csb": {
+      "sha256": "fe74b840288e82348d3e9a5e3420875eb5861b42e89760c7b9337bb6f57a755c",
+      "node_count": 143,
+      "button_count": 11
+    },
+    "wnd/unit_skill_renewal.csb": {
+      "sha256": "a16a83b00b7acbe63a11254014fa8148f4ca14fb9b9b8500de63904e215bf777",
+      "node_count": 77,
+      "button_count": 6
+    },
+    "wnd/sanctuary_forest_new.csb": {
+      "sha256": "e9a67156aba8857f96c861b807900bc258511a6dee0b0a068a08c47212d98dc5",
+      "node_count": 87,
+      "button_count": 5
+    },
+    "wnd/sanctuary_forest_new_popup.csb": {
+      "sha256": "b0771cbc91e7febf21ba0c846ae72c2cc0f6e013608819ff4caea68b671f6e22",
+      "node_count": 67,
+      "button_count": 9
+    },
+    "wnd/equip_base.csb": {
+      "sha256": "920a2f005bcd0e1d28b132a15d5d069438a71f95a0ab0879b803dc735c45fead",
+      "node_count": 684,
+      "button_count": 164
+    },
+    "wnd/equip_craft_renewal_main.csb": {
+      "sha256": "3a4e5acf0177c9c074ce25a25f60b2b86d9acf845e968000a0e3155ba9794dc6",
+      "node_count": 47,
+      "button_count": 6
+    },
+    "wnd/sanctuary_alchemy_conversion_confirm.csb": {
+      "sha256": "f75ea44c964d61878cac18344ecd8526f7f4b8d71a797d01662c25357b0d345c",
+      "node_count": 47,
+      "button_count": 3
+    },
+    "wnd/unit_pet_detail.csb": {
+      "sha256": "1ecb3507fd96a2e237d25ec3ba6713e96c0ba80c8a84e2a7fc8e2064e608fde8",
+      "node_count": 131,
+      "button_count": 11
+    },
+    "wnd/unit_pet_synthesis.csb": {
+      "sha256": "03536b3b627389ec8a7edfd67a509d65643fdf4fc0dab617c36c7753a813768c",
+      "node_count": 178,
+      "button_count": 13
+    },
+    "wnd/pet_care_popup.csb": {
+      "sha256": "5d2054ba407645de4bba9f2212ddd8cb2e858aef503ab2690972f460eeac9021",
+      "node_count": 54,
+      "button_count": 5
+    },
+    "wnd/destiny.csb": {
+      "sha256": "0276a124a392540af446eb7a41a347f1f708b67fea67fcab255deada1a8e260f",
+      "node_count": 82,
+      "button_count": 6
+    },
+    "wnd/destiny_present.csb": {
+      "sha256": "5f614856fbaca67d75001786c9fdd39f10d5eead2099e8ba5a44a2e5b2eb3a39",
+      "node_count": 21,
+      "button_count": 3
+    },
+    "wnd/shop_buy_detail.csb": {
+      "sha256": "eea8ef3ec893fb1ebc3c822bb2aa1aee114a6d1a0a9b2322aa1ed6d20b390b7d",
+      "node_count": 10,
+      "button_count": 1
+    },
+    "wnd/shop_popup_buy.csb": {
+      "sha256": "557ca4ab5c9f7c204fa31aa9c3c56238a1525a749321784a9d738a9cf74280d4",
+      "node_count": 87,
+      "button_count": 12
+    },
+    "wnd/dungeon_home.csb": {
+      "sha256": "d87f2da76ea1cbd994e3a0aa4448e804b652dbd2536ddb88a9dc605acd688182",
+      "node_count": 151,
+      "button_count": 6
+    },
+    "wnd/dungeon_crevice.csb": {
+      "sha256": "865ac6739c5c66604a86182338a9520437594c56dc85342679f20f3d6e411042",
+      "node_count": 105,
+      "button_count": 10
+    },
+    "wnd/trial_effect_popup.csb": {
+      "sha256": "3cb2102fb692ea6b9c69e69ccd7b5cfcd7dc18ff38d54d2b08618ed442518237",
+      "node_count": 16,
+      "button_count": 0
+    },
+    "wnd/clan_renew_activity.csb": {
+      "sha256": "d8296a942faf73fa2ad95d7ecd6d1923b6b95e5f654fc63d3856888670ec8cdd",
+      "node_count": 115,
+      "button_count": 10
+    },
+    "wnd/unit_support.csb": {
+      "sha256": "81bc953c8713184131df17c384f49dc810d469bdc85cfa16a42123cbf24b40c6",
+      "node_count": 138,
+      "button_count": 17
+    },
+    "wnd/story_theater_main.csb": {
+      "sha256": "29e5f79300ee866fc248472dc7ebe79f14ab23950aa8a8f5d989aa4887741bb3",
+      "node_count": 58,
+      "button_count": 6
+    },
+    "wnd/gacha_renew.csb": {
+      "sha256": "04b5793f5742cccf00cad2bceddcb141e2f9117e2fe14815f10364711dd95c1f",
+      "node_count": 162,
+      "button_count": 18
+    },
+    "wnd/achievement_base.csb": {
+      "sha256": "3d173149e4956f6431b7acb6402865101eeb749159e9f90f7418e177bd717018",
+      "node_count": 257,
+      "button_count": 26
+    },
+    "wnd/dungeon.csb": {
+      "sha256": "6374a14aed734a8cf762a8fe041762a2a08e5ea55af4ae7e83cc958f3821f5be",
+      "node_count": 438,
+      "button_count": 25
+    }
+  },
+  "decoded_databases": {
+    "db/pvp_npcbattle_lineup.db": {
+      "row_count": 97,
+      "columns": [
+        "id",
+        "export_id"
+      ]
+    },
+    "db/level_battlemenu_hunt.db": {
+      "row_count": 6,
+      "columns": [
+        "id",
+        "export_id",
+        "enter_key",
+        "name",
+        "desc",
+        "reward1",
+        "reward2",
+        "set_id",
+        "monster_id",
+        "icon_battlemenu",
+        "scroll_node_info",
+        "scroll_node_item",
+        "begin1",
+        "end1",
+        "begin2",
+        "end2",
+        "begin3",
+        "end3"
+      ]
+    },
+    "db/level_battlemenu_genie.db": {
+      "row_count": 5,
+      "columns": [
+        "id",
+        "export_id",
+        "sort",
+        "name",
+        "desc",
+        "monster_id",
+        "icon_battlemenu",
+        "enter_key",
+        "is_always_open",
+        "start_day1",
+        "start_time1",
+        "end_day1",
+        "end_time1",
+        "start_day2",
+        "start_time2",
+        "end_day2",
+        "end_time2",
+        "start_day3",
+        "start_time3",
+        "end_day3",
+        "end_time3"
+      ]
+    },
+    "db/forest_spirit_function.db": {
+      "row_count": 7,
+      "columns": [
+        "id",
+        "export_id",
+        "title",
+        "stat_cfx",
+        "item_id",
+        "time",
+        "produce1_end",
+        "produce2_end",
+        "grow_count",
+        "grow_shorten_time",
+        "able_grow",
+        "grow_cooltime",
+        "desc",
+        "ui_icon",
+        "token_type",
+        "get1_value",
+        "get10_value"
+      ]
+    },
+    "db/rune_req.db": {
+      "row_count": 540,
+      "columns": [
+        "id",
+        "export_id",
+        "attribute",
+        "zodiac",
+        "role",
+        "req1_1",
+        "count1_1",
+        "req1_2",
+        "count1_2",
+        "req2_1",
+        "count2_1",
+        "req2_2",
+        "count2_2",
+        "req3_1",
+        "count3_1",
+        "req3_2",
+        "count3_2",
+        "req4_1",
+        "count4_1",
+        "req4_2",
+        "count4_2",
+        "req5_1",
+        "count5_1",
+        "req5_2",
+        "count5_2",
+        "req6_1",
+        "count6_1",
+        "req6_2",
+        "count6_2"
+      ]
+    },
+    "db/skill_upgrade.db": {
+      "row_count": 133,
+      "columns": [
+        "id",
+        "export_id",
+        "res0",
+        "res_count0",
+        "res1",
+        "res_count1",
+        "res2_knight",
+        "res2_manauser",
+        "res2_ranger",
+        "res2_mage",
+        "res2_assassin",
+        "res2_warrior",
+        "res2_ram",
+        "res2_bull",
+        "res2_twins",
+        "res2_crab",
+        "res2_lion",
+        "res2_maiden",
+        "res2_scales",
+        "res2_scorpion",
+        "res2_archer",
+        "res2_goat",
+        "res2_waterbearer",
+        "res2_fish",
+        "res_count2",
+        "ori_res0",
+        "ori_res_count0",
+        "ori_res1",
+        "ori_res_count1",
+        "ori2_res0",
+        "ori2_res_count0",
+        "ori2_res1",
+        "ori2_res_count1",
+        "ori3_res0",
+        "ori3_res_count0",
+        "ori3_res1",
+        "ori3_res_count1",
+        "ori4_res0",
+        "ori4_res_count0",
+        "ori4_res1",
+        "ori4_res_count1"
+      ]
+    },
+    "db/item_equip_upgrade.db": {
+      "row_count": 395,
+      "columns": [
+        "id",
+        "export_id",
+        "category",
+        "set_id",
+        "item_equip_base",
+        "item_equip_result",
+        "material",
+        "count",
+        "price",
+        "option"
+      ]
+    },
+    "db/item_craft.db": {
+      "row_count": 5,
+      "columns": [
+        "id",
+        "export_id",
+        "set_id",
+        "grade_rate_id",
+        "item1",
+        "mileage1",
+        "material1",
+        "count1",
+        "material1_2",
+        "count1_2",
+        "price1",
+        "item2",
+        "mileage2",
+        "material2",
+        "count2",
+        "material2_2",
+        "count2_2",
+        "price2",
+        "item3",
+        "mileage3",
+        "material3",
+        "count3",
+        "material3_2",
+        "count3_2",
+        "price3",
+        "mileage4",
+        "material4_2",
+        "count4_2",
+        "item4",
+        "material4",
+        "count4",
+        "price4",
+        "mileage5",
+        "material5_2",
+        "count5_2",
+        "item5",
+        "material5",
+        "count5",
+        "price5",
+        "mileage6",
+        "material6_2",
+        "count6_2",
+        "item6",
+        "material6",
+        "count6",
+        "price6"
+      ]
+    },
+    "db/item_craft_category.db": {
+      "row_count": 5,
+      "columns": [
+        "id",
+        "export_id",
+        "category",
+        "craft_id",
+        "lv",
+        "mileage_txt",
+        "icon",
+        "category_desc",
+        "sample_item_1",
+        "sample_item_2"
+      ]
+    },
+    "db/alchemy_recipe.db": {
+      "row_count": 50,
+      "columns": [
+        "id",
+        "export_id",
+        "category",
+        "detail_group",
+        "sort",
+        "icon",
+        "recipe_name",
+        "req_res_desc",
+        "set_id",
+        "quality_standard",
+        "limit_group",
+        "limit_period",
+        "limit_count",
+        "req_gold",
+        "result_category",
+        "result_0",
+        "count_0",
+        "res_category",
+        "res_condition",
+        "res_exclude"
+      ]
+    },
+    "db/pet_grade.db": {
+      "row_count": 5,
+      "columns": [
+        "id",
+        "export_id",
+        "name",
+        "grade",
+        "level",
+        "syn_point",
+        "max_skill",
+        "max_fix",
+        "affection",
+        "compose",
+        "repeat_count",
+        "support_count",
+        "lobby_gift",
+        "exp_up",
+        "price_up",
+        "token",
+        "add_per",
+        "transform_token"
+      ]
+    },
+    "db/pet_affection.db": {
+      "row_count": 6,
+      "columns": [
+        "id",
+        "export_id",
+        "name",
+        "grade",
+        "exp"
+      ]
+    },
+    "db/destiny_category.db": {
+      "row_count": 9,
+      "columns": [
+        "id",
+        "export_id",
+        "char_id",
+        "con_stage",
+        "destiny_open_story",
+        "story",
+        "recommend_content_icon1",
+        "recommend_content_title1",
+        "recommend_content_desc1",
+        "recommend_content_icon2",
+        "recommend_content_title2",
+        "recommend_content_desc2",
+        "is_start",
+        "sort",
+        "hide",
+        "recommend_tag",
+        "update_date"
+      ]
+    },
+    "db/destiny_mission.db": {
+      "row_count": 36,
+      "columns": [
+        "id",
+        "export_id",
+        "category_name",
+        "mission_name",
+        "mission_icon_1",
+        "mission_icon_2",
+        "mission_desc",
+        "condition",
+        "give_code",
+        "give_count",
+        "value",
+        "reward_id1",
+        "reward_count1",
+        "clear_desc",
+        "btn_move"
+      ]
+    },
+    "db/shop_category.db": {
+      "row_count": 22,
+      "columns": [
+        "id",
+        "export_id",
+        "name",
+        "icon",
+        "badge",
+        "option_badge_icon",
+        "option_badge",
+        "sort",
+        "reward_popup_desc",
+        "topbar_currency"
+      ]
+    },
+    "db/shop_chapter.db": {
+      "row_count": 329,
+      "columns": [
+        "id",
+        "category",
+        "unlock_enter",
+        "tap_order"
+      ]
+    },
+    "db/level_crevicehunt.db": {
+      "row_count": 5,
+      "columns": [
+        "id",
+        "export_id",
+        "name",
+        "attribute",
+        "normal_enter_id",
+        "hard_enter_id",
+        "set_exclude",
+        "boss_character_id",
+        "bg_crevicehunt",
+        "rune_group1",
+        "rune_group2",
+        "rune_group3",
+        "rune_group4",
+        "show_period"
+      ]
+    },
+    "db/level_battlemenu_trialhall.db": {
+      "row_count": 193,
+      "columns": [
+        "id",
+        "export_id",
+        "name",
+        "name_hard",
+        "monster_id",
+        "icon_trial",
+        "enter_key",
+        "enter_key_hard",
+        "boss_id",
+        "boss_id_hard",
+        "boss_penalty_skills",
+        "boss_benefit_skills",
+        "resonance_benefit_skills",
+        "resonance_hero_1",
+        "resonance_hero_2",
+        "resonance_hero_3",
+        "resonance_hero_4",
+        "resonance_subtitle",
+        "clear_bonus",
+        "boss_berserk_count",
+        "boss_berserk_count_hard",
+        "boss_berserk_skills",
+        "groggy_count",
+        "benefit_con_1",
+        "value_1",
+        "benefit_con_2",
+        "value_2",
+        "benefit_1_subtitle",
+        "benefit_2_subtitle",
+        "penalty_1_subtitle"
+      ]
+    },
+    "db/ml_theater_story.db": {
+      "row_count": 96,
+      "columns": [
+        "id",
+        "export_id",
+        "sort",
+        "episode_title",
+        "sub_category_name",
+        "story_background_img",
+        "story_bi",
+        "story_desc",
+        "bgm",
+        "story_character",
+        "story_btn_type",
+        "story_btn_val",
+        "need_token",
+        "need_time",
+        "need_clear_theater_story",
+        "start_date",
+        "start_hour"
+      ]
+    },
+    "db/clan_attendance.db": {
+      "row_count": 6,
+      "columns": [
+        "id",
+        "export_id",
+        "name",
+        "atten_member",
+        "reward_id1",
+        "reward_count1",
+        "reward_id2",
+        "reward_count2",
+        "clan_reward_type",
+        "clan_reward_count"
+      ]
+    },
+    "db/clan_donate.db": {
+      "row_count": 2,
+      "columns": [
+        "id",
+        "export_id",
+        "name",
+        "sort",
+        "popup_title",
+        "donate_count_until_reset",
+        "increase_count",
+        "donated_type",
+        "donated_detail",
+        "donated_count",
+        "reward_token",
+        "reward_count",
+        "reward_clan_exp",
+        "reset_time"
+      ]
+    },
+    "db/clan_worldboss_npc.db": {
+      "row_count": 50,
+      "columns": [
+        "id",
+        "export_id",
+        "start_level",
+        "attribute",
+        "data"
+      ]
+    },
+    "db/pvp_npcbattle_s2.db": {
+      "row_count": 30,
+      "columns": [
+        "id",
+        "export_id",
+        "name",
+        "team_1",
+        "team_2",
+        "team_3",
+        "team_4",
+        "reward1_normal",
+        "count1_normal",
+        "reward_lose_normal",
+        "count_lose_normal"
+      ]
+    },
+    "db/classchange_category.db": {
+      "row_count": 24,
+      "columns": [
+        "id",
+        "export_id",
+        "char_id",
+        "char_id_cc",
+        "recommend",
+        "recommend_content_icon1",
+        "recommend_content_title1",
+        "recommend_content_desc1",
+        "recommend_content_icon2",
+        "recommend_content_title2",
+        "recommend_content_desc2",
+        "change_skill",
+        "image",
+        "start_story",
+        "clear_story",
+        "sort",
+        "lock_text_lv",
+        "lock_text",
+        "clear_enter",
+        "get_material",
+        "clear_enter_desc",
+        "btn_move",
+        "hide",
+        "update_date"
+      ]
+    },
+    "db/classchange_quest.db": {
+      "row_count": 96,
+      "columns": [
+        "id",
+        "export_id",
+        "char_id",
+        "category",
+        "category_name",
+        "mission_name",
+        "mission_icon_1",
+        "mission_icon_2",
+        "mission_desc",
+        "sort",
+        "condition",
+        "give_code",
+        "give_count",
+        "enter_stage",
+        "value",
+        "enter_condition_state",
+        "reward_id1",
+        "reward_count1",
+        "btn_move",
+        "clear_need_crystal"
+      ]
+    }
+  },
+  "decoded_gamepad_maps": {
+    "gamepad_path_map/growth_masterbook.json": {
+      "sha256": "517ac14b336b561e97892033bbf8dba5c3940180d3575a8255ba190506595a96",
+      "top_level_keys": [
+        "growth_masterbook_sub_item::growth_masterbook_sub_item[3]/btn_point_tab"
+      ]
+    },
+    "gamepad_path_map/unit_ui.json": {
+      "sha256": "767324d752c15f2f0ffc3cbc6dd7b19626cee525b9660b503e68f65a5e4e8283",
+      "top_level_keys": [
+        "_focus_scope_subtree",
+        "unit_detail::unit_detail/n_menu_hero/left_hero/n_skills/skill_icons/n_skillline1/skill2",
+        "unit_detail::unit_detail/n_menu_hero/left_hero/n_skills/skill_icons/n_skillline1/skill3",
+        "unit_detail::unit_detail/n_menu_hero/left_hero/n_skills/skill_icons/n_dedi/btn_dedi2",
+        "unit_detail::unit_detail/clipper/n_herolist_base"
+      ]
+    },
+    "gamepad_path_map/unit_base.json": {
+      "sha256": "c90b167041e30d04a360f1534e1cd59df9152423ae99a88b40206e9234b538bb",
+      "top_level_keys": [
+        "_focus_block_subtree",
+        "unit_upgrade::unit_upgrade/CENTER/n_buttons/btn_up",
+        "unit_upgrade::unit_upgrade/CENTER/n_material_slot/btn_slot",
+        "unit_upgrade::unit_upgrade/RIGHT/n_material/scroll_view",
+        "unit_skill_renewal::unit_skill_renewal/RIGHT/n_head/icon_pos",
+        "unit_up::unit_up/RIGHT/btn_item"
+      ]
+    },
+    "gamepad_path_map/sanctuary.json": {
+      "sha256": "2e0ec5fb7ae533fcc8a1c1721a726c544c30c13a6d78963a6b681a67e550bada",
+      "top_level_keys": [
+        "sanctuary_alchemy_renewal_main::sanctuary_alchemy_renewal_main/LEFT"
+      ]
+    },
+    "gamepad_path_map/pet_ui.json": {
+      "sha256": "8af9690d9f45d90d63608b31c9e92c3f60837e636843193e1c2220762a15b81b",
+      "top_level_keys": [
+        "unit_pet_list::unit_pet_list/RIGHT/layer_scroll"
+      ]
+    },
+    "gamepad_path_map/equip_craft_renewal_main.json": {
+      "sha256": "32854ec2cc249982388e17417af5955cd465b778e7bb3082760807ee3f19e80a",
+      "top_level_keys": [
+        "_focus_block_subtree",
+        "equip_craft_renewal_enhancement::equip_craft_renewal_enhancement/CENTER/bg_item1",
+        "equip_craft_renewal_enhancement::equip_craft_renewal_enhancement/CENTER/bg_item6",
+        "equip_craft_renewal_main::equip_craft_renewal_main/LEFT/left_tab"
+      ]
+    },
+    "gamepad_path_map/dungeon.json": {
+      "sha256": "cfb29e12f455bb6649447f4ad5bc5955fce4fcac1b89607e3b49ac6e57c54378",
+      "top_level_keys": [
+        "dungeon_automtn::dungeon_automtn/RIGHT/floor_info",
+        "dungeon_automtn::dungeon_automtn/RIGHT/contents/btn_go",
+        "dungeon_automtn::dungeon_automtn/LEFT/n_left_bottom/btn_device_inven"
+      ]
+    },
+    "gamepad_path_map/shop_new.json": {
+      "sha256": "5a8ccb666abe39937755b9254ad5e387e09a5ae3940ee8f23ad709187af854d6",
+      "top_level_keys": [
+        "_focus_scope_subtree"
+      ]
+    },
+    "gamepad_path_map/clan.json": {
+      "sha256": "3e91fa71839e3b401377706771d0af2beda90e4f60fcb6d1c1629bc0092f210c",
+      "top_level_keys": [
+        "_focus_block_subtree"
+      ]
+    }
+  },
+  "common_quest_reader": {
+    "decoded_layouts": [
+      "wnd/growth_masterbook.csb",
+      "wnd/growth_masterbook_quest_item.csb",
+      "wnd/growth_masterbook_challenge_item.csb"
+    ],
+    "scope": "Leitura/ida/resgate compartilhados pelas famílias; precisa reconhecer estado atual e variante Go/Receive."
+  },
+  "groups": [
+    {
+      "id": "battles",
+      "family_ids": [
+        "campaign",
+        "combat_modes",
+        "consecutive",
+        "team_battle",
+        "drop_farm"
+      ],
+      "structural_support": "strong_common_shell",
+      "decoded_layouts": [
+        "wnd/battle_ready.csb",
+        "wnd/result_base.csb",
+        "wnd/dungeon_home.csb",
+        "wnd/dungeon.csb"
+      ],
+      "decoded_databases": [
+        "db/level_battlemenu_hunt.db",
+        "db/level_battlemenu_genie.db"
+      ],
+      "benefit": "Identidade de modos, elementos, recompensas candidatas e estrutura de preparação/resultado; reutilização da campanha já existente.",
+      "remaining_live_measurement": "Disponibilidade, seleção de modo/fase/equipe, custo atual, vitória e contador; farm pode exigir repetir até obter o drop.",
+      "runtime_enabled": false
+    },
+    {
+      "id": "arena",
+      "family_ids": [
+        "arena",
+        "mock_arena",
+        "quiz"
+      ],
+      "structural_support": "strong_npc_partial_other_variants",
+      "decoded_layouts": [
+        "wnd/pvp_base.csb",
+        "wnd/pvp_npc_chall.csb",
+        "wnd/pvp_ready.csb",
+        "wnd/result_base.csb"
+      ],
+      "decoded_databases": [
+        "db/pvp_npcbattle_s2.db",
+        "db/pvp_npcbattle_lineup.db"
+      ],
+      "benefit": "NPCs podem ser ligados a nomes localizados, quatro heróis e retratos; há variantes de preparação e resultado.",
+      "remaining_live_measurement": "Distinguir NPC/normal/mock/quiz, entradas e cooldown; os cinco quizzes do catálogo continuam sem critério preenchido. Presença no pacote não prova acesso na demo.",
+      "runtime_enabled": false
+    },
+    {
+      "id": "heroes",
+      "family_ids": [
+        "hero_growth",
+        "hero_skills",
+        "friendship",
+        "specialty",
+        "supporters"
+      ],
+      "structural_support": "strong_growth_partial_nested_quests",
+      "decoded_layouts": [
+        "wnd/unit_detail.csb",
+        "wnd/unit_up.csb",
+        "wnd/unit_upgrade.csb",
+        "wnd/unit_skill_renewal.csb",
+        "wnd/unit_support.csb"
+      ],
+      "decoded_databases": [
+        "db/rune_req.db",
+        "db/skill_upgrade.db",
+        "db/classchange_category.db",
+        "db/classchange_quest.db"
+      ],
+      "benefit": "Controles de crescimento, habilidades e apoiadores; recursos por atributo/classe e árvore de mudança de especialidade.",
+      "remaining_live_measurement": "Herói selecionado, nível/estrelas/amizade atuais, materiais elegíveis e custo; expandir subquestões de especialidade antes de medir seus fluxos.",
+      "runtime_enabled": false
+    },
+    {
+      "id": "gear",
+      "family_ids": [
+        "enhancement",
+        "equipping",
+        "crafting",
+        "conversion",
+        "reforging",
+        "disposal"
+      ],
+      "structural_support": "strong_recipes_partial_destructive_variants",
+      "decoded_layouts": [
+        "wnd/equip_base.csb",
+        "wnd/equip_craft_renewal_main.csb",
+        "wnd/sanctuary_alchemy_conversion_confirm.csb"
+      ],
+      "decoded_databases": [
+        "db/item_equip_upgrade.db",
+        "db/item_craft.db",
+        "db/item_craft_category.db",
+        "db/alchemy_recipe.db"
+      ],
+      "benefit": "Receitas, conjuntos, materiais, custos estáticos e controles de produção/confirmação.",
+      "remaining_live_measurement": "Identidade, slot, bloqueio, equipado, nível e qualidade do item; não tratar venda/extração como uma mesma ação nem selecionar material só pela imagem.",
+      "runtime_enabled": false
+    },
+    {
+      "id": "sanctuary",
+      "family_ids": [
+        "production",
+        "spending"
+      ],
+      "structural_support": "strong_production_partial_generic_spending",
+      "decoded_layouts": [
+        "wnd/sanctuary_forest_new.csb",
+        "wnd/sanctuary_forest_new_popup.csb"
+      ],
+      "decoded_databases": [
+        "db/forest_spirit_function.db"
+      ],
+      "benefit": "Relaciona função produtiva, item, tempo, ícone e token; ajuda a escolher onde um gasto necessário pode satisfazer a missão.",
+      "remaining_live_measurement": "Variante produzir/coletar/comprar, quantidade, custo efetivo e saldo; gasto genérico precisa da semântica de sua condição.",
+      "runtime_enabled": false
+    },
+    {
+      "id": "shops_summons",
+      "family_ids": [
+        "shops",
+        "summoning"
+      ],
+      "structural_support": "partial_transaction_identity",
+      "decoded_layouts": [
+        "wnd/shop_buy_detail.csb",
+        "wnd/shop_popup_buy.csb",
+        "wnd/gacha_renew.csb"
+      ],
+      "decoded_databases": [
+        "db/shop_category.db",
+        "db/shop_chapter.db"
+      ],
+      "benefit": "Categorias, moedas e desbloqueios estáticos; separação de invocação simples/múltipla e controles de compra.",
+      "remaining_live_measurement": "Estoque, banner, moeda, quantidade e preço atuais; falta resolver oferta e tabela de invocação específica. Controles presentes não autorizam gastos.",
+      "runtime_enabled": false
+    },
+    {
+      "id": "pets",
+      "family_ids": [
+        "pets"
+      ],
+      "structural_support": "strong_common_shell",
+      "decoded_layouts": [
+        "wnd/unit_pet_detail.csb",
+        "wnd/unit_pet_synthesis.csb",
+        "wnd/pet_care_popup.csb"
+      ],
+      "decoded_databases": [
+        "db/pet_grade.db",
+        "db/pet_affection.db"
+      ],
+      "benefit": "Grau, habilidades, afeto e controles distintos para brincar, alimentar e sintetizar.",
+      "remaining_live_measurement": "Pet escolhido, limite diário, recursos, habilidade preservada e resultado; síntese e cuidado exigem contratos separados.",
+      "runtime_enabled": false
+    },
+    {
+      "id": "connections",
+      "family_ids": [
+        "connections",
+        "connection_gift",
+        "side_story_records"
+      ],
+      "structural_support": "strong_gift_partial_records",
+      "decoded_layouts": [
+        "wnd/destiny.csb",
+        "wnd/destiny_present.csb"
+      ],
+      "decoded_databases": [
+        "db/destiny_category.db",
+        "db/destiny_mission.db"
+      ],
+      "benefit": "Conecta missão/personagem/condição com give_code e give_count; count da condição pode representar uma entrega, não unidades de moeda.",
+      "remaining_live_measurement": "Desbloqueio atual, pré-requisitos e progresso; registros de história ainda precisam de sua tela específica e evidência de conclusão.",
+      "runtime_enabled": false
+    },
+    {
+      "id": "guild",
+      "family_ids": [
+        "guild",
+        "world_boss"
+      ],
+      "structural_support": "partial_dependencies_and_demo",
+      "decoded_layouts": [
+        "wnd/clan_renew_activity.csb",
+        "wnd/result_base.csb"
+      ],
+      "decoded_databases": [
+        "db/clan_attendance.db",
+        "db/clan_donate.db",
+        "db/clan_worldboss_npc.db"
+      ],
+      "benefit": "Tipos/limites de doação, recompensas de presença, dados de NPCs do World Boss e ramo próprio de resultado.",
+      "remaining_live_measurement": "Participação em guilda, elegibilidade, horário e acesso na demo; World Boss não foi validado. Exclusão de Guild War não resolve a disponibilidade das outras operações.",
+      "runtime_enabled": false
+    },
+    {
+      "id": "advanced",
+      "family_ids": [
+        "rift",
+        "trials",
+        "theater"
+      ],
+      "structural_support": "strong_catalog_partial_access",
+      "decoded_layouts": [
+        "wnd/dungeon_crevice.csb",
+        "wnd/trial_effect_popup.csb",
+        "wnd/story_theater_main.csb",
+        "wnd/result_base.csb"
+      ],
+      "decoded_databases": [
+        "db/level_crevicehunt.db",
+        "db/level_battlemenu_trialhall.db",
+        "db/ml_theater_story.db"
+      ],
+      "benefit": "Entradas normal/difícil, atributos, condições de chefe e requisitos de episódio do teatro; botões gratuitos/pagos são distintos.",
+      "remaining_live_measurement": "Temporada, acesso, equipe, pontuação, ingresso e custo atuais; pontos ou assistir não equivalem automaticamente à condição do caminho.",
+      "runtime_enabled": false
+    },
+    {
+      "id": "time",
+      "family_ids": [
+        "time_gates"
+      ],
+      "structural_support": "partial_reset_semantics",
+      "decoded_layouts": [
+        "wnd/achievement_base.csb"
+      ],
+      "decoded_databases": [
+        "db/clan_attendance.db",
+        "db/clan_donate.db",
+        "db/level_battlemenu_genie.db"
+      ],
+      "benefit": "Aponta operações com resets, contagens e possíveis janelas, além da estrutura de conquistas.",
+      "remaining_live_measurement": "Data do servidor, reset, elegibilidade e recompensa do dia; is_always_open deve ser considerado junto das janelas estáticas, sem converter horário por suposição.",
+      "runtime_enabled": false
+    }
+  ],
+  "specialty_nested_gap": {
+    "source": "db/classchange_quest.db",
+    "subquest_rows": 96,
+    "distinct_conditions": 23,
+    "additional_conditions_outside_path_map": [
+      "charawakenover_grade_level_count",
+      "chrintimacy_chr_level_count",
+      "clear_entertype_event_count",
+      "clearcamping_count",
+      "equipget_equiptype_count",
+      "get_force_credit_count",
+      "get_tokentype_count",
+      "kill_enter_race_count",
+      "kill_enter_targetid_chrid_count",
+      "kill_enter_targetid_count",
+      "kill_enter_type_count",
+      "kill_entertype_race_count",
+      "kill_entertype_type_count",
+      "materialget_entertype_materialid_count",
+      "materialget_materialid_count",
+      "party_enter_chrid_count",
+      "pvpwin_pvptype_count"
+    ],
+    "status": "not_yet_mapped_to_executable_or_leaf_operations"
+  },
+  "npc_join_example": {
+    "npc_id": "npc_01",
+    "name_key": "npcbattle_s2_name_1",
+    "localized_name": "Summer Memories",
+    "team": [
+      {
+        "id": "c5016",
+        "name": "Holiday Yufine",
+        "attribute": "fire",
+        "face_id": "c5016",
+        "candidate_face_assets": [
+          "face/c5016_su.png",
+          "face/c5016_l.png",
+          "face/c5016_s.png"
+        ]
+      },
+      {
+        "id": "c5009",
+        "name": "Summer Break Charlotte",
+        "attribute": "ice",
+        "face_id": "c5009",
+        "candidate_face_assets": [
+          "face/c5009_l.png",
+          "face/c5009_s.png",
+          "face/c5009_su.png"
+        ]
+      },
+      {
+        "id": "c3121",
+        "name": "Melany",
+        "attribute": "fire",
+        "face_id": "c3121",
+        "candidate_face_assets": [
+          "face/c3121_sd01_s.png",
+          "face/c3121_sd01_pro.png",
+          "face/c3121_l.png",
+          "face/c3121_s.png"
+        ]
+      },
+      {
+        "id": "c3122",
+        "name": "Helen",
+        "attribute": "ice",
+        "face_id": "c3122",
+        "candidate_face_assets": [
+          "face/c3122_sd01_s.png",
+          "face/c3122_sd01_pro.png",
+          "face/c3122_l.png",
+          "face/c3122_s.png"
+        ]
+      }
+    ]
+  },
+  "gift_example": {
+    "task_id": "de_4_c1087_03",
+    "condition": "destiny_give_count",
+    "condition_count": 1,
+    "give_code": "to_honor",
+    "give_count": 30,
+    "meaning": "Uma entrega de 30 Brave Crests; não uma unidade de moeda."
+  },
+  "limitations": [
+    "CSB declara posições locais, escala e variantes possíveis; não fornece coordenadas globais ou árvore Win32/UIA.",
+    "Mapas de gamepad são relações parciais de foco; não são rotas completas nem entrada calibrada.",
+    "Nome e imagem compartilhados não identificam unicamente uma ação; o ramo ativo e seu contexto são necessários.",
+    "Somente dois campos de texto de Button vieram preenchidos nesta leitura, ambos com o placeholder Button; legendas finais requerem outras fontes.",
+    "A avaliação de apoio estrutural é qualitativa; não mede velocidade, precisão nem sucesso ao vivo.",
+    "Ausência em uma amostra ou falha do leitor não comprova ausência da funcionalidade."
+  ]
+}

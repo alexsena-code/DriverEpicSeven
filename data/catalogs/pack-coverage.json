@@ -1,0 +1,265 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-26",
+  "inventory_files": 94583,
+  "extracted_verified_files": 94583,
+  "source_pack_bytes": 7666379762,
+  "extracted_payload_bytes": 7661495628,
+  "source_pack_sha256": "96baeaebdd9c368351eb876c03d9957c09da907efcf8f09c3858cb6228e769c5",
+  "source_unchanged_before_after": true,
+  "private_inventory_sha256": "cd7a4ef519833a6633e16ffd4f76e337df18201f791114fd0b9c4e62c8563080",
+  "interpretation": {
+    "partial": 34811,
+    "structured": 59771,
+    "uninterpreted": 1
+  },
+  "semantic_interpretation_complete": false,
+  "status_definitions": {
+    "structured": "Known syntax/container/table values parsed; complete application semantics and runtime state are not established.",
+    "partial": "Named declarations/subsets or compression decoded; remaining fields/payload semantics are explicit.",
+    "uninterpreted": "Bytes extracted and hashed; compatible content decoder not available.",
+    "error": "Current parsing attempt failed; no promotion to a known structure."
+  },
+  "by_extension": {
+    "(none)": {
+      "partial": 1
+    },
+    ".atlas": {
+      "structured": 12299
+    },
+    ".attributes": {
+      "partial": 1
+    },
+    ".bin": {
+      "uninterpreted": 1
+    },
+    ".cfx": {
+      "structured": 6245
+    },
+    ".csb": {
+      "partial": 2287
+    },
+    ".dat": {
+      "partial": 3
+    },
+    ".db": {
+      "structured": 1014,
+      "partial": 23
+    },
+    ".fnt": {
+      "partial": 16
+    },
+    ".frag": {
+      "partial": 68
+    },
+    ".ini": {
+      "partial": 1
+    },
+    ".jpg": {
+      "structured": 410
+    },
+    ".json": {
+      "structured": 58
+    },
+    ".media": {
+      "partial": 1
+    },
+    ".model": {
+      "structured": 1
+    },
+    ".opt": {
+      "structured": 25
+    },
+    ".particle": {
+      "structured": 2335
+    },
+    ".pfc": {
+      "structured": 100
+    },
+    ".png": {
+      "structured": 29594
+    },
+    ".res": {
+      "partial": 1
+    },
+    ".rtg": {
+      "structured": 340
+    },
+    ".sca": {
+      "partial": 464
+    },
+    ".scsb": {
+      "structured": 2551
+    },
+    ".scsp": {
+      "partial": 19868
+    },
+    ".sct": {
+      "partial": 11932
+    },
+    ".sector_rev": {
+      "partial": 6
+    },
+    ".seqani": {
+      "structured": 264
+    },
+    ".srt": {
+      "partial": 26
+    },
+    ".stg": {
+      "structured": 2541
+    },
+    ".story": {
+      "partial": 1
+    },
+    ".text": {
+      "partial": 1
+    },
+    ".tflite": {
+      "partial": 11
+    },
+    ".timeline": {
+      "structured": 663
+    },
+    ".tsv": {
+      "partial": 4
+    },
+    ".ttf": {
+      "partial": 5
+    },
+    ".txt": {
+      "partial": 70
+    },
+    ".ver": {
+      "partial": 7
+    },
+    ".vert": {
+      "partial": 14
+    },
+    ".webp": {
+      "structured": 1327
+    },
+    ".work": {
+      "structured": 4
+    }
+  },
+  "layout_nodes": 126182,
+  "remaining_csb_class_options": {
+    "ClippingNode": 14,
+    "TileSprite": 3,
+    "CircleProgress": 2
+  },
+  "databases": {
+    "files": 1037,
+    "string_cell_tables": 1016,
+    "virtual_filter_definitions": 14,
+    "opaque_row_tables": [
+      {
+        "source": "db/equip_item_undress.db",
+        "opaque_rows": 7
+      },
+      {
+        "source": "db/level_chapter_starmig.db",
+        "opaque_rows": 34
+      },
+      {
+        "source": "db/tile_sub_object_data.db",
+        "opaque_rows": 156
+      },
+      {
+        "source": "db/tile_sub_mission.db",
+        "opaque_rows": 8
+      },
+      {
+        "source": "db/pvp_npcbattle_team.db",
+        "opaque_rows": 93
+      },
+      {
+        "source": "db/pvp_npcbattle.db",
+        "opaque_rows": 10
+      },
+      {
+        "source": "db/character_recall.db",
+        "opaque_rows": 4
+      }
+    ],
+    "keyless_auxiliary_block_tables": [
+      "story/cut.db",
+      "story/characters.db"
+    ],
+    "opaque_control_member_tables": [
+      "db/equip_item_undress.db",
+      "db/skillset_player_grade2.db",
+      "db/cs_player_grade2.db",
+      "db/level_chapter_starmig.db",
+      "db/tile_sub_object_data.db",
+      "db/tile_sub_mission.db",
+      "db/pvp_npcbattle_team.db",
+      "db/pvp_npcbattle.db",
+      "db/character_recall.db"
+    ]
+  },
+  "reference_index": {
+    "asset_refs": 142774,
+    "resolved_asset_refs": 130173,
+    "text_refs": 324744,
+    "atlas_regions": 394070,
+    "files_considered": 94583,
+    "elapsed_seconds": 247.37,
+    "scope": "Literal static candidates only; not a complete semantic graph or a live selector."
+  },
+  "software": {
+    "maafw": "v5.14.3",
+    "lz4": "4.4.5"
+  },
+  "tools_sha256": {
+    "tools/audit_pack.py": "c519cbd3eed02d8cf0458e93632cc98a9c5ad5d05eec0190ea6113e99f7aee50",
+    "tools/inspect_csb_layout.py": "d65eb3dd661c2101bde7fe8188aa2a28675e531f59489bd188a238f37054f1b6",
+    "tools/inspect_db_table.py": "b11d3b03ce3a59a57feaa2f01d143248edf9da93b9d532b5557f18c75117b3de",
+    "tools/index_pack_references.py": "5c91b4f3b05e41a2e43a0900407d8becc3954a220a85f308fbea24beefd54e16"
+  },
+  "validation": {
+    "tests_passed": 161,
+    "test_seconds": 182.63,
+    "log": "var/pack-audit-tests-consolidated.log",
+    "pipeline_nodes": 125,
+    "pipeline_errors": 0,
+    "reference_targets_not_in_inventory": 0,
+    "saved_source_fingerprints_unchanged_during_tests": true
+  },
+  "private_evidence": {
+    "root": "assets/local/full-pack",
+    "index": "assets/local/full-pack/audit.sqlite",
+    "inventory": "assets/local/full-pack/inventory.json",
+    "summary": "assets/local/full-pack/summary.json",
+    "initial_log": "var/full-pack-audit.log",
+    "expanded_log": "var/full-pack-reinterpret.log",
+    "repairs_log": "var/full-pack-repair.log",
+    "reference_log": "var/full-pack-references.log"
+  },
+  "remaining_gaps": [
+    "bin64/game.bin: compatible content decoder not identified.",
+    "CSB: 19 ClippingNode/TileSprite/CircleProgress option blocks; timeline frame values not evaluated; FrameDuration words preserved without interpreting time.",
+    "SCSP: LZ4 decoded; internal animation/skeleton payload remains opaque.",
+    "SCA: header/page/dimensions read; region geometry/animation payload unparsed.",
+    "SCT0/1/2: container/storage decoded; pixel processor mapping and rendering not validated.",
+    "Seven DB tables have opaque rows; nine have opaque control members; filter declarations are not executed.",
+    "TFLite: tensor metadata read; operators/weights/output semantics not evaluated.",
+    "Text/shader/font/revision subsets retain explicit per-file interpretation depths."
+  ],
+  "limitations": [
+    "Structural parsing does not prove demo access, current account configuration or an actionable UI target.",
+    "Literal static reference candidates are not a complete semantic graph or live selectors.",
+    "SQLite interpretation attempt history starts at final expansion; earlier phase totals are preserved in logs.",
+    "Existing local e7_db_reader remains the input/key adapter; keys were not copied into the project.",
+    "Saved tools required final consolidation; the final verification checked their on-disk fingerprints."
+  ],
+  "followup_issue": "ALE-189",
+  "followup_issue_status": "canceled",
+  "followup_scope_decision": {
+    "date": "2026-10-26",
+    "reason": "Broad research canceled by user scope decision; documented interpretation gaps remain unresolved.",
+    "future_trigger": "Open a specific issue only when an interpretation gap prevents a concrete operation."
+  },
+  "audit_issue": "ALE-187"
+}

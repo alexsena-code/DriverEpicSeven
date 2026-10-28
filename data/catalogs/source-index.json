@@ -1,0 +1,1256 @@
+{
+  "schema_version": 1,
+  "scope": "Static source routing by operation. Not account state, runtime selectors, global coordinates or permission to execute.",
+  "family_catalog": "data/missions/operation-map.json",
+  "family_evidence": "data/missions/static-family-evidence.json",
+  "topics": [
+    {
+      "id": "manual_combat",
+      "related_families": [
+        "campaign",
+        "combat_modes"
+      ],
+      "title": "Combate manual: habilidade, alvo e prova da acao",
+      "aliases": [
+        "ataque manual",
+        "combate manual",
+        "selecionar inimigo",
+        "alvo inimigo",
+        "habilidade em combate"
+      ],
+      "sources": [
+        "wnd/inbattle_hud.csb",
+        "wnd/hud_skill.csb",
+        "wnd/inbattle_target_guide.csb",
+        "wnd/inbattle_topbar.csb",
+        "wnd/hud_auto.csb",
+        "wnd/hud_face.csb",
+        "db/key_binding.db",
+        "db/system_option.db"
+      ],
+      "repository_refs": [
+        "docs/assets.md#consulta-por-operacao",
+        "docs/architecture.md#operacoes-e-auto",
+        "docs/campaign.md#fluxo-de-batalha"
+      ],
+      "gaps": [
+        "key_binding declara Q/W/E para select_skill_1/2/3 apenas em battle; attach_path inbattle_hud/n_skills/skill/n_skillN/btn_skillN e declarativo, nao handle ou garantia de suporte da primitiva atual.",
+        "system_option key_select_skill_1/2/3 usa legendas ui_option_key_binding_24/28/14 para PC; esses sufixos nao sao teclas numericas. Nenhum binding enemy/target foi encontrado nesta consulta.",
+        "hud_skill e composto visual com icon/cooltime/selected, sem Button no CSB; o vinculo interativo e dinamico. inbattle_target_guide tem n_r/n_l com n_btn_1..6, sem prova de correspondencia com o inimigo atual.",
+        "A leitura de cooldown por slot usa apenas rotulo OCR unico no HUD atual (por exemplo 2 turn(s)), com proveniencia e confianca. Ausencia, ambiguidade ou score baixo permanece null, nunca zero, ready, enabled ou prova de execucao.",
+        "Uma habilidade selecionada nao comprova ataque aplicado. Provar alteracao de HP, desaparecimento de inimigo, onda seguinte ou resultado; animacao isolada nao comprova Auto.",
+        "As capturas STOVE iniciais mostram HUD com tres habilidades, mas os templates Auto antigos nao passam; a arvore mantem Auto desconhecido. Nao repetir toggle incerto nem inferir on pela animacao.",
+        "Alvos e barras de HP exigem imagem atual, identidade/posicao e guardas. Nenhum executor de ataque ou novo binding foi habilitado por este mapa."
+      ]
+    },
+    {
+      "id": "prequel_campaign",
+      "related_families": [
+        "campaign"
+      ],
+      "title": "6th World Episode / prequel: capitulo, lista de historias e preparacao",
+      "aliases": [
+        "6th world episode",
+        "prequel",
+        "adventure_ep0",
+        "wdp001",
+        "wdp002",
+        "view story",
+        "mapa do preludio"
+      ],
+      "sources": [
+        "wnd/battle_prequel.csb",
+        "wnd/battle_stage_list.csb",
+        "wnd/story_ready.csb",
+        "wnd/battle_ready.csb",
+        "wnd/formation.csb",
+        "db/level_enter_adventure.db",
+        "db/mission_data.db",
+        "db/key_binding.db",
+        "db/system_option.db",
+        "text/en/text.db"
+      ],
+      "repository_refs": [
+        "docs/assets.md#consulta-por-operacao",
+        "docs/campaign.md#selecao-de-fase"
+      ],
+      "gaps": [
+        "battle_prequel e a composicao do capitulo/lista: /Layer/left/scrollview_stage, n_chapter, right/n_info e n_reward. O controle inferior vem de story_ready /Layer/btn_go; nao esta no shell battle_prequel.",
+        "A primeira captura STOVE mostra 6th World Episode, Chapter 1 e View Story. O adapter so le essa composicao com par nativo de ancoras, OCR atual e processo/tamanho do perfil.",
+        "Linhas visiveis, descricao e contador bruto de estrelas nao comprovam selected, locked, completed, ID interno de fase ou custo; todos permanecem desconhecidos sem reconhecimento proprio.",
+        "O mapa privado tem candidatos adventure_ep0 e requisitos do pacote Steam; nao foi promovido a catalogo executavel STOVE. Historias do tipo story e quests com equipe NPC forcada sao variantes distintas.",
+        "View Story e apenas item de leitura neste adapter, sem target_states ou inicio generico. As guardas de preparacao/inicio do seletor antigo nao foram ampliadas.",
+        "Callbacks, textos placeholders e posicoes CSB nao sao controles vivos; confirmar variantes com tela atual. Custos estaticos zero/8 nao substituem o valor observado."
+      ]
+    },
+    {
+      "id": "story_skip",
+      "title": "Historia: Skip, confirmacao e cutscene sem controle reconhecido",
+      "aliases": [
+        "pular historia",
+        "skip",
+        "story skip",
+        "cutscene",
+        "historia",
+        "story"
+      ],
+      "sources": [
+        "wnd/story.csb",
+        "wnd/story_talk.csb",
+        "wnd/story_movie_skip.csb",
+        "wnd/story_pv_skip.csb",
+        "wnd/msgbox.csb",
+        "db/key_binding.db",
+        "db/system_option.db",
+        "text/en/text.db"
+      ],
+      "repository_refs": [
+        "docs/campaign.md#fluxo-de-batalha",
+        "docs/assets.md#consulta-por-operacao"
+      ],
+      "gaps": [
+        "wnd/story.csb separa /Layer/n_skip/btn_forward, t_skip e Sprite_118. Posicoes locais e alpha127 declarado nao comprovam visibilidade, habilitacao ou coordenadas na janela.",
+        "story_movie_skip usa /Layer/n_skip/btn_skip; story_pv_skip e outra variante. Nao transferir gesto mantido da demo para STOVE sem evidencia.",
+        "Nenhum binding skip foi encontrado em key_binding.db. system_option key_substory e navegacao de Side Story, nao atalho de pular dialogo.",
+        "History positivo e falha do template Skip nao provam introducao sem Skip. No primeiro positivo STOVE o Skip estava visivel apesar do estado legado story_intro.",
+        "Confirmacao de Skip usa o texto ui_story_skip_check e btn_yes da composicao msgbox/n_buttons; os btn_yes de custo sao variantes distintas. Exigir pergunta exata e Confirm juntos, nao Confirm generico.",
+        "Calibracao de reconhecimento STOVE usa recortes proprios, positivos salvos e negativos declarados; a transicao apos clique e a confirmacao ainda exigem prova live independente."
+      ]
+    },
+    {
+      "id": "onboarding_tutorial",
+      "title": "Onboarding e tutorial: guia atual, alvo destacado e desbloqueios",
+      "aliases": [
+        "tutorial",
+        "onboarding",
+        "conta nova",
+        "primeiros passos",
+        "guia inicial",
+        "skip tutorial",
+        "pular tutorial",
+        "tutorial equipamento",
+        "equipment tutorial",
+        "equip_install"
+      ],
+      "sources": [
+        "db/tutorial_guide.db",
+        "db/tutorial_custom.db",
+        "db/tutorial_menu.db",
+        "db/system_achievement.db",
+        "wnd/guide.csb",
+        "wnd/guide_talk.csb",
+        "wnd/renew_guide_talk.csb",
+        "wnd/renew_guide_dim.csb",
+        "db/key_binding.db",
+        "db/system_option.db",
+        "text/en/text.db"
+      ],
+      "repository_refs": [
+        "docs/assets.md#consulta-por-operacao",
+        "docs/mission-operations.md#expansao-operacional"
+      ],
+      "gaps": [
+        "Fontes estaticas do pacote Steam extraido nao demonstram disponibilidade STOVE. O reconhecimento inicial STOVE cobre somente o prompt prequel_stage_guide_01 observado, nao o onboarding inteiro.",
+        "tutorial_guide preserva scene, target, target_event, target_touch, skip_btn e proc; nao e sequencia atual da conta nem motor a executar. A ordem fisica das linhas nao e ordem de onboarding.",
+        "Guias antigos e renovados coexistem. Targets podem ser caminhos parciais; proc/func e callbacks nao sao APIs para o agente.",
+        "prequel_stage_guide_01 liga scene=lobby a btn_map.n_title/target_event=btn_map e texto tuto_prequel_stage_guide_01. Skip Tutorial vem de guide_talk /base/btn_guide_skip/btn_guide_skip; reconhecer o controle junto ao contexto atual, sem inferir enabled.",
+        "Reconhecer a instrucao e o alvo destacados na captura atual; provar cada transicao pela tela seguinte. Nao presumir que todo tutorial possa ser pulado.",
+        "equip_install_01 em unit_ui aponta *HERO_BELT_SELECT(c1166,c0166) e tuto_equip_install_01; hooks não são APIs. skip_btn vazio não determina disponibilidade; exigir o Skip e o contexto atuais."
+      ]
+    },
+    {
+      "id": "initial_summon_selection",
+      "title": "Selecao e invocacao inicial: previsualizar, registrar e confirmar resultado",
+      "aliases": [
+        "selective summon",
+        "invocacao seletiva",
+        "selecao inicial",
+        "summon inicial",
+        "primeira invocacao"
+      ],
+      "sources": [
+        "db/tutorial_guide.db",
+        "db/system_achievement.db",
+        "db/gacha_ui.db",
+        "db/gacha_ui_list.db",
+        "wnd/gacha_select.csb",
+        "wnd/gacha_select_record.csb",
+        "wnd/gacha_renew_select.csb",
+        "wnd/gacha_renew_select_popup.csb",
+        "wnd/gacha_renew.csb",
+        "wnd/gacha_result.csb",
+        "db/key_binding.db",
+        "db/system_option.db",
+        "text/en/text.db"
+      ],
+      "repository_refs": [
+        "docs/assets.md#consulta-por-operacao",
+        "docs/mission-operations.md#expansao-operacional"
+      ],
+      "gaps": [
+        "Mapeamento parcial do pacote Steam, nao disponibilidade ou pool atual STOVE. Confirmar modalidade antes de gastar.",
+        "Textos antigos de chances limitadas/20 e novos de tentativas ilimitadas coexistem; usar o contador e as regras observados, nunca uma constante escolhida do texto estatico.",
+        "gacha_select_record separa resultado registrado e atual, btn_record e btn_confirm. Registrar/previsualizar nao comprova recebimento definitivo.",
+        "O tutorial system_011 aponta btn_list, btn_recommend, msgbox.btn_yes e btn_summon_1; isso nao prova ser a mesma variante de Selective Summon.",
+        "key_binding.gacha declara KEY_5 fora de battle; system_option.key_gacha usa legenda ui_option_key_binding_6, nao tecla 6. Sem validacao de atalho STOVE.",
+        "A escolha final requer identidade dos candidatos atuais e prova de recebimento; nao repetir confirmacao ou invocacao com resultado incerto."
+      ]
+    },
+    {
+      "id": "moonlight_blessing",
+      "title": "Bencao do Luar / Moonlight's Blessing: escolher heroi e remover restricoes",
+      "aliases": [
+        "moonlight blessing",
+        "moonlight's blessing",
+        "bencao do luar",
+        "arby",
+        "arbiter vildred",
+        "arbitro vildred",
+        "moonlight destiny"
+      ],
+      "sources": [
+        "db/moonlight_destiny.db",
+        "db/system_achievement.db",
+        "db/tutorial_guide.db",
+        "db/character.db",
+        "db/character_player.db",
+        "wnd/quick_menu_renew.csb",
+        "wnd/hero_recruit.csb",
+        "wnd/destiny_moonlight_hero.csb",
+        "wnd/destiny_moonlight_item.csb",
+        "wnd/destiny_moonlight_msgbox.csb",
+        "wnd/destiny_moonlight_quest.csb",
+        "wnd/destiny_moonlight_recall.csb",
+        "db/key_binding.db",
+        "db/system_option.db",
+        "text/en/text.db",
+        "db/level_enter_adventure.db"
+      ],
+      "repository_refs": [
+        "docs/assets.md#consulta-por-operacao",
+        "docs/mission-operations.md#expansao-operacional"
+      ],
+      "gaps": [
+        "Fonte e pacote Steam extraido; acesso, requisitos e lista da conta STOVE ainda desconhecidos. Nenhuma calibracao live neste levantamento.",
+        "Rota candidata do tutorial: quick_menu_renew.btn_recruit -> hero_recruit.n_slot2.btn_slot2 -> character_scroll_view -> btn_select. Confirmar ancestralidade e variante na captura.",
+        "system_143 declara clear_enter_count enter=tar002,count=1; ui_recruit_title_2_lock diz Clear 6th World Episode, Chapter 4, The Final Fight. Sao declaracoes desse pacote, nao desbloqueio STOVE comprovado.",
+        "c2007/chrn_c2007 identifica Arbiter Vildred; a tabela moonlight_destiny tem temporadas e textos, nao um pool de herois. Confirmar Arby na lista atual.",
+        "Selecao inicial, missoes/restricoes e Final Summon sao etapas distintas. Missao cumprida ou texto de selecao nao prova posse irrestrita.",
+        "btn_reset/recall e temporada 2 sao variantes separadas; nao usar reset como fallback de navegacao. Textos declaram reset unico, mas limite atual exige tela.",
+        "Confirmar nome selecionado, dialogo, custo/restricoes e estado posterior. IDs de instancia, enabled e progresso continuam desconhecidos sem prova."
+      ]
+    },
+    {
+      "id": "equipment_selection",
+      "related_families": [
+        "equipping",
+        "enhancement"
+      ],
+      "title": "Equipar, desequipar e Equip All: item atual, candidato e confirmação",
+      "aliases": [
+        "equipar",
+        "desequipar",
+        "equipar todos",
+        "desequipar todos",
+        "equip all",
+        "unequip all",
+        "trocar equipamento"
+      ],
+      "sources": [
+        "wnd/unit_detail.csb",
+        "wnd/item_detail.csb",
+        "wnd/equip_base.csb",
+        "wnd/equip_change_popup.csb",
+        "db/key_binding.db",
+        "db/system_option.db"
+      ],
+      "repository_refs": [
+        "docs/assets.md#melhoria-fontes",
+        "docs/validation.md#equipar-desequipar-e-equip-all--26102026",
+        "docs/architecture.md#operacoes-e-auto"
+      ],
+      "gaps": [
+        "CP, nome, ícone e conjuntos não comprovam IDs internos ou vínculo dos seis slots; manter instância e habilitação desconhecidas sem prova.",
+        "Equip All abre prévia ou informa ausência de item melhor; Change abre confirmação e Confirm Change aplica. Unequip All aplica remoção.",
+        "Gratuidade foi observada no teste da Sigret, não é regra geral de remoção. Conferir custo atual e resultado.",
+        "Paths e callbacks do pacote são pistas estáticas, não seletores nem garantia de acesso no launcher normal."
+      ]
+    },
+    {
+      "id": "formation",
+      "related_families": [
+        "campaign",
+        "combat_modes",
+        "team_battle",
+        "arena",
+        "mock_arena",
+        "supporters",
+        "equipping"
+      ],
+      "title": "Equipe: selecionar, trocar posição, substituir e remover personagem",
+      "aliases": [
+        "trocar personagem",
+        "trocar heroi",
+        "selecionar personagem",
+        "selecionar heroi",
+        "tirar personagem",
+        "remover personagem",
+        "reposicionar",
+        "equipe",
+        "formation",
+        "roster",
+        "swap",
+        "Brieg",
+        "Furious",
+        "Muwi"
+      ],
+      "sources": [
+        "wnd/formation.csb",
+        "wnd/unit_list.csb",
+        "wnd/unit_team_formation.csb",
+        "wnd/battle_ready.csb",
+        "db/character_player.db",
+        "db/character.db",
+        "db/character_player_grade2.db",
+        "db/character_player_grade3.db"
+      ],
+      "repository_refs": [
+        "data/input/static-control-links.json#/formation",
+        "docs/assets.md#formacao-fontes",
+        "docs/mission-operations.md#expansao-operacional"
+      ],
+      "gaps": [
+        "Callbacks sem nome e seleção dinâmica não são lógica executável do pacote.",
+        "Confirmar ancestralidade e variante; a formação é uma composição além do shell battle_ready.",
+        "Posse, instância, posição atual, vínculo do botão + e controles ativos precisam de evidência atual.",
+        "character.db compõe tabelas player, grade2 e grade3; consultar só character_player.db omite heróis. Não confundir variantes de monstro com jogador."
+      ]
+    },
+    {
+      "id": "otherworld",
+      "related_families": [
+        "combat_modes"
+      ],
+      "title": "Otherworld Breach / Remnant of Supremacy",
+      "aliases": [
+        "otherworld breach",
+        "remnant of supremacy",
+        "chaosgate",
+        "spectral core",
+        "hcsc001",
+        "hcsc002",
+        "hcsc003"
+      ],
+      "sources": [
+        "db/level_battlemenu_chaosgate.db",
+        "db/chaosgate_stage.db",
+        "db/level_enter_battle.db",
+        "wnd/formation.csb",
+        "wnd/result_base.csb",
+        "text/en/text.db"
+      ],
+      "repository_refs": [
+        "docs/validation.md#otherworld-e-formacao",
+        "docs/mission-operations.md#expansao-operacional"
+      ],
+      "gaps": [
+        "Identificar temporada, dificuldade, token e saldo na tela; type=hunt não identifica sozinho este modo.",
+        "Layout completo do menu e vínculo do botão + ainda não resolvidos.",
+        "A validação Normal por primitivas não valida Hard/Hell, compras ou um executor genérico."
+      ]
+    },
+    {
+      "id": "abyss",
+      "related_families": [
+        "combat_modes"
+      ],
+      "title": "Abyss: andar disponível, concluído, bloqueado e preparação",
+      "aliases": [
+        "abyss",
+        "abismo",
+        "andar abyss",
+        "selecionar andar",
+        "purify",
+        "abyss normal",
+        "abyss challenge"
+      ],
+      "sources": [
+        "db/level_battlemenu.db",
+        "db/level_enter_battle.db",
+        "db/level_abyss_reward.db",
+        "wnd/dungeon_hell.csb",
+        "wnd/dungeon_hell_tower.csb",
+        "wnd/dungeon_hell_cleaning.csb",
+        "wnd/battle_ready.csb",
+        "wnd/formation.csb",
+        "wnd/result_base.csb",
+        "text/en/text.db"
+      ],
+      "repository_refs": [
+        "docs/assets.md#abyss-arena-fontes",
+        "docs/mission-operations.md#expansao-operacional",
+        "docs/validation.md#abyss-arena"
+      ],
+      "gaps": [
+        "Separar hub, lista de andares e preparação. Hell e Hell_Challenge são modos distintos; presença estática não comprova acesso.",
+        "Available, Conquered e Cannot proceed mudam os controles: Select Team, Replay ou Move to Floor. Move to Floor não inicia combate e sua posição varia.",
+        "Ler custo e equipe próprios do modo na preparação. Valores de to_stamina/use_enterpoint do pacote não substituem saldo e custo atuais.",
+        "A adaptacao parcial da arvore nao habilita Start nem executor generico; identidade interna de equipe e outros andares permanecem sem prova.",
+        "Normal: combate/resultado/retorno e incremento de andar foram validados em uma unidade. Purify, Replay e Challenge Mode continuam fora do escopo. A recompensa de conquista nao foi ligada a level_abyss_reward."
+      ]
+    },
+    {
+      "id": "arena",
+      "title": "Arena normal, Rookie Arena e NPC Challenge",
+      "aliases": [
+        "arena",
+        "arena normal",
+        "rookie arena",
+        "npc challenge",
+        "arena npc",
+        "pvp",
+        "bandeiras",
+        "quick match"
+      ],
+      "sources": [
+        "wnd/pvp_sel_renew.csb",
+        "wnd/pvp_base.csb",
+        "wnd/pvp_bar.csb",
+        "wnd/pvp_npc_chall.csb",
+        "wnd/pvp_ready.csb",
+        "db/pvp_hub.db",
+        "db/pvp_npcbattle_s2.db",
+        "db/pvp_npcbattle_lineup.db",
+        "db/pvp_reset.db",
+        "db/key_binding.db",
+        "db/system_option.db",
+        "text/en/text.db"
+      ],
+      "repository_refs": [
+        "docs/assets.md#abyss-arena-fontes",
+        "docs/mission-operations.md#expansao-operacional",
+        "docs/validation.md#abyss-arena",
+        "data/catalogs/quests.json"
+      ],
+      "gaps": [
+        "Selecionar uma linha habilita Challenge; esse botão abre preparação. Start e Quick Match são entradas consumidoras distintas.",
+        "Conferir modalidade, adversário, equipe, bandeiras, boosting e limite diário. Texto/posição de NPC Challenge na tela não prova o vínculo com btn_tab_5 do layout.",
+        "NPC pode abrir Quick Match ativo. Os ramos n_btn_quick0/1 e seus seletores on/off não equivalem a iniciar partida; preservar configuração após calibração.",
+        "Nomes de NPC podem se repetir: npc_21..30 compartilham texto e team_1..4 vazios. Nome sozinho não identifica uma composição.",
+        "key_binding gladiator declara KEY_4; o driver atual não oferece a tecla 4. O n_btn_1 de system_option é referência de legenda, não a tecla em si.",
+        "db/pvp_reset contém preços candidatos para refresh, não custo da partida. Não atualizar adversários nem comprar bandeiras só para mapear.",
+        "Opponents/Rookie: uma vitoria, custo e retorno validados; na unidade observada nao houve incremento da missao. Nao presumir equivalencia com pvptype normal do catalogo. NPC/Quick Match continuam sem credito de missao exercitado."
+      ]
+    },
+    {
+      "id": "enhancement",
+      "title": "Melhorar equipamento e artefato",
+      "aliases": [
+        "upar equipamento",
+        "upar item",
+        "melhorar equipamento",
+        "melhorar artefato",
+        "upar artefato",
+        "enhance equipment",
+        "enhance artifact",
+        "materiais",
+        "charms"
+      ],
+      "sources": [
+        "wnd/unit_detail.csb",
+        "wnd/equip_base.csb",
+        "wnd/item_detail.csb",
+        "wnd/unit_item_upgrade.csb",
+        "wnd/item_upgrade_card.csb",
+        "wnd/item_upgrade_equip_card.csb",
+        "wnd/item_select_slidebar_popup.csb",
+        "db/equip_item.db",
+        "db/item_material.db",
+        "db/item_equip_balance.db",
+        "text/en/text.db"
+      ],
+      "repository_refs": [
+        "data/missions/operation-map.json",
+        "docs/mission-operations.md#expansao-operacional",
+        "docs/assets.md#melhoria-fontes"
+      ],
+      "gaps": [
+        "Distinguir equipamento de artefato, instância, equipado/bloqueado, materiais, prévia e custo.",
+        "Quantidade de eventos de melhoria não equivale a nível final.",
+        "Selecionar material ou confirmar melhoria exige o plano autorizado, não apenas referência estática.",
+        "item_equip_upgrade.db descreve base→resultado, material e preço de reforja; não é a tabela da melhoria comum por EXP.",
+        "Separar item atual de candidato na comparação; Change aplica troca, Enhance abre a tela, e Enhance dentro dela confirma gasto.",
+        "Pó abre seleção de quantidade antes da prévia. Reservar material não comprova consumo. Max Up de cópias de artefato é variante de limite, distinta de Exp+.",
+        "price e XP brutos do pacote não substituem a prévia atual: custo e bônus não estão totalmente ligados às fórmulas."
+      ]
+    },
+    {
+      "id": "reforging",
+      "title": "Reforjar equipamento: base, resultado e receita",
+      "aliases": [
+        "reforjar",
+        "reforja",
+        "reforge",
+        "reforging"
+      ],
+      "sources": [
+        "db/item_equip_upgrade.db",
+        "db/item_equip_upgrade_stat.db"
+      ],
+      "repository_refs": [
+        "docs/assets.md#melhoria-fontes",
+        "data/missions/static-family-evidence.json"
+      ],
+      "gaps": [
+        "Não confundir receita base→resultado com melhoria comum por EXP. A referência não comprova elegibilidade do item ou saldo atual.",
+        "Nenhuma reforja foi executada nesta calibração."
+      ]
+    },
+    {
+      "id": "hero_skills",
+      "title": "Melhorar habilidades de herói",
+      "aliases": [
+        "upar habilidade",
+        "melhorar habilidade",
+        "hero skill",
+        "mola",
+        "molagora"
+      ],
+      "sources": [
+        "wnd/unit_detail.csb",
+        "wnd/unit_skill_renewal.csb",
+        "wnd/skill_up_confirm.csb",
+        "db/skill_upgrade.db",
+        "db/character_player.db",
+        "db/character.db",
+        "db/character_player_grade2.db",
+        "db/character_player_grade3.db",
+        "db/skill_player.db",
+        "db/skill_player_grade2.db",
+        "db/skill_player_grade3.db",
+        "text/en/text.db"
+      ],
+      "repository_refs": [
+        "data/missions/operation-map.json",
+        "docs/mission-operations.md#expansao-operacional"
+      ],
+      "gaps": [
+        "Ler instância, habilidade, nível, material e custo atuais antes de uma unidade consumidora.",
+        "Seguir personagem → skill1/2/3 → tabela de habilidade correta; custos iguais em skill_upgrade não identificam uma linha única. Vínculo da fórmula de custo continua pendente."
+      ]
+    },
+    {
+      "id": "hero_growth",
+      "title": "Nível, promoção e despertar de personagem",
+      "aliases": [
+        "upar personagem",
+        "upar heroi",
+        "despertar",
+        "promover",
+        "penguin",
+        "hero growth",
+        "awakening"
+      ],
+      "sources": [
+        "wnd/unit_detail.csb",
+        "wnd/unit_up.csb",
+        "wnd/unit_upgrade.csb",
+        "db/rune_req.db",
+        "db/character_player.db",
+        "db/character.db",
+        "db/character_player_grade2.db",
+        "db/character_player_grade3.db"
+      ],
+      "repository_refs": [
+        "data/missions/static-family-evidence.json",
+        "docs/mission-operations.md"
+      ],
+      "gaps": [
+        "Definição estática não é inventário. Escolher instância e materiais e conferir custo e resultado.",
+        "character.db compõe tabelas player, grade2 e grade3; consultar só character_player.db omite heróis. Não confundir variantes de monstro com jogador."
+      ]
+    },
+    {
+      "id": "three_stars",
+      "related_families": [
+        "campaign",
+        "team_battle"
+      ],
+      "title": "Três estrelas: objetivos, equipe e resultado de aventura",
+      "aliases": [
+        "3 estrelas",
+        "3 stars",
+        "3*",
+        "3★",
+        "tres estrelas",
+        "three stars",
+        "objetivos de fase"
+      ],
+      "sources": [
+        "db/level_enter_adventure.db",
+        "db/mission_data.db",
+        "db/character_player.db",
+        "wnd/battle_ready.csb",
+        "wnd/formation.csb",
+        "wnd/result_base.csb",
+        "text/en/text.db",
+        "db/character.db",
+        "db/character_player_grade2.db",
+        "db/character_player_grade3.db",
+        "wnd/result_mission_item.csb"
+      ],
+      "repository_refs": [
+        "data/stages/star-requirements.json",
+        "docs/campaign.md#planejamento-de-tres-estrelas"
+      ],
+      "gaps": [
+        "Separar textos de objetivo de objetivos conquistados; preservar unknown.",
+        "Planejar as próximas fases, sem fila de reparo retroativo.",
+        "Confirmar apoiadores, equipe, resultado e custo; AP nas recompensas não é custo de energia.",
+        "character.db compõe tabelas player, grade2 e grade3; consultar só character_player.db omite heróis. Não confundir variantes de monstro com jogador.",
+        "result_mission_item.csb declara /Layer/icon_check e txt_type/txt_desc; conclusão exige marcador verde e texto atuais no resultado. Efeito central de três estrelas tem ancestralidade ainda desconhecida."
+      ]
+    },
+    {
+      "id": "quests",
+      "title": "Orbis, caminhos e controles Go/Receive",
+      "aliases": [
+        "orbis",
+        "path of heir",
+        "succession",
+        "missao",
+        "missoes",
+        "resgatar missao",
+        "quest",
+        "go",
+        "receive",
+        "caminho do herdeiro",
+        "three sisters diary",
+        "diary",
+        "guia orbis"
+      ],
+      "sources": [
+        "wnd/growth_masterbook.csb",
+        "wnd/growth_masterbook_quest_item.csb",
+        "wnd/growth_masterbook_challenge_item.csb",
+        "db/key_binding.db",
+        "wnd/quick_menu_renew.csb",
+        "db/system_option.db",
+        "db/system_achievement.db",
+        "db/orbis_tour_guide_group.db",
+        "db/orbis_tour_guide_mission.db",
+        "text/en/text.db"
+      ],
+      "repository_refs": [
+        "data/catalogs/quests.json",
+        "data/missions/operation-map.json",
+        "docs/mission-operations.md#primitivas-de-missao"
+      ],
+      "gaps": [
+        "Grupo/aba atual, contador, Go/Receive e linha completa precisam de reconhecimento atual.",
+        "O catálogo cobre 33 famílias; a leitura comum não habilita seus executores.",
+        "Path of Heir usa growth_masterbook /Layer/n_content/n_growth_guide/listview com itens growth_masterbook_quest_item /Layer/btn_go e /Layer/btn_reward. Group Clear Reward usa n_top/n_reward/btn_group_reward separado; Diary usa n_daily_weekly/listview.",
+        "key_binding orbis declara KEY_G fora de battle e quick_menu_renew/btn_guidebook; system_option key_orbis declara rotulo ui_option_key_binding_18 para PC, nao tecla numerica. Ancestralidade completa candidata: quick_menu_renew /Layer/n_quick_menu/notch_hide_btn/n_quick_btn/n_guidebook/btn_guidebook.",
+        "A lista principal de abas e dinamica. Placeholders, contadores e flags declarados do CSB nao comprovam aba, progresso, enabled ou coordenadas globais STOVE. Condicao satisfeita, recompensa resgatada e contador do grupo sao fatos distintos.",
+        "Um Receive observado na demo coletou varias linhas prontas do grupo; nao prometer resgate isolado nem repetir resgate incerto. Confirmar recibo e grupo atual. Go apenas navega; identidade, custo e inicio da operacao de destino precisam de prova propria."
+      ]
+    },
+    {
+      "id": "navigation",
+      "title": "Atalhos, navegação e configuração",
+      "aliases": [
+        "atalho",
+        "hotkey",
+        "teclado",
+        "binding",
+        "navegacao",
+        "menu rapido",
+        "opcoes"
+      ],
+      "sources": [
+        "db/key_binding.db",
+        "db/system_option.db",
+        "wnd/top_bar.csb",
+        "wnd/quick_menu_renew.csb",
+        "text/en/text.db"
+      ],
+      "repository_refs": [
+        "data/input/hotkeys.json",
+        "data/input/static-control-links.json",
+        "data/input/sdk-contracts.json",
+        "docs/architecture.md#preparacao-antes-da-calibracao"
+      ],
+      "gaps": [
+        "Bindings do pacote são defaults; confirmar contexto, configuração da conta e destino.",
+        "Consulte a versão instalada do SDK antes de escolher reconhecimento ou entrada."
+      ]
+    },
+    {
+      "id": "notifications",
+      "title": "Chat, notificações e checkboxes",
+      "aliases": [
+        "notificacao",
+        "notificacoes",
+        "chat",
+        "checkbox",
+        "public",
+        "guild",
+        "aviso demo"
+      ],
+      "sources": [
+        "wnd/chat_filter.csb",
+        "db/system_option.db",
+        "text/en/text.db"
+      ],
+      "repository_refs": [
+        "data/input/static-control-links.json",
+        "docs/architecture.md#preparação-da-sessão"
+      ],
+      "gaps": [
+        "Selecionar categoria, distinguir caixa principal/individual e preservar estado ambíguo.",
+        "Não reativar os avisos da demo para produzir teste; validação positiva adiada."
+      ]
+    },
+    {
+      "id": "coreloop",
+      "title": "Marco Brilhante / Milestone of Radiance",
+      "aliases": [
+        "marco brilhante",
+        "milestone of radiance",
+        "coreloop",
+        "core loop",
+        "brilliant chest",
+        "bau brilhante",
+        "origin coin",
+        "glory coin"
+      ],
+      "sources": [
+        "db/core_loop_pass_track.db",
+        "db/core_loop_pass_upgrade.db",
+        "db/core_loop_pass_drop.db",
+        "db/core_loop_pass_config.db",
+        "db/core_loop_pass_large_icon.db",
+        "wnd/coreloop_main.csb",
+        "text/en/text.db",
+        "db/system_achievement.db",
+        "db/tutorial_guide.db",
+        "db/shop_category_group.db",
+        "wnd/lobby_ui_renew.csb",
+        "db/key_binding.db",
+        "db/system_option.db",
+        "wnd/coreloop_main_box_up.csb",
+        "wnd/coreloop_main_box_reward.csb",
+        "wnd/coreloop_main_info.csb",
+        "wnd/coreloop_main_info_select.csb",
+        "wnd/coreloop_main_info_summon.csb",
+        "wnd/coreloop_main_info_group.csb",
+        "wnd/coreloop_clear_p.csb",
+        "wnd/shop_exchange_base_renew.csb",
+        "wnd/shop_base_renew.csb",
+        "wnd/shop_card.csb",
+        "wnd/shop_card2.csb",
+        "wnd/shop_item_short.csb",
+        "wnd/shop_item_long.csb",
+        "wnd/shop_popup_detail.csb",
+        "wnd/shop_popup_buy.csb",
+        "wnd/shop_popup_buy2.csb",
+        "wnd/gacha_select_group.csb",
+        "wnd/gacha_select_group_popup.csb",
+        "wnd/gacha_result_unit.csb",
+        "wnd/story.csb",
+        "wnd/choose_gacha.csb",
+        "wnd/choose_gacha_card.csb",
+        "wnd/skill_icon.csb",
+        "wnd/skill_detail.csb",
+        "wnd/msgbox.csb",
+        "wnd/msgbox_renewal.csb"
+      ],
+      "repository_refs": [
+        "docs/assets.md#referências-para-o-próximo-objetivo-marco-brilhante-e-estrelas"
+      ],
+      "gaps": [
+        "Variantes n_new/n_bagic contêm btn_get; confirmar ancestralidade e contexto.",
+        "Acesso, preço, saldo e resgate exigem evidência atual de cada variante; fonte estática não comprova disponibilidade.",
+        "system_531 declara clear_enter_count enter=dap008,count=1; não comprova acesso atual.",
+        "Entrada candidata lobby_ui_renew /Layer/BUTTONS/LEFT/n_btn_type/n_btn_coreloop/btn_coreloop; loja coreloop_main /Layer/RIGHT/btn_shop.",
+        "Exchange separa group_coreloop_new (Origin Coin/milestone_n) e group_coreloop_base (Glory Coin/milestone_b); disponibilidade, produto e custo exigem tela atual.",
+        "Brilliant Chest não foi encontrado como nome inglês exato; alias não identifica um produto. Preço estático vazio não prova custo zero.",
+        "Avanço de chest: coreloop_main /Layer/n_upgrade/n_next/btn_next, separado dos dois btn_get. box_up/box_reward são apresentações sem botão próprio.",
+        "sp_cl_eq_goblin_1..3 descrevem conjuntos épicos +15 Lv85 de6peças (Speed/Critical, Destruction/Critical, Speed/Health); nome truncado não vincula o cartão atual ao ID.",
+        "gacha_select_group tem Panels de seleção panel1..3, skillline/skill1..3 anexados em runtime e btn_reward; choose_gacha é popup distinto, não substituto da composição de3colunas.",
+        "Confirmar seleção pelo candidato destacado e pelo modal atual ui_hero_selection_alret. msgbox n_buttons/btn_yes é candidato; variante dinâmica permanece lacuna. Confirmação ainda não prova posse.",
+        "coreloop_main_info_select é decoração; unit_skill_tooltip é tooltip de recursos de enhancement, não a descrição de habilidade do selector."
+      ]
+    },
+    {
+      "id": "battle_auto",
+      "related_families": [
+        "campaign",
+        "combat_modes",
+        "arena"
+      ],
+      "title": "Combate: reconhecer e ativar Auto com guarda de estado",
+      "aliases": [
+        "auto",
+        "ativar auto",
+        "auto battle",
+        "combate automatico",
+        "battle-auto",
+        "sem auto"
+      ],
+      "sources": [
+        "wnd/inbattle_topbar.csb",
+        "wnd/hud_auto.csb",
+        "wnd/hud_skill.csb",
+        "db/tutorial_guide.db",
+        "db/tutorial_custom.db",
+        "db/system_achievement.db",
+        "db/level_enter_adventure.db",
+        "db/config_content.db",
+        "text/en/text.db",
+        "db/key_binding.db",
+        "db/system_option.db"
+      ],
+      "repository_refs": [
+        "docs/architecture.md#operacoes-e-auto",
+        "docs/validation.md#combate-e-arvore",
+        "resources/epic-seven/pipeline/auto.json"
+      ],
+      "gaps": [
+        "Botao superior global e seletores de habilidades por heroi sao controles diferentes. Nao inferir Auto pelo angulo das setas animadas.",
+        "No STOVE inicial, ije006_auto_01..05 declara mensagem de disponibilidade e aponta Auto/Speed, mas o gatilho nao foi resolvido. system_achievement auto refere-se a Automaton, nao desbloqueio de Auto-Battle.",
+        "level_enter_adventure.auto_battle_able e vazio em wdp004 e ije006; ha 863 vazios e 41 y no pacote analisado. Vazio nao comprova false nem disponibilidade da conta STOVE.",
+        "A leitura battle_skill_selection expoe somente a borda destacada: highlighted_slot quando unico, selected_slot/auto_available/auto_enabled/turn_accepts_input desconhecidos. Nao habilita ataque ou toggle.",
+        "Exigir correspondencia positiva de HUD ligado ou manual. Sem HUD visivel, variante nao calibrada ou dois resultados compativeis, preservar desconhecido e nao alternar.",
+        "Ativacao manual e transicao para ataque foram observadas na Arena; o novo grafo condicional tem validacao nativa em capturas e nao autoriza iniciar outra batalha para teste."
+      ]
+    },
+    {
+      "id": "hero_joined_notice",
+      "title": "Aviso de herói disponível: Victorika entrou",
+      "aliases": [
+        "heroi entrou",
+        "hero joined",
+        "hero available",
+        "victorika joined",
+        "novo heroi disponivel"
+      ],
+      "related_families": [
+        "campaign",
+        "team_battle"
+      ],
+      "sources": [
+        "wnd/hero_get.csb",
+        "text/en/text.db",
+        "db/character_player.db",
+        "db/key_binding.db",
+        "db/system_option.db"
+      ],
+      "repository_refs": [
+        "docs/assets.md",
+        "docs/architecture.md#arvore-observada"
+      ],
+      "gaps": [
+        "No matching hero_get/btn_ok key binding or hero_get system option found.",
+        "Callbacks and runtime instance binding are not extracted; static Mercedes placeholder is not observed hero identity.",
+        "No enabled/selected/team slot/owned instance/complete roster inference.",
+        "Only actual Victorika popup calibrated; Ras and other hero notices remain unsupported.",
+        "c0166_get_title/desc identificam o aviso; presença da mensagem atual não fornece instance_id nem equipe selecionada."
+      ]
+    },
+    {
+      "id": "date_change_notice",
+      "title": "Troca de data e retorno ao Lobby",
+      "aliases": [
+        "date changed",
+        "mudanca de data",
+        "troca de data",
+        "reset diario"
+      ],
+      "sources": [
+        "wnd/msgbox.csb",
+        "wnd/msgbox_renewal.csb",
+        "text/en/text.db",
+        "db/key_binding.db",
+        "db/system_option.db"
+      ],
+      "gaps": [
+        "reset_data_title/reset_data_data são os textos exatos; variante msgbox/renewal ainda não distinguida. n_ok_only/txt_tab é rótulo; btn_default é candidato de entrada.",
+        "Exigir título e mensagem atuais; não confundir o Story Clear sob o aviso com a camada ativa."
+      ],
+      "related_families": [
+        "time_gates"
+      ],
+      "repository_refs": [
+        "docs/assets.md",
+        "docs/architecture.md#arvore-observada"
+      ]
+    },
+    {
+      "id": "checkin_notices",
+      "title": "Calendários de check-in, login reward e bloqueio de rank",
+      "aliases": [
+        "login reward",
+        "check-in reward",
+        "check in",
+        "calendario",
+        "new player check-in",
+        "collaboration check-in"
+      ],
+      "sources": [
+        "wnd/battle_story_christmas_calendar.csb",
+        "wnd/calendar.csb",
+        "wnd/calendar_14days.csb",
+        "wnd/calendar_7_consecutive.csb",
+        "wnd/calendar_7_consecutive_sp.csb",
+        "wnd/calendar_7days.csb",
+        "wnd/calendar_7days_sp.csb",
+        "wnd/calendar_countdown.csb",
+        "wnd/event_calendar_14.csb",
+        "wnd/event_calendar_42.csb",
+        "wnd/event_calendar_42_stamp.csb",
+        "wnd/event_calendar_7.csb",
+        "wnd/event_christmas_calendar_14.csb",
+        "text/en/text.db",
+        "db/key_binding.db",
+        "db/system_option.db"
+      ],
+      "gaps": [
+        "28dias: calendar /Layer/btn_close; 14dias: calendar_14days /Layer/bg_frame/btn_close. Confirm compartilha nome mas não ancestralidade.",
+        "Artwork/skin de Collaboration não vinculado ao ramo runtime; catálogo não comprova elegibilidade, rank, coleta ou contagem atual.",
+        "calendar_count é Rewards Received:#cur#/#max#; confirmar a captura atual e não inferir nova coleta ao fechar."
+      ],
+      "related_families": [
+        "time_gates"
+      ],
+      "repository_refs": [
+        "docs/assets.md",
+        "docs/architecture.md#arvore-observada"
+      ]
+    },
+    {
+      "id": "buff_effect_notice",
+      "title": "Buff Effect: painel de bônus da conta",
+      "aliases": [
+        "buff effect",
+        "buffs da conta",
+        "booster tooltip",
+        "efeito de buff"
+      ],
+      "sources": [
+        "wnd/booster_tooltip.csb",
+        "wnd/booster_item.csb",
+        "wnd/booster_base.csb",
+        "text/en/text.db",
+        "db/key_binding.db",
+        "db/system_option.db"
+      ],
+      "gaps": [
+        "ui_booster_tootip_title é Buff Effect; /base/txt_close é rótulo, /base/btn_close é candidato; panel_block/listview interceptam o painel central.",
+        "Lista dinâmica, inventário completo de buffs, timers e cálculos não interpretados por esse mapeamento."
+      ],
+      "related_families": [
+        "time_gates"
+      ],
+      "repository_refs": [
+        "docs/assets.md",
+        "docs/architecture.md#arvore-observada"
+      ]
+    },
+    {
+      "id": "account_rank_up_notice",
+      "title": "Rank Up da conta e recuperação de energia",
+      "aliases": [
+        "rank up",
+        "rankup",
+        "subiu rank",
+        "aumento de rank",
+        "rank up energy"
+      ],
+      "related_families": [
+        "campaign",
+        "time_gates"
+      ],
+      "sources": [
+        "wnd/rankup.csb",
+        "wnd/dlg_rankup_up.csb",
+        "db/key_binding.db",
+        "db/system_option.db"
+      ],
+      "repository_refs": [
+        "docs/assets.md",
+        "docs/architecture.md#arvore-observada"
+      ],
+      "gaps": [
+        "rankup /base/btn_default e dlg_rankup_up /base/btn_ok são candidatos fullscreen; a variante Maximum Energy foi ligada ao título, corpo e Tap to close centrais observados.",
+        "Rank e energia recuperada exigem texto/imagem atuais. Não inferir pelo placeholder ou padrão do pacote.",
+        "Sem correspondências key_binding/system_option segundo levantamento unitário. Fechar e verificar destino; nenhum executor genérico."
+      ]
+    },
+    {
+      "id": "hero_acquisition_result",
+      "title": "Apresentação de aquisição de herói e fala inicial",
+      "aliases": [
+        "new hero",
+        "hero acquisition",
+        "heroi adquirido",
+        "resultado de aquisicao",
+        "victorika confirm"
+      ],
+      "related_families": [
+        "campaign",
+        "summoning"
+      ],
+      "sources": [
+        "wnd/gacha_result_unit.csb",
+        "wnd/gacha_result.csb",
+        "wnd/story.csb",
+        "wnd/story_talk.csb",
+        "db/character_player.db",
+        "text/en/text.db",
+        "db/key_binding.db",
+        "db/system_option.db"
+      ],
+      "repository_refs": [
+        "docs/assets.md",
+        "docs/architecture.md#arvore-observada"
+      ],
+      "gaps": [
+        "gacha_result_unit é apresentação reutilizada; o nome do arquivo não comprova summon iniciado. Origem depende da evidência de transição.",
+        "Confirm candidato /Layer/n_result/n_buttons_ext/btn_close; btn_next/Continue e btn_summon são variantes distintas.",
+        "Fala c1166_gacha_get pertence a Victorika(c1166), diferente de Inexperienced Victorika(c0166). Instância e roster completo desconhecidos.",
+        "Enquanto a fala estiver visível, o Confirm escurecido não é alvo. Vínculo runtime de story/story_talk com resultado não extraído."
+      ]
+    },
+    {
+      "id": "prequel_tag_npc",
+      "title": "TAG do prólogo e variantes de NPC: dap007 e dap008",
+      "aliases": [
+        "tag",
+        "trocar heroi tag",
+        "rinak",
+        "rinak npc",
+        "blink strike",
+        "shadow dance",
+        "dap007",
+        "dap008",
+        "npc skills",
+        "ras npc",
+        "vildred npc",
+        "kise npc"
+      ],
+      "related_families": [
+        "campaign",
+        "team_battle",
+        "supporters"
+      ],
+      "sources": [
+        "db/tutorial_guide.db",
+        "db/level_enter_adventure.db",
+        "db/level_monstergroup_npcteam.db",
+        "db/character_monster_normal4.db",
+        "db/skill_monster_normal4.db",
+        "db/skillset_monster_normal4.db",
+        "db/character_player.db",
+        "db/skill_player.db",
+        "db/skillset_player.db",
+        "db/cs.db",
+        "text/en/text.db",
+        "wnd/inbattle_hud.csb",
+        "wnd/hud_skill.csb",
+        "wnd/hud_face.csb",
+        "wnd/hero_tag_icon.csb",
+        "db/key_binding.db",
+        "db/system_option.db"
+      ],
+      "repository_refs": [
+        "docs/assets.md#consulta-por-operacao",
+        "docs/architecture.md#operacoes-e-auto"
+      ],
+      "gaps": [
+        "prequel_tag_02 declara btn_tag, mas ancestralidade HUD não extraída; hero_tag_icon é variante de menu, não seletor HUD.",
+        "dap007.supporter_1=c1168_dap007 leva à tabela character_monster_normal4 e skills ms_c2033_w_n_dap007_1..5; não usar o kit player c1168 só pelo nome Rinak.",
+        "lmn_dap008 declara c1001_dap008, c1007_dap008 e c1006_dap008; suas skills apontam a linhas compartilhadas sk_c1001, sk_c1007 e sk_c1006 em skill_player. apply_npc_skill=y está decodificado, mas sua resolução em runtime não foi extraída.",
+        "c1006_dap008 usa chrn_c1006=Kise e skills sk_c1006 com ícones sk_c2006; nomes de assets não determinam a identidade atual. Confirmar nome e ícones no HUD; preservar o ID NPC candidato e a instância possuída como campos distintos.",
+        "Cooldown/recurso/efeitos atuais precisam da captura. IDs de instância, seleção, enabled e cálculos internos permanecem desconhecidos."
+      ]
+    },
+    {
+      "id": "hero_promotional_presentation",
+      "title": "Anúncio de herói: Confirm e Go to Summon",
+      "aliases": [
+        "hero promotion",
+        "hero announcement",
+        "anuncio de heroi",
+        "promocao heroi",
+        "renoa confirm",
+        "mei lin confirm",
+        "go to summon"
+      ],
+      "related_families": [
+        "summoning"
+      ],
+      "sources": [
+        "wnd/gacha_result_unit.csb",
+        "wnd/gacha_result.csb",
+        "db/key_binding.db",
+        "db/system_option.db",
+        "text/en/text.db"
+      ],
+      "repository_refs": [
+        "docs/assets.md#consulta-por-operacao",
+        "docs/architecture.md#arvore-observada"
+      ],
+      "gaps": [
+        "Apresentação promocional com NEW não comprova aquisição ou summon. Não reutilizar semântica de owned/acquisition só pelo layout.",
+        "Confirm candidato /Layer/n_result/n_buttons_ext/btn_close. Go to Summon atual não teve ancestralidade exata resolvida; btn_summon_r1/r2/up são variantes distintas.",
+        "key_binding.gacha KEY_5 é navegação genérica do quick menu; não representa os controles do anúncio."
+      ]
+    },
+    {
+      "id": "inventory_equipment_consumables",
+      "title": "Inventário: equipamentos, consumíveis e abertura de baús",
+      "aliases": [
+        "inventario equipamento",
+        "inventario de equipamentos",
+        "equipment inventory",
+        "inventory",
+        "abrir baus consumiveis",
+        "abrir baus",
+        "abrir bau",
+        "consumiveis",
+        "usar bau",
+        "chest inventory"
+      ],
+      "related_families": [
+        "equipping",
+        "disposal",
+        "enhancement"
+      ],
+      "sources": [
+        "wnd/inventory.csb",
+        "wnd/inventory_renewal.csb",
+        "wnd/inventory_card.csb",
+        "wnd/inventory_card2.csb",
+        "wnd/inventory_equip_popup.csb",
+        "wnd/inventory_open_box.csb",
+        "wnd/inventory_open_box_p.csb",
+        "wnd/inventory_open_box_p2.csb",
+        "wnd/inventory_box_dual_choose.csb",
+        "db/item_special.db",
+        "db/key_binding.db",
+        "db/system_option.db",
+        "text/en/text.db"
+      ],
+      "repository_refs": [
+        "docs/assets.md#consulta-por-operacao",
+        "docs/architecture.md#arvore-observada"
+      ],
+      "gaps": [
+        "inventory and inventory_renewal coexist; exact current variant/tab binding needs screenshot validation.",
+        "Equipment and catalyst-selection chest are distinct item types. Empty gear view does not mean every inventory category is empty.",
+        "Package item_special describes possible contents, not owned quantity or runtime instance. Current usable count, selected reward and capacity must be observed.",
+        "Inspecionar, selecionar recompensa e abrir/consumir são operações distintas; validar resultado sem retry de consumo incerto."
+      ]
+    },
+    {
+      "id": "mail_inspection_claim",
+      "title": "Correio: inspecionar mensagens e resgatar recompensas",
+      "aliases": [
+        "correio resgatar",
+        "correio",
+        "mail",
+        "mailbox",
+        "resgatar correio",
+        "claim mail",
+        "caixa de correio",
+        "recompensas correio"
+      ],
+      "sources": [
+        "wnd/mail_list.csb",
+        "wnd/mail_bar.csb",
+        "wnd/mail_item.csb",
+        "wnd/mail_event_item.csb",
+        "wnd/mail_event_popup.csb",
+        "wnd/mail_select_popup.csb",
+        "wnd/mail_select_popup_item.csb",
+        "db/mail_send.db",
+        "db/mail_theme.db",
+        "db/key_binding.db",
+        "db/system_option.db",
+        "text/en/text.db"
+      ],
+      "repository_refs": [
+        "docs/assets.md#consulta-por-operacao",
+        "docs/architecture.md#arvore-observada"
+      ],
+      "gaps": [
+        "mail_event_popup and ordinary mail rows are separate variants; a birthday/event letter does not calibrate every mail claim.",
+        "GetAll/selective claim paths must be distinguished; static defaults do not prove which category/rows are selected.",
+        "Unknown claim result is not retried or switched to GetAll. Existing mail contents/gear rewards remain unknown until current evidence."
+      ]
+    },
+    {
+      "id": "friendship",
+      "title": "Amizade: resultado de aumento de nível e fechamento do aviso",
+      "aliases": [
+        "friendship",
+        "amizade",
+        "friendship result",
+        "hero friendship level increase",
+        "fechar aviso amizade"
+      ],
+      "sources": [
+        "wnd/result_intimacy.csb",
+        "wnd/unit_detail.csb",
+        "db/key_binding.db",
+        "db/system_option.db",
+        "text/en/text.db"
+      ],
+      "repository_refs": [
+        "docs/assets.md#consulta-por-operacao",
+        "docs/architecture.md#arvore-observada"
+      ],
+      "gaps": [
+        "result_intimacy /Layer/btn_close é o fechamento fullscreen declarado; coordenadas CSB são locais e não um alvo global.",
+        "Título, níveis antes/depois e Tap to close atuais devem concordar; a variante1para2 não calibra todos os níveis de amizade.",
+        "Fechar o aviso é separado do Confirm da recompensa atrás dele. Não inferir novo combate, coleta, instância ou habilitação."
+      ]
+    },
+    {
+      "id": "spirit_altar",
+      "related_families": [
+        "combat_modes"
+      ],
+      "title": "Altar Espiritual / Spirit Altar: elemento, dificuldade e resultado",
+      "aliases": [
+        "altar espiritual",
+        "spirit altar",
+        "dark spirit altar",
+        "cmon001",
+        "runas"
+      ],
+      "sources": [
+        "wnd/dungeon.csb",
+        "wnd/battle_ready.csb",
+        "wnd/formation.csb",
+        "wnd/result_base.csb",
+        "db/level_battlemenu_genie.db",
+        "db/level_enter_battle.db",
+        "text/en/text.db",
+        "db/key_binding.db",
+        "db/system_option.db"
+      ],
+      "repository_refs": [
+        "data/stages/spirit-altars.json",
+        "docs/mission-operations.md#roteiro-por-nivel",
+        "docs/validation.md#fechamento-altar-resgates"
+      ],
+      "gaps": [
+        "dungeon_home é outra composição (Shadow Module); não substitui dungeon para Spirit Altar.",
+        "Disponibilidade, seleção de equipe, saldo, custo e resultado exigem evidência atual.",
+        "Uma unidade Dark Easy cmon001 foi validada; outros elementos/dificuldades são candidatos estáticos."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,260 @@
+{
+  "schema_version": 1,
+  "scope": "static identity/cost candidates, not account access",
+  "sources": [
+    {
+      "source": "db/level_battlemenu_genie.db",
+      "sha256": "114afa1531e893b5c696523f8aaa13af2e34f89dbf55daf2a5da40f1a218fba2"
+    },
+    {
+      "source": "db/level_enter_battle.db",
+      "sha256": "5f1a3df77ac7f7e2a877f35c260a1e059ac5f769a96a6c457036e7c990fd677d"
+    },
+    {
+      "source": "text/en/text.db",
+      "sha256": "b5bbeceb5612ba6b9b80901fea5acbc57c031fb9db3a954451c8beabfc3409b1"
+    }
+  ],
+  "stages": {
+    "cmon001": {
+      "id": "cmon001",
+      "altar_name": "Dark Spirit Altar",
+      "difficulty": "Easy",
+      "label": "Dark Spirit Altar - Easy",
+      "energy": 9,
+      "currency": "energy",
+      "source": "db/level_enter_battle.db",
+      "name_key": "map_cmon001",
+      "menu_name_key": "level_weekly_name_1",
+      "account_progress": null
+    },
+    "cmon002": {
+      "id": "cmon002",
+      "altar_name": "Dark Spirit Altar",
+      "difficulty": "Normal",
+      "label": "Dark Spirit Altar - Normal",
+      "energy": 10,
+      "currency": "energy",
+      "source": "db/level_enter_battle.db",
+      "name_key": "map_cmon002",
+      "menu_name_key": "level_weekly_name_1",
+      "account_progress": null
+    },
+    "cmon003": {
+      "id": "cmon003",
+      "altar_name": "Dark Spirit Altar",
+      "difficulty": "Hard",
+      "label": "Dark Spirit Altar - Hard",
+      "energy": 11,
+      "currency": "energy",
+      "source": "db/level_enter_battle.db",
+      "name_key": "map_cmon003",
+      "menu_name_key": "level_weekly_name_1",
+      "account_progress": null
+    },
+    "cmon004": {
+      "id": "cmon004",
+      "altar_name": "Dark Spirit Altar",
+      "difficulty": "Hell",
+      "label": "Dark Spirit Altar - Hell",
+      "energy": 12,
+      "currency": "energy",
+      "source": "db/level_enter_battle.db",
+      "name_key": "map_cmon004",
+      "menu_name_key": "level_weekly_name_1",
+      "account_progress": null
+    },
+    "ctue001": {
+      "id": "ctue001",
+      "altar_name": "Flame Spirit Altar",
+      "difficulty": "Easy",
+      "label": "Flame Spirit Altar - Easy",
+      "energy": 9,
+      "currency": "energy",
+      "source": "db/level_enter_battle.db",
+      "name_key": "map_ctue001",
+      "menu_name_key": "level_weekly_name_2",
+      "account_progress": null
+    },
+    "ctue002": {
+      "id": "ctue002",
+      "altar_name": "Flame Spirit Altar",
+      "difficulty": "Normal",
+      "label": "Flame Spirit Altar - Normal",
+      "energy": 10,
+      "currency": "energy",
+      "source": "db/level_enter_battle.db",
+      "name_key": "map_ctue002",
+      "menu_name_key": "level_weekly_name_2",
+      "account_progress": null
+    },
+    "ctue003": {
+      "id": "ctue003",
+      "altar_name": "Flame Spirit Altar",
+      "difficulty": "Hard",
+      "label": "Flame Spirit Altar - Hard",
+      "energy": 11,
+      "currency": "energy",
+      "source": "db/level_enter_battle.db",
+      "name_key": "map_ctue003",
+      "menu_name_key": "level_weekly_name_2",
+      "account_progress": null
+    },
+    "ctue004": {
+      "id": "ctue004",
+      "altar_name": "Flame Spirit Altar",
+      "difficulty": "Hell",
+      "label": "Flame Spirit Altar - Hell",
+      "energy": 12,
+      "currency": "energy",
+      "source": "db/level_enter_battle.db",
+      "name_key": "map_ctue004",
+      "menu_name_key": "level_weekly_name_2",
+      "account_progress": null
+    },
+    "cwed001": {
+      "id": "cwed001",
+      "altar_name": "Frost Spirit Altar",
+      "difficulty": "Easy",
+      "label": "Frost Spirit Altar - Easy",
+      "energy": 9,
+      "currency": "energy",
+      "source": "db/level_enter_battle.db",
+      "name_key": "map_cwed001",
+      "menu_name_key": "level_weekly_name_3",
+      "account_progress": null
+    },
+    "cwed002": {
+      "id": "cwed002",
+      "altar_name": "Frost Spirit Altar",
+      "difficulty": "Normal",
+      "label": "Frost Spirit Altar - Normal",
+      "energy": 10,
+      "currency": "energy",
+      "source": "db/level_enter_battle.db",
+      "name_key": "map_cwed002",
+      "menu_name_key": "level_weekly_name_3",
+      "account_progress": null
+    },
+    "cwed003": {
+      "id": "cwed003",
+      "altar_name": "Frost Spirit Altar",
+      "difficulty": "Hard",
+      "label": "Frost Spirit Altar - Hard",
+      "energy": 11,
+      "currency": "energy",
+      "source": "db/level_enter_battle.db",
+      "name_key": "map_cwed003",
+      "menu_name_key": "level_weekly_name_3",
+      "account_progress": null
+    },
+    "cwed004": {
+      "id": "cwed004",
+      "altar_name": "Frost Spirit Altar",
+      "difficulty": "Hell",
+      "label": "Frost Spirit Altar - Hell",
+      "energy": 12,
+      "currency": "energy",
+      "source": "db/level_enter_battle.db",
+      "name_key": "map_cwed004",
+      "menu_name_key": "level_weekly_name_3",
+      "account_progress": null
+    },
+    "cthu001": {
+      "id": "cthu001",
+      "altar_name": "Forest Spirit Altar",
+      "difficulty": "Easy",
+      "label": "Forest Spirit Altar - Easy",
+      "energy": 9,
+      "currency": "energy",
+      "source": "db/level_enter_battle.db",
+      "name_key": "map_cthu001",
+      "menu_name_key": "level_weekly_name_4",
+      "account_progress": null
+    },
+    "cthu002": {
+      "id": "cthu002",
+      "altar_name": "Forest Spirit Altar",
+      "difficulty": "Normal",
+      "label": "Forest Spirit Altar - Normal",
+      "energy": 10,
+      "currency": "energy",
+      "source": "db/level_enter_battle.db",
+      "name_key": "map_cthu002",
+      "menu_name_key": "level_weekly_name_4",
+      "account_progress": null
+    },
+    "cthu003": {
+      "id": "cthu003",
+      "altar_name": "Forest Spirit Altar",
+      "difficulty": "Hard",
+      "label": "Forest Spirit Altar - Hard",
+      "energy": 11,
+      "currency": "energy",
+      "source": "db/level_enter_battle.db",
+      "name_key": "map_cthu003",
+      "menu_name_key": "level_weekly_name_4",
+      "account_progress": null
+    },
+    "cthu004": {
+      "id": "cthu004",
+      "altar_name": "Forest Spirit Altar",
+      "difficulty": "Hell",
+      "label": "Forest Spirit Altar - Hell",
+      "energy": 12,
+      "currency": "energy",
+      "source": "db/level_enter_battle.db",
+      "name_key": "map_cthu004",
+      "menu_name_key": "level_weekly_name_4",
+      "account_progress": null
+    },
+    "cfri001": {
+      "id": "cfri001",
+      "altar_name": "Light Spirit Altar",
+      "difficulty": "Easy",
+      "label": "Light Spirit Altar - Easy",
+      "energy": 9,
+      "currency": "energy",
+      "source": "db/level_enter_battle.db",
+      "name_key": "map_cfri001",
+      "menu_name_key": "level_weekly_name_5",
+      "account_progress": null
+    },
+    "cfri002": {
+      "id": "cfri002",
+      "altar_name": "Light Spirit Altar",
+      "difficulty": "Normal",
+      "label": "Light Spirit Altar - Normal",
+      "energy": 10,
+      "currency": "energy",
+      "source": "db/level_enter_battle.db",
+      "name_key": "map_cfri002",
+      "menu_name_key": "level_weekly_name_5",
+      "account_progress": null
+    },
+    "cfri003": {
+      "id": "cfri003",
+      "altar_name": "Light Spirit Altar",
+      "difficulty": "Hard",
+      "label": "Light Spirit Altar - Hard",
+      "energy": 11,
+      "currency": "energy",
+      "source": "db/level_enter_battle.db",
+      "name_key": "map_cfri003",
+      "menu_name_key": "level_weekly_name_5",
+      "account_progress": null
+    },
+    "cfri004": {
+      "id": "cfri004",
+      "altar_name": "Light Spirit Altar",
+      "difficulty": "Hell",
+      "label": "Light Spirit Altar - Hell",
+      "energy": 12,
+      "currency": "energy",
+      "source": "db/level_enter_battle.db",
+      "name_key": "map_cfri004",
+      "menu_name_key": "level_weekly_name_5",
+      "account_progress": null
+    }
+  }
+}

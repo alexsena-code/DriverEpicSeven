@@ -1,0 +1,58 @@
+{
+  "$description": "Ensure Auto on in an already-running battle. One click only from a positively recognized off HUD.",
+  "Auto.Entry": {
+    "recognition": "DirectHit",
+    "action": "DoNothing",
+    "timeout": 5000,
+    "next": [
+      "Auto.AlreadyOn",
+      "Auto.Enable"
+    ]
+  },
+  "Auto.AlreadyOn": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "battle_running",
+      "auto_state": true
+    },
+    "action": "DoNothing",
+    "max_hit": 1,
+    "next": [
+      "Auto.Done"
+    ]
+  },
+  "Auto.Enable": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "battle_running",
+      "auto_state": false,
+      "target": "battle_auto"
+    },
+    "action": "Click",
+    "max_hit": 1,
+    "post_delay": 150,
+    "timeout": 5000,
+    "next": [
+      "Auto.Verify"
+    ]
+  },
+  "Auto.Verify": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "state": "battle_running",
+      "auto_state": true
+    },
+    "action": "DoNothing",
+    "timeout": 5000,
+    "next": [
+      "Auto.Done"
+    ]
+  },
+  "Auto.Done": {
+    "recognition": "DirectHit",
+    "action": "DoNothing"
+  }
+}

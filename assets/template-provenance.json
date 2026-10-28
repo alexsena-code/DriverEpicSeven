@@ -1,0 +1,3621 @@
+{
+  "origin": "screen_crop",
+  "reference_size": [
+    1212,
+    682
+  ],
+  "templates": {
+    "orbis_button": {
+      "source_file": "04_interface_restaurada.png",
+      "crop_xyxy": [
+        827,
+        593,
+        876,
+        659
+      ],
+      "source_sha256": "a285d606687bd59dc004f59a5dd0de7436315b0a1705cf60010dcb2567acb62e",
+      "sha256": "66ebd723bdb4b4281a701058c3652219a556935a9fd719cf0b9650b968df34a7",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "lobby_label": {
+      "source_file": "04_interface_restaurada.png",
+      "crop_xyxy": [
+        1081,
+        420,
+        1174,
+        448
+      ],
+      "source_sha256": "a285d606687bd59dc004f59a5dd0de7436315b0a1705cf60010dcb2567acb62e",
+      "sha256": "707e7fe3e795b3a5876b4ed50b4858008244dab89d20e222a87788fdd573ae08",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "orbis_header": {
+      "source_file": "09_abrir_orbis_depois.png",
+      "crop_xyxy": [
+        63,
+        64,
+        205,
+        91
+      ],
+      "source_sha256": "84aedf9a4707cad00c2da4cce0f4936e82c93165d67a9331b0300ee6c79c0909",
+      "sha256": "365fe25bc3440f805632a227a5378807c2143d0d4f6999e7a74855bc403cc2f0",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "tavern_wall": {
+      "source_file": "03_apos_mover_cursor.png",
+      "crop_xyxy": [
+        930,
+        110,
+        1000,
+        210
+      ],
+      "source_sha256": "42ea82ba390c1e8714992c6e6575829800df302049b0f57207396b3b33b44f18",
+      "sha256": "58c17bf6bc401cc43fbfecbddcab28ba49a9e32abf3f989628c0848f437754f5",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "tavern_shelf": {
+      "source_file": "03_apos_mover_cursor.png",
+      "crop_xyxy": [
+        598,
+        100,
+        646,
+        138
+      ],
+      "source_sha256": "42ea82ba390c1e8714992c6e6575829800df302049b0f57207396b3b33b44f18",
+      "sha256": "8603051b6e0fdfce9f1a27b63d642e88e77c0b04efa7fc2bb9edf0cccdf94ac4",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "map_episode_header": {
+      "source_file": "observation.png",
+      "source_run": "20261026T000111Z_c3e8fb12",
+      "crop_xyxy": [
+        63,
+        20,
+        146,
+        48
+      ],
+      "source_sha256": "0f6323f21ac67f4b3674cee815810f587b026108459cc927fd1da676b250d574",
+      "sha256": "e3adff782246c884858ddbfcf389a900630854d52ccc5d08b65e960116c25d17",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "map_ready_label": {
+      "origin": "existing_screen_crop_reused",
+      "derived_from": "resources/epic-seven/image/map_ready_label.png",
+      "sha256": "e7b74759fb68e0486567306355e8ed4308e1aea4c39842d672f6d17a2517d698",
+      "original_provenance": "assets/template-provenance.json#/templates/map_ready_label",
+      "transformation": "Exact copy; all original correlation and pixel thresholds preserved.",
+      "pack_texture": false,
+      "purpose": "runtime_template",
+      "stove_positive_frame": "var/runs/20261027T005115Z_8d1b189a/agent_000027.png"
+    },
+    "ready_header": {
+      "source_file": "before_first_start.png",
+      "source_run": "20261026T001048Z_a56a321a",
+      "crop_xyxy": [
+        63,
+        20,
+        134,
+        49
+      ],
+      "source_sha256": "9eb312c7d7f6c82d6706de9610e1ed52dd0b299b6d5fb0efede52cdbf5703d80",
+      "sha256": "76fd717fec1d186ab30f9bcb88c4b3d0be2df2f706b929d6de7a90e5a8204fc7",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "start_quest_label": {
+      "source_file": "before_first_start.png",
+      "source_run": "20261026T001048Z_a56a321a",
+      "crop_xyxy": [
+        1037,
+        615,
+        1143,
+        645
+      ],
+      "source_sha256": "9eb312c7d7f6c82d6706de9610e1ed52dd0b299b6d5fb0efede52cdbf5703d80",
+      "sha256": "704b9f6f980f1c58dcf5b516f4a354887d745726864f188be47633b671a1a776",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "supporter_title": {
+      "source_file": "first_stage_preparation.png",
+      "source_run": "20261026T000200Z_206cf421",
+      "crop_xyxy": [
+        214,
+        79,
+        459,
+        109
+      ],
+      "source_sha256": "cb8cf25f61947a75aa1d282dcb67f2c5e8e073316fa9e5c2eedaa489928a5bc0",
+      "sha256": "eab381f3eacf8e4bfffcbaf9bef6343b745daf503b5bf2ac2481fdbe404095f9",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "story_skip": {
+      "source_file": "var/runs/20261027T003313Z_8040ba21/agent_000001.png",
+      "source_sha256": "aaf1bb36c7649f51116404a880921ae08e7a003c0a52a918db05d66f46c224da",
+      "crop_xyxy": [
+        1123,
+        21,
+        1189,
+        52
+      ],
+      "sha256": "f776c9306ab7d5fe43652f9126a5b87ba06a8da9bfd0ee4061807c65c81a8c79",
+      "transformation": "Keep neutral glyphs (min channel >=95, channel spread <35) plus 1px neighborhood; background replaced with native Maa green mask. No scaling.",
+      "origin": "screen_crop",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682",
+      "purpose": "runtime_template",
+      "live_action_validation": false
+    },
+    "story_history": {
+      "source_file": "var/runs/20261027T003313Z_8040ba21/agent_000001.png",
+      "source_sha256": "aaf1bb36c7649f51116404a880921ae08e7a003c0a52a918db05d66f46c224da",
+      "crop_xyxy": [
+        1023,
+        20,
+        1059,
+        53
+      ],
+      "sha256": "0d76472c889bb5ed19c1dec40f2198843d92e0483c3174d997576097cf18ba6c",
+      "transformation": "Keep neutral glyphs (min channel >=95, channel spread <35) plus 1px neighborhood; background replaced with native Maa green mask. No scaling.",
+      "origin": "screen_crop",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682",
+      "purpose": "runtime_template",
+      "live_action_validation": false
+    },
+    "story_confirm_question": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T003836Z_6bfd84bc/agent_000003.png",
+      "source_sha256": "0e40f46b30a8270c0efd1e4b4f952248eadb37074abd9ac52f15018ded29dc24",
+      "crop_xyxy": [
+        438,
+        294,
+        774,
+        321
+      ],
+      "sha256": "2ec092c4a6137dcf4c2fab8f71b40044f5293e5dacc346105b7c6fb7eeb3bdb7",
+      "transformation": "Neutral glyphs (min channel >=110, spread <35) and 1px neighborhood retained, native Maa green mask outside; no scaling.",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682",
+      "purpose": "runtime_template",
+      "live_action_validation": false,
+      "static_references": [
+        "wnd/msgbox.csb /Layer/CENTER/n_show_eff/n_content/n_buttons/btn_yes",
+        "text/en/text.db ui_story_skip_check"
+      ]
+    },
+    "story_confirm_button": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T003836Z_6bfd84bc/agent_000003.png",
+      "source_sha256": "0e40f46b30a8270c0efd1e4b4f952248eadb37074abd9ac52f15018ded29dc24",
+      "crop_xyxy": [
+        671,
+        422,
+        747,
+        450
+      ],
+      "sha256": "06a909fabbbe27f05280bba3e8964554a0d40fe3f6f6186ec9410ab4a8819b1f",
+      "transformation": "Neutral glyphs (min channel >=110, spread <35) and 1px neighborhood retained, native Maa green mask outside; no scaling.",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682",
+      "purpose": "runtime_template",
+      "live_action_validation": false,
+      "static_references": [
+        "wnd/msgbox.csb /Layer/CENTER/n_show_eff/n_content/n_buttons/btn_yes",
+        "text/en/text.db ui_story_skip_check"
+      ]
+    },
+    "clear_initial": {
+      "origin": "existing_screen_crop_reused",
+      "derived_from": "resources/epic-seven/image/clear_initial.png",
+      "sha256": "99d6539b57e8e17c395f765f15da5938cf396f4083bdf7dfeb0ea18290ee278f",
+      "original_provenance": "assets/template-provenance.json#/templates/clear_initial",
+      "transformation": "Exact copy, original thresholds preserved after current STOVE positive/negative replay.",
+      "pack_texture": false,
+      "purpose": "runtime_template",
+      "stove_evidence": "var/stove-session/clear-result-compatibility.json"
+    },
+    "clear_story": {
+      "source_file": "observation.png",
+      "source_run": "20261026T001327Z_d2c8c353",
+      "crop_xyxy": [
+        559,
+        533,
+        705,
+        579
+      ],
+      "source_sha256": "00e04c24c99da8755336c420ebc26220ca939ce3ee08b2e9cb8e77482bcee338",
+      "sha256": "27d86a323c1873f0e0e6bffe7351d1bb28e62e1f8ea20a6887342552fa4bcab3",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "clear_continue": {
+      "origin": "existing_screen_crop_reused",
+      "derived_from": "resources/epic-seven/image/clear_continue.png",
+      "sha256": "47b39fed040ffafd2425286b08622b5c25135483cac4d42954d715ee035ca25a",
+      "original_provenance": "assets/template-provenance.json#/templates/clear_continue",
+      "transformation": "Exact copy, original thresholds preserved after current STOVE positive/negative replay.",
+      "pack_texture": false,
+      "purpose": "runtime_template",
+      "stove_evidence": "var/stove-session/clear-result-compatibility.json"
+    },
+    "result_heading": {
+      "origin": "existing_screen_crop_reused",
+      "derived_from": "resources/epic-seven/image/result_heading.png",
+      "sha256": "431251c4a68f3341f7673d9c8a408952959552a8ccace125b45780dd73adc636",
+      "original_provenance": "assets/template-provenance.json#/templates/result_heading",
+      "transformation": "Exact copy, original thresholds preserved after current STOVE positive/negative replay.",
+      "pack_texture": false,
+      "purpose": "runtime_template",
+      "stove_evidence": "var/stove-session/clear-result-compatibility.json"
+    },
+    "result_confirm": {
+      "origin": "existing_screen_crop_reused",
+      "derived_from": "resources/epic-seven/image/result_confirm.png",
+      "sha256": "f240f033b6a2c8f5c8bff65c4245af2e4e7d1a82b5eae1416f177b5ba8cf65ce",
+      "original_provenance": "assets/template-provenance.json#/templates/result_confirm",
+      "transformation": "Exact copy, original thresholds preserved after current STOVE positive/negative replay.",
+      "pack_texture": false,
+      "purpose": "runtime_template",
+      "stove_evidence": "var/stove-session/clear-result-compatibility.json"
+    },
+    "story_reward_header": {
+      "origin": "existing_screen_crop_reused",
+      "derived_from": "resources/epic-seven/image/story_reward_header.png",
+      "sha256": "2fe3e31983dd11da0f1cbb6954e5c9c90f3941a8adbdc7545278b9ac4b77d96e",
+      "original_provenance": "assets/template-provenance.json#/templates/story_reward_header",
+      "transformation": "Exact copy; all original correlation and pixel thresholds preserved.",
+      "pack_texture": false,
+      "purpose": "runtime_template",
+      "stove_positive_frame": "var/runs/20261027T005115Z_8d1b189a/agent_000025.png"
+    },
+    "story_reward_close": {
+      "origin": "existing_screen_crop_reused",
+      "derived_from": "resources/epic-seven/image/story_reward_close.png",
+      "sha256": "530c256f626db3392134212bf1b715b76902c0ddf248cdbcfaa06870a392a18c",
+      "original_provenance": "assets/template-provenance.json#/templates/story_reward_close",
+      "transformation": "Exact copy; all original correlation and pixel thresholds preserved.",
+      "pack_texture": false,
+      "purpose": "runtime_template",
+      "stove_positive_frame": "var/runs/20261027T005115Z_8d1b189a/agent_000025.png"
+    },
+    "battle_pause": {
+      "origin": "existing_screen_crop_reused",
+      "derived_from": "resources/epic-seven/image/battle_pause.png",
+      "sha256": "169cf7809a77188effbfec84a8272411866117f8a80c2195ca6c282c65f28c46",
+      "original_provenance": "assets/template-provenance.json#/templates/battle_pause",
+      "transformation": "Exact copy; original correlation/glyph pixel thresholds preserved.",
+      "purpose": "runtime_template",
+      "pack_texture": false,
+      "stove_positive_frames": [
+        "var/runs/20261027T005115Z_8d1b189a/agent_000042.png",
+        "var/runs/20261027T005115Z_8d1b189a/agent_000043.png",
+        "var/runs/20261027T005115Z_8d1b189a/agent_000045.png"
+      ],
+      "stove_negative_frames": [
+        "var/runs/20261027T005115Z_8d1b189a/agent_000033.png",
+        "var/runs/20261027T005115Z_8d1b189a/agent_000039.png"
+      ],
+      "scope": "Battle context only; no auto on/off or input enabled state inferred."
+    },
+    "battle_help": {
+      "origin": "existing_screen_crop_reused",
+      "derived_from": "resources/epic-seven/image/battle_help.png",
+      "sha256": "d2dbbffea4257d6a3883df0a6df524aacfe1317fcf77d80aeac61699f1323f28",
+      "original_provenance": "assets/template-provenance.json#/templates/battle_help",
+      "transformation": "Exact copy; original correlation/glyph pixel thresholds preserved.",
+      "purpose": "runtime_template",
+      "pack_texture": false,
+      "stove_positive_frames": [
+        "var/runs/20261027T005115Z_8d1b189a/agent_000042.png",
+        "var/runs/20261027T005115Z_8d1b189a/agent_000043.png",
+        "var/runs/20261027T005115Z_8d1b189a/agent_000045.png"
+      ],
+      "stove_negative_frames": [
+        "var/runs/20261027T005115Z_8d1b189a/agent_000033.png",
+        "var/runs/20261027T005115Z_8d1b189a/agent_000039.png"
+      ],
+      "scope": "Battle context only; no auto on/off or input enabled state inferred."
+    },
+    "map_padlock": {
+      "source_file": "chapter_next_unlocked.png",
+      "source_run": "20261026T001643Z_6aa2cd74",
+      "crop_xyxy": [
+        63,
+        322,
+        78,
+        343
+      ],
+      "source_sha256": "a6ddab69366de181c9c9a567861debab6347d5579f5bc226895c32c57e386d3b",
+      "sha256": "93271246302bf90ae793590b369c280f901e373c2d45e4656aec5f14f29dddba",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "start_regular_label": {
+      "source_file": "debug_ready.png",
+      "source_run": "20261026T002852Z_ef0cbed9",
+      "crop_xyxy": [
+        1060,
+        615,
+        1110,
+        643
+      ],
+      "source_sha256": "e94571662bfabb31e33299ac1326214f871d85387e7bc9f9378c3671dd798dee",
+      "sha256": "f762704ec7c63d447ee89f1a04574faef71d4cc055a82e5637746bd4ea67a2ff",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "ready_completed_flag": {
+      "source_file": "debug_ready.png",
+      "source_run": "20261026T002852Z_ef0cbed9",
+      "crop_xyxy": [
+        885,
+        161,
+        1010,
+        195
+      ],
+      "source_sha256": "e94571662bfabb31e33299ac1326214f871d85387e7bc9f9378c3671dd798dee",
+      "sha256": "aa9d2f59d6a3e0261e8233f886356cdbcc83534cf8d8e4d5447c223c4958e606",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "start_quest_small": {
+      "source_file": "prepare_two_debug.png",
+      "source_run": "20261026T003157Z_abd3cc0f",
+      "crop_xyxy": [
+        1030,
+        610,
+        1140,
+        638
+      ],
+      "source_sha256": "d81d2b8740dd0bdf654a1a5aaf3fc7b69f7552d7aaceea02ea296cfe905a8305",
+      "sha256": "b1d34a843de78574fd0fd306a27aebf5cf0f9522a47ba2597858ec678a1f1d5e",
+      "purpose": "runtime_template_variant",
+      "pack_texture": false
+    },
+    "side_alert_header": {
+      "source_file": "var\\runs\\20261026T011654Z_ce82e175\\phase3_diagnosis.png",
+      "crop_xyxy": [
+        504,
+        140,
+        708,
+        170
+      ],
+      "source_sha256": "c5283d0168b72bd27dba65399cc614a9b7a0f72ad23fec3808fd4849ed6e3856",
+      "sha256": "aa4ccd44c9e81192db6c0d272f206dcd837996fabdc5269a64be673ada50644e",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "side_alert_close": {
+      "source_file": "var\\runs\\20261026T011654Z_ce82e175\\phase3_diagnosis.png",
+      "crop_xyxy": [
+        554,
+        516,
+        663,
+        539
+      ],
+      "source_sha256": "c5283d0168b72bd27dba65399cc614a9b7a0f72ad23fec3808fd4849ed6e3856",
+      "sha256": "baeb67f43405ac819681e9879f6b7d4156bba27d71582682ce675d3f0c4e7b92",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "friend_header": {
+      "source_file": "var\\runs\\20261026T012003Z_c0ed817e\\friend_request.png",
+      "crop_xyxy": [
+        564,
+        151,
+        649,
+        179
+      ],
+      "source_sha256": "c44e7d838d9be5901dd0ed27d079a42ae18018e7042eec8e05cd9ea9487df58e",
+      "sha256": "e13581de65ab5e11250e9d7e25acb92063408837fca93002017ae625419cb3e4",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "friend_prompt": {
+      "source_file": "var\\runs\\20261026T012003Z_c0ed817e\\friend_request.png",
+      "crop_xyxy": [
+        422,
+        227,
+        790,
+        266
+      ],
+      "source_sha256": "c44e7d838d9be5901dd0ed27d079a42ae18018e7042eec8e05cd9ea9487df58e",
+      "sha256": "c1b3f3d6fb5200428f54617e84b7b8c5a1024526e5e4b3079100a5b4991ef1ec",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "friend_cancel": {
+      "source_file": "var\\runs\\20261026T012003Z_c0ed817e\\friend_request.png",
+      "crop_xyxy": [
+        475,
+        491,
+        534,
+        513
+      ],
+      "source_sha256": "c44e7d838d9be5901dd0ed27d079a42ae18018e7042eec8e05cd9ea9487df58e",
+      "sha256": "8d231d28fcd2451c244a496537f21ff91dd4316c8db18e82dc87283190b5ce7f",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "received_reward_header": {
+      "origin": "existing_screen_crop_reused",
+      "derived_from": "resources/epic-seven/image/received_reward_header.png",
+      "sha256": "19504bbe9dae874bc5d219f091ddb606dcef18d51171fb13c64ba9ab8360cd54",
+      "original_provenance": "assets/template-provenance.json#/templates/received_reward_header",
+      "transformation": "Exact copy, original thresholds preserved after current STOVE positive/negative replay.",
+      "pack_texture": false,
+      "purpose": "runtime_template",
+      "stove_evidence": "var/stove-session/clear-result-compatibility.json"
+    },
+    "received_reward_close": {
+      "origin": "existing_screen_crop_reused",
+      "derived_from": "resources/epic-seven/image/received_reward_close.png",
+      "sha256": "5736fa74ea5fb8e27c22f06f2c7bdb4041f5dc6aedd13aba8b87dced85681c7b",
+      "original_provenance": "assets/template-provenance.json#/templates/received_reward_close",
+      "transformation": "Exact copy, original thresholds preserved after current STOVE positive/negative replay.",
+      "pack_texture": false,
+      "purpose": "runtime_template",
+      "stove_evidence": "var/stove-session/clear-result-compatibility.json"
+    },
+    "story_skip_masked": {
+      "derived_from": "story_skip.png",
+      "transformation": "Green-mask only background outside neutral glyphs and their 1px edge neighborhood; Maa green_mask. Original glyphs unchanged.",
+      "sha256": "87b4ce48484f6145b6c92514ca3ddd224f1923877fc9751d7dc0d9ef2b75098e",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "episode_button": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T003836Z_6bfd84bc/agent_000025.png",
+      "source_sha256": "789e267f856e59407f4cb2fb6b05c0df1696ac1e2d337f6f8a591d224b3c3e54",
+      "crop_xyxy": [
+        1066,
+        158,
+        1174,
+        194
+      ],
+      "sha256": "2205eb73c422e792b0c6b4c2b11265992887716a250b39cfa5133bb86616da31",
+      "transformation": "Pale glyphs: min channel>=130,spread<65 plus 1px neighborhood retained; native Maa green mask outside; no scaling.",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682",
+      "purpose": "runtime_template",
+      "live_action_validation": false,
+      "static_references": [
+        "wnd/guide_talk.csb /base/btn_guide_skip/btn_guide_skip",
+        "db/tutorial_guide.db prequel_stage_guide_01",
+        "text/en/text.db skip_tutorial / tuto_prequel_stage_guide_01"
+      ]
+    },
+    "quest_claimed_tick": {
+      "source_file": "var/runs/20261026T111641Z_f5e00a6c/receipt.png",
+      "crop_xyxy": [
+        1038,
+        454,
+        1068,
+        477
+      ],
+      "source_sha256": "ee1896901f69d306b7e6792d2a948f5465ec8b187b9ea3f0afb1587ee558f702",
+      "sha256": "6f2fd9f2cb9aa7d557cd492bd3a73fd41d9a8cf7492546f05c16a572c0eca88b",
+      "purpose": "quest_row_claim_receipt",
+      "pack_texture": false
+    },
+    "checkbox_on": {
+      "source_file": "var/runs/20261026T132837Z_3253dd3c/restore_filter_state.png",
+      "crop_xyxy": [
+        888,
+        181,
+        917,
+        210
+      ],
+      "source_sha256": "9cbe51e3cc2cf9599c3f55c742508dcae51a9c9ea5276eb714be158ab744b057",
+      "sha256": "493eb32d90d9b291cad5dd45af7643c5f074ee9a0a20eb5718168c6ac863f237",
+      "purpose": "chat_notification_checkbox_state",
+      "pack_texture": false
+    },
+    "checkbox_off": {
+      "source_file": "var/runs/20261026T132903Z_83affff6/public_off_verified.png",
+      "crop_xyxy": [
+        888,
+        181,
+        917,
+        210
+      ],
+      "source_sha256": "667175f20a70f14675f0dadac46115b4a2338bb128cc091742583d05a67e7ac2",
+      "sha256": "5f6178cbd462d9fa281e1b392ceb25ba4845669cb35390e523fcb34fc5353bc3",
+      "purpose": "chat_notification_checkbox_state",
+      "pack_texture": false
+    },
+    "tavern_wall_day": {
+      "source_file": "agent_000003.png",
+      "source_run": "20261026T151101Z_359c50a3",
+      "crop_xyxy": [
+        995,
+        125,
+        1065,
+        225
+      ],
+      "source_sha256": "42860e69d0d6ceda80a70491c3951f0000fc56e31e2fba560f1d1286293370ed",
+      "sha256": "ff04b8caf77ef8fe5916886f12a43e9b3253cd173eb381b9700f256513239b8d",
+      "purpose": "runtime_template",
+      "pack_texture": false,
+      "scope": "Daylight bulletin-board wall detail selected against six temporal samples; original clock area has variable sunbeam illumination. Paired second anchor and HUD absence remain required."
+    },
+    "tavern_barrel_day": {
+      "source_file": "agent_000001.png",
+      "source_run": "20261026T150448Z_d098b0cd",
+      "crop_xyxy": [
+        825,
+        120,
+        873,
+        158
+      ],
+      "source_sha256": "d3e497669bba08b2f80149fd04e83c083a15222fc3a9a266f8410232bfb626f7",
+      "sha256": "eee73ce0efad1beedf3fe11367968f1c76fcfb02c441490074b50441719ec9a7",
+      "purpose": "runtime_template",
+      "pack_texture": false,
+      "scope": "Stable daylight barrel detail; second paired tavern anchor. Shelf daylight location had large sunbeam variation and is not used."
+    },
+    "checkbox_off_item": {
+      "source_file": "agent_000003.png",
+      "source_run": "20261026T151225Z_7b1fa554",
+      "crop_xyxy": [
+        888,
+        244,
+        917,
+        273
+      ],
+      "source_sha256": "7688a2984e71db5c2f32bd12812414989112e1815a9759f2e5c5ab50f5569511",
+      "sha256": "4da15ac7067ea039e6ce17eeb6feaa00f83043aa12b838a773b42f9a7eb98867",
+      "purpose": "runtime_template",
+      "pack_texture": false,
+      "scope": "Unchecked individual notification checkbox on dark background; checked templates remain separate and unknown is preserved."
+    },
+    "quick_menu_music": {
+      "source_file": "agent_000004.png",
+      "source_run": "20261026T152512Z_e31b2a12",
+      "crop_xyxy": [
+        903,
+        613,
+        989,
+        635
+      ],
+      "source_sha256": "fe8a7814a8f954d258dbcdc97b995fffcc4593b7269fd5e852cd11dbbb556960",
+      "sha256": "c6fc81baf718f611e7a361bf1bd5cdbb87461b8b93c7e5afbcf84ddd367faec1",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "quick_menu_close": {
+      "source_file": "agent_000004.png",
+      "source_run": "20261026T152512Z_e31b2a12",
+      "crop_xyxy": [
+        1158,
+        14,
+        1194,
+        50
+      ],
+      "source_sha256": "fe8a7814a8f954d258dbcdc97b995fffcc4593b7269fd5e852cd11dbbb556960",
+      "sha256": "0776d6515a89a5dcb482a24771a04bdd56b16b156c1d7cf9ccd1672c24e2fc7d",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "options_header": {
+      "source_file": "agent_000007.png",
+      "source_run": "20261026T152901Z_09d82e44",
+      "crop_xyxy": [
+        58,
+        14,
+        154,
+        50
+      ],
+      "source_sha256": "ddcb809bbd52ba20f21f247628479261f1e17984a58ed8f1f484bc7be1b762f1",
+      "sha256": "8bff29a9652ca84ff2562975e0bd6754e5ca9d02ba0cdcfc74f43b06638a846b",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "options_back": {
+      "source_file": "agent_000007.png",
+      "source_run": "20261026T152901Z_09d82e44",
+      "crop_xyxy": [
+        20,
+        12,
+        52,
+        50
+      ],
+      "source_sha256": "ddcb809bbd52ba20f21f247628479261f1e17984a58ed8f1f484bc7be1b762f1",
+      "sha256": "f0750e47c061a7cc950cd806cecc6942472ca8ec718531497ce85f879a80f9b2",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "hero_search": {
+      "source_file": "agent_000020.png",
+      "source_run": "20261026T153130Z_69896c78",
+      "crop_xyxy": [
+        884,
+        76,
+        945,
+        98
+      ],
+      "source_sha256": "0124e2846c2963a59525bfbeb5aad22f36f14633f71da3c1aa7443292553609d",
+      "sha256": "c2cf99ef206f228158d6329c903ae0b42b482aaef512a1320d82b968fb1714e5",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "hero_transmission_label": {
+      "source_file": "agent_000020.png",
+      "source_run": "20261026T153130Z_69896c78",
+      "crop_xyxy": [
+        1050,
+        622,
+        1184,
+        645
+      ],
+      "source_sha256": "0124e2846c2963a59525bfbeb5aad22f36f14633f71da3c1aa7443292553609d",
+      "sha256": "6a7a5a8ed9ce501576e1b873311e74769353928f4a63e84af3f668a2d6e3268b",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "battle_menu_header": {
+      "source_file": "agent_000016.png",
+      "source_run": "20261026T153545Z_16aa79d1",
+      "crop_xyxy": [
+        59,
+        16,
+        130,
+        47
+      ],
+      "source_sha256": "c7820dd3f1d4223cd9223d2833fbd311068cc6b25b3895bf20894bff1c125750",
+      "sha256": "f94a02259095a66cc95f89ab6e616d5d4f3caef6da60b8f3fdef78a4a67489d4",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "battle_seasonal_tab": {
+      "source_file": "agent_000016.png",
+      "source_run": "20261026T153545Z_16aa79d1",
+      "crop_xyxy": [
+        249,
+        99,
+        335,
+        127
+      ],
+      "source_sha256": "c7820dd3f1d4223cd9223d2833fbd311068cc6b25b3895bf20894bff1c125750",
+      "sha256": "9ff541c379ef07cdc1a1c3365f440de66ed0319726ddf50c9f7aa2c94d1d022d",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "battle_normal_tab": {
+      "source_file": "agent_000016.png",
+      "source_run": "20261026T153545Z_16aa79d1",
+      "crop_xyxy": [
+        83,
+        102,
+        149,
+        124
+      ],
+      "source_sha256": "c7820dd3f1d4223cd9223d2833fbd311068cc6b25b3895bf20894bff1c125750",
+      "sha256": "6db16354fc4530c36ed9d663b3b11adbc0908fa9339fda3049e005695f4e8236",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "battle_normal_tab_normal_view": {
+      "source_file": "agent_000003.png",
+      "source_run": "20261026T153834Z_208b4d30",
+      "crop_xyxy": [
+        83,
+        102,
+        149,
+        124
+      ],
+      "source_sha256": "17dea5b8dedf25214480003cf0a2e0be9d62db2657b91aec5c772a31410bacc8",
+      "sha256": "c735bd49b20e72ee0ec563246329413bb7fed4051beff6549bdf89c467a5e797",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "battle_seasonal_tab_normal_view": {
+      "source_file": "agent_000003.png",
+      "source_run": "20261026T153834Z_208b4d30",
+      "crop_xyxy": [
+        251,
+        103,
+        334,
+        124
+      ],
+      "source_sha256": "17dea5b8dedf25214480003cf0a2e0be9d62db2657b91aec5c772a31410bacc8",
+      "sha256": "1a624257a11792af00ab05ee7f2780c443728c622a568b1b0b0d65da226ea660",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "auto_hud_on": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T060242Z_390d2724/agent_000144.png",
+      "source_sha256": "b42b3da5654fa470c017f2130499090d9b48ec594cecf3fcea1c550fe91f3681",
+      "crop_xyxy": [
+        930,
+        647,
+        1192,
+        676
+      ],
+      "sha256": "daf98cc2bb4a1aac7a22abf75b55d1be3e8c01591f7fce5f92a91872525f37d1",
+      "transformation": "Four separate27px checks with blue footer, all gaps masked; no portrait identity or top-arrow color used for on.",
+      "source_layout": "wnd/hud_auto.csb",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "scope": "STOVE1212x682 current battle HUD. On requires four checks; off requires three Vildred icon cores and normal unlocked Auto control. enabled/availability unknown.",
+      "calibration": "var/stove-session/auto-unlocked-calibration/report.json",
+      "limitations": [
+        "141 activation glow is unknown. Missing HUD/cutscene/old locked skills are unknown.",
+        "Off is calibrated only for the observed Vildred manual skill layout; on only the four-hero checked HUD.",
+        "No toggle/executor added. Existing canonical no-op can consume true without input."
+      ]
+    },
+    "auto_hud_off": {
+      "source_file": "agent_000072.png",
+      "source_run": "20261026T213404Z_9a757f4e",
+      "source_sha256": "8603c148de32c1ae1593213f36f1c7fddc9adb4ac408c80307914f12d9f09167",
+      "crop_xyxy": [
+        916,
+        576,
+        1007,
+        677
+      ],
+      "sha256": "b655153cd730b9c61db9f34bb17e97e653e510d2f65636203620be54850756d8",
+      "purpose": "runtime_template",
+      "pack_texture": false,
+      "green_mask": true,
+      "scope": "Calibrated visible HUD; absent/ambiguous markers leave Auto unknown.",
+      "game_asset_attribution": "Epic Seven game UI; not original artwork."
+    },
+    "auto_hud_off_pulse": {
+      "source_file": "agent_000073.png",
+      "source_run": "20261026T213404Z_9a757f4e",
+      "source_sha256": "94edfbbdf004cc7fe10464753e517de4e98be3512e0cd4af9e55a1fbf9eb2b0e",
+      "crop_xyxy": [
+        916,
+        576,
+        1007,
+        677
+      ],
+      "sha256": "5da45fc5e452b599de2d633f41cd5679da7236416a567288e1d677a64234d5b9",
+      "purpose": "runtime_template",
+      "pack_texture": false,
+      "green_mask": true,
+      "scope": "Calibrated visible HUD; absent/ambiguous markers leave Auto unknown.",
+      "game_asset_attribution": "Epic Seven game UI; not original artwork."
+    },
+    "formation_remove": {
+      "source_file": "agent_000033.png",
+      "source_run": "20261026T201921Z_d656a3d9",
+      "source_sha256": "e21d048d196577099fb20b1defb95e7bddce61c66d262f66a1b86ad482f3e0e5",
+      "crop_xyxy": [
+        218,
+        336,
+        260,
+        355
+      ],
+      "sha256": "56c910ba82cf53c632278fa00e4b354edf7fbe3cb1c2004c6ac0d2bdef3d081d",
+      "purpose": "runtime_template",
+      "pack_texture": false,
+      "scope": "Paired selected-member controls only; member and slot identities unknown."
+    },
+    "formation_details": {
+      "source_file": "agent_000033.png",
+      "source_run": "20261026T201921Z_d656a3d9",
+      "source_sha256": "e21d048d196577099fb20b1defb95e7bddce61c66d262f66a1b86ad482f3e0e5",
+      "crop_xyxy": [
+        305,
+        328,
+        343,
+        367
+      ],
+      "sha256": "e9ad408e6c4135b81d0431d4310405e37464955dbd2d6f61fa1995f35b02351e",
+      "purpose": "runtime_template",
+      "pack_texture": false,
+      "scope": "Paired selected-member controls only; member and slot identities unknown.",
+      "comparison_glyph_min": 170
+    },
+    "auto_hud_off_arena": {
+      "source_file": "agent_000222.png",
+      "source_run": "20261026T232625Z_eef54186",
+      "source_sha256": "50bca21cb9cc14c14aa067797bad2f6d5f6ee3b61d3c7b8018a7b7a6ff46ff26",
+      "crop_xyxy": [
+        916,
+        576,
+        1007,
+        677
+      ],
+      "sha256": "9ec069346143a7b1878e277fd7dc6741cd127e494202685bd7a118fde21f888d",
+      "purpose": "runtime_template",
+      "pack_texture": false,
+      "green_mask": true,
+      "mask_reference": "auto_hud_off.png green region; internal skill artwork excluded",
+      "scope": "Positive manual skill-slot HUD variant; does not infer Auto from absence or alter battle classifier.",
+      "game_asset_attribution": "Epic Seven game UI; not original artwork."
+    },
+    "auto_hud_off_arena_glow": {
+      "source_file": "agent_000264.png",
+      "source_run": "20261026T232625Z_eef54186",
+      "source_sha256": "26541f833f2d37b95dfd1022557e56a5c2515bbde35c1f38a0718b0a9e228367",
+      "crop_xyxy": [
+        916,
+        576,
+        1007,
+        677
+      ],
+      "sha256": "e097f5aa8d0e78da6a0aa3ed7a99b30c94feeede5e2d90e192a2597251979846",
+      "purpose": "runtime_template",
+      "pack_texture": false,
+      "green_mask": true,
+      "mask_reference": "auto_hud_off.png green region; internal skill artwork excluded",
+      "scope": "Positive manual skill-slot HUD variant; does not infer Auto from absence or alter battle classifier.",
+      "game_asset_attribution": "Epic Seven game UI; not original artwork."
+    },
+    "classic_story_skip": {
+      "source_file": "entered_5s.png",
+      "source_run": "20261026T001048Z_a56a321a",
+      "crop_xyxy": [
+        1123,
+        21,
+        1189,
+        52
+      ],
+      "source_sha256": "be42c574da7d5980c4128835d4ea6a99e5a184f0f9a5f0bb0ce2888d8f1f0ce6",
+      "sha256": "12f6d8f620fd429a67beb70d1031367495b99c03b6ca5aa051d9f868138441ce",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "classic_story_history": {
+      "source_file": "entered_5s.png",
+      "source_run": "20261026T001048Z_a56a321a",
+      "crop_xyxy": [
+        1023,
+        20,
+        1059,
+        53
+      ],
+      "source_sha256": "be42c574da7d5980c4128835d4ea6a99e5a184f0f9a5f0bb0ce2888d8f1f0ce6",
+      "sha256": "ba63fc6d1b118c557c190e7fc346f0442b34c9bc91633fc7ddcc8c640c3fd351",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "classic_story_confirm_question": {
+      "source_file": "story_after_skip_click.png",
+      "source_run": "20261026T001114Z_d4375621",
+      "crop_xyxy": [
+        438,
+        294,
+        774,
+        321
+      ],
+      "source_sha256": "a3197749d403dff3fcdad66cda3df3b6af7d8f17fe53d23122fa1ca965e410f3",
+      "sha256": "e7bb4ceb4252cd69a8682417ee3721b5aba7c281dd3b622f33065181948c930d",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "classic_story_confirm_button": {
+      "source_file": "story_after_skip_click.png",
+      "source_run": "20261026T001114Z_d4375621",
+      "crop_xyxy": [
+        671,
+        422,
+        747,
+        450
+      ],
+      "source_sha256": "a3197749d403dff3fcdad66cda3df3b6af7d8f17fe53d23122fa1ca965e410f3",
+      "sha256": "8fa15bfcde0d37e0cf10e3ce6143d632f9073688c2536ddaa88009be01344d9d",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "tutorial_skip": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T003836Z_6bfd84bc/agent_000025.png",
+      "source_sha256": "789e267f856e59407f4cb2fb6b05c0df1696ac1e2d337f6f8a591d224b3c3e54",
+      "crop_xyxy": [
+        1040,
+        19,
+        1165,
+        47
+      ],
+      "sha256": "7e905b5722cb7d72f531a4d303da0a999a929bac66e5b3185bf4aefede58c2b3",
+      "transformation": "Gold glyphs: R>100,G>70,B>40,R-G>10,G-B>10 plus 1px neighborhood retained; native Maa green mask outside; no scaling.",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682",
+      "purpose": "runtime_template",
+      "live_action_validation": false,
+      "static_references": [
+        "wnd/guide_talk.csb /base/btn_guide_skip/btn_guide_skip",
+        "db/tutorial_guide.db prequel_stage_guide_01",
+        "text/en/text.db skip_tutorial / tuto_prequel_stage_guide_01"
+      ]
+    },
+    "tutorial_episode_instruction": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T003836Z_6bfd84bc/agent_000025.png",
+      "source_sha256": "789e267f856e59407f4cb2fb6b05c0df1696ac1e2d337f6f8a591d224b3c3e54",
+      "crop_xyxy": [
+        685,
+        160,
+        980,
+        211
+      ],
+      "sha256": "80479a7a52afd4f16ad70b4c80d79c65bad4a8e9e4d64e2d6e099bb6c4f631de",
+      "transformation": "Pale glyphs: min channel>=130,spread<65 plus 1px neighborhood retained; native Maa green mask outside; no scaling.",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682",
+      "purpose": "runtime_template",
+      "live_action_validation": false,
+      "static_references": [
+        "wnd/guide_talk.csb /base/btn_guide_skip/btn_guide_skip",
+        "db/tutorial_guide.db prequel_stage_guide_01",
+        "text/en/text.db skip_tutorial / tuto_prequel_stage_guide_01"
+      ]
+    },
+    "classic_episode_button": {
+      "source_file": "var\\runs\\20261026T021112Z_2c5f94b9\\live.png",
+      "crop_xyxy": [
+        1071,
+        163,
+        1167,
+        189
+      ],
+      "source_sha256": "d4c94fc239859220956f23fb7c9e9ee5435c3a55e0737179eb2ab000dd50e62e",
+      "sha256": "475d3965fd6bb62b987eabd2838b84722313cdb7f392b1a5077ed8f7a9bb875b",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "lobby_stained_window": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T004547Z_58a7ec10/agent_000007.png",
+      "source_sha256": "1fdde961b104c3483fd7e5b2c7ac13c5d48dce424ff2016297a49b41ebdb4135",
+      "crop_xyxy": [
+        750,
+        80,
+        830,
+        125
+      ],
+      "sha256": "b86e6c9cda74640766ae92f3691f8011f3887154e86dce5b3516f92499052f06",
+      "transformation": "Exact crop, no mask or scaling. Narrow ROI; full-color pixel validation.",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682 anniversary illustrated lobby only",
+      "purpose": "runtime_template",
+      "live_action_validation": false
+    },
+    "lobby_idle_upper_left": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T004547Z_58a7ec10/agent_000007.png",
+      "source_sha256": "1fdde961b104c3483fd7e5b2c7ac13c5d48dce424ff2016297a49b41ebdb4135",
+      "crop_xyxy": [
+        30,
+        20,
+        90,
+        60
+      ],
+      "sha256": "e8c2af313cc1ff6ec7240d14bd3cb515517347e1ec96c3d26df7248918a17a71",
+      "transformation": "Exact crop, no mask or scaling. Narrow ROI; full-color pixel validation.",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682 anniversary illustrated lobby only",
+      "purpose": "runtime_template",
+      "live_action_validation": false
+    },
+    "lobby_menu_grid": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T004547Z_58a7ec10/agent_000003.png",
+      "source_sha256": "e3130d8642c1ce514cfed2a3022e7bac2632d390c188f2624df65c20a2212bbe",
+      "crop_xyxy": [
+        1158,
+        13,
+        1193,
+        49
+      ],
+      "sha256": "cd162f93408a80e1c172cb05497f7914bd0c4437fa3c95695b0e3b19bf61c1f8",
+      "transformation": "Exact crop, no mask or scaling. Narrow ROI; full-color pixel validation.",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682 anniversary illustrated lobby only",
+      "purpose": "runtime_template",
+      "live_action_validation": false
+    },
+    "episode_button_normal": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T004547Z_58a7ec10/agent_000003.png",
+      "source_sha256": "e3130d8642c1ce514cfed2a3022e7bac2632d390c188f2624df65c20a2212bbe",
+      "crop_xyxy": [
+        1066,
+        158,
+        1174,
+        194
+      ],
+      "sha256": "86cf9727d446a84b9b19c5755f3043a9b3f384d0dbda93e4fe6aa53378108cca",
+      "transformation": "Pale glyphs min channel>=130, spread<65 plus 1px neighborhood; green mask outside; no scaling.",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682 anniversary lobby normal, not tutorial glow",
+      "purpose": "runtime_template",
+      "live_action_validation": false
+    },
+    "story_skip_light_room": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T005115Z_8d1b189a/agent_000019.png",
+      "source_sha256": "6ed609b70f1c00500883aaf6b4ef64c3a4eecb8a15b0ae5b4530c1c26588ff7d",
+      "crop_xyxy": [
+        1123,
+        21,
+        1189,
+        52
+      ],
+      "sha256": "501330445a40a0b3eec03f20bd97b6c5a2b057b61e215e341cdc5349836403fd",
+      "transformation": "Exact current RGB values under the same glyph+1px mask from original STOVE story_skip; green mask elsewhere. No threshold change, scaling, or added background pixels.",
+      "mask_source": "resources/epic-seven/image/story_skip.png",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682 story light-room variant",
+      "purpose": "runtime_template",
+      "live_action_validation": false
+    },
+    "prequel_episode_header": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T005115Z_8d1b189a/agent_000015.png",
+      "source_sha256": "998f017bb11f5fae4b91d1924703ae2a35cee7e13baeeb6c45271ab20c9edcd9",
+      "crop_xyxy": [
+        60,
+        17,
+        260,
+        49
+      ],
+      "sha256": "8bc721d5dca37fd9610a1e87e176adeb0200915be9d964895c8d04b1ddda3473",
+      "transformation": "Neutral pale glyphs min channel>=140,spread<45 plus 1px neighborhood retained; green mask outside; no scaling.",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682 prequel story-selection map",
+      "purpose": "read_only_state_anchor",
+      "static_references": [
+        "wnd/battle_prequel.csb",
+        "wnd/story_ready.csb /Layer/btn_go"
+      ],
+      "live_action_validation": false
+    },
+    "prequel_view_story": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T005115Z_8d1b189a/agent_000015.png",
+      "source_sha256": "998f017bb11f5fae4b91d1924703ae2a35cee7e13baeeb6c45271ab20c9edcd9",
+      "crop_xyxy": [
+        1000,
+        607,
+        1105,
+        645
+      ],
+      "sha256": "5b9bfb74d9d75c52872b3b0f15c5fac0003c6d06aca9bed9a3bf6d20fd880669",
+      "transformation": "Neutral pale glyphs min channel>=140,spread<45 plus 1px neighborhood retained; green mask outside; no scaling.",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682 prequel story-selection map",
+      "purpose": "read_only_state_anchor",
+      "static_references": [
+        "wnd/battle_prequel.csb",
+        "wnd/story_ready.csb /Layer/btn_go"
+      ],
+      "live_action_validation": false
+    },
+    "classic_battle_help": {
+      "source_file": "after_story_confirm_6s.png",
+      "source_run": "20261026T001130Z_bf3f28be",
+      "crop_xyxy": [
+        934,
+        12,
+        970,
+        51
+      ],
+      "source_sha256": "b20d6ffe59b8505306da1c7179567e7ce91a36eee6ecc0288bec7e0d0e5560e5",
+      "sha256": "d2dbbffea4257d6a3883df0a6df524aacfe1317fcf77d80aeac61699f1323f28",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "classic_battle_pause": {
+      "source_file": "after_story_confirm_6s.png",
+      "source_run": "20261026T001130Z_bf3f28be",
+      "crop_xyxy": [
+        1161,
+        12,
+        1190,
+        49
+      ],
+      "source_sha256": "b20d6ffe59b8505306da1c7179567e7ce91a36eee6ecc0288bec7e0d0e5560e5",
+      "sha256": "169cf7809a77188effbfec84a8272411866117f8a80c2195ca6c282c65f28c46",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "nightmare_keeper_body_007": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T010445Z_262a2dda/agent_000007.png",
+      "source_sha256": "fef6cefc9f4756aeef5afd828867f77df4171cbbb65e843745cd3246d311a91f",
+      "crop_xyxy": [
+        1002,
+        292,
+        1084,
+        390
+      ],
+      "sha256": "a5b0c1c21676e28e457184c4091bc2f4a79d90d1c883430a3b715be21111ffe9",
+      "transformation": "Exact visible torso crop, no mask/scaling; local native template recognition determines current bounding box.",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682 wdp002 Nightmare Keeper physical target",
+      "purpose": "runtime_target_candidate",
+      "scope": "Only with positive boss name and Help/Pause; target binding and live hitbox remain unverified until principal input."
+    },
+    "nightmare_keeper_body_009": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T010445Z_262a2dda/agent_000009.png",
+      "source_sha256": "3674944683712c0d872d48bcc701baeafb590bdaf5e0547a707764f2951d2a5a",
+      "crop_xyxy": [
+        1002,
+        292,
+        1084,
+        390
+      ],
+      "sha256": "e5830f714c12c08dd4e406f7206b6f36fce3025193e0ca44577d1882b7fd75ce",
+      "transformation": "Exact visible torso crop, no mask/scaling; local native template recognition determines current bounding box.",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682 wdp002 Nightmare Keeper physical target",
+      "purpose": "runtime_target_candidate",
+      "scope": "Only with positive boss name and Help/Pause; target binding and live hitbox remain unverified until principal input."
+    },
+    "nightmare_keeper_body_011": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T010445Z_262a2dda/agent_000011.png",
+      "source_sha256": "c804507e76a48b4f282fcd59c7d99fdcd4207cc68825c0fe052166b98153cb5d",
+      "crop_xyxy": [
+        1002,
+        292,
+        1084,
+        390
+      ],
+      "sha256": "e9d5ca8179d0f2376ce3e25da43cae2f4e8c66c66868f1b358ac91cc6929b9d8",
+      "transformation": "Exact visible torso crop, no mask/scaling; local native template recognition determines current bounding box.",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682 wdp002 Nightmare Keeper physical target",
+      "purpose": "runtime_target_candidate",
+      "scope": "Only with positive boss name and Help/Pause; target binding and live hitbox remain unverified until principal input."
+    },
+    "nightmare_keeper_body_013": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T010445Z_262a2dda/agent_000013.png",
+      "source_sha256": "040c2b5d2d9bd14c82b06cde0d10a3fd303c4499c8b947e80892cc21dd9dffe6",
+      "crop_xyxy": [
+        1002,
+        292,
+        1084,
+        390
+      ],
+      "sha256": "a97600755ae0f57fa557563f9b055a157eda96e47290c2c8feb679ef6ce987b5",
+      "transformation": "Exact visible torso crop, no mask/scaling; local native template recognition determines current bounding box.",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682 wdp002 Nightmare Keeper physical target",
+      "purpose": "runtime_target_candidate",
+      "scope": "Only with positive boss name and Help/Pause; target binding and live hitbox remain unverified until principal input."
+    },
+    "nightmare_keeper_body_016": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T010445Z_262a2dda/agent_000016.png",
+      "source_sha256": "a0cb68c47421d806506fb301efab1159017058b56f4084f5421537ee1e614151",
+      "crop_xyxy": [
+        1002,
+        292,
+        1084,
+        390
+      ],
+      "sha256": "b73ed9154718033eea71a129cf813f8cc62351bb21dbebb563a2d7d7b92aed38",
+      "transformation": "Exact visible torso crop, no mask/scaling; local native template recognition determines current bounding box.",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682 wdp002 Nightmare Keeper physical target",
+      "purpose": "runtime_target_candidate",
+      "scope": "Only with positive boss name and Help/Pause; target binding and live hitbox remain unverified until principal input."
+    },
+    "nightmare_keeper_body_019": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T010445Z_262a2dda/agent_000019.png",
+      "source_sha256": "4725faabee9a44f2e3fabd0965267f084a86c64d154ff90cac615d0ea4b408b4",
+      "crop_xyxy": [
+        1002,
+        292,
+        1084,
+        390
+      ],
+      "sha256": "f2c57db55849798a4369e49bf78bd9fe5e92f6bb6b33e839591da088dd173efa",
+      "transformation": "Exact visible torso crop, no mask/scaling; local native template recognition determines current bounding box.",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682 wdp002 Nightmare Keeper physical target",
+      "purpose": "runtime_target_candidate",
+      "scope": "Only with positive boss name and Help/Pause; target binding and live hitbox remain unverified until principal input."
+    },
+    "nightmare_keeper_name": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T010445Z_262a2dda/agent_000019.png",
+      "source_sha256": "4725faabee9a44f2e3fabd0965267f084a86c64d154ff90cac615d0ea4b408b4",
+      "crop_xyxy": [
+        291,
+        2,
+        451,
+        28
+      ],
+      "sha256": "6d5cb86137060de82d4d871bb53e3cb078bd0ba210ff55f44c433fa5fb6ac065",
+      "transformation": "Neutral bright name glyphs min>=150,spread<40 plus 1px neighborhood; green mask outside.",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682 Nightmare Keeper header",
+      "purpose": "runtime_context_anchor"
+    },
+    "nightmare_keeper_body_postattack_006": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T011501Z_1691e5c9/agent_000006.png",
+      "source_sha256": "2c6301b244c52f88f7b121d00aa0f0224d8f384cb09f193c3854185b8c28f21e",
+      "crop_xyxy": [
+        1002,
+        292,
+        1084,
+        390
+      ],
+      "sha256": "4b1ee3a1090438b13923999d43b67eae45cfd34438b3cba94f265c90f8c5520f",
+      "transformation": "Exact visible torso pose after first confirmed attack; same box dimensions, no masking/scaling or threshold changes.",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682 wdp002 Nightmare Keeper physical target",
+      "purpose": "runtime_target_candidate",
+      "scope": "Same boss name/HUD context; this pose previously failed before input. No damage or animation completion inferred."
+    },
+    "nightmare_keeper_body_postattack_007": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T011501Z_1691e5c9/agent_000007.png",
+      "source_sha256": "091d6c661108a08c205ba7a020d9e5541f9af85b25a552f592c7a4fc74122105",
+      "crop_xyxy": [
+        1002,
+        292,
+        1084,
+        390
+      ],
+      "sha256": "6c5c6aa4fbebdd37eba3672b441d763893b4f6aed65ef1b3efdb979615fc9ff4",
+      "transformation": "Exact visible torso pose after first confirmed attack; same box dimensions, no masking/scaling or threshold changes.",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682 wdp002 Nightmare Keeper physical target",
+      "purpose": "runtime_target_candidate",
+      "scope": "Same boss name/HUD context; this pose previously failed before input. No damage or animation completion inferred."
+    },
+    "nightmare_keeper_body_postattack_009": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T011501Z_1691e5c9/agent_000009.png",
+      "source_sha256": "3caec8b92b79770ff2842f635ff9cfb88c51a0476397382af17ef6e389722ea2",
+      "crop_xyxy": [
+        1002,
+        292,
+        1084,
+        390
+      ],
+      "sha256": "4b1ee3a1090438b13923999d43b67eae45cfd34438b3cba94f265c90f8c5520f",
+      "transformation": "Exact visible torso pose after first confirmed attack; same box dimensions, no masking/scaling or threshold changes.",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682 wdp002 Nightmare Keeper physical target",
+      "purpose": "runtime_target_candidate",
+      "scope": "Same boss name/HUD context; this pose previously failed before input. No damage or animation completion inferred."
+    },
+    "classic_story_reward_header": {
+      "source_file": "observation.png",
+      "source_run": "20261026T001458Z_4a002f83",
+      "crop_xyxy": [
+        531,
+        150,
+        683,
+        182
+      ],
+      "source_sha256": "bda3e1239d048830607747dd3e23206deb297853ec7f81e98e8680c03250f782",
+      "sha256": "2fe3e31983dd11da0f1cbb6954e5c9c90f3941a8adbdc7545278b9ac4b77d96e",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "classic_story_reward_close": {
+      "source_file": "observation.png",
+      "source_run": "20261026T001458Z_4a002f83",
+      "crop_xyxy": [
+        552,
+        443,
+        659,
+        471
+      ],
+      "source_sha256": "bda3e1239d048830607747dd3e23206deb297853ec7f81e98e8680c03250f782",
+      "sha256": "530c256f626db3392134212bf1b715b76902c0ddf248cdbcfaa06870a392a18c",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "classic_map_ready_label": {
+      "source_file": "observation.png",
+      "source_run": "20261026T000111Z_c3e8fb12",
+      "crop_xyxy": [
+        1019,
+        614,
+        1084,
+        642
+      ],
+      "source_sha256": "0f6323f21ac67f4b3674cee815810f587b026108459cc927fd1da676b250d574",
+      "sha256": "e7b74759fb68e0486567306355e8ed4308e1aea4c39842d672f6d17a2517d698",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "prequel_ready_header": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T005115Z_8d1b189a/agent_000033.png",
+      "source_sha256": "70cfbdf4b729979fbc164286cceb75666c8cf3a0013729ee06b99aeae0850d22",
+      "crop_xyxy": [
+        58,
+        15,
+        135,
+        49
+      ],
+      "sha256": "dd3b7f1691b12afdccf1808cbbe52f4012426a9863269eb7e9e5d4c128d6e45e",
+      "transformation": "Pale text min>=110, spread<75 with1px neighborhood; green mask outside, no scaling.",
+      "pack_texture": false,
+      "purpose": "read_only_state_anchor",
+      "scope": "Observed STOVE Story Team preparation with current tutorial shading; no generic battle start target."
+    },
+    "prequel_story_team": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T005115Z_8d1b189a/agent_000033.png",
+      "source_sha256": "70cfbdf4b729979fbc164286cceb75666c8cf3a0013729ee06b99aeae0850d22",
+      "crop_xyxy": [
+        176,
+        80,
+        265,
+        106
+      ],
+      "sha256": "f0d35a9110d8f37888e644c9555c98452c22ad8b592372151038c7b38d246f4f",
+      "transformation": "Exact opaque blue badge crop, no mask or scaling.",
+      "pack_texture": false,
+      "purpose": "read_only_state_anchor",
+      "scope": "Observed STOVE Story Team preparation with current tutorial shading; no generic battle start target."
+    },
+    "prequel_episode_header_tutorial": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T005115Z_8d1b189a/agent_000027.png",
+      "source_sha256": "ee04eef50a75cf12838743702809eb9e0351826b3963e1695f5dafca399bfede",
+      "crop_xyxy": [
+        60,
+        17,
+        260,
+        49
+      ],
+      "sha256": "70644fa7b7b917e09dd09847cba3274e1666160ec1a7c75d9c4cecb051a1ac23",
+      "transformation": "Same exact glyph mask as base prequel header, actual pixels from observed tutorial-shaded map. No threshold change.",
+      "pack_texture": false,
+      "purpose": "read_only_state_anchor"
+    },
+    "classic_clear_initial": {
+      "source_file": "observation.png",
+      "source_run": "20261026T001327Z_d2c8c353",
+      "crop_xyxy": [
+        237,
+        533,
+        399,
+        579
+      ],
+      "source_sha256": "00e04c24c99da8755336c420ebc26220ca939ce3ee08b2e9cb8e77482bcee338",
+      "sha256": "99d6539b57e8e17c395f765f15da5938cf396f4083bdf7dfeb0ea18290ee278f",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "classic_clear_continue": {
+      "source_file": "observation.png",
+      "source_run": "20261026T001327Z_d2c8c353",
+      "crop_xyxy": [
+        1164,
+        627,
+        1187,
+        654
+      ],
+      "source_sha256": "00e04c24c99da8755336c420ebc26220ca939ce3ee08b2e9cb8e77482bcee338",
+      "sha256": "47b39fed040ffafd2425286b08622b5c25135483cac4d42954d715ee035ca25a",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "classic_result_heading": {
+      "source_file": "result_after_clear.png",
+      "source_run": "20261026T001359Z_ca7eb921",
+      "crop_xyxy": [
+        1036,
+        31,
+        1176,
+        58
+      ],
+      "source_sha256": "339f1c7953cdd953c0a3487c42504bba94dab26c547e2c35d799cbf2b81f8d91",
+      "sha256": "431251c4a68f3341f7673d9c8a408952959552a8ccace125b45780dd73adc636",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "classic_result_confirm": {
+      "source_file": "result_after_clear.png",
+      "source_run": "20261026T001359Z_ca7eb921",
+      "crop_xyxy": [
+        1063,
+        613,
+        1132,
+        644
+      ],
+      "source_sha256": "339f1c7953cdd953c0a3487c42504bba94dab26c547e2c35d799cbf2b81f8d91",
+      "sha256": "f240f033b6a2c8f5c8bff65c4245af2e4e7d1a82b5eae1416f177b5ba8cf65ce",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "classic_received_reward_header": {
+      "source_file": "var\\runs\\20261026T012040Z_158702ef\\live.png",
+      "crop_xyxy": [
+        492,
+        145,
+        723,
+        174
+      ],
+      "source_sha256": "fed2c821fe78e0e93b04589149c008e104853522d21671b779515ed1f5cf20c3",
+      "sha256": "19504bbe9dae874bc5d219f091ddb606dcef18d51171fb13c64ba9ab8360cd54",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "classic_received_reward_close": {
+      "source_file": "var\\runs\\20261026T012040Z_158702ef\\live.png",
+      "crop_xyxy": [
+        553,
+        491,
+        660,
+        512
+      ],
+      "source_sha256": "fed2c821fe78e0e93b04589149c008e104853522d21671b779515ed1f5cf20c3",
+      "sha256": "5736fa74ea5fb8e27c22f06f2c7bdb4041f5dc6aedd13aba8b87dced85681c7b",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "prequel_episode_header_tenebria": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T012018Z_f4ee88cc/agent_000020.png",
+      "source_sha256": "84f35fac95eb76828a2057f3c55c879cf11e19dc89eeca7a7e55630b30426c17",
+      "crop_xyxy": [
+        60,
+        17,
+        260,
+        49
+      ],
+      "sha256": "be2722e0545084e0b95bb600c826aff7e0918629bf0f029da9395a800193e090",
+      "transformation": "Actual pixels retained under same base glyph mask; no threshold change or scaling.",
+      "pack_texture": false,
+      "purpose": "runtime_template"
+    },
+    "story_history_camp": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T012018Z_f4ee88cc/agent_000007.png",
+      "source_sha256": "6b1b9133c869984ad9425f405767dcbe96527ad695264cbbb8e5000aa817d39e",
+      "crop_xyxy": [
+        1023,
+        20,
+        1059,
+        53
+      ],
+      "sha256": "43a36df203ab73ca029a6a47817380b8eee64800822f9cb7306032aada2ba5bc",
+      "transformation": "Actual pixels retained under same base glyph mask; no threshold change or scaling.",
+      "pack_texture": false,
+      "purpose": "runtime_template"
+    },
+    "mercenary_lydia_body_004": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T013137Z_d2916078/agent_000004.png",
+      "source_sha256": "155441cc1d908360ba2024b584853f1b11ba990a212f7dd991d918468ad1a6c1",
+      "crop_xyxy": [
+        880,
+        310,
+        1000,
+        515
+      ],
+      "sha256": "e8fbe8848ec2e54d2fda1ef619c7787388a9f42cffc512861a8af66084702c1a",
+      "transformation": "Exact physical body/pose crop, no mask or scaling. Current native box determines input location.",
+      "pack_texture": false,
+      "purpose": "runtime_target_candidate",
+      "scope": "Mercenary Lydia only, requires name and Help/Pause; dynamic hitbox binding unknown, no inference of Auto or skill execution."
+    },
+    "mercenary_lydia_body_013": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T013137Z_d2916078/agent_000013.png",
+      "source_sha256": "05e881d6f3d8092d998ad8bdc89dffda207a2d0a9da6699f0d8cec00887eebdc",
+      "crop_xyxy": [
+        880,
+        310,
+        1000,
+        515
+      ],
+      "sha256": "0a4f03a292d1f70abf3dcda216fc854e8902201ba6a6a9a6a8993a1a61819372",
+      "transformation": "Exact physical body/pose crop, no mask or scaling. Current native box determines input location.",
+      "pack_texture": false,
+      "purpose": "runtime_target_candidate",
+      "scope": "Mercenary Lydia only, requires name and Help/Pause; dynamic hitbox binding unknown, no inference of Auto or skill execution."
+    },
+    "mercenary_lydia_body_020": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T013137Z_d2916078/agent_000020.png",
+      "source_sha256": "e17e564d1bc940c5936c64d5fad7cd4fa1343d3cb5eee8dd89539295599dd4a3",
+      "crop_xyxy": [
+        880,
+        310,
+        1000,
+        515
+      ],
+      "sha256": "5a6151c01f8fb282ae8bf1c401a6c919c9349bf980686b9ae57343bd05bb7127",
+      "transformation": "Exact physical body/pose crop, no mask or scaling. Current native box determines input location.",
+      "pack_texture": false,
+      "purpose": "runtime_target_candidate",
+      "scope": "Mercenary Lydia only, requires name and Help/Pause; dynamic hitbox binding unknown, no inference of Auto or skill execution."
+    },
+    "mercenary_lydia_body_022": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T013137Z_d2916078/agent_000022.png",
+      "source_sha256": "00a1af0f8c48740430b0fd192e8e25f351424fb9b4e69e5aa8b284dc2ad882e9",
+      "crop_xyxy": [
+        880,
+        310,
+        1000,
+        515
+      ],
+      "sha256": "5e8cea170e03e8e170c58febc28dc081b9cc0bae9fd34aac1d6f198a5afae7db",
+      "transformation": "Exact physical body/pose crop, no mask or scaling. Current native box determines input location.",
+      "pack_texture": false,
+      "purpose": "runtime_target_candidate",
+      "scope": "Mercenary Lydia only, requires name and Help/Pause; dynamic hitbox binding unknown, no inference of Auto or skill execution."
+    },
+    "mercenary_lydia_body_024": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T013137Z_d2916078/agent_000024.png",
+      "source_sha256": "befadb189eb04f9f7f572f36b0c74b6c86761eb943a4f8e3a596a6e0b91d7477",
+      "crop_xyxy": [
+        880,
+        310,
+        1000,
+        515
+      ],
+      "sha256": "610632bb2baf618a940f12085592d6beab8d8b9d4ab5765dc163150f9f099657",
+      "transformation": "Exact physical body/pose crop, no mask or scaling. Current native box determines input location.",
+      "pack_texture": false,
+      "purpose": "runtime_target_candidate",
+      "scope": "Mercenary Lydia only, requires name and Help/Pause; dynamic hitbox binding unknown, no inference of Auto or skill execution."
+    },
+    "mercenary_lydia_name": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T013137Z_d2916078/agent_000024.png",
+      "source_sha256": "befadb189eb04f9f7f572f36b0c74b6c86761eb943a4f8e3a596a6e0b91d7477",
+      "crop_xyxy": [
+        291,
+        2,
+        443,
+        29
+      ],
+      "sha256": "17b104e7b4a9637c0ac53666ed4880f3a0c3fd74fedc33a89b34b9fd86265868",
+      "transformation": "Neutral name glyphs min>=150,spread<40 plus1px neighborhood; green mask outside.",
+      "pack_texture": false,
+      "purpose": "runtime_context_anchor"
+    },
+    "skill_highlight_frame_1": {
+      "origin": "screen_crop",
+      "sources": [
+        {
+          "path": "var/runs/20261027T013137Z_d2916078/agent_000004.png",
+          "sha256": "155441cc1d908360ba2024b584853f1b11ba990a212f7dd991d918468ad1a6c1"
+        },
+        {
+          "path": "var/runs/20261027T013137Z_d2916078/agent_000007.png",
+          "sha256": "83c515b0e9561e44875b1604a38657a481b8a56886f0cc7c9905d94c3f8e4830"
+        }
+      ],
+      "crop_xyxy": [
+        923,
+        580,
+        1015,
+        680
+      ],
+      "sha256": "b1f662385af98b4a345be352427d541e90770701dd0dcd063e7188b506e4181b",
+      "transformation": "Retain yellow pixels(R>220,G>190,B<230) within14px perimeter only where max channel difference between two current positive phases<=12; other pixels use native Maa green mask. No scaling or threshold relaxation.",
+      "static_shape_reference": "wnd/hud_skill.csb /Layer/selected -> img/cm_select_skill.png; package pixels not used in this crop.",
+      "pack_texture": false,
+      "purpose": "read_only_highlight_marker",
+      "scope": "Calibrated Krau story-team skill-border presentation only; not enabled/Auto/turn or execution proof."
+    },
+    "skill_highlight_frame_2": {
+      "origin": "screen_crop",
+      "sources": [
+        {
+          "path": "var/runs/20261027T013137Z_d2916078/agent_000013.png",
+          "sha256": "05e881d6f3d8092d998ad8bdc89dffda207a2d0a9da6699f0d8cec00887eebdc"
+        },
+        {
+          "path": "var/runs/20261027T013137Z_d2916078/agent_000009.png",
+          "sha256": "e85672eed4a8150a56c738751385a2b645fbfcf99e6de802b7444e738b5f1d69"
+        }
+      ],
+      "crop_xyxy": [
+        1019,
+        580,
+        1111,
+        680
+      ],
+      "sha256": "c3c5de2607a3198ff2d30faa0b1030245ddc538e74e7adb1c9160f66c76fac46",
+      "transformation": "Retain yellow pixels(R>220,G>190,B<230) within14px perimeter only where max channel difference between two current positive phases<=12; other pixels use native Maa green mask. No scaling or threshold relaxation.",
+      "static_shape_reference": "wnd/hud_skill.csb /Layer/selected -> img/cm_select_skill.png; package pixels not used in this crop.",
+      "pack_texture": false,
+      "purpose": "read_only_highlight_marker",
+      "scope": "Calibrated Krau story-team skill-border presentation only; not enabled/Auto/turn or execution proof."
+    },
+    "skill_highlight_frame_3": {
+      "origin": "screen_crop",
+      "sources": [
+        {
+          "path": "var/runs/20261027T010445Z_262a2dda/agent_000016.png",
+          "sha256": "a0cb68c47421d806506fb301efab1159017058b56f4084f5421537ee1e614151"
+        },
+        {
+          "path": "var/runs/20261027T010445Z_262a2dda/agent_000019.png",
+          "sha256": "4725faabee9a44f2e3fabd0965267f084a86c64d154ff90cac615d0ea4b408b4"
+        }
+      ],
+      "crop_xyxy": [
+        1115,
+        580,
+        1207,
+        680
+      ],
+      "sha256": "eeb0bd9e3f58453a2ecab461e10b2ceb2063707cf3f13df2ec8c40f5575f6888",
+      "transformation": "Retain yellow pixels(R>220,G>190,B<230) within14px perimeter only where max channel difference between two current positive phases<=12; other pixels use native Maa green mask. No scaling or threshold relaxation.",
+      "static_shape_reference": "wnd/hud_skill.csb /Layer/selected -> img/cm_select_skill.png; package pixels not used in this crop.",
+      "pack_texture": false,
+      "purpose": "read_only_highlight_marker",
+      "scope": "Calibrated Krau story-team skill-border presentation only; not enabled/Auto/turn or execution proof."
+    },
+    "skill_highlight_frame_hugo_s1": {
+      "origin": "screen_crop",
+      "sources": [
+        {
+          "path": "var/runs/20261027T020703Z_0dc452c4/agent_000004.png",
+          "sha256": "4eb326d3bfbd24e7b237e0a28d68cb0a6e97fceb7ed0f71ef1ed8a539c8a9d01"
+        },
+        {
+          "path": "var/runs/20261027T020703Z_0dc452c4/agent_000007.png",
+          "sha256": "1a290cec1cb6bdd5c8b6c00ca8f93a09c6e20781fe6695b35d436bc9812b86d0"
+        }
+      ],
+      "crop_xyxy": [
+        923,
+        580,
+        1015,
+        680
+      ],
+      "sha256": "b0b313c88f4fcea8b3bb74e31523de2e915669b2c62c195c040413906ba0342b",
+      "transformation": "Same selected-border criteria: yellow R>220,G>190,B<230 within14px perimeter, max channel change<=12 across positive phases. Native green mask elsewhere.",
+      "retained_pixels": 419,
+      "pack_texture": false,
+      "purpose": "read_only_highlight_marker",
+      "scope": "Actual highlighted border only, not enabled/Auto/readiness/selection application proof."
+    },
+    "skill_highlight_frame_hugo_s2": {
+      "origin": "screen_crop",
+      "sources": [
+        {
+          "path": "var/runs/20261027T020703Z_0dc452c4/agent_000001.png",
+          "sha256": "52e59c6ecbc892ef82a7c7ed28f4ba9905519868e936fc3e9e2dee31ea930ec3"
+        },
+        {
+          "path": "var/runs/20261027T013137Z_d2916078/agent_000013.png",
+          "sha256": "05e881d6f3d8092d998ad8bdc89dffda207a2d0a9da6699f0d8cec00887eebdc"
+        }
+      ],
+      "crop_xyxy": [
+        1019,
+        580,
+        1111,
+        680
+      ],
+      "sha256": "161b460f5c3a4199db2e06150df562b874e87ee60f54330de5a69b6c6609f01c",
+      "transformation": "Same selected-border criteria: yellow R>220,G>190,B<230 within14px perimeter, max channel change<=12 across positive phases. Native green mask elsewhere.",
+      "retained_pixels": 513,
+      "pack_texture": false,
+      "purpose": "read_only_highlight_marker",
+      "scope": "Actual highlighted border only, not enabled/Auto/readiness/selection application proof."
+    },
+    "clear_objective_check": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T012018Z_f4ee88cc/agent_000011.png",
+      "source_sha256": "d3aa1a6e859b2f3f9437a202a59a0a6122f87d9aa7a4f57f524ceecf13ced5a5",
+      "crop_xyxy": [
+        209,
+        532,
+        236,
+        553
+      ],
+      "sha256": "206a260dcf79bc61ce14e7eaa8dcb0865eb8e83aa6dda94a675e8a9d5c3bf18c",
+      "transformation": "Exact saved-screen crop, no scaling.",
+      "pack_texture": false,
+      "purpose": "read_only_current_clear_result_marker",
+      "scope": "STOVE current CLEAR only; not preparation requirements, stage identity, reward receipt or next-stage authorization.",
+      "static_shape_reference": "wnd/result_mission_item.csb /Layer/icon_check -> img/cm_icon_check_b.png",
+      "source_gap": "Runtime instance binding is not extracted; slot association requires current CLEAR composition and aligned OCR.",
+      "validation_mask": "Current shared check glyph: template G>130, G>1.4R, G>1.4B; >=50 pixels. Native correlation .94 and MAE 14 unchanged. Independent ijp003 result in var/group2-live."
+    },
+    "clear_three_stars": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T012018Z_f4ee88cc/agent_000011.png",
+      "source_sha256": "d3aa1a6e859b2f3f9437a202a59a0a6122f87d9aa7a4f57f524ceecf13ced5a5",
+      "crop_xyxy": [
+        490,
+        245,
+        720,
+        380
+      ],
+      "sha256": "833a33f29e8907790ee0c178e71821dc4e86a15d815edbdb4ec9d610d3090252",
+      "transformation": "Keep white three-star glyphs (min channel>=220, channel spread<35) and 2px neighborhood; native green mask elsewhere. No scaling.",
+      "pack_texture": false,
+      "purpose": "read_only_current_clear_result_marker",
+      "scope": "STOVE current CLEAR only; not preparation requirements, stage identity, reward receipt or next-stage authorization.",
+      "static_shape_reference": null,
+      "source_gap": "Large three-star effect ancestry is unresolved; exact runtime bitmap calibration only."
+    },
+    "hero_joined_title": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T024311Z_f1c0e142/agent_000047.png",
+      "source_sha256": "e10570ddc1822938bd69ac60a82e41dd1e0a9530a6499f3a277d1437d2636789",
+      "crop_xyxy": [
+        370,
+        168,
+        844,
+        202
+      ],
+      "sha256": "28d8be3f909079373f0d33a19fc0d88733f4c7742af771c5fea1b1ec4654c58a",
+      "transformation": "Neutral glyphs min>=145 and channel spread<35 plus1px neighborhood; native green mask elsewhere.",
+      "pack_texture": false,
+      "purpose": "read_only_hero_availability_notice",
+      "static_shape_reference": "wnd/hero_get.csb /Layer/window_frame/txt_title",
+      "scope": "Victorika notice only; no general hero acquisition executor or owned-instance inference."
+    },
+    "hero_joined_description": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T024311Z_f1c0e142/agent_000047.png",
+      "source_sha256": "e10570ddc1822938bd69ac60a82e41dd1e0a9530a6499f3a277d1437d2636789",
+      "crop_xyxy": [
+        362,
+        371,
+        853,
+        416
+      ],
+      "sha256": "cca4c8c849b75c45ba5e10092bc5a5acf63f72404e53febf35e5c4fbd354e4ef",
+      "transformation": "Neutral glyphs min>=145 and channel spread<35 plus1px neighborhood; native green mask elsewhere.",
+      "pack_texture": false,
+      "purpose": "read_only_hero_availability_notice",
+      "static_shape_reference": "wnd/hero_get.csb /Layer/window_frame/txt_disc",
+      "scope": "Victorika notice only; no general hero acquisition executor or owned-instance inference."
+    },
+    "hero_joined_ok": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T024311Z_f1c0e142/agent_000047.png",
+      "source_sha256": "e10570ddc1822938bd69ac60a82e41dd1e0a9530a6499f3a277d1437d2636789",
+      "crop_xyxy": [
+        514,
+        461,
+        698,
+        516
+      ],
+      "sha256": "f05814f5ca4d4bd097945639888e38bd979158abd3cb048f9b375f5262281c06",
+      "transformation": "Exact button crop; no mask or scaling.",
+      "pack_texture": false,
+      "purpose": "read_only_hero_availability_notice",
+      "static_shape_reference": "wnd/hero_get.csb /Layer/window_frame/btn_ok",
+      "scope": "Victorika notice only; no general hero acquisition executor or owned-instance inference."
+    },
+    "prequel_ready_header_normal": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T031057Z_dcdc3935/agent_000007.png",
+      "source_sha256": "fa760a085b75f2f0140562ccb68c2fad1523f42e96ecf42fe329ee9565713a64",
+      "crop_xyxy": [
+        58,
+        15,
+        135,
+        49
+      ],
+      "sha256": "1f8ebbc5647934495b6b5d14c7619a964be583caedb5d113d5e1dd2aef8472df",
+      "transformation": "Neutral glyphs min150/spread35 plus1px neighborhood, native green mask.",
+      "purpose": "read_only_prequel_formation",
+      "pack_texture": false,
+      "static_shape_reference": "wnd/battle_ready.csb current Ready heading",
+      "scope": "Current supplied formation composition only, not runtime slot IDs, enabled state or action authorization."
+    },
+    "prequel_story_team_normal": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T031057Z_dcdc3935/agent_000007.png",
+      "source_sha256": "fa760a085b75f2f0140562ccb68c2fad1523f42e96ecf42fe329ee9565713a64",
+      "crop_xyxy": [
+        166,
+        79,
+        281,
+        104
+      ],
+      "sha256": "e6a85141a78371be7a0d8ee52614c32d45417d27253485305ce38ef3a98e0dbe",
+      "transformation": "Exact saved-screen crop, no scaling or mask.",
+      "purpose": "read_only_prequel_formation",
+      "pack_texture": false,
+      "static_shape_reference": "wnd/formation.csb current Story Team badge",
+      "scope": "Current supplied formation composition only, not runtime slot IDs, enabled state or action authorization."
+    },
+    "formation_destination_right": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T031057Z_dcdc3935/agent_000013.png",
+      "source_sha256": "e7236600dd26c637fedce48b087571a8689893bf710333e9791ea6f976b21ff9",
+      "crop_xyxy": [
+        500,
+        299,
+        574,
+        374
+      ],
+      "sha256": "413d1241bfe0309cefa432d930e9e198fa3f3e1fc48ab6690f2c0e93847525ee",
+      "transformation": "Exact saved-screen crop, no scaling or mask.",
+      "purpose": "read_only_prequel_formation",
+      "pack_texture": false,
+      "static_shape_reference": "wnd/formation.csb dynamic destination marker; static slot ID unresolved",
+      "scope": "Current supplied formation composition only, not runtime slot IDs, enabled state or action authorization."
+    },
+    "formation_destination_lower": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T031057Z_dcdc3935/agent_000013.png",
+      "source_sha256": "e7236600dd26c637fedce48b087571a8689893bf710333e9791ea6f976b21ff9",
+      "crop_xyxy": [
+        383,
+        372,
+        458,
+        447
+      ],
+      "sha256": "e3bd923bc96a60d5c434c4ca5758fd9b8cc7ed6efdade924c8e5d6b5565d0f71",
+      "transformation": "Exact saved-screen crop, no scaling or mask.",
+      "purpose": "read_only_prequel_formation",
+      "pack_texture": false,
+      "static_shape_reference": "wnd/formation.csb dynamic destination marker; static slot ID unresolved",
+      "scope": "Current supplied formation composition only, not runtime slot IDs, enabled state or action authorization."
+    },
+    "formation_victorika_right": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T031057Z_dcdc3935/agent_000016.png",
+      "source_sha256": "fd9d2cc9fde1bbbde7241903cebcfa4b8f84d8745d9a07bb27ab391a35248ed4",
+      "crop_xyxy": [
+        498,
+        234,
+        575,
+        330
+      ],
+      "sha256": "ae50ff322915ae1a1640adcc8166890f934682bbb65269a6625e514acb36e096",
+      "transformation": "Exact saved-screen crop, no scaling or mask.",
+      "purpose": "read_only_prequel_formation",
+      "pack_texture": false,
+      "static_shape_reference": "wnd/formation.csb runtime member sprite; dynamic instance unresolved",
+      "scope": "Current supplied formation composition only, not runtime slot IDs, enabled state or action authorization."
+    },
+    "dap005_preparation_identity": {
+      "source_file": "var/runs/20261027T032805Z_f1bed6a4/agent_000025.png",
+      "source_sha256": "6f8f09cb5e5e3dff516c4e3b18183b472215e47c7005c41728ef2c8accdd0888",
+      "crop_xyxy": [
+        873,
+        74,
+        1054,
+        139
+      ],
+      "sha256": "ff562a2d2315a76e90e5f060ca4278e8a664b6288aee033f5170c3f8af3f7d3c",
+      "retained_pixels": 3171,
+      "transformation": "Actual gold location and neutral title glyphs plus1px neighborhood; native green mask elsewhere; no scaling.",
+      "origin": "screen_crop",
+      "pack_texture": false,
+      "purpose": "exclusive_dap005_preparation_identity",
+      "scope": "Corrupted Forest / An Unpermitted Future only, with current Ready, exact location/title OCR and energy cost8 with stock>=8.",
+      "target": "dap005_start_quest from native current OCR box; no fixed point, executor or auto-start.",
+      "calibration": "var/stove-session/dap005-start-calibration/report.json",
+      "limitations": [
+        "One current STOVE composition; unsupported layouts/localizations stay unknown.",
+        "Static battle_ready btn_go branch binding unresolved; actual current text is the input anchor.",
+        "Ledger/reservation and one input remain parent responsibilities; recognition never proves a sent start or destination."
+      ],
+      "live_action_validation": true,
+      "live_evidence": {
+        "before": "var/runs/20261027T034529Z_6b3c4cd0/agent_000001.json",
+        "single_request": "var/runs/20261027T034529Z_6b3c4cd0/agent_000002.json",
+        "entry_vignette": "var/runs/20261027T034529Z_6b3c4cd0/agent_000002.png",
+        "later_story": "var/runs/20261027T034529Z_6b3c4cd0/agent_000003.json",
+        "clear": "var/runs/20261027T034529Z_6b3c4cd0/agent_000054.json",
+        "report": "var/stove-session/dap005-start-calibration/live-validation.json",
+        "limit": "Immediate expected-story wait timed out; correct entry vignette and later story separately confirmed. No repeated Start."
+      }
+    },
+    "victorika_acquisition_name": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T034529Z_6b3c4cd0/agent_000156.png",
+      "source_sha256": "87a4314976ccaa4c9d299d48ace6a433bee16e91d83121f3ed24782eddea8ab2",
+      "crop_xyxy": [
+        29,
+        62,
+        220,
+        110
+      ],
+      "sha256": "c3078a8dece8327dd3b6a495fc3e7264d1364b7a3a25875a4286239f855add42",
+      "transformation": "Neutral glyphs min110/spread40 plus1px; native green mask elsewhere.",
+      "pack_texture": false,
+      "static_shape_reference": "wnd/gacha_result_unit.csb /Layer/n_result/n_name/txt_name",
+      "purpose": "scoped_Victorika_acquisition_dismissal",
+      "scope": "Victorika c1166, displayed4stars, Fire/Knight/Leo and NEW only. Confirm requires normal button, current Confirm OCR and no recognized dialogue name.",
+      "calibration": "var/stove-session/victorika-acquisition-calibration/report.json",
+      "limitations": [
+        "No summon, selector, purchase or owned-instance inference.",
+        "No generic Confirm target or executor."
+      ],
+      "live_dismiss_validation": true,
+      "live_evidence": {
+        "before": "var/runs/20261027T045511Z_1ec60bbf/agent_000001.json",
+        "dispatch": "var/runs/20261027T045511Z_1ec60bbf/agent_000002.json",
+        "later_story_reward": "var/runs/20261027T045511Z_1ec60bbf/agent_000003.json",
+        "report": "var/stove-session/victorika-acquisition-calibration/live-validation.json",
+        "limit": "Immediate unknown after-state; destination confirmed by separate fresh read. No repeated click."
+      }
+    },
+    "victorika_acquisition_traits": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T034529Z_6b3c4cd0/agent_000156.png",
+      "source_sha256": "87a4314976ccaa4c9d299d48ace6a433bee16e91d83121f3ed24782eddea8ab2",
+      "crop_xyxy": [
+        31,
+        20,
+        241,
+        53
+      ],
+      "sha256": "1d550bf4e57a3605feec18f02deb1aa96427ab31e1cc95e6ec115ad5c7bb4537",
+      "transformation": "Exact saved-screen crop, no scaling or mask.",
+      "pack_texture": false,
+      "static_shape_reference": "wnd/gacha_result_unit.csb /Layer/n_result/n_name/n_name_top",
+      "purpose": "scoped_Victorika_acquisition_dismissal",
+      "scope": "Victorika c1166, displayed4stars, Fire/Knight/Leo and NEW only. Confirm requires normal button, current Confirm OCR and no recognized dialogue name.",
+      "calibration": "var/stove-session/victorika-acquisition-calibration/report.json",
+      "limitations": [
+        "No summon, selector, purchase or owned-instance inference.",
+        "No generic Confirm target or executor."
+      ],
+      "live_dismiss_validation": true,
+      "live_evidence": {
+        "before": "var/runs/20261027T045511Z_1ec60bbf/agent_000001.json",
+        "dispatch": "var/runs/20261027T045511Z_1ec60bbf/agent_000002.json",
+        "later_story_reward": "var/runs/20261027T045511Z_1ec60bbf/agent_000003.json",
+        "report": "var/stove-session/victorika-acquisition-calibration/live-validation.json",
+        "limit": "Immediate unknown after-state; destination confirmed by separate fresh read. No repeated click."
+      }
+    },
+    "victorika_acquisition_new": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T034529Z_6b3c4cd0/agent_000156.png",
+      "source_sha256": "87a4314976ccaa4c9d299d48ace6a433bee16e91d83121f3ed24782eddea8ab2",
+      "crop_xyxy": [
+        257,
+        111,
+        325,
+        180
+      ],
+      "sha256": "b3ef7c57f26ab0fd14598188590653158f8d12fca479763e81521405671949fb",
+      "transformation": "Exact saved-screen crop, no scaling or mask.",
+      "pack_texture": false,
+      "static_shape_reference": "wnd/gacha_result_unit.csb /Layer/n_result/n_name/n_new",
+      "purpose": "scoped_Victorika_acquisition_dismissal",
+      "scope": "Victorika c1166, displayed4stars, Fire/Knight/Leo and NEW only. Confirm requires normal button, current Confirm OCR and no recognized dialogue name.",
+      "calibration": "var/stove-session/victorika-acquisition-calibration/report.json",
+      "limitations": [
+        "No summon, selector, purchase or owned-instance inference.",
+        "No generic Confirm target or executor."
+      ],
+      "live_dismiss_validation": true,
+      "live_evidence": {
+        "before": "var/runs/20261027T045511Z_1ec60bbf/agent_000001.json",
+        "dispatch": "var/runs/20261027T045511Z_1ec60bbf/agent_000002.json",
+        "later_story_reward": "var/runs/20261027T045511Z_1ec60bbf/agent_000003.json",
+        "report": "var/stove-session/victorika-acquisition-calibration/live-validation.json",
+        "limit": "Immediate unknown after-state; destination confirmed by separate fresh read. No repeated click."
+      }
+    },
+    "victorika_acquisition_four_stars": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T034529Z_6b3c4cd0/agent_000156.png",
+      "source_sha256": "87a4314976ccaa4c9d299d48ace6a433bee16e91d83121f3ed24782eddea8ab2",
+      "crop_xyxy": [
+        227,
+        73,
+        312,
+        106
+      ],
+      "sha256": "06b1877ef6fbcaf29735eb7312f852e57ac51b30b80799ad34cb61073802124a",
+      "transformation": "Exact saved-screen crop, no scaling or mask.",
+      "pack_texture": false,
+      "static_shape_reference": "wnd/gacha_result_unit.csb /Layer/n_result/n_name/star1/star2/star3/star4",
+      "purpose": "scoped_Victorika_acquisition_dismissal",
+      "scope": "Victorika c1166, displayed4stars, Fire/Knight/Leo and NEW only. Confirm requires normal button, current Confirm OCR and no recognized dialogue name.",
+      "calibration": "var/stove-session/victorika-acquisition-calibration/report.json",
+      "limitations": [
+        "No summon, selector, purchase or owned-instance inference.",
+        "No generic Confirm target or executor."
+      ],
+      "live_dismiss_validation": true,
+      "live_evidence": {
+        "before": "var/runs/20261027T045511Z_1ec60bbf/agent_000001.json",
+        "dispatch": "var/runs/20261027T045511Z_1ec60bbf/agent_000002.json",
+        "later_story_reward": "var/runs/20261027T045511Z_1ec60bbf/agent_000003.json",
+        "report": "var/stove-session/victorika-acquisition-calibration/live-validation.json",
+        "limit": "Immediate unknown after-state; destination confirmed by separate fresh read. No repeated click."
+      }
+    },
+    "victorika_acquisition_confirm_normal": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T034529Z_6b3c4cd0/agent_000156.png",
+      "source_sha256": "87a4314976ccaa4c9d299d48ace6a433bee16e91d83121f3ed24782eddea8ab2",
+      "crop_xyxy": [
+        1017,
+        606,
+        1134,
+        647
+      ],
+      "sha256": "a3527d0407e906e390f6cf2a53a3320946c44ce0c7c3a069cc8a37fd24ff023c",
+      "transformation": "Exact saved-screen crop, no scaling or mask.",
+      "pack_texture": false,
+      "static_shape_reference": "wnd/gacha_result_unit.csb /Layer/n_result/n_buttons_ext/btn_close",
+      "purpose": "scoped_Victorika_acquisition_dismissal",
+      "scope": "Victorika c1166, displayed4stars, Fire/Knight/Leo and NEW only. Confirm requires normal button, current Confirm OCR and no recognized dialogue name.",
+      "calibration": "var/stove-session/victorika-acquisition-calibration/report.json",
+      "limitations": [
+        "No summon, selector, purchase or owned-instance inference.",
+        "No generic Confirm target or executor."
+      ],
+      "live_dismiss_validation": true,
+      "live_evidence": {
+        "before": "var/runs/20261027T045511Z_1ec60bbf/agent_000001.json",
+        "dispatch": "var/runs/20261027T045511Z_1ec60bbf/agent_000002.json",
+        "later_story_reward": "var/runs/20261027T045511Z_1ec60bbf/agent_000003.json",
+        "report": "var/stove-session/victorika-acquisition-calibration/live-validation.json",
+        "limit": "Immediate unknown after-state; destination confirmed by separate fresh read. No repeated click."
+      }
+    },
+    "victorika_acquisition_speech_name": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T034529Z_6b3c4cd0/agent_000151.png",
+      "source_sha256": "92a7911d19ce991147af0963000455d7dbfac26697bac0b0eccd494906b62329",
+      "crop_xyxy": [
+        555,
+        488,
+        659,
+        521
+      ],
+      "sha256": "010a9b90546bb1bd66b025059e2c0045df4ffb40e7f3bff33d6344fc19423469",
+      "transformation": "Neutral glyphs min110/spread40 plus1px; native green mask elsewhere.",
+      "pack_texture": false,
+      "static_shape_reference": "story.csb dialogue-name runtime attachment unresolved",
+      "purpose": "scoped_Victorika_acquisition_dismissal",
+      "scope": "Victorika c1166, displayed4stars, Fire/Knight/Leo and NEW only. Confirm requires normal button, current Confirm OCR and no recognized dialogue name.",
+      "calibration": "var/stove-session/victorika-acquisition-calibration/report.json",
+      "limitations": [
+        "No summon, selector, purchase or owned-instance inference.",
+        "No generic Confirm target or executor."
+      ],
+      "live_dismiss_validation": true,
+      "live_evidence": {
+        "before": "var/runs/20261027T045511Z_1ec60bbf/agent_000001.json",
+        "dispatch": "var/runs/20261027T045511Z_1ec60bbf/agent_000002.json",
+        "later_story_reward": "var/runs/20261027T045511Z_1ec60bbf/agent_000003.json",
+        "report": "var/stove-session/victorika-acquisition-calibration/live-validation.json",
+        "limit": "Immediate unknown after-state; destination confirmed by separate fresh read. No repeated click."
+      }
+    },
+    "renoa_promo_traits": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T055006Z_d1c129f7/agent_000007.png",
+      "source_sha256": "a3f6e9f48986f855f7bf597bbfa8aa3e33cde7a5c5bae2f1342eaf4262cb357b",
+      "crop_xyxy": [
+        208,
+        81,
+        391,
+        113
+      ],
+      "sha256": "1c6e43e66862a322d8e90fcfeb5ea2732ab31623225390df69338bcc5d8d913d",
+      "transformation": "Exact saved screenshot crop; no resize or mask.",
+      "static_shape_reference": "wnd/gacha_result_unit.csb /Layer/n_result/n_name/n_name_top",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "purpose": "scoped_Renoa_promotional_dismissal",
+      "scope": "Renoa/Ranger/Dark and exact two-line description; shared unchanged normal Confirm plus current OCR. No acquisition claim.",
+      "calibration": "var/stove-session/renoa-promo-calibration/report.json",
+      "limitations": [
+        "Only observed Renoa promotional variant; no generic Confirm, purchase, summon, owned-instance claim or executor.",
+        "Live dispatch and destination remain pending."
+      ]
+    },
+    "renoa_promo_description": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T055006Z_d1c129f7/agent_000007.png",
+      "source_sha256": "a3f6e9f48986f855f7bf597bbfa8aa3e33cde7a5c5bae2f1342eaf4262cb357b",
+      "crop_xyxy": [
+        134,
+        293,
+        488,
+        336
+      ],
+      "sha256": "b8c0f193d2780dc0a33aedbc0dd42765fd0da4c282648debd5446e43779f25a8",
+      "transformation": "Gold glyph selection R110/G70/B<=140/R>=1.12G/G>=1.2B plus1px dilation; native green mask elsewhere.",
+      "static_shape_reference": "wnd/gacha_result_unit.csb /Layer/n_result/n_name/txt_story",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "purpose": "scoped_Renoa_promotional_dismissal",
+      "scope": "Renoa/Ranger/Dark and exact two-line description; shared unchanged normal Confirm plus current OCR. No acquisition claim.",
+      "calibration": "var/stove-session/renoa-promo-calibration/report.json",
+      "limitations": [
+        "Only observed Renoa promotional variant; no generic Confirm, purchase, summon, owned-instance claim or executor.",
+        "Live dispatch and destination remain pending."
+      ]
+    },
+    "lobby_menu_grid_badge_masked": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T055624Z_d8a1e216/agent_000010.png",
+      "source_sha256": "17ce0a7945eac1786b88397b09ae00817f15c77fc97e752640ef7dc5417dfa31",
+      "crop_xyxy": [
+        1158,
+        13,
+        1193,
+        49
+      ],
+      "sha256": "1f84f4cd83d1ea97647442c0138ec60712086f576f252ce348158dc50868e910",
+      "transformation": "Mask the top-left18x18 quadrant; retain the other three menu squares. Badge presence/color is ignored, never a state cue.",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "purpose": "anniversary_lobby_current_menu_and_Milestone_entry",
+      "profile": "STOVE1212x682 observed anniversary lobby only",
+      "calibration": "var/stove-session/lobby-milestone-calibration/report.json",
+      "limitations": [
+        "No broadened missing-HUD/other-theme state. Existing tutorial/modal exclusions and numeric thresholds unchanged.",
+        "Entry target only. No claim, chest opening, purchase or generic shop executor."
+      ],
+      "live_action_validation": false
+    },
+    "milestone_lobby_entry": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T055624Z_d8a1e216/agent_000010.png",
+      "source_sha256": "17ce0a7945eac1786b88397b09ae00817f15c77fc97e752640ef7dc5417dfa31",
+      "crop_xyxy": [
+        6,
+        143,
+        102,
+        216
+      ],
+      "sha256": "f5b74f3fbdc9d3763320de8e152b3f932058a961afcbce4750842a833988b7a4",
+      "transformation": "Current gold icon and two-line title pixels R120/G105/B<=.95G/R>=.95G, plus1px; native green mask elsewhere.",
+      "static_shape_reference": "wnd/lobby_ui_renew.csb /Layer/BUTTONS/LEFT/n_btn_type/n_btn_coreloop/btn_coreloop and sibling t_title; local shape only, not global coordinates.",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "purpose": "anniversary_lobby_current_menu_and_Milestone_entry",
+      "profile": "STOVE1212x682 observed anniversary lobby only",
+      "calibration": "var/stove-session/lobby-milestone-calibration/report.json",
+      "limitations": [
+        "No broadened missing-HUD/other-theme state. Existing tutorial/modal exclusions and numeric thresholds unchanged.",
+        "Entry target only. No claim, chest opening, purchase or generic shop executor."
+      ],
+      "live_action_validation": true,
+      "live_validation_reference": "var/stove-session/lobby-milestone-calibration/live-validation.json"
+    },
+    "classic_auto_hud_on": {
+      "source_file": "agent_000076.png",
+      "source_run": "20261026T213404Z_9a757f4e",
+      "source_sha256": "6c0bc4508c8a3b36065dec18fda946eaa21702e598f7952231c31f5b397cc219",
+      "crop_xyxy": [
+        937,
+        650,
+        966,
+        678
+      ],
+      "sha256": "b8f5bb14ede60d4910b66930cbd1f832ae4d39e4f402a43d5c14ef871fb41d94",
+      "purpose": "runtime_template",
+      "pack_texture": false,
+      "green_mask": false,
+      "scope": "Calibrated visible HUD; absent/ambiguous markers leave Auto unknown.",
+      "game_asset_attribution": "Epic Seven game UI; not original artwork."
+    },
+    "classic_auto_hud_off": {
+      "source_file": "agent_000072.png",
+      "source_run": "20261026T213404Z_9a757f4e",
+      "source_sha256": "8603c148de32c1ae1593213f36f1c7fddc9adb4ac408c80307914f12d9f09167",
+      "crop_xyxy": [
+        916,
+        576,
+        1007,
+        677
+      ],
+      "sha256": "b655153cd730b9c61db9f34bb17e97e653e510d2f65636203620be54850756d8",
+      "purpose": "runtime_template",
+      "pack_texture": false,
+      "green_mask": true,
+      "scope": "Calibrated visible HUD; absent/ambiguous markers leave Auto unknown.",
+      "game_asset_attribution": "Epic Seven game UI; not original artwork."
+    },
+    "auto_manual_skills": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T060242Z_390d2724/agent_000139.png",
+      "source_sha256": "e375c646653061c5d0c82d9952706f00723d1f8e7db85a7aa2a3e5ed4cf28fda",
+      "crop_xyxy": [
+        938,
+        597,
+        1190,
+        657
+      ],
+      "sha256": "179795e36f08d9a8fa6c86e87e61aa8184d007e56cf9c8c2766dce52f2b1a7f0",
+      "transformation": "Three current Vildred60x60 skill icon cores, gaps/glowing borders ignored; not a readiness or selection claim.",
+      "source_layout": "wnd/hud_skill.csb",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "scope": "STOVE1212x682 current battle HUD. On requires four checks; off requires three Vildred icon cores and normal unlocked Auto control. enabled/availability unknown.",
+      "calibration": "var/stove-session/auto-unlocked-calibration/report.json",
+      "limitations": [
+        "141 activation glow is unknown. Missing HUD/cutscene/old locked skills are unknown.",
+        "Off is calibrated only for the observed Vildred manual skill layout; on only the four-hero checked HUD.",
+        "No toggle/executor added. Existing canonical no-op can consume true without input."
+      ]
+    },
+    "auto_unlocked_off": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T060242Z_390d2724/agent_000139.png",
+      "source_sha256": "e375c646653061c5d0c82d9952706f00723d1f8e7db85a7aa2a3e5ed4cf28fda",
+      "crop_xyxy": [
+        1046,
+        12,
+        1090,
+        51
+      ],
+      "sha256": "091dce57015b0697a4dbed344b15b563c512d14626dd4c84fffa668ef09c6412",
+      "transformation": "Exact normal unlit white Auto control plus dark backing; never sufficient alone for off.",
+      "source_layout": "wnd/inbattle_topbar.csb /base/top_right/n_miscs/n_top_auto/btn_top_auto",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "scope": "STOVE1212x682 current battle HUD. On requires four checks; off requires three Vildred icon cores and normal unlocked Auto control. enabled/availability unknown.",
+      "calibration": "var/stove-session/auto-unlocked-calibration/report.json",
+      "limitations": [
+        "141 activation glow is unknown. Missing HUD/cutscene/old locked skills are unknown.",
+        "Off is calibrated only for the observed Vildred manual skill layout; on only the four-hero checked HUD.",
+        "No toggle/executor added. Existing canonical no-op can consume true without input."
+      ]
+    },
+    "battle_pause_tar002": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T060242Z_390d2724/agent_000144.png",
+      "source_sha256": "b42b3da5654fa470c017f2130499090d9b48ec594cecf3fcea1c550fe91f3681",
+      "crop_xyxy": [
+        1161,
+        12,
+        1190,
+        49
+      ],
+      "sha256": "be109f502d6f4fe7eedadbb8126cdd5db01a4f978ea45bf271ce6e91819f7831",
+      "transformation": "Exact current pause glyph crop; existing glyph_min170/MAE18 preserved, new variant threshold.94; old variant threshold unchanged.",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "scope": "STOVE1212x682 current battle HUD. On requires four checks; off requires three Vildred icon cores and normal unlocked Auto control. enabled/availability unknown.",
+      "calibration": "var/stove-session/auto-unlocked-calibration/report.json",
+      "limitations": [
+        "141 activation glow is unknown. Missing HUD/cutscene/old locked skills are unknown.",
+        "Off is calibrated only for the observed Vildred manual skill layout; on only the four-hero checked HUD.",
+        "No toggle/executor added. Existing canonical no-op can consume true without input."
+      ]
+    },
+    "victorika_equipment_tab": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T064500Z_ea02d489/agent_000016.png",
+      "source_sha256": "971f2c6198cae797d6d631208a51e0b51751a314dbb946aa4bed02959e3235bb",
+      "crop_xyxy": [
+        0,
+        135,
+        81,
+        193
+      ],
+      "sha256": "94868d51f8c539475d46108437d72f4c36a9f08272db66263036c04f9075fb49",
+      "transformation": "Exact saved UI crop; no scaling/mask or account identifiers. Chat/portrait animation outside the UI cards is excluded.",
+      "scope": "Current Victorika15 equipment view and three-card roster only; Arbiter row name is partly clipped and not claimed as OCR.",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/arbiter-row-calibration/report.json",
+      "limitations": [
+        "Current Arbiter label is partly covered by selected Victorika card, not reliable OCR.",
+        "Owned/runtime instance ID remains unknown.",
+        "No generic hero-screen or arbitrary roster-row selector."
+      ],
+      "action_scope": "One existing selection primitive only, no equip/purchase/transmission executor."
+    },
+    "victorika_three_hero_roster": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T064500Z_ea02d489/agent_000016.png",
+      "source_sha256": "971f2c6198cae797d6d631208a51e0b51751a314dbb946aa4bed02959e3235bb",
+      "crop_xyxy": [
+        939,
+        221,
+        1212,
+        413
+      ],
+      "sha256": "1e5f6ac0f9f1eb6fd9bf88cb4be41157fd294469787b4e0e6126c1e8aedb564b",
+      "transformation": "Exact saved UI crop; no scaling/mask or account identifiers. Chat/portrait animation outside the UI cards is excluded.",
+      "scope": "Current Victorika15 equipment view and three-card roster only; Arbiter row name is partly clipped and not claimed as OCR.",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/arbiter-row-calibration/report.json",
+      "limitations": [
+        "Current Arbiter label is partly covered by selected Victorika card, not reliable OCR.",
+        "Owned/runtime instance ID remains unknown.",
+        "No generic hero-screen or arbitrary roster-row selector."
+      ],
+      "action_scope": "One existing selection primitive only, no equip/purchase/transmission executor."
+    },
+    "arbiter_roster_row_10": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T064500Z_ea02d489/agent_000016.png",
+      "source_sha256": "971f2c6198cae797d6d631208a51e0b51751a314dbb946aa4bed02959e3235bb",
+      "crop_xyxy": [
+        960,
+        307,
+        1212,
+        357
+      ],
+      "sha256": "e521891eebfe37ca1b7b59dcc3e5e5e1012537697a9bd2b6a50e264c9a7cadac",
+      "transformation": "Exact saved UI crop; no scaling/mask or account identifiers. Chat/portrait animation outside the UI cards is excluded.",
+      "scope": "Current Victorika15 equipment view and three-card roster only; Arbiter row name is partly clipped and not claimed as OCR.",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/arbiter-row-calibration/report.json",
+      "limitations": [
+        "Current Arbiter label is partly covered by selected Victorika card, not reliable OCR.",
+        "Owned/runtime instance ID remains unknown.",
+        "No generic hero-screen or arbitrary roster-row selector."
+      ],
+      "action_scope": "One existing selection primitive only, no equip/purchase/transmission executor."
+    },
+    "milestone_read_header": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T060242Z_390d2724/agent_000006.png",
+      "source_sha256": "a6cb3d12557d769bb69e7723809e3c85067387e88b4d476e6885bddb5bf058f9",
+      "crop_xyxy": [
+        61,
+        16,
+        304,
+        49
+      ],
+      "sha256": "2d373d2c9d7d8dc1ca2c81e8b109ad047a036b00a2601a22b66155296470f3b9",
+      "transformation": "white",
+      "shape_reference": "coreloop_main title",
+      "scope": "read-only marker; never a target or acquisition solely from NEW",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/coreloop-reading-calibration/report.json",
+      "limitations": [
+        "Only read-only current fields. No new state/target/executor or claim/purchase input.",
+        "Candidate presentations and NEW badges never imply acquisition; Obtained or explicit reward receipt is required.",
+        "Current progress, OriginCoin OCR, owned instance and enabled remain unknown without evidence."
+      ]
+    },
+    "milestone_read_receive": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T060242Z_390d2724/agent_000006.png",
+      "source_sha256": "a6cb3d12557d769bb69e7723809e3c85067387e88b4d476e6885bddb5bf058f9",
+      "crop_xyxy": [
+        575,
+        563,
+        899,
+        603
+      ],
+      "sha256": "200d9d777df4a137cc14273ffe90de0d685dc90368b667eb7d008a8fb9a657f0",
+      "transformation": "cost_gap",
+      "shape_reference": "coreloop_main /Layer/n_get/n_cost",
+      "scope": "read-only marker; never a target or acquisition solely from NEW",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/coreloop-reading-calibration/report.json",
+      "limitations": [
+        "Only read-only current fields. No new state/target/executor or claim/purchase input.",
+        "Candidate presentations and NEW badges never imply acquisition; Obtained or explicit reward receipt is required.",
+        "Current progress, OriginCoin OCR, owned instance and enabled remain unknown without evidence."
+      ]
+    },
+    "milestone_read_receive_limited": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T060242Z_390d2724/agent_000074.png",
+      "source_sha256": "d8555a2a70bf8a74c7ccc8b01017254e563bef83ebf0495aff28f65abcd93b1e",
+      "crop_xyxy": [
+        575,
+        563,
+        899,
+        603
+      ],
+      "sha256": "594b8393b3417b6a94f184133408eae8f492d81fe596433d5bc6e65f8b53ed8b",
+      "transformation": "cost_gap",
+      "shape_reference": "coreloop_main current alternate cost-panel appearance, not enabled proof",
+      "scope": "read-only marker; never a target or acquisition solely from NEW",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/coreloop-reading-calibration/report.json",
+      "limitations": [
+        "Only read-only current fields. No new state/target/executor or claim/purchase input.",
+        "Candidate presentations and NEW badges never imply acquisition; Obtained or explicit reward receipt is required.",
+        "Current progress, OriginCoin OCR, owned instance and enabled remain unknown without evidence."
+      ]
+    },
+    "milestone_read_currencies": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T060242Z_390d2724/agent_000006.png",
+      "source_sha256": "a6cb3d12557d769bb69e7723809e3c85067387e88b4d476e6885bddb5bf058f9",
+      "crop_xyxy": [
+        793,
+        15,
+        883,
+        48
+      ],
+      "sha256": "cde115b167f2e0b31fce8ddddd5b163914d43f0e630c300509cd06140692bdc2",
+      "transformation": "balance_gap",
+      "shape_reference": "current topbar Essence/Origin icons",
+      "scope": "read-only marker; never a target or acquisition solely from NEW",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/coreloop-reading-calibration/report.json",
+      "limitations": [
+        "Only read-only current fields. No new state/target/executor or claim/purchase input.",
+        "Candidate presentations and NEW badges never imply acquisition; Obtained or explicit reward receipt is required.",
+        "Current progress, OriginCoin OCR, owned instance and enabled remain unknown without evidence."
+      ]
+    },
+    "coreloop_selector_prompt": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T060242Z_390d2724/agent_000049.png",
+      "source_sha256": "6c3d98a5bcba566f81c45f2559584fc877e19f555d893a7d189ba930e80d22da",
+      "crop_xyxy": [
+        627,
+        608,
+        871,
+        636
+      ],
+      "sha256": "53999aefe36c0177da3d0d50e6d5d063df82eabaeb5aa80efe1e4f25b229d7b1",
+      "transformation": "gray",
+      "shape_reference": "gacha_select_group /Layer/n_group/n_txt_2/txt_info",
+      "scope": "read-only marker; never a target or acquisition solely from NEW",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/coreloop-reading-calibration/report.json",
+      "limitations": [
+        "Only read-only current fields. No new state/target/executor or claim/purchase input.",
+        "Candidate presentations and NEW badges never imply acquisition; Obtained or explicit reward receipt is required.",
+        "Current progress, OriginCoin OCR, owned instance and enabled remain unknown without evidence."
+      ]
+    },
+    "coreloop_selector_receive_normal": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T060242Z_390d2724/agent_000052.png",
+      "source_sha256": "169fea060c0df6706dca38b57546b4c9d9a7d3b0731b5ea81be07a0dcec56eb0",
+      "crop_xyxy": [
+        1009,
+        600,
+        1113,
+        641
+      ],
+      "sha256": "83007295e118c7ef86ec94efd9d736f8fdfb0454711ed520ab161029844a7a9c",
+      "transformation": "Exact current crop",
+      "shape_reference": "gacha_select_group /Layer/n_group/n_btn/btn_reward",
+      "scope": "read-only marker; never a target or acquisition solely from NEW",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/coreloop-reading-calibration/report.json",
+      "limitations": [
+        "Only read-only current fields. No new state/target/executor or claim/purchase input.",
+        "Candidate presentations and NEW badges never imply acquisition; Obtained or explicit reward receipt is required.",
+        "Current progress, OriginCoin OCR, owned instance and enabled remain unknown without evidence."
+      ]
+    },
+    "coreloop_selector_tenebria_bright": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T060242Z_390d2724/agent_000052.png",
+      "source_sha256": "169fea060c0df6706dca38b57546b4c9d9a7d3b0731b5ea81be07a0dcec56eb0",
+      "crop_xyxy": [
+        900,
+        300,
+        1008,
+        383
+      ],
+      "sha256": "16d5b99f317cb01baeba733e67027776d6a13120d037d9766adc0f9d7ce82e5c",
+      "transformation": "Exact current crop",
+      "shape_reference": "gacha_select_group panel3 selected composition",
+      "scope": "read-only marker; never a target or acquisition solely from NEW",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/coreloop-reading-calibration/report.json",
+      "limitations": [
+        "Only read-only current fields. No new state/target/executor or claim/purchase input.",
+        "Candidate presentations and NEW badges never imply acquisition; Obtained or explicit reward receipt is required.",
+        "Current progress, OriginCoin OCR, owned instance and enabled remain unknown without evidence."
+      ]
+    },
+    "coreloop_selector_confirmation": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T060242Z_390d2724/agent_000055.png",
+      "source_sha256": "951a8771367fa7d672dac65da2020becaf0225f83f372947011fa764b65b5150",
+      "crop_xyxy": [
+        517,
+        170,
+        694,
+        206
+      ],
+      "sha256": "609455f42e7d73bf90e6d2f49c9464b3c5fee40995f9c8e1d97b542d720c3513",
+      "transformation": "white",
+      "shape_reference": "msgbox n_title/txt_title",
+      "scope": "read-only marker; never a target or acquisition solely from NEW",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/coreloop-reading-calibration/report.json",
+      "limitations": [
+        "Only read-only current fields. No new state/target/executor or claim/purchase input.",
+        "Candidate presentations and NEW badges never imply acquisition; Obtained or explicit reward receipt is required.",
+        "Current progress, OriginCoin OCR, owned instance and enabled remain unknown without evidence."
+      ]
+    },
+    "coreloop_selector_tenebria_question": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T060242Z_390d2724/agent_000055.png",
+      "source_sha256": "951a8771367fa7d672dac65da2020becaf0225f83f372947011fa764b65b5150",
+      "crop_xyxy": [
+        449,
+        257,
+        761,
+        302
+      ],
+      "sha256": "7100ba61e743aa5620f447c35a6f85761a68db11d23005f4a187298d1178039e",
+      "transformation": "gray",
+      "shape_reference": "msgbox current ui_hero_selection_alret",
+      "scope": "read-only marker; never a target or acquisition solely from NEW",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/coreloop-reading-calibration/report.json",
+      "limitations": [
+        "Only read-only current fields. No new state/target/executor or claim/purchase input.",
+        "Candidate presentations and NEW badges never imply acquisition; Obtained or explicit reward receipt is required.",
+        "Current progress, OriginCoin OCR, owned instance and enabled remain unknown without evidence."
+      ]
+    },
+    "coreloop_obtained": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T060242Z_390d2724/agent_000062.png",
+      "source_sha256": "81fe6ced231c78e369df29a3f3353d10bb6c1dc7eccd54339f5d12fed04ed904",
+      "crop_xyxy": [
+        33,
+        599,
+        262,
+        658
+      ],
+      "sha256": "3b156a656ea41cc21caa59713915c4a62201fbffec34a7db0d9600a1b7f15244",
+      "transformation": "Exact current crop",
+      "shape_reference": "gacha_result_unit /Layer/n_result/n_buttons_back/btn_back",
+      "scope": "read-only marker; never a target or acquisition solely from NEW",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/coreloop-reading-calibration/report.json",
+      "limitations": [
+        "Only read-only current fields. No new state/target/executor or claim/purchase input.",
+        "Candidate presentations and NEW badges never imply acquisition; Obtained or explicit reward receipt is required.",
+        "Current progress, OriginCoin OCR, owned instance and enabled remain unknown without evidence."
+      ]
+    },
+    "coreloop_catalyst_receipt": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T060242Z_390d2724/agent_000071.png",
+      "source_sha256": "a0e7953b2b682f18ce2df2ea5cf5dc101bb2b514eef066639e6e54225b051f5d",
+      "crop_xyxy": [
+        240,
+        158,
+        973,
+        199
+      ],
+      "sha256": "a3806140f0445a2fc660ccd2dd40f7d37cb3ddc7f9c0abf794bab4e2c8155e4c",
+      "transformation": "white",
+      "shape_reference": "ui_coreloop_reward_result_title current item name",
+      "scope": "read-only marker; never a target or acquisition solely from NEW",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/coreloop-reading-calibration/report.json",
+      "limitations": [
+        "Only read-only current fields. No new state/target/executor or claim/purchase input.",
+        "Candidate presentations and NEW badges never imply acquisition; Obtained or explicit reward receipt is required.",
+        "Current progress, OriginCoin OCR, owned instance and enabled remain unknown without evidence."
+      ]
+    },
+    "coreloop_catalyst_icon": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T060242Z_390d2724/agent_000071.png",
+      "source_sha256": "a0e7953b2b682f18ce2df2ea5cf5dc101bb2b514eef066639e6e54225b051f5d",
+      "crop_xyxy": [
+        540,
+        250,
+        675,
+        382
+      ],
+      "sha256": "3ea27d22b93c488f9d34a84c109b810d48f6ce63b32e823d8b180bc543c491d8",
+      "transformation": "Exact current crop",
+      "shape_reference": "coreloop_main reward item current RareCatalystSelectionChest",
+      "scope": "read-only marker; never a target or acquisition solely from NEW",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/coreloop-reading-calibration/report.json",
+      "limitations": [
+        "Only read-only current fields. No new state/target/executor or claim/purchase input.",
+        "Candidate presentations and NEW badges never imply acquisition; Obtained or explicit reward receipt is required.",
+        "Current progress, OriginCoin OCR, owned instance and enabled remain unknown without evidence."
+      ]
+    },
+    "equipment_tutorial_instruction": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T073707Z_93ef3e05/agent_000001.png",
+      "source_sha256": "dcba399f057defd9e3fafeeabed0d4d9a6a442cfa0d8350ff64ec91c2f9a5c49",
+      "crop_xyxy": [
+        596,
+        236,
+        898,
+        306
+      ],
+      "sha256": "c84a64bf851bfcbb78e1b10b929206269d8801e4574f9bdae7170db1ba6f7de0",
+      "transformation": "Instruction glyphs min150/spread70 plus1px; native green mask elsewhere.",
+      "scope": "Exact equip_install_01 observed instruction and Victorika15 highlighted card only.",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/equipment-tutorial-skip-calibration/report.json",
+      "limitations": [
+        "Only exact equipment tutorial and selected Victorika15 card; no arbitrary tutorial dismissal or equipment action."
+      ]
+    },
+    "equipment_tutorial_victorika_card": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T073707Z_93ef3e05/agent_000001.png",
+      "source_sha256": "dcba399f057defd9e3fafeeabed0d4d9a6a442cfa0d8350ff64ec91c2f9a5c49",
+      "crop_xyxy": [
+        943,
+        232,
+        1079,
+        297
+      ],
+      "sha256": "06ee885a17c637f8a902bec8452012a4127f596b912be1a9cd9b5f6a7dfc1da2",
+      "transformation": "Exact Victorika title,15/Fire/fourstars and blue selected-card interior; excludes pulsing outside frame and portrait; no scaling or mask.",
+      "scope": "Exact equip_install_01 observed instruction and Victorika15 highlighted card only.",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/equipment-tutorial-skip-calibration/report.json",
+      "limitations": [
+        "Only exact equipment tutorial and selected Victorika15 card; no arbitrary tutorial dismissal or equipment action."
+      ]
+    },
+    "equipment_tutorial_skip": {
+      "origin": "existing_template_alias",
+      "source_template": "tutorial_skip",
+      "sha256": "7e905b5722cb7d72f531a4d303da0a999a929bac66e5b3185bf4aefede58c2b3",
+      "scope": "Alias only in equipment_tutorial_prompt; original template/pipeline unchanged.",
+      "calibration": "var/stove-session/equipment-tutorial-skip-calibration/report.json"
+    },
+    "victorika_hero_tab": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T074608Z_0b4c4ba2/agent_000003.png",
+      "source_sha256": "124cc8926bba91fe4381a6fb8a5f138dc9eb354167b0cebc476ac90366b01986",
+      "crop_xyxy": [
+        0,
+        62,
+        80,
+        123
+      ],
+      "sha256": "dd2a2cc4c3346d55a82d64c52d309c8a0b3ea8b8b856e396f97f2c38fabb0d51",
+      "transformation": "Exact selected Hero-tab blue panel and icon; no resize/mask; no account identifiers.",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/victorika-quickmenu-calibration/report.json",
+      "scope": "Current Victorika15/40 Hero page with current selected card and menu; not a generic hero or unknown-screen target."
+    },
+    "victorika_hero_quickmenu": {
+      "origin": "existing_template_alias",
+      "source_template": "lobby_menu_grid",
+      "templates": [
+        {
+          "file": "lobby_menu_grid.png",
+          "sha256": "cd162f93408a80e1c172cb05497f7914bd0c4437fa3c95695b0e3b19bf61c1f8"
+        },
+        {
+          "file": "lobby_menu_grid_badge_masked.png",
+          "sha256": "1f84f4cd83d1ea97647442c0138ec60712086f576f252ce348158dc50868e910"
+        }
+      ],
+      "shape_reference": "wnd/top_bar.csb /Layer/TOP_BAR_RIGHT/btn_top_quickmenu",
+      "scope": "Only victorika_hero_menu; original grid pipeline, variants and thresholds unchanged.",
+      "calibration": "var/stove-session/victorika-quickmenu-calibration/report.json",
+      "live_destination_validation": false
+    },
+    "friendship_result_title": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T080001Z_4bad03e5/agent_000048.png",
+      "source_sha256": "76dfcb0c0aeef6feecd00ad287fb831b58e9352cee5b23126f00efc91bae17ce",
+      "crop_xyxy": [
+        509,
+        137,
+        925,
+        175
+      ],
+      "sha256": "efb499ce50658e2f75ca681b5079dc3988037a461fa919562b5132a1a234c6a7",
+      "transformation": "Neutral title glyphs min160/spread40 plus1px; green mask elsewhere.",
+      "scope": "Current Hero Friendship Level Increase banner with1to2 transition; no generic reward close.",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/friendship-result-calibration/report.json",
+      "source_control": "wnd/result_intimacy.csb /Layer/btn_close",
+      "limitations": [
+        "Only current friendship1to2 banner. No underlying reward Confirm, new battle, claim, or generic close executor."
+      ]
+    },
+    "friendship_level_one": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T080001Z_4bad03e5/agent_000048.png",
+      "source_sha256": "76dfcb0c0aeef6feecd00ad287fb831b58e9352cee5b23126f00efc91bae17ce",
+      "crop_xyxy": [
+        441,
+        297,
+        464,
+        323
+      ],
+      "sha256": "437fac6edccbc871abff40d25a3a8d0216f138c73b00dc1b672f2bd1fde69c2e",
+      "transformation": "Exact current badge or Tap-to-close crop, narrow ROI; no scaling or mask.",
+      "scope": "Current Hero Friendship Level Increase banner with1to2 transition; no generic reward close.",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/friendship-result-calibration/report.json",
+      "source_control": "wnd/result_intimacy.csb /Layer/btn_close",
+      "limitations": [
+        "Only current friendship1to2 banner. No underlying reward Confirm, new battle, claim, or generic close executor."
+      ]
+    },
+    "friendship_level_two": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T080001Z_4bad03e5/agent_000048.png",
+      "source_sha256": "76dfcb0c0aeef6feecd00ad287fb831b58e9352cee5b23126f00efc91bae17ce",
+      "crop_xyxy": [
+        773,
+        297,
+        796,
+        323
+      ],
+      "sha256": "6ae2fbfd8e0dc93efc9a72de2e839bbaaecb4ce56b4f5f73cbe225f6987277a3",
+      "transformation": "Exact current badge or Tap-to-close crop, narrow ROI; no scaling or mask.",
+      "scope": "Current Hero Friendship Level Increase banner with1to2 transition; no generic reward close.",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/friendship-result-calibration/report.json",
+      "source_control": "wnd/result_intimacy.csb /Layer/btn_close",
+      "limitations": [
+        "Only current friendship1to2 banner. No underlying reward Confirm, new battle, claim, or generic close executor."
+      ]
+    },
+    "friendship_result_close": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T080001Z_4bad03e5/agent_000048.png",
+      "source_sha256": "76dfcb0c0aeef6feecd00ad287fb831b58e9352cee5b23126f00efc91bae17ce",
+      "crop_xyxy": [
+        656,
+        515,
+        778,
+        565
+      ],
+      "sha256": "19ce118ee164263144f3f17be31f9533e0d088a8a7459500e85167e02f0fd7f3",
+      "transformation": "Exact current badge or Tap-to-close crop, narrow ROI; no scaling or mask.",
+      "scope": "Current Hero Friendship Level Increase banner with1to2 transition; no generic reward close.",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/friendship-result-calibration/report.json",
+      "source_control": "wnd/result_intimacy.csb /Layer/btn_close",
+      "limitations": [
+        "Only current friendship1to2 banner. No underlying reward Confirm, new battle, claim, or generic close executor."
+      ]
+    },
+    "summon_quickmenu_title": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T081838Z_d968bc8e/agent_000111.png",
+      "source_sha256": "8f9114b50d64339ba62a304951fab06079d2eda489aaeba9bbcec3cb74802422",
+      "crop_xyxy": [
+        62,
+        18,
+        161,
+        47
+      ],
+      "sha256": "90478c6650c7dc6b9564447854a800101c76e6fa45c08aa8543f006543180c04",
+      "transformation": "Neutral text/icon glyphs min140/spread60 plus1px; green mask elsewhere.",
+      "scope": "Current quick menu overlay above Summon with Journal/Hero composition. Recruit navigation only; no summon/claim control.",
+      "file": "resources/epic-seven/image/summon_quickmenu_title.png",
+      "native_threshold": 0.94,
+      "max_pixel_mae": 14,
+      "source_control": "wnd/quick_menu_renew.csb /Layer/n_quick_menu/notch_hide_btn/n_quick_btn/n_recruit/btn_recruit",
+      "validation_report": "var/stove-session/quickmenu-recruit-calibration/report.json",
+      "validation": {
+        "positives": 3,
+        "negatives": 16,
+        "native_replay_passed": true,
+        "live_validated": false
+      },
+      "limitations": [
+        "Other backgrounds are excluded pending independent validation.",
+        "Current enabled and owned instance are unknown.",
+        "No recruit binding or system option found."
+      ],
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/quickmenu-recruit-calibration/report.json"
+    },
+    "summon_quickmenu_close": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T081838Z_d968bc8e/agent_000111.png",
+      "source_sha256": "8f9114b50d64339ba62a304951fab06079d2eda489aaeba9bbcec3cb74802422",
+      "crop_xyxy": [
+        1158,
+        14,
+        1191,
+        48
+      ],
+      "sha256": "d1908dbf75b95b5bd8062105edf0575e36b1bef66336947788063a9352563534",
+      "transformation": "Exact current blue menu X crop; narrow ROI, no scaling.",
+      "scope": "Current quick menu overlay above Summon with Journal/Hero composition. Recruit navigation only; no summon/claim control.",
+      "file": "resources/epic-seven/image/summon_quickmenu_close.png",
+      "native_threshold": 0.94,
+      "max_pixel_mae": 14,
+      "source_control": "wnd/quick_menu_renew.csb /Layer/n_quick_menu/notch_hide_btn/n_quick_btn/n_recruit/btn_recruit",
+      "validation_report": "var/stove-session/quickmenu-recruit-calibration/report.json",
+      "validation": {
+        "positives": 3,
+        "negatives": 16,
+        "native_replay_passed": true,
+        "live_validated": false
+      },
+      "limitations": [
+        "Other backgrounds are excluded pending independent validation.",
+        "Current enabled and owned instance are unknown.",
+        "No recruit binding or system option found."
+      ],
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/quickmenu-recruit-calibration/report.json"
+    },
+    "summon_quickmenu_composition": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T081838Z_d968bc8e/agent_000111.png",
+      "source_sha256": "8f9114b50d64339ba62a304951fab06079d2eda489aaeba9bbcec3cb74802422",
+      "crop_xyxy": [
+        994,
+        108,
+        1165,
+        178
+      ],
+      "sha256": "13db9483834192e86253109b12fe5bdca15701dfa0366c908f041e926797ab8a",
+      "transformation": "Neutral text/icon glyphs min140/spread60 plus1px; green mask elsewhere.",
+      "scope": "Current quick menu overlay above Summon with Journal/Hero composition. Recruit navigation only; no summon/claim control.",
+      "file": "resources/epic-seven/image/summon_quickmenu_composition.png",
+      "native_threshold": 0.94,
+      "max_pixel_mae": 14,
+      "source_control": "wnd/quick_menu_renew.csb /Layer/n_quick_menu/notch_hide_btn/n_quick_btn/n_recruit/btn_recruit",
+      "validation_report": "var/stove-session/quickmenu-recruit-calibration/report.json",
+      "validation": {
+        "positives": 3,
+        "negatives": 16,
+        "native_replay_passed": true,
+        "live_validated": false
+      },
+      "limitations": [
+        "Other backgrounds are excluded pending independent validation.",
+        "Current enabled and owned instance are unknown.",
+        "No recruit binding or system option found."
+      ],
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/quickmenu-recruit-calibration/report.json"
+    },
+    "summon_quickmenu_recruit": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T081838Z_d968bc8e/agent_000111.png",
+      "source_sha256": "8f9114b50d64339ba62a304951fab06079d2eda489aaeba9bbcec3cb74802422",
+      "crop_xyxy": [
+        1113,
+        224,
+        1167,
+        289
+      ],
+      "sha256": "ffb8e31da9d077bbdae07d4e331f2c8b3e25cac44030b8b03274d146576a7b6c",
+      "transformation": "Neutral text/icon glyphs min140/spread60 plus1px; green mask elsewhere.",
+      "scope": "Current quick menu overlay above Summon with Journal/Hero composition. Recruit navigation only; no summon/claim control.",
+      "file": "resources/epic-seven/image/summon_quickmenu_recruit.png",
+      "native_threshold": 0.94,
+      "max_pixel_mae": 14,
+      "source_control": "wnd/quick_menu_renew.csb /Layer/n_quick_menu/notch_hide_btn/n_quick_btn/n_recruit/btn_recruit",
+      "validation_report": "var/stove-session/quickmenu-recruit-calibration/report.json",
+      "validation": {
+        "positives": 3,
+        "negatives": 16,
+        "native_replay_passed": true,
+        "live_validated": false
+      },
+      "limitations": [
+        "Other backgrounds are excluded pending independent validation.",
+        "Current enabled and owned instance are unknown.",
+        "No recruit binding or system option found."
+      ],
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "calibration": "var/stove-session/quickmenu-recruit-calibration/report.json"
+    },
+    "tieria_dialogue_name": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T084618Z_f4017642/agent_000033.png",
+      "source_sha256": "3f9651041fa71f3c4306ddb7b0362e45730c60991ea0e9fa34c7c831f36c979d",
+      "crop_xyxy": [
+        519,
+        490,
+        694,
+        522
+      ],
+      "sha256": "60af6b1cd8ccd3a0618c7a7a5c5e3a95fcec74ad4a9d8b59783f98b999afbea8",
+      "transformation": "Cyan name glyphs G/B>=150, G-R>=12, B-R>=18 plus1px; green mask elsewhere.",
+      "scope": "Current Free Spirit Tieria Connection completion dialogue only. Does not prove acquisition by itself.",
+      "file": "resources/epic-seven/image/tieria_dialogue_name.png",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "native_threshold": 0.94,
+      "max_pixel_mae": 14,
+      "source_control": "wnd/story.csb /Layer/n_skip/btn_forward",
+      "calibration": "var/stove-session/tieria-dialogue-skip-calibration/report.json",
+      "validation": {
+        "positives": 3,
+        "negatives": 15,
+        "native_replay_passed": true,
+        "live_validated": false
+      },
+      "limitations": [
+        "Text line not found in bounded text.db query; retained as current runtime evidence.",
+        "Only current dialogue/name/background, not generic Tieria story.",
+        "No Skip key binding or option found."
+      ]
+    },
+    "tieria_dialogue_line": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T084618Z_f4017642/agent_000033.png",
+      "source_sha256": "3f9651041fa71f3c4306ddb7b0362e45730c60991ea0e9fa34c7c831f36c979d",
+      "crop_xyxy": [
+        244,
+        559,
+        972,
+        592
+      ],
+      "sha256": "c6c5b999c6b0d7a7855c9ee9bcd4dd84f3b25987152ddadf62a98c323aa2bb11",
+      "transformation": "Neutral white dialogue glyphs min170/spread50 plus1px; green mask elsewhere.",
+      "scope": "Current Free Spirit Tieria Connection completion dialogue only. Does not prove acquisition by itself.",
+      "file": "resources/epic-seven/image/tieria_dialogue_line.png",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "native_threshold": 0.94,
+      "max_pixel_mae": 14,
+      "source_control": "wnd/story.csb /Layer/n_skip/btn_forward",
+      "calibration": "var/stove-session/tieria-dialogue-skip-calibration/report.json",
+      "validation": {
+        "positives": 3,
+        "negatives": 15,
+        "native_replay_passed": true,
+        "live_validated": false
+      },
+      "limitations": [
+        "Text line not found in bounded text.db query; retained as current runtime evidence.",
+        "Only current dialogue/name/background, not generic Tieria story.",
+        "No Skip key binding or option found."
+      ]
+    },
+    "tieria_dialogue_history": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T084618Z_f4017642/agent_000033.png",
+      "source_sha256": "3f9651041fa71f3c4306ddb7b0362e45730c60991ea0e9fa34c7c831f36c979d",
+      "crop_xyxy": [
+        1023,
+        20,
+        1059,
+        53
+      ],
+      "sha256": "35669a2b73c977e22c55065db3131113f8f9e66b442263bfdcddd40ac8223b52",
+      "transformation": "Exact current History crop; narrow ROI, no scaling or mask.",
+      "scope": "Current Free Spirit Tieria Connection completion dialogue only. Does not prove acquisition by itself.",
+      "file": "resources/epic-seven/image/tieria_dialogue_history.png",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "native_threshold": 0.94,
+      "max_pixel_mae": 14,
+      "source_control": "wnd/story.csb /Layer/n_skip/btn_forward",
+      "calibration": "var/stove-session/tieria-dialogue-skip-calibration/report.json",
+      "validation": {
+        "positives": 3,
+        "negatives": 15,
+        "native_replay_passed": true,
+        "live_validated": false
+      },
+      "limitations": [
+        "Text line not found in bounded text.db query; retained as current runtime evidence.",
+        "Only current dialogue/name/background, not generic Tieria story.",
+        "No Skip key binding or option found."
+      ]
+    },
+    "tieria_connection_dialogue_skip": {
+      "origin": "existing_template_alias",
+      "source_target": "story_skip",
+      "templates": [
+        "story_skip.png",
+        "story_skip_light_room.png"
+      ],
+      "scope": "Only tieria_connection_dialogue; original StorySkip pipeline, variants and thresholds unchanged.",
+      "source_control": "wnd/story.csb /Layer/n_skip/btn_forward",
+      "calibration": "var/stove-session/tieria-dialogue-skip-calibration/report.json",
+      "live_destination_validation": false
+    },
+    "tieria_acquisition_traits": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T085923Z_aaae21c1/agent_000005.png",
+      "source_sha256": "be015ad0303575ff7df8cd8af3aad5f5ec797c6ce7081aadcd9b421356c18233",
+      "crop_xyxy": [
+        28,
+        21,
+        281,
+        54
+      ],
+      "sha256": "9a76b5e044c46812ff2c9341e3f3ac1bf20c3f92aa88f1ca0e4204e04df331f9",
+      "transformation": "Exact current Light/Warrior/Virgo traits; narrow ROI, no scaling or mask.",
+      "scope": "Current Free Spirit Tieria hero-result presentation. Identity/context only; no owned instance or summon performed inferred.",
+      "file": "resources/epic-seven/image/tieria_acquisition_traits.png",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "native_threshold": 0.94,
+      "max_pixel_mae": 14,
+      "source_control": "wnd/gacha_result_unit.csb /Layer/n_result/n_buttons_ext/btn_close",
+      "calibration": "var/stove-session/tieria-acquisition-confirm-calibration/report.json",
+      "validation": {
+        "positives": 3,
+        "negatives": 16,
+        "native_replay_passed": true,
+        "live_validated": false
+      },
+      "limitations": [
+        "No current instance ID, enabled flag or full roster inferred.",
+        "Other hero presentations, dialogue/dim Confirm and selectors excluded.",
+        "key_binding.gacha is navigation, not this Confirm; no exact confirmation binding found."
+      ]
+    },
+    "tieria_acquisition_description": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T085923Z_aaae21c1/agent_000005.png",
+      "source_sha256": "be015ad0303575ff7df8cd8af3aad5f5ec797c6ce7081aadcd9b421356c18233",
+      "crop_xyxy": [
+        27,
+        114,
+        235,
+        178
+      ],
+      "sha256": "b9b32abe7a9a2b7c1f7055c8c971ea9afa81b9de644ba502124960463a555ec6",
+      "transformation": "Blue description glyphs B>=120/G>=75/B-R>=50/G-R>=30 plus1px; green mask elsewhere.",
+      "scope": "Current Free Spirit Tieria hero-result presentation. Identity/context only; no owned instance or summon performed inferred.",
+      "file": "resources/epic-seven/image/tieria_acquisition_description.png",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "native_threshold": 0.94,
+      "max_pixel_mae": 14,
+      "source_control": "wnd/gacha_result_unit.csb /Layer/n_result/n_buttons_ext/btn_close",
+      "calibration": "var/stove-session/tieria-acquisition-confirm-calibration/report.json",
+      "validation": {
+        "positives": 3,
+        "negatives": 16,
+        "native_replay_passed": true,
+        "live_validated": false
+      },
+      "limitations": [
+        "No current instance ID, enabled flag or full roster inferred.",
+        "Other hero presentations, dialogue/dim Confirm and selectors excluded.",
+        "key_binding.gacha is navigation, not this Confirm; no exact confirmation binding found."
+      ]
+    },
+    "tieria_acquisition_confirm": {
+      "origin": "existing_recognition_alias",
+      "source_target": "renoa_promotional_confirm",
+      "normal_button_template": "victorika_acquisition_confirm_normal.png",
+      "scope": "Only tieria_acquisition_presentation; normal button and Confirm OCR pipeline thresholds unchanged; unique filtered OCR required.",
+      "source_control": "wnd/gacha_result_unit.csb /Layer/n_result/n_buttons_ext/btn_close",
+      "calibration": "var/stove-session/tieria-acquisition-confirm-calibration/report.json",
+      "live_destination_validation": false
+    },
+    "tieria_hero_traits": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T091000Z_a714adef/agent_000015.png",
+      "source_sha256": "23deca89496f7f579ceaee086c27c67015efe4bc07c09011ee1fc85d392408c6",
+      "crop_xyxy": [
+        98,
+        77,
+        344,
+        106
+      ],
+      "sha256": "5c1c0221e1ecf1ad5c908bd436d048563a99701809d7b9c586925a1e6442329e",
+      "transformation": "Exact current Light/Warrior/Virgo traits; narrow ROI, no scaling.",
+      "scope": "Current Free Spirit Tieria Hero tab; navigation into growth panels only, no EXP or awakening application.",
+      "file": "resources/epic-seven/image/tieria_hero_traits.png",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "native_threshold": 0.94,
+      "max_pixel_mae": 14,
+      "source_controls": {
+        "tieria_hero_awaken_entry": "wnd/unit_detail.csb /Layer/n_menu_hero/center_hero/btn_zodiac",
+        "tieria_hero_level_up_entry": "wnd/unit_detail.csb /Layer/n_menu_hero/center_hero/btn_lv_up"
+      },
+      "calibration": "var/stove-session/tieria-hero-navigation-calibration/report.json",
+      "validation": {
+        "real_positives": 3,
+        "level_independence_synthetic_positive": 1,
+        "negatives": 16,
+        "native_replay_passed": true,
+        "live_validated": false
+      },
+      "limitations": [
+        "Current button enabled, hero instance, level and material sufficiency unknown.",
+        "HeroC/key13 source label is generic hero navigation, not these controls.",
+        "No new growth executor or purchase/farming implied."
+      ]
+    },
+    "tieria_hero_awaken_entry": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T091000Z_a714adef/agent_000015.png",
+      "source_sha256": "23deca89496f7f579ceaee086c27c67015efe4bc07c09011ee1fc85d392408c6",
+      "crop_xyxy": [
+        772,
+        577,
+        820,
+        624
+      ],
+      "sha256": "138356784057a34c8d39941a26f88d1155221dd8e31fc5ec186c8ab7ab94661f",
+      "transformation": "White inner-button glyphs min170/spread55 plus1px; green mask elsewhere, excluding outer glow.",
+      "scope": "Current Free Spirit Tieria Hero tab; navigation into growth panels only, no EXP or awakening application.",
+      "file": "resources/epic-seven/image/tieria_hero_awaken_entry.png",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "native_threshold": 0.94,
+      "max_pixel_mae": 14,
+      "source_controls": {
+        "tieria_hero_awaken_entry": "wnd/unit_detail.csb /Layer/n_menu_hero/center_hero/btn_zodiac",
+        "tieria_hero_level_up_entry": "wnd/unit_detail.csb /Layer/n_menu_hero/center_hero/btn_lv_up"
+      },
+      "calibration": "var/stove-session/tieria-hero-navigation-calibration/report.json",
+      "validation": {
+        "real_positives": 3,
+        "level_independence_synthetic_positive": 1,
+        "negatives": 16,
+        "native_replay_passed": true,
+        "live_validated": false
+      },
+      "limitations": [
+        "Current button enabled, hero instance, level and material sufficiency unknown.",
+        "HeroC/key13 source label is generic hero navigation, not these controls.",
+        "No new growth executor or purchase/farming implied."
+      ],
+      "generic_navigation_reuse": {
+        "kind": "current_inner_button_glyph_with_generic_panel_proof",
+        "character_identity_required": false,
+        "live_character": "Arbiter Vildred",
+        "report": "var/animated-navigation-live/report.json",
+        "legacy_target_states_unchanged": true,
+        "note": "Does not promote the old qualified target to other native states. The observed-coordinate navigation guard consumes this current marker in its canonical control node."
+      }
+    },
+    "tieria_hero_level_up_entry": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261027T091000Z_a714adef/agent_000015.png",
+      "source_sha256": "23deca89496f7f579ceaee086c27c67015efe4bc07c09011ee1fc85d392408c6",
+      "crop_xyxy": [
+        568,
+        578,
+        619,
+        623
+      ],
+      "sha256": "f556e2e8d53d6148f9fda867a3320e2b886b01ccebfaadf88bbce2a94c5b5c1e",
+      "transformation": "White inner-button glyphs min170/spread55 plus1px; green mask elsewhere, excluding outer glow.",
+      "scope": "Current Free Spirit Tieria Hero tab; navigation into growth panels only, no EXP or awakening application.",
+      "file": "resources/epic-seven/image/tieria_hero_level_up_entry.png",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "native_threshold": 0.94,
+      "max_pixel_mae": 14,
+      "source_controls": {
+        "tieria_hero_awaken_entry": "wnd/unit_detail.csb /Layer/n_menu_hero/center_hero/btn_zodiac",
+        "tieria_hero_level_up_entry": "wnd/unit_detail.csb /Layer/n_menu_hero/center_hero/btn_lv_up"
+      },
+      "calibration": "var/stove-session/tieria-hero-navigation-calibration/report.json",
+      "validation": {
+        "real_positives": 3,
+        "level_independence_synthetic_positive": 1,
+        "negatives": 16,
+        "native_replay_passed": true,
+        "live_validated": false
+      },
+      "limitations": [
+        "Current button enabled, hero instance, level and material sufficiency unknown.",
+        "HeroC/key13 source label is generic hero navigation, not these controls.",
+        "No new growth executor or purchase/farming implied."
+      ],
+      "generic_navigation_reuse": {
+        "kind": "current_inner_button_glyph_with_generic_panel_proof",
+        "character_identity_required": false,
+        "live_character": "Arbiter Vildred",
+        "report": "var/animated-navigation-live/report.json",
+        "legacy_target_states_unchanged": true,
+        "note": "Does not promote the old qualified target to other native states. The observed-coordinate navigation guard consumes this current marker in its canonical control node."
+      }
+    },
+    "coreloop_chest_presentation_16": {
+      "source_file": "var/runs/20261027T060242Z_390d2724/agent_000016.png",
+      "source_sha256": "a86d864c39b7702264af98f9067117bc52506764566ce32ba9eae88fe81d9509",
+      "crop_xyxy": [
+        520,
+        270,
+        690,
+        405
+      ],
+      "sha256": "078c8bcc1f3ce0fd286a7839d2a13de530a269676817ff9082de657511cf618d",
+      "file": "resources/epic-seven/image/coreloop_chest_presentation_16.png",
+      "origin": "screen_crop",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "transformation": "Unscaled crop of the central chest; three observed visual variants, no rarity semantics.",
+      "scope": "Read-only presentation identity with current Tap the screen prompt; no action target or executor.",
+      "native_threshold": 0.96,
+      "max_pixel_mae": 8,
+      "live_action_validation": false,
+      "calibration": "var/stove-session/chest-ui-calibration.json",
+      "validation": {
+        "native_replay_passed": true,
+        "source_positive_frames": 3,
+        "real_negatives": 13,
+        "dimmed_negatives": 3,
+        "independent_positive_variants": false,
+        "live_validated": false,
+        "report_sha256": "b316119912e740b4a715fac85af09a20ef632355b6424c1512cc00492ad527c1"
+      }
+    },
+    "coreloop_chest_presentation_19": {
+      "source_file": "var/runs/20261027T060242Z_390d2724/agent_000019.png",
+      "source_sha256": "8e6ec63579e39f461b67a718c7b9eb5d2bf440f77b8b33bb60048f9434fdc2f8",
+      "crop_xyxy": [
+        520,
+        270,
+        690,
+        405
+      ],
+      "sha256": "3dcd6312edaa6f76833ce82d4628dfe91e9ab2f1b507637f800d35767a7c9a5a",
+      "file": "resources/epic-seven/image/coreloop_chest_presentation_19.png",
+      "origin": "screen_crop",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "transformation": "Unscaled crop of the central chest; three observed visual variants, no rarity semantics.",
+      "scope": "Read-only presentation identity with current Tap the screen prompt; no action target or executor.",
+      "native_threshold": 0.96,
+      "max_pixel_mae": 8,
+      "live_action_validation": false,
+      "calibration": "var/stove-session/chest-ui-calibration.json",
+      "validation": {
+        "native_replay_passed": true,
+        "source_positive_frames": 3,
+        "real_negatives": 13,
+        "dimmed_negatives": 3,
+        "independent_positive_variants": false,
+        "live_validated": false,
+        "report_sha256": "b316119912e740b4a715fac85af09a20ef632355b6424c1512cc00492ad527c1"
+      }
+    },
+    "coreloop_chest_presentation_22": {
+      "source_file": "var/runs/20261027T060242Z_390d2724/agent_000022.png",
+      "source_sha256": "dcbebc47bf997d71c8314dedf044910a2653612be2f407113657f593480faea7",
+      "crop_xyxy": [
+        520,
+        270,
+        690,
+        405
+      ],
+      "sha256": "bc646a3f13d96f1efdf356a9d1690d5c25c30264f077196f40739ddbdf808e68",
+      "file": "resources/epic-seven/image/coreloop_chest_presentation_22.png",
+      "origin": "screen_crop",
+      "pack_texture": false,
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "transformation": "Unscaled crop of the central chest; three observed visual variants, no rarity semantics.",
+      "scope": "Read-only presentation identity with current Tap the screen prompt; no action target or executor.",
+      "native_threshold": 0.96,
+      "max_pixel_mae": 8,
+      "live_action_validation": false,
+      "calibration": "var/stove-session/chest-ui-calibration.json",
+      "validation": {
+        "native_replay_passed": true,
+        "source_positive_frames": 3,
+        "real_negatives": 13,
+        "dimmed_negatives": 3,
+        "independent_positive_variants": false,
+        "live_validated": false,
+        "report_sha256": "b316119912e740b4a715fac85af09a20ef632355b6424c1512cc00492ad527c1"
+      }
+    },
+    "path_heir_tab_inactive": {
+      "source_file": "var/runs/20261027T223307Z_e463338a/live.png",
+      "source_sha256": "0602c74635b8f234f6f8a2f3384ee240a13c9821565b24346b52afb42a930603",
+      "crop_xyxy": [
+        112,
+        196,
+        198,
+        214
+      ],
+      "sha256": "40c5e1bc26ada62e85c0746d716d3b5d76c4c40389f39d3c0aa871cf8999196c",
+      "origin": "screen_crop",
+      "pack_texture": false,
+      "profile": "shared layout; calibrated on STOVE 1212x682",
+      "layout_reference": "wnd/growth_masterbook.csb",
+      "purpose": "Current inactive Path tab pixel fidelity; navigation only. Never a mission or reward target.",
+      "live_action_validation": {
+        "scope": "one observed operation only",
+        "input": "var/runs/20261027T223540Z_18969bc2",
+        "destination": "var/runs/20261027T223540Z_18969bc2"
+      }
+    },
+    "path_covenant_tab": {
+      "source_file": "var/runs/20261027T223540Z_18969bc2/agent_000003.png",
+      "source_sha256": "5bbeca32bbf70e08178aad94b3990dd14780ac63fd53f3cba5e91584c15467cd",
+      "crop_xyxy": [
+        58,
+        586,
+        152,
+        613
+      ],
+      "sha256": "162b94aad31da6084c1b6127091ba2eaa1ba63de881fcfe48cf1d54c9de5efe6",
+      "origin": "screen_crop",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682",
+      "layout_reference": "wnd/gacha_renew.csb",
+      "purpose": "Navigation to Covenant banner only; not a summon or proof of zero cost.",
+      "live_action_validation": {
+        "scope": "one observed operation only",
+        "input": "var/runs/20261027T223844Z_09ce17d5",
+        "destination": "var/runs/20261027T224203Z_c2124010"
+      }
+    },
+    "path_free_summon": {
+      "source_file": "var/runs/20261027T224237Z_68eb8f17/agent_000010.png",
+      "source_sha256": "20272683e2ad5bada7666439787c15ddcf152a63589a361cd611d0592c7f90c2",
+      "crop_xyxy": [
+        752,
+        610,
+        812,
+        642
+      ],
+      "sha256": "7c7a3fda999fbee0afacfc6bbee06512c2cfc78488a9c204894c1170871d3487",
+      "origin": "screen_crop",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682",
+      "layout_reference": "wnd/gacha_renew.csb",
+      "purpose": "Active single Covenant Free button after Wish List 14/14. Empty-list disabled button is negative. Requires current 1/1 free availability.",
+      "live_action_validation": {
+        "scope": "one observed operation only",
+        "input": "var/runs/20261027T224519Z_8c20e80f",
+        "destination": "var/runs/20261027T225008Z_82ff224a/004_Path.Open.Done.png"
+      }
+    },
+    "path_prequel_available": {
+      "source_file": "var/runs/20261027T225008Z_82ff224a/available-node-template-source.png",
+      "source_sha256": "66fcfc8e02614ca69a5137f7fa73437bc57113de5358f262f8e781f0bec36b08",
+      "crop_xyxy": [
+        18,
+        186,
+        85,
+        251
+      ],
+      "sha256": "7a82ac92cfbabc47adec9efff4a06546580a9eb624345ae88c0b63e4b6247d05",
+      "origin": "screen_crop",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682",
+      "layout_reference": "wnd/battle_stage_list.csb",
+      "purpose": "Selected available combat node; bright crossed swords, matched to the current numbered row. Completed/locked nodes must not pass.",
+      "live_action_validation": {
+        "scope": "one observed operation only",
+        "input": "var/runs/20261027T232155Z_ca18ef16",
+        "destination": "var/runs/20261027T232155Z_ca18ef16"
+      }
+    },
+    "story_skip_dialogue_gray": {
+      "source_file": "var/runs/20261027T233054Z_89604c75/agent_000001.png",
+      "source_sha256": "a2333ba356c79e67b33506b1835f1ea46ef5933d6b1da5642c63da4fdd325d7f",
+      "crop_xyxy": [
+        1123,
+        18,
+        1191,
+        56
+      ],
+      "sha256": "24c73400a0932e62da39d8529768f83d63698249a5554676799ce6c08da66d3d",
+      "origin": "screen_crop",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682 mouse4",
+      "transformation": "Neutral glyphs min channel 135, spread <=35, one-pixel neighbourhood; other pixels native green mask. No scaling.",
+      "layout_reference": "wnd/story.csb /Layer/n_skip/btn_forward",
+      "purpose": "Gray story header variant with Skip arrow and history icon; paired proof only.",
+      "live_action_validation": {
+        "method": "LongPress 1500ms, mouse4",
+        "input": "var/runs/20261027T233054Z_89604c75/agent_000003.json",
+        "destination": "var/runs/20261027T233054Z_89604c75/agent_000004.json"
+      }
+    },
+    "story_history_dialogue_gray": {
+      "source_file": "var/runs/20261027T233054Z_89604c75/agent_000001.png",
+      "source_sha256": "a2333ba356c79e67b33506b1835f1ea46ef5933d6b1da5642c63da4fdd325d7f",
+      "crop_xyxy": [
+        1025,
+        15,
+        1067,
+        57
+      ],
+      "sha256": "0e12bda0945b550d90500b760ac7b0644632e19363855e2cc8f410103bf88266",
+      "origin": "screen_crop",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682 mouse4",
+      "transformation": "Neutral glyphs min channel 135, spread <=35, one-pixel neighbourhood; other pixels native green mask. No scaling.",
+      "layout_reference": "wnd/story.csb /Layer/n_skip/btn_forward",
+      "purpose": "Gray story header variant with Skip arrow and history icon; paired proof only.",
+      "live_action_validation": {
+        "method": "LongPress 1500ms, mouse4",
+        "input": "var/runs/20261027T233054Z_89604c75/agent_000003.json",
+        "destination": "var/runs/20261027T233054Z_89604c75/agent_000004.json"
+      }
+    },
+    "path_receive_ready": {
+      "source_file": "var/runs/20261027T225008Z_82ff224a/004_Path.Open.Done.png",
+      "source_sha256": "1a47e95882fb32e6f6a9dd684a565b332e4946d2506eabaf32b941c78436d690",
+      "crop_xyxy": [
+        1003,
+        321,
+        1115,
+        360
+      ],
+      "sha256": "291a268137fa0637be6a29f1dfe613d74375306392325c1a0193ed7ff6b8b6ef",
+      "origin": "screen_crop",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682",
+      "layout_reference": "wnd/growth_masterbook_quest_item.csb /Layer/btn_reward",
+      "purpose": "Green Receive body plus label; gray group control and amber Go are negatives. Does not prove condition counter or claimed status.",
+      "live_action_validation": false
+    },
+    "path_claimed_tick": {
+      "source_file": "resources/epic-seven/image/quest_claimed_tick.png",
+      "source_sha256": "6f2fd9f2cb9aa7d557cd492bd3a73fd41d9a8cf7492546f05c16a572c0eca88b",
+      "sha256": "6f2fd9f2cb9aa7d557cd492bd3a73fd41d9a8cf7492546f05c16a572c0eca88b",
+      "origin": "existing_game_template_copy",
+      "pack_texture": false,
+      "profile": "STOVE 1212x682, pending native replay",
+      "purpose": "Completed task check only; bind to current exact task row and complete counter, never to readiness for clicking."
+    },
+    "path_battle_clear_heading": {
+      "source_file": "var/runs/20261028T005525Z_65af4a70/agent_000004.png",
+      "source_sha256": "933c9834164ffda27a04ee8638a7cfdcb192e5e5327f11b27c1ba3dd53778039",
+      "crop_xyxy": [
+        508,
+        254,
+        713,
+        295
+      ],
+      "sha256": "bcc6aad95daa1a33b5b4668192d451e404fcae5ef402130e147af06cbb569059",
+      "origin": "screen_crop",
+      "pack_texture": false,
+      "profile": "STOVE1212x682 mouse4",
+      "layout_reference": "wnd/result_base.csb /Layer/n_buttons/CENTER/btn_move_next",
+      "purpose": "Paired generic battle CLEAR advance only; no star count or mode identity.",
+      "live_action_validation": {
+        "input": "var/runs/20261028T005525Z_65af4a70/agent_000005.json",
+        "destination": "var/runs/20261028T005525Z_65af4a70/agent_000006.json"
+      }
+    },
+    "path_battle_clear_dim_hud": {
+      "source_file": "var/runs/20261028T005525Z_65af4a70/agent_000004.png",
+      "source_sha256": "933c9834164ffda27a04ee8638a7cfdcb192e5e5327f11b27c1ba3dd53778039",
+      "crop_xyxy": [
+        934,
+        13,
+        973,
+        52
+      ],
+      "sha256": "84a36dfe495fc3fb6ca1fa2b32e76381633e4c3e2e5cd70101a12a49bbd145b2",
+      "origin": "screen_crop",
+      "pack_texture": false,
+      "profile": "STOVE1212x682 mouse4",
+      "layout_reference": "wnd/result_base.csb /Layer/n_buttons/CENTER/btn_move_next",
+      "purpose": "Paired generic battle CLEAR advance only; no star count or mode identity.",
+      "live_action_validation": {
+        "input": "var/runs/20261028T005525Z_65af4a70/agent_000005.json",
+        "destination": "var/runs/20261028T005525Z_65af4a70/agent_000006.json"
+      }
+    },
+    "path_battle_exit_lobby": {
+      "source_file": "var/path-closure-live/altar-footer-source.png",
+      "source_sha256": "28cc65d254e782e335b05793b7a07da27fc146c05be3ba9be88ab47b7610fa94",
+      "crop_xyxy": [
+        187,
+        600,
+        317,
+        655
+      ],
+      "sha256": "4fa93e2f040df308257be38d84ad3fe1aeaadf803cc1b9c4588e15e6ac784a82",
+      "origin": "screen_crop",
+      "pack_texture": false,
+      "profile": "STOVE1212x682",
+      "layout_reference": "wnd/result_base.csb /Layer/n_buttons/CENTER/n_left_btns/btn_lobby",
+      "purpose": "Current unoccluded result footer; combine with Leave/Try again/Next Difficulty and costs. No victory/mode inference.",
+      "live_action_validation": {
+        "input": "var/runs/20261028T011335Z_07cce166/agent_000001.json",
+        "scope": "zero-start Altar completion to lobby"
+      }
+    },
+    "path_receive_group": {
+      "source_file": "var/runs/20261028T011335Z_07cce166/010_Path.Claim.Done.png",
+      "source_sha256": "ba29b56ced4e6c9e366498592182dabd2db03c5a91be11fd7c87d932b444130a",
+      "crop_xyxy": [
+        995,
+        203,
+        1110,
+        245
+      ],
+      "sha256": "c0971d3a906520cf012375a002152e51584d3845cca931adeebdb28681e46f20",
+      "origin": "screen_crop",
+      "pack_texture": false,
+      "profile": "STOVE1212x682 mouse4",
+      "layout_reference": "wnd/growth_masterbook.csb",
+      "purpose": "Current group reward readiness / group navigation; never infer unlock/claim completion from appearance alone.",
+      "live_action_validation": {
+        "input": "var/runs/20261028T012258Z_711fed77/agent_000001.json",
+        "destination": "var/runs/20261028T012258Z_711fed77/agent_000010.json",
+        "scope": "single group reward dispatch and receipt; rank modal needed explicit dismissal before clean verification"
+      }
+    },
+    "path_group_next": {
+      "source_file": "var/runs/20261028T011335Z_07cce166/010_Path.Claim.Done.png",
+      "source_sha256": "ba29b56ced4e6c9e366498592182dabd2db03c5a91be11fd7c87d932b444130a",
+      "crop_xyxy": [
+        1064,
+        58,
+        1105,
+        99
+      ],
+      "sha256": "f122b4508b89ff3a0404f51dc2859f66fdab58c9cf50d5b84c40a3db668ca7ad",
+      "origin": "screen_crop",
+      "pack_texture": false,
+      "profile": "STOVE1212x682 mouse4",
+      "layout_reference": "wnd/growth_masterbook.csb",
+      "purpose": "Current group reward readiness / group navigation; never infer unlock/claim completion from appearance alone.",
+      "live_action_validation": false
+    },
+    "path_prequel_boss_available": {
+      "source_file": "var\\runs\\20261028T095702Z_2f558826\\path_failure_after.png",
+      "crop_xyxy": [
+        18,
+        187,
+        85,
+        252
+      ],
+      "source_sha256": "74bdc9f0308395815e98e1f216e961ba20f9fbd945f91ecfe3d7bd15d0fcce81",
+      "sha256": "a426d4c5936f44eb24ef2f14f0b453c3f0d99bff1eea6e0d4fffc931cb29ceaf",
+      "purpose": "runtime_template",
+      "notes": "Current selected boss-row badge, calibrated with exact chapter/row/description and native Ready. Other rows, dimmed/covered images remain negative; no account-wide availability inferred."
+    },
+    "equip_all_control": {
+      "origin": "screen_crop",
+      "source_file": "var\\runs\\20261028T111719Z_6f5206ff\\agent_000003.png",
+      "source_sha256": "0e118658a296e8a625b5a44c0e9b1bce775987744f2083c7265c2ed0b0da961a",
+      "crop_xyxy": [
+        574,
+        576,
+        622,
+        625
+      ],
+      "sha256": "98b90b2e631a9d4202d577e4a75fa36b1bd88a2b1b7bc28e948ac0425d01e8fe",
+      "source_layout": "wnd/unit_detail.csb /Layer/n_menu_equipment/center_equipment/btn_equip",
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "scope": "1212x682 equipment panel icon; needs current composed hero equipment and label. White glyph pixels only; no item identity."
+    }
+  },
+  "scope": "Shared Epic Seven bundle. Original run/client labels are historical provenance, not runtime profiles."
+}

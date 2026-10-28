@@ -1,0 +1,1846 @@
+{
+  "reference_size": [
+    1212,
+    682
+  ],
+  "templates": {
+    "orbis_button": {
+      "node": "Template.OrbisButton",
+      "template": "orbis_button.png",
+      "max_pixel_mae": 12,
+      "glyph_min": 170
+    },
+    "lobby_label": {
+      "node": "Template.LobbyLabel",
+      "template": "lobby_label.png",
+      "max_pixel_mae": 18
+    },
+    "orbis_header": {
+      "node": "Template.OrbisHeader",
+      "template": "orbis_header.png",
+      "max_pixel_mae": 18
+    },
+    "tavern_wall": {
+      "node": "Template.TavernWall",
+      "template": [
+        "tavern_wall.png",
+        "tavern_wall_day.png"
+      ],
+      "max_pixel_mae": 10
+    },
+    "tavern_shelf": {
+      "node": "Template.TavernShelf",
+      "template": [
+        "tavern_shelf.png",
+        "tavern_barrel_day.png"
+      ],
+      "max_pixel_mae": 10
+    },
+    "map_episode_header": {
+      "node": "Template.MapEpisodeHeader",
+      "template": "map_episode_header.png",
+      "max_pixel_mae": 18
+    },
+    "map_ready_label": {
+      "node": "Stove.Template.MapReadyLabel",
+      "template": "map_ready_label.png",
+      "max_pixel_mae": 18,
+      "alternatives": [
+        {
+          "node": "Template.MapReadyLabel",
+          "template": "map_ready_label.png",
+          "max_pixel_mae": 18
+        }
+      ]
+    },
+    "ready_header": {
+      "node": "Template.ReadyHeader",
+      "template": "ready_header.png",
+      "max_pixel_mae": 18
+    },
+    "start_quest_label": {
+      "node": "Template.StartQuestLabel",
+      "template": [
+        "start_quest_label.png",
+        "start_quest_small.png"
+      ],
+      "max_pixel_mae": 18
+    },
+    "supporter_title": {
+      "node": "Template.SupporterTitle",
+      "template": "supporter_title.png",
+      "max_pixel_mae": 18
+    },
+    "story_skip": {
+      "node": "Stove.Template.StorySkip",
+      "template": [
+        "story_skip.png",
+        "story_skip_light_room.png",
+        "story_skip_dialogue_gray.png"
+      ],
+      "max_pixel_mae": 18,
+      "green_mask": true,
+      "alternatives": [
+        {
+          "node": "Template.StorySkip",
+          "template": "classic_story_skip.png",
+          "max_pixel_mae": 28,
+          "glyph_min": 170
+        }
+      ]
+    },
+    "story_history": {
+      "node": "Stove.Template.StoryHistory",
+      "template": [
+        "story_history.png",
+        "story_history_camp.png",
+        "story_history_dialogue_gray.png"
+      ],
+      "max_pixel_mae": 18,
+      "green_mask": true,
+      "alternatives": [
+        {
+          "node": "Template.StoryHistory",
+          "template": "classic_story_history.png",
+          "max_pixel_mae": 22,
+          "glyph_min": 110
+        }
+      ]
+    },
+    "story_confirm_question": {
+      "node": "Stove.Template.StoryConfirmQuestion",
+      "template": "story_confirm_question.png",
+      "max_pixel_mae": 18,
+      "green_mask": true,
+      "alternatives": [
+        {
+          "node": "Template.StoryConfirmQuestion",
+          "template": "classic_story_confirm_question.png",
+          "max_pixel_mae": 18
+        }
+      ]
+    },
+    "story_confirm_button": {
+      "node": "Stove.Template.StoryConfirmButton",
+      "template": "story_confirm_button.png",
+      "max_pixel_mae": 18,
+      "green_mask": true,
+      "alternatives": [
+        {
+          "node": "Template.StoryConfirmButton",
+          "template": "classic_story_confirm_button.png",
+          "max_pixel_mae": 18
+        }
+      ]
+    },
+    "clear_initial": {
+      "node": "Stove.Template.ClearInitial",
+      "template": "clear_initial.png",
+      "max_pixel_mae": 18,
+      "alternatives": [
+        {
+          "node": "Template.ClearInitial",
+          "template": "clear_initial.png",
+          "max_pixel_mae": 18
+        }
+      ]
+    },
+    "clear_story": {
+      "node": "Template.ClearStory",
+      "template": "clear_story.png",
+      "max_pixel_mae": 18
+    },
+    "clear_continue": {
+      "node": "Stove.Template.ClearContinue",
+      "template": "clear_continue.png",
+      "max_pixel_mae": 18,
+      "alternatives": [
+        {
+          "node": "Template.ClearContinue",
+          "template": "clear_continue.png",
+          "max_pixel_mae": 18
+        }
+      ]
+    },
+    "result_heading": {
+      "node": "Stove.Template.ResultHeading",
+      "template": "result_heading.png",
+      "max_pixel_mae": 18,
+      "alternatives": [
+        {
+          "node": "Template.ResultHeading",
+          "template": "result_heading.png",
+          "max_pixel_mae": 18
+        }
+      ]
+    },
+    "result_confirm": {
+      "node": "Stove.Template.ResultConfirm",
+      "template": "result_confirm.png",
+      "max_pixel_mae": 18,
+      "alternatives": [
+        {
+          "node": "Template.ResultConfirm",
+          "template": "result_confirm.png",
+          "max_pixel_mae": 18
+        }
+      ]
+    },
+    "story_reward_header": {
+      "node": "Stove.Template.StoryRewardHeader",
+      "template": "story_reward_header.png",
+      "max_pixel_mae": 18,
+      "alternatives": [
+        {
+          "node": "Template.StoryRewardHeader",
+          "template": "story_reward_header.png",
+          "max_pixel_mae": 18
+        }
+      ]
+    },
+    "story_reward_close": {
+      "node": "Stove.Template.StoryRewardClose",
+      "template": "story_reward_close.png",
+      "max_pixel_mae": 18,
+      "alternatives": [
+        {
+          "node": "Template.StoryRewardClose",
+          "template": "story_reward_close.png",
+          "max_pixel_mae": 18
+        }
+      ]
+    },
+    "battle_pause": {
+      "node": "Stove.Template.BattlePause",
+      "template": [
+        "battle_pause.png",
+        "battle_pause_tar002.png"
+      ],
+      "max_pixel_mae": 18,
+      "glyph_min": 170,
+      "alternatives": [
+        {
+          "node": "Template.BattlePause",
+          "template": "battle_pause.png",
+          "max_pixel_mae": 18,
+          "glyph_min": 170
+        }
+      ]
+    },
+    "battle_help": {
+      "node": "Stove.Template.BattleHelp",
+      "template": "battle_help.png",
+      "max_pixel_mae": 18,
+      "glyph_min": 170,
+      "alternatives": [
+        {
+          "node": "Template.BattleHelp",
+          "template": "battle_help.png",
+          "max_pixel_mae": 18,
+          "glyph_min": 170
+        }
+      ]
+    },
+    "start_regular_label": {
+      "node": "Template.StartRegularLabel",
+      "template": "start_regular_label.png",
+      "max_pixel_mae": 18
+    },
+    "ready_completed_flag": {
+      "node": "Template.ReadyCompletedFlag",
+      "template": "ready_completed_flag.png",
+      "max_pixel_mae": 18
+    },
+    "side_alert_header": {
+      "node": "Template.SideAlertHeader",
+      "template": "side_alert_header.png",
+      "max_pixel_mae": 18
+    },
+    "side_alert_close": {
+      "node": "Template.SideAlertClose",
+      "template": "side_alert_close.png",
+      "max_pixel_mae": 18
+    },
+    "friend_header": {
+      "node": "Template.FriendHeader",
+      "template": "friend_header.png",
+      "max_pixel_mae": 18
+    },
+    "friend_prompt": {
+      "node": "Template.FriendPrompt",
+      "template": "friend_prompt.png",
+      "max_pixel_mae": 18
+    },
+    "friend_cancel": {
+      "node": "Template.FriendCancel",
+      "template": "friend_cancel.png",
+      "max_pixel_mae": 18
+    },
+    "received_reward_header": {
+      "node": "Stove.Template.ReceivedRewardHeader",
+      "template": "received_reward_header.png",
+      "max_pixel_mae": 18,
+      "alternatives": [
+        {
+          "node": "Template.ReceivedRewardHeader",
+          "template": "received_reward_header.png",
+          "max_pixel_mae": 18
+        }
+      ]
+    },
+    "received_reward_close": {
+      "node": "Stove.Template.ReceivedRewardClose",
+      "template": "received_reward_close.png",
+      "max_pixel_mae": 18,
+      "alternatives": [
+        {
+          "node": "Template.ReceivedRewardClose",
+          "template": "received_reward_close.png",
+          "max_pixel_mae": 18
+        }
+      ]
+    },
+    "episode_button": {
+      "node": "Stove.Template.EpisodeButton",
+      "template": [
+        "episode_button.png",
+        "episode_button_normal.png"
+      ],
+      "max_pixel_mae": 14,
+      "green_mask": true,
+      "alternatives": [
+        {
+          "node": "Template.EpisodeButton",
+          "template": "classic_episode_button.png",
+          "max_pixel_mae": 18
+        }
+      ]
+    },
+    "quick_menu_music": {
+      "node": "Template.QuickMenuMusic",
+      "template": "quick_menu_music.png",
+      "max_pixel_mae": 12
+    },
+    "quick_menu_close": {
+      "node": "Template.QuickMenuClose",
+      "template": "quick_menu_close.png",
+      "max_pixel_mae": 12
+    },
+    "options_header": {
+      "node": "Template.OptionsHeader",
+      "template": "options_header.png",
+      "max_pixel_mae": 12,
+      "glyph_min": 170
+    },
+    "options_back": {
+      "node": "Template.OptionsBack",
+      "template": "options_back.png",
+      "max_pixel_mae": 12,
+      "glyph_min": 170
+    },
+    "hero_search": {
+      "node": "Template.HeroSearch",
+      "template": "hero_search.png",
+      "max_pixel_mae": 12,
+      "glyph_min": 110
+    },
+    "hero_transmission_label": {
+      "node": "Template.HeroTransmissionLabel",
+      "template": "hero_transmission_label.png",
+      "max_pixel_mae": 12,
+      "glyph_min": 110
+    },
+    "battle_menu_header": {
+      "node": "Template.BattleMenuHeader",
+      "template": "battle_menu_header.png",
+      "max_pixel_mae": 12,
+      "glyph_min": 110
+    },
+    "battle_seasonal_tab": {
+      "node": "Template.BattleSeasonalTab",
+      "template": [
+        "battle_seasonal_tab.png",
+        "battle_seasonal_tab_normal_view.png"
+      ],
+      "max_pixel_mae": 12,
+      "glyph_min": 110
+    },
+    "battle_normal_tab": {
+      "node": "Template.BattleNormalTab",
+      "template": [
+        "battle_normal_tab.png",
+        "battle_normal_tab_normal_view.png"
+      ],
+      "max_pixel_mae": 12,
+      "glyph_min": 110
+    },
+    "auto_hud_on": {
+      "node": "Stove.Template.AutoHudOnFourChecks",
+      "template": "auto_hud_on.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "auto_single_check_hint": {
+      "node": "Template.auto_hud_on",
+      "template": "classic_auto_hud_on.png",
+      "max_pixel_mae": 14,
+      "green_mask": false
+    },
+    "auto_hud_off": {
+      "node": "Template.auto_hud_off",
+      "template": [
+        "classic_auto_hud_off.png",
+        "auto_hud_off_pulse.png",
+        "auto_hud_off_arena.png",
+        "auto_hud_off_arena_glow.png"
+      ],
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "formation_remove": {
+      "node": "Template.formation_remove",
+      "template": "formation_remove.png",
+      "max_pixel_mae": 14
+    },
+    "formation_details": {
+      "node": "Template.formation_details",
+      "template": "formation_details.png",
+      "max_pixel_mae": 14,
+      "glyph_min": 170
+    },
+    "tutorial_skip": {
+      "node": "Stove.Template.TutorialSkip",
+      "template": "tutorial_skip.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "tutorial_episode_instruction": {
+      "node": "Stove.Template.TutorialEpisodeInstruction",
+      "template": "tutorial_episode_instruction.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "lobby_stained_window": {
+      "node": "Stove.Template.LobbyStainedWindow",
+      "template": "lobby_stained_window.png",
+      "max_pixel_mae": 10
+    },
+    "lobby_idle_upper_left": {
+      "node": "Stove.Template.LobbyIdleUpperLeft",
+      "template": "lobby_idle_upper_left.png",
+      "max_pixel_mae": 8
+    },
+    "lobby_menu_grid": {
+      "node": "Stove.Template.LobbyMenuGrid",
+      "template": [
+        "lobby_menu_grid.png",
+        "lobby_menu_grid_badge_masked.png"
+      ],
+      "max_pixel_mae": 12,
+      "green_mask": true
+    },
+    "prequel_episode_header": {
+      "node": "Stove.Template.PrequelEpisodeHeader",
+      "template": [
+        "prequel_episode_header.png",
+        "prequel_episode_header_tutorial.png",
+        "prequel_episode_header_tenebria.png"
+      ],
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "prequel_view_story": {
+      "node": "Stove.Template.PrequelViewStory",
+      "template": "prequel_view_story.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "nightmare_keeper_body": {
+      "node": "Stove.Template.NightmareKeeperBody",
+      "template": [
+        "nightmare_keeper_body_007.png",
+        "nightmare_keeper_body_009.png",
+        "nightmare_keeper_body_011.png",
+        "nightmare_keeper_body_013.png",
+        "nightmare_keeper_body_016.png",
+        "nightmare_keeper_body_019.png",
+        "nightmare_keeper_body_postattack_006.png",
+        "nightmare_keeper_body_postattack_007.png",
+        "nightmare_keeper_body_postattack_009.png"
+      ],
+      "max_pixel_mae": 14
+    },
+    "nightmare_keeper_name": {
+      "node": "Stove.Template.NightmareKeeperName",
+      "template": "nightmare_keeper_name.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "prequel_ready_header": {
+      "node": "Stove.Template.PrequelReadyHeader",
+      "template": [
+        "prequel_ready_header.png",
+        "prequel_ready_header_normal.png"
+      ],
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "prequel_story_team": {
+      "node": "Stove.Template.PrequelStoryTeam",
+      "template": [
+        "prequel_story_team.png",
+        "prequel_story_team_normal.png"
+      ],
+      "max_pixel_mae": 14,
+      "green_mask": false
+    },
+    "mercenary_lydia_body": {
+      "node": "Stove.Template.MercenaryLydiaBody",
+      "template": [
+        "mercenary_lydia_body_004.png",
+        "mercenary_lydia_body_013.png",
+        "mercenary_lydia_body_020.png",
+        "mercenary_lydia_body_022.png",
+        "mercenary_lydia_body_024.png"
+      ],
+      "max_pixel_mae": 18
+    },
+    "mercenary_lydia_name": {
+      "node": "Stove.Template.MercenaryLydiaName",
+      "template": "mercenary_lydia_name.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "skill_highlight_1": {
+      "node": "Stove.Template.SkillHighlight1",
+      "template": [
+        "skill_highlight_frame_1.png",
+        "skill_highlight_frame_2.png",
+        "skill_highlight_frame_3.png",
+        "skill_highlight_frame_hugo_s1.png",
+        "skill_highlight_frame_hugo_s2.png"
+      ],
+      "max_pixel_mae": 18,
+      "green_mask": true
+    },
+    "skill_highlight_2": {
+      "node": "Stove.Template.SkillHighlight2",
+      "template": [
+        "skill_highlight_frame_1.png",
+        "skill_highlight_frame_2.png",
+        "skill_highlight_frame_3.png",
+        "skill_highlight_frame_hugo_s1.png",
+        "skill_highlight_frame_hugo_s2.png"
+      ],
+      "max_pixel_mae": 18,
+      "green_mask": true
+    },
+    "skill_highlight_3": {
+      "node": "Stove.Template.SkillHighlight3",
+      "template": [
+        "skill_highlight_frame_1.png",
+        "skill_highlight_frame_2.png",
+        "skill_highlight_frame_3.png",
+        "skill_highlight_frame_hugo_s1.png",
+        "skill_highlight_frame_hugo_s2.png"
+      ],
+      "max_pixel_mae": 18,
+      "green_mask": true
+    },
+    "clear_objective_check_1": {
+      "node": "Stove.Template.ClearObjectiveCheck1",
+      "template": "clear_objective_check.png",
+      "max_pixel_mae": 14,
+      "green_glyph": true
+    },
+    "clear_objective_check_2": {
+      "node": "Stove.Template.ClearObjectiveCheck2",
+      "template": "clear_objective_check.png",
+      "max_pixel_mae": 14,
+      "green_glyph": true
+    },
+    "clear_objective_check_3": {
+      "node": "Stove.Template.ClearObjectiveCheck3",
+      "template": "clear_objective_check.png",
+      "max_pixel_mae": 14,
+      "green_glyph": true
+    },
+    "clear_three_stars": {
+      "node": "Stove.Template.ClearThreeStars",
+      "template": "clear_three_stars.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "hero_joined_title": {
+      "node": "Stove.Template.HeroJoinedTitle",
+      "template": "hero_joined_title.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "hero_joined_description": {
+      "node": "Stove.Template.HeroJoinedDescription",
+      "template": "hero_joined_description.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "hero_joined_ok": {
+      "node": "Stove.Template.HeroJoinedOK",
+      "template": "hero_joined_ok.png",
+      "max_pixel_mae": 14,
+      "green_mask": false
+    },
+    "formation_destination_right": {
+      "node": "Stove.Template.FormationDestinationRight",
+      "template": "formation_destination_right.png",
+      "max_pixel_mae": 14
+    },
+    "formation_destination_lower": {
+      "node": "Stove.Template.FormationDestinationLower",
+      "template": "formation_destination_lower.png",
+      "max_pixel_mae": 14
+    },
+    "formation_victorika_right": {
+      "node": "Stove.Template.FormationVictorikaRight",
+      "template": "formation_victorika_right.png",
+      "max_pixel_mae": 14
+    },
+    "dap005_preparation_identity": {
+      "node": "Stove.Template.Dap005PreparationIdentity",
+      "template": "dap005_preparation_identity.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "victorika_acquisition_name": {
+      "node": "Stove.Template.VictorikaAcquisitionName",
+      "template": "victorika_acquisition_name.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "victorika_acquisition_traits": {
+      "node": "Stove.Template.VictorikaAcquisitionTraits",
+      "template": "victorika_acquisition_traits.png",
+      "max_pixel_mae": 14,
+      "green_mask": false
+    },
+    "victorika_acquisition_new": {
+      "node": "Stove.Template.VictorikaAcquisitionNew",
+      "template": "victorika_acquisition_new.png",
+      "max_pixel_mae": 14,
+      "green_mask": false
+    },
+    "victorika_acquisition_four_stars": {
+      "node": "Stove.Template.VictorikaAcquisitionFourStars",
+      "template": "victorika_acquisition_four_stars.png",
+      "max_pixel_mae": 14,
+      "green_mask": false
+    },
+    "victorika_acquisition_confirm_normal": {
+      "node": "Stove.Template.VictorikaAcquisitionConfirmNormal",
+      "template": "victorika_acquisition_confirm_normal.png",
+      "max_pixel_mae": 14,
+      "green_mask": false
+    },
+    "victorika_acquisition_speech_name": {
+      "node": "Stove.Template.VictorikaAcquisitionSpeechName",
+      "template": "victorika_acquisition_speech_name.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "renoa_promo_traits": {
+      "node": "Stove.Template.RenoaPromoTraits",
+      "template": "renoa_promo_traits.png",
+      "max_pixel_mae": 14,
+      "green_mask": false
+    },
+    "renoa_promo_description": {
+      "node": "Stove.Template.RenoaPromoDescription",
+      "template": "renoa_promo_description.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "milestone_lobby_entry": {
+      "node": "Stove.Template.MilestoneLobbyEntry",
+      "template": "milestone_lobby_entry.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "auto_manual_skills": {
+      "node": "Stove.Template.AutoHudOff",
+      "template": "auto_hud_off.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "auto_unlocked_off": {
+      "node": "Stove.Template.AutoUnlockedOff",
+      "template": "stove_auto_unlocked_off.png",
+      "max_pixel_mae": 14,
+      "green_mask": false
+    },
+    "victorika_equipment_tab": {
+      "node": "Stove.Template.VictorikaEquipmentTab",
+      "template": "victorika_equipment_tab.png",
+      "max_pixel_mae": 14
+    },
+    "victorika_three_hero_roster": {
+      "node": "Stove.Template.VictorikaThreeHeroRoster",
+      "template": "victorika_three_hero_roster.png",
+      "max_pixel_mae": 14
+    },
+    "arbiter_roster_row_10": {
+      "node": "Stove.Template.ArbiterRosterRow10",
+      "template": "arbiter_roster_row_10.png",
+      "max_pixel_mae": 14
+    },
+    "milestone_read_header": {
+      "node": "Stove.Template.MilestoneReadHeader",
+      "template": "milestone_read_header.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "milestone_read_receive": {
+      "node": "Stove.Template.MilestoneReadReceive",
+      "template": "milestone_read_receive.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "milestone_read_receive_limited": {
+      "node": "Stove.Template.MilestoneReadReceiveLimited",
+      "template": "milestone_read_receive_limited.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "milestone_read_currencies": {
+      "node": "Stove.Template.MilestoneReadCurrencies",
+      "template": "milestone_read_currencies.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "coreloop_selector_prompt": {
+      "node": "Stove.Template.CoreloopSelectorPrompt",
+      "template": "coreloop_selector_prompt.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "coreloop_selector_receive_normal": {
+      "node": "Stove.Template.CoreloopSelectorReceiveNormal",
+      "template": "coreloop_selector_receive_normal.png",
+      "max_pixel_mae": 14,
+      "green_mask": false
+    },
+    "coreloop_selector_tenebria_bright": {
+      "node": "Stove.Template.CoreloopSelectorTenebriaBright",
+      "template": "coreloop_selector_tenebria_bright.png",
+      "max_pixel_mae": 14,
+      "green_mask": false
+    },
+    "coreloop_selector_confirmation": {
+      "node": "Stove.Template.CoreloopSelectorConfirmation",
+      "template": "coreloop_selector_confirmation.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "coreloop_selector_tenebria_question": {
+      "node": "Stove.Template.CoreloopSelectorTenebriaQuestion",
+      "template": "coreloop_selector_tenebria_question.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "coreloop_obtained": {
+      "node": "Stove.Template.CoreloopObtained",
+      "template": "coreloop_obtained.png",
+      "max_pixel_mae": 14,
+      "green_mask": false
+    },
+    "coreloop_catalyst_receipt": {
+      "node": "Stove.Template.CoreloopCatalystReceipt",
+      "template": "coreloop_catalyst_receipt.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "coreloop_catalyst_icon": {
+      "node": "Stove.Template.CoreloopCatalystIcon",
+      "template": "coreloop_catalyst_icon.png",
+      "max_pixel_mae": 14,
+      "green_mask": false
+    },
+    "equipment_tutorial_instruction": {
+      "node": "Stove.Template.EquipmentTutorialInstruction",
+      "template": "equipment_tutorial_instruction.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "equipment_tutorial_victorika_card": {
+      "node": "Stove.Template.EquipmentTutorialVictorikaCard",
+      "template": "equipment_tutorial_victorika_card.png",
+      "max_pixel_mae": 14,
+      "green_mask": false
+    },
+    "equipment_tutorial_skip": {
+      "node": "Stove.Template.TutorialSkip",
+      "template": "tutorial_skip.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "victorika_hero_tab": {
+      "node": "Stove.Template.VictorikaHeroTab",
+      "template": "victorika_hero_tab.png",
+      "max_pixel_mae": 14
+    },
+    "victorika_hero_quickmenu": {
+      "node": "Stove.Template.LobbyMenuGrid",
+      "template": [
+        "lobby_menu_grid.png",
+        "lobby_menu_grid_badge_masked.png"
+      ],
+      "max_pixel_mae": 12,
+      "green_mask": true
+    },
+    "friendship_result_title": {
+      "node": "Stove.Template.FriendshipResultTitle",
+      "template": "friendship_result_title.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "friendship_level_one": {
+      "node": "Stove.Template.FriendshipLevelOne",
+      "template": "friendship_level_one.png",
+      "max_pixel_mae": 14,
+      "green_mask": false
+    },
+    "friendship_level_two": {
+      "node": "Stove.Template.FriendshipLevelTwo",
+      "template": "friendship_level_two.png",
+      "max_pixel_mae": 14,
+      "green_mask": false
+    },
+    "friendship_result_close": {
+      "node": "Stove.Template.FriendshipResultClose",
+      "template": "friendship_result_close.png",
+      "max_pixel_mae": 14,
+      "green_mask": false
+    },
+    "summon_quickmenu_title": {
+      "node": "Stove.Template.SummonQuickmenuTitle",
+      "template": "summon_quickmenu_title.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "summon_quickmenu_close": {
+      "node": "Stove.Template.SummonQuickmenuClose",
+      "template": "summon_quickmenu_close.png",
+      "max_pixel_mae": 14,
+      "green_mask": false
+    },
+    "summon_quickmenu_composition": {
+      "node": "Stove.Template.SummonQuickmenuComposition",
+      "template": "summon_quickmenu_composition.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "summon_quickmenu_recruit": {
+      "node": "Stove.Template.SummonQuickmenuRecruit",
+      "template": "summon_quickmenu_recruit.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "tieria_dialogue_name": {
+      "node": "Stove.Template.TieriaDialogueName",
+      "template": "tieria_dialogue_name.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "tieria_dialogue_line": {
+      "node": "Stove.Template.TieriaDialogueLine",
+      "template": "tieria_dialogue_line.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "tieria_dialogue_history": {
+      "node": "Stove.Template.TieriaDialogueHistory",
+      "template": "tieria_dialogue_history.png",
+      "max_pixel_mae": 14,
+      "green_mask": false
+    },
+    "tieria_connection_dialogue_skip": {
+      "node": "Stove.Template.StorySkip",
+      "template": [
+        "story_skip.png",
+        "story_skip_light_room.png"
+      ],
+      "max_pixel_mae": 18,
+      "green_mask": true
+    },
+    "tieria_acquisition_traits": {
+      "node": "Stove.Template.TieriaAcquisitionTraits",
+      "template": "tieria_acquisition_traits.png",
+      "max_pixel_mae": 14,
+      "green_mask": false
+    },
+    "tieria_acquisition_description": {
+      "node": "Stove.Template.TieriaAcquisitionDescription",
+      "template": "tieria_acquisition_description.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "tieria_hero_traits": {
+      "node": "Stove.Template.TieriaHeroTraits",
+      "template": "tieria_hero_traits.png",
+      "max_pixel_mae": 14,
+      "green_mask": false
+    },
+    "tieria_hero_awaken_entry": {
+      "node": "Stove.Template.TieriaHeroAwakenEntry",
+      "template": "tieria_hero_awaken_entry.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "tieria_hero_level_up_entry": {
+      "node": "Stove.Template.TieriaHeroLevelUpEntry",
+      "template": "tieria_hero_level_up_entry.png",
+      "max_pixel_mae": 14,
+      "green_mask": true
+    },
+    "stove_coreloop_chest_presentation": {
+      "node": "Stove.Template.CoreloopChestPresentation",
+      "template": [
+        "coreloop_chest_presentation_16.png",
+        "coreloop_chest_presentation_19.png",
+        "coreloop_chest_presentation_22.png"
+      ],
+      "max_pixel_mae": 8
+    },
+    "path_heir_tab_inactive": {
+      "node": "Path.Template.HeirTabInactive",
+      "template": "path_heir_tab_inactive.png",
+      "max_pixel_mae": 6
+    },
+    "path_covenant_tab": {
+      "node": "Path.Template.CovenantTab",
+      "template": "path_covenant_tab.png",
+      "max_pixel_mae": 8
+    },
+    "path_free_summon": {
+      "node": "Path.Template.FreeSummon",
+      "template": "path_free_summon.png",
+      "max_pixel_mae": 6
+    },
+    "path_prequel_available": {
+      "node": "Path.Template.PrequelAvailable",
+      "template": "path_prequel_available.png",
+      "max_pixel_mae": 8,
+      "glyph_min": 210,
+      "alternatives": [
+        {
+          "node": "Path.Template.PrequelBossAvailable",
+          "template": "path_prequel_boss_available.png",
+          "max_pixel_mae": 8,
+          "glyph_min": 210
+        }
+      ]
+    },
+    "path_story_skip_gray": {
+      "node": "Path.Template.StorySkipGray",
+      "template": "story_skip_dialogue_gray.png",
+      "max_pixel_mae": 18,
+      "green_mask": true
+    },
+    "path_story_history_gray": {
+      "node": "Path.Template.StoryHistoryGray",
+      "template": "story_history_dialogue_gray.png",
+      "max_pixel_mae": 18,
+      "green_mask": true
+    },
+    "path_receive_row_1": {
+      "node": "Path.Template.ReceiveRow1",
+      "template": "path_receive_ready.png",
+      "max_pixel_mae": 8
+    },
+    "path_receive_row_2": {
+      "node": "Path.Template.ReceiveRow2",
+      "template": "path_receive_ready.png",
+      "max_pixel_mae": 8
+    },
+    "path_receive_row_3": {
+      "node": "Path.Template.ReceiveRow3",
+      "template": "path_receive_ready.png",
+      "max_pixel_mae": 8
+    },
+    "path_claimed_row_1": {
+      "node": "Path.Template.ClaimedRow1",
+      "template": "path_claimed_tick.png",
+      "max_pixel_mae": 12
+    },
+    "path_claimed_row_2": {
+      "node": "Path.Template.ClaimedRow2",
+      "template": "path_claimed_tick.png",
+      "max_pixel_mae": 12
+    },
+    "path_claimed_row_3": {
+      "node": "Path.Template.ClaimedRow3",
+      "template": "path_claimed_tick.png",
+      "max_pixel_mae": 12
+    },
+    "path_battle_clear_heading": {
+      "node": "Path.Template.BattleClearHeading",
+      "template": "path_battle_clear_heading.png",
+      "max_pixel_mae": 18,
+      "glyph_min": 210
+    },
+    "path_battle_clear_dim_hud": {
+      "node": "Path.Template.BattleClearDimHud",
+      "template": "path_battle_clear_dim_hud.png",
+      "max_pixel_mae": 9
+    },
+    "path_battle_exit_lobby": {
+      "node": "Path.Template.BattleExitLobby",
+      "template": "path_battle_exit_lobby.png",
+      "max_pixel_mae": 8
+    },
+    "path_receive_group": {
+      "node": "Path.Template.ReceiveGroup",
+      "template": "path_receive_group.png",
+      "max_pixel_mae": 8
+    },
+    "path_group_next": {
+      "node": "Path.Template.GroupNext",
+      "template": "path_group_next.png",
+      "max_pixel_mae": 12,
+      "glyph_min": 210
+    },
+    "equip_all_control": {
+      "node": "Template.EquipAllControl",
+      "template": "equip_all_control.png",
+      "max_pixel_mae": 14,
+      "glyph_min": 210
+    }
+  },
+  "states": {
+    "lobby": {
+      "variants": [
+        {
+          "all": [
+            "orbis_button",
+            "lobby_label"
+          ],
+          "none": [
+            "orbis_header",
+            "quick_menu_music"
+          ]
+        },
+        {
+          "all": [
+            "lobby_stained_window",
+            "lobby_menu_grid",
+            "episode_button"
+          ],
+          "none": [
+            "tutorial_skip",
+            "tutorial_episode_instruction",
+            "story_confirm_question"
+          ],
+          "source_nodes": {
+            "episode_button": "Stove.Template.EpisodeButton"
+          }
+        }
+      ]
+    },
+    "orbis_guide": {
+      "all": [
+        "orbis_header"
+      ],
+      "none": [
+        "lobby_label"
+      ]
+    },
+    "lobby_idle": {
+      "variants": [
+        {
+          "all": [
+            "tavern_wall",
+            "tavern_shelf"
+          ],
+          "none": [
+            "orbis_button",
+            "lobby_label",
+            "orbis_header",
+            "quick_menu_music"
+          ]
+        },
+        {
+          "all": [
+            "lobby_stained_window",
+            "lobby_idle_upper_left"
+          ],
+          "none": [
+            "lobby_menu_grid",
+            "episode_button",
+            "tutorial_skip",
+            "story_confirm_question"
+          ]
+        }
+      ]
+    },
+    "episode_map": {
+      "all": [
+        "map_episode_header",
+        "map_ready_label"
+      ],
+      "none": [
+        "story_reward_header",
+        "quick_menu_music"
+      ]
+    },
+    "supporter_selection": {
+      "all": [
+        "ready_header"
+      ],
+      "any": [
+        "supporter_title",
+        "supporter_caption"
+      ],
+      "none": [
+        "start_quest_label"
+      ]
+    },
+    "battle_ready": {
+      "all": [
+        "ready_header"
+      ],
+      "any": [
+        "start_quest_label",
+        "start_regular_label"
+      ],
+      "none": [
+        "supporter_title"
+      ]
+    },
+    "story": {
+      "variants": [
+        {
+          "all": [
+            "story_skip"
+          ],
+          "none": [
+            "story_confirm_question"
+          ],
+          "source_nodes": {
+            "story_skip": "Template.StorySkip"
+          }
+        },
+        {
+          "all": [
+            "story_skip",
+            "story_history"
+          ],
+          "none": [
+            "story_confirm_question",
+            "tieria_dialogue_line"
+          ],
+          "source_nodes": {
+            "story_skip": "Stove.Template.StorySkip",
+            "story_history": "Stove.Template.StoryHistory"
+          }
+        }
+      ]
+    },
+    "story_confirmation": {
+      "all": [
+        "story_confirm_question",
+        "story_confirm_button"
+      ]
+    },
+    "battle_running": {
+      "variants": [
+        {
+          "all": [
+            "battle_help",
+            "battle_pause"
+          ],
+          "none": [
+            "clear_initial",
+            "story_confirm_question",
+            "tutorial_skip",
+            "nightmare_keeper_body",
+            "mercenary_lydia_body"
+          ],
+          "source_nodes": {
+            "battle_help": "Template.BattleHelp",
+            "battle_pause": "Template.BattlePause"
+          }
+        },
+        {
+          "all": [
+            "battle_help",
+            "battle_pause"
+          ],
+          "none": [
+            "clear_initial",
+            "story_confirm_question",
+            "tutorial_skip",
+            "nightmare_keeper_body",
+            "mercenary_lydia_body"
+          ],
+          "source_nodes": {
+            "battle_help": "Stove.Template.BattleHelp",
+            "battle_pause": "Stove.Template.BattlePause"
+          }
+        }
+      ]
+    },
+    "stage_clear": {
+      "all": [
+        "clear_initial",
+        "clear_continue",
+        "clear_heading"
+      ]
+    },
+    "battle_rewards": {
+      "all": [
+        "result_heading",
+        "result_confirm"
+      ]
+    },
+    "story_reward": {
+      "all": [
+        "story_reward_header",
+        "story_reward_close"
+      ]
+    },
+    "side_story_alert": {
+      "all": [
+        "side_alert_header",
+        "side_alert_close"
+      ]
+    },
+    "friend_request": {
+      "all": [
+        "friend_header",
+        "friend_prompt",
+        "friend_cancel"
+      ]
+    },
+    "received_reward": {
+      "all": [
+        "received_reward_header",
+        "received_reward_close"
+      ]
+    },
+    "tap_to_close_notice": {
+      "all": [
+        "tap_close_text"
+      ],
+      "none": [
+        "story_confirm_question",
+        "friend_prompt",
+        "side_alert_header",
+        "received_reward_header",
+        "story_reward_header"
+      ]
+    },
+    "rank_up": {
+      "all": [
+        "rankup_heading",
+        "rankup_footer"
+      ]
+    },
+    "story_intro": {
+      "all": [
+        "story_history"
+      ],
+      "none": [
+        "story_skip",
+        "story_confirm_question"
+      ]
+    },
+    "connection_unlocked": {
+      "all": [
+        "connection_unlocked_text",
+        "connection_ok_text"
+      ]
+    },
+    "battle_failed": {
+      "all": [
+        "failed_heading",
+        "defeat_leave_text",
+        "defeat_retry_text"
+      ]
+    },
+    "chat_panel": {
+      "all": [
+        "chat_heading",
+        "chat_input_hint"
+      ],
+      "none": [
+        "chat_notification_heading",
+        "notice_disable_question"
+      ]
+    },
+    "chat_notifications": {
+      "all": [
+        "chat_heading",
+        "chat_input_hint",
+        "chat_notification_heading"
+      ],
+      "none": [
+        "notice_disable_question"
+      ]
+    },
+    "notice_disable_confirmation": {
+      "all": [
+        "notice_disable_question",
+        "notice_disable_confirm"
+      ]
+    },
+    "quick_menu": {
+      "all": [
+        "quick_menu_music",
+        "quick_menu_close"
+      ]
+    },
+    "options_screen": {
+      "all": [
+        "options_header",
+        "options_back"
+      ]
+    },
+    "hero_screen": {
+      "all": [
+        "hero_search",
+        "hero_transmission_label"
+      ]
+    },
+    "battle_categories": {
+      "all": [
+        "battle_menu_header",
+        "battle_seasonal_tab",
+        "battle_normal_tab"
+      ]
+    },
+    "tutorial_episode_prompt": {
+      "all": [
+        "tutorial_skip",
+        "tutorial_episode_instruction",
+        "episode_button"
+      ]
+    },
+    "prequel_story_map": {
+      "all": [
+        "prequel_episode_header",
+        "prequel_view_story"
+      ],
+      "none": [
+        "story_confirm_question",
+        "story_reward_header",
+        "received_reward_header"
+      ]
+    },
+    "battle_nightmare_keeper": {
+      "all": [
+        "battle_help",
+        "battle_pause",
+        "nightmare_keeper_name",
+        "nightmare_keeper_body"
+      ],
+      "none": [
+        "story_confirm_question",
+        "tutorial_skip"
+      ]
+    },
+    "prequel_ready_map": {
+      "all": [
+        "prequel_episode_header",
+        "map_ready_label"
+      ],
+      "none": [
+        "story_reward_header",
+        "story_confirm_question",
+        "received_reward_header"
+      ]
+    },
+    "prequel_preparation": {
+      "all": [
+        "prequel_ready_header",
+        "prequel_story_team"
+      ],
+      "none": [
+        "story_reward_header",
+        "story_confirm_question",
+        "received_reward_header",
+        "dap005_preparation_identity"
+      ],
+      "supersedes": [
+        "battle_ready",
+        "supporter_selection"
+      ]
+    },
+    "battle_mercenary_lydia": {
+      "all": [
+        "battle_help",
+        "battle_pause",
+        "mercenary_lydia_name",
+        "mercenary_lydia_body"
+      ],
+      "none": [
+        "story_confirm_question",
+        "tutorial_skip"
+      ]
+    },
+    "hero_joined_notice": {
+      "all": [
+        "hero_joined_title",
+        "hero_joined_description",
+        "hero_joined_ok"
+      ]
+    },
+    "prequel_preparation_dap005": {
+      "all": [
+        "prequel_ready_header",
+        "dap005_preparation_identity",
+        "dap005_location",
+        "dap005_stage_title",
+        "dap005_energy_cost",
+        "dap005_start_quest"
+      ],
+      "supersedes": [
+        "battle_ready",
+        "supporter_selection"
+      ]
+    },
+    "victorika_acquisition_dialogue": {
+      "all": [
+        "victorika_acquisition_name",
+        "victorika_acquisition_traits",
+        "victorika_acquisition_new",
+        "victorika_acquisition_four_stars",
+        "victorika_acquisition_speech_name"
+      ],
+      "none": [
+        "victorika_acquisition_confirm_normal"
+      ]
+    },
+    "victorika_acquisition_result": {
+      "all": [
+        "victorika_acquisition_name",
+        "victorika_acquisition_traits",
+        "victorika_acquisition_new",
+        "victorika_acquisition_four_stars",
+        "victorika_acquisition_confirm_normal",
+        "victorika_acquisition_confirm"
+      ],
+      "none": [
+        "victorika_acquisition_speech_name"
+      ]
+    },
+    "renoa_promotional_presentation": {
+      "all": [
+        "renoa_promo_name",
+        "renoa_promo_traits",
+        "renoa_promo_description",
+        "victorika_acquisition_confirm_normal",
+        "renoa_promotional_confirm"
+      ],
+      "none": [
+        "victorika_acquisition_speech_name",
+        "story_confirm_question"
+      ]
+    },
+    "victorika_equipment_arbiter_roster": {
+      "all": [
+        "victorika_equipment_tab",
+        "victorika_three_hero_roster",
+        "arbiter_roster_row_10",
+        "victorika_equipment_current_name",
+        "victorika_equipment_current_level"
+      ],
+      "none": [
+        "story_confirm_question",
+        "tutorial_skip"
+      ]
+    },
+    "equipment_tutorial_prompt": {
+      "all": [
+        "equipment_tutorial_instruction",
+        "equipment_tutorial_victorika_card",
+        "equipment_tutorial_skip"
+      ],
+      "none": [
+        "story_confirm_question"
+      ]
+    },
+    "victorika_hero_menu": {
+      "all": [
+        "victorika_hero_tab",
+        "victorika_hero_quickmenu",
+        "victorika_equipment_current_name",
+        "victorika_equipment_current_level",
+        "equipment_tutorial_victorika_card"
+      ],
+      "none": [
+        "tutorial_skip",
+        "story_confirm_question",
+        "equipment_tutorial_instruction"
+      ]
+    },
+    "friendship_result_1_to_2": {
+      "all": [
+        "friendship_result_title",
+        "friendship_level_one",
+        "friendship_level_two",
+        "friendship_result_close"
+      ],
+      "none": [
+        "story_confirm_question",
+        "tutorial_skip"
+      ]
+    },
+    "summon_quickmenu": {
+      "all": [
+        "summon_quickmenu_title",
+        "summon_quickmenu_close",
+        "summon_quickmenu_composition",
+        "summon_quickmenu_recruit"
+      ],
+      "none": [
+        "story_confirm_question",
+        "tutorial_skip"
+      ]
+    },
+    "tieria_connection_dialogue": {
+      "all": [
+        "tieria_dialogue_name",
+        "tieria_dialogue_line",
+        "tieria_dialogue_history",
+        "tieria_connection_dialogue_skip"
+      ],
+      "none": [
+        "story_confirm_question",
+        "tutorial_skip"
+      ]
+    },
+    "tieria_acquisition_presentation": {
+      "all": [
+        "tieria_acquisition_name",
+        "tieria_acquisition_traits",
+        "tieria_acquisition_description",
+        "victorika_acquisition_confirm_normal",
+        "tieria_acquisition_confirm"
+      ],
+      "none": [
+        "story_confirm_question",
+        "tieria_dialogue_name",
+        "victorika_acquisition_speech_name"
+      ]
+    },
+    "tieria_hero_growth": {
+      "all": [
+        "victorika_hero_tab",
+        "tieria_hero_name",
+        "tieria_hero_traits",
+        "tieria_hero_awaken_entry",
+        "tieria_hero_level_up_entry"
+      ],
+      "none": [
+        "story_confirm_question",
+        "tutorial_skip",
+        "equipment_tutorial_instruction"
+      ]
+    }
+  },
+  "points": {
+    "wake_lobby": {
+      "state": "lobby_idle",
+      "xy": [
+        1120,
+        620
+      ],
+      "source": "Neutral background point observed on actual STOVE idle anniversary lobby; requires two positive background anchors and no recognized HUD. Live wake transition remains a separate calibration."
+    },
+    "story_intro_hold": {
+      "state": "story_intro",
+      "xy": [
+        606,
+        340
+      ],
+      "source": "IntroduÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o sem Skip observada em sha002; gesto mantido informado pelo usuÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡rio."
+    }
+  },
+  "target_states": {
+    "orbis_button": [
+      "lobby"
+    ],
+    "wake_lobby": [
+      "lobby_idle"
+    ],
+    "story_skip": [
+      "story"
+    ],
+    "story_confirm_button": [
+      "story_confirmation"
+    ],
+    "clear_continue": [
+      "stage_clear"
+    ],
+    "result_confirm": [
+      "battle_rewards"
+    ],
+    "story_reward_close": [
+      "story_reward"
+    ],
+    "side_alert_close": [
+      "side_story_alert"
+    ],
+    "friend_cancel": [
+      "friend_request"
+    ],
+    "received_reward_close": [
+      "received_reward"
+    ],
+    "tap_close_text": [
+      "tap_to_close_notice"
+    ],
+    "episode_button": [
+      "lobby",
+      "tutorial_episode_prompt"
+    ],
+    "rankup_footer": [
+      "rank_up"
+    ],
+    "connection_ok_text": [
+      "connection_unlocked"
+    ],
+    "defeat_leave_text": [
+      "battle_failed"
+    ],
+    "quick_menu_close": [
+      "quick_menu"
+    ],
+    "battle_normal_tab": [
+      "battle_categories"
+    ],
+    "battle_seasonal_tab": [
+      "battle_categories"
+    ],
+    "tutorial_skip": [
+      "tutorial_episode_prompt"
+    ],
+    "nightmare_keeper_body": [
+      "battle_nightmare_keeper"
+    ],
+    "mercenary_lydia_body": [
+      "battle_mercenary_lydia"
+    ],
+    "dap005_start_quest": [
+      "prequel_preparation_dap005"
+    ],
+    "victorika_acquisition_confirm": [
+      "victorika_acquisition_result"
+    ],
+    "renoa_promotional_confirm": [
+      "renoa_promotional_presentation"
+    ],
+    "milestone_lobby_entry": [
+      "lobby"
+    ],
+    "arbiter_roster_row_10": [
+      "victorika_equipment_arbiter_roster"
+    ],
+    "equipment_tutorial_skip": [
+      "equipment_tutorial_prompt"
+    ],
+    "victorika_hero_quickmenu": [
+      "victorika_hero_menu"
+    ],
+    "friendship_result_close": [
+      "friendship_result_1_to_2"
+    ],
+    "summon_quickmenu_recruit": [
+      "summon_quickmenu"
+    ],
+    "tieria_connection_dialogue_skip": [
+      "tieria_connection_dialogue"
+    ],
+    "tieria_acquisition_confirm": [
+      "tieria_acquisition_presentation"
+    ],
+    "tieria_hero_awaken_entry": [
+      "tieria_hero_growth"
+    ],
+    "tieria_hero_level_up_entry": [
+      "tieria_hero_growth"
+    ]
+  },
+  "ocr": {
+    "tap_close_text": {
+      "node": "OCR.TapToClose",
+      "expected": "tap to close[.]?",
+      "min_score": 0.9,
+      "bright_glyph_min": 150,
+      "min_bright_pixels": 8,
+      "require_unique": true
+    },
+    "rankup_heading": {
+      "node": "OCR.RankUpHeading",
+      "expected": "RANK\\s*UP",
+      "min_score": 0.9
+    },
+    "rankup_footer": {
+      "node": "OCR.RankUpFooter",
+      "expected": ".*Energy.*Ranking up.*",
+      "min_score": 0.9
+    },
+    "connection_unlocked_text": {
+      "node": "OCR.ConnectionUnlocked",
+      "expected": "Connection Unlocked",
+      "min_score": 0.9
+    },
+    "connection_ok_text": {
+      "node": "OCR.ConnectionOK",
+      "expected": "OK",
+      "min_score": 0.9
+    },
+    "supporter_caption": {
+      "node": "OCR.SelectSupporter",
+      "expected": "Select Supporter",
+      "min_score": 0.9
+    },
+    "clear_heading": {
+      "node": "OCR.ClearHeading",
+      "expected": "C\\s*L\\s*E\\s*A\\s*R",
+      "min_score": 0.9
+    },
+    "failed_heading": {
+      "node": "OCR.FailedHeading",
+      "expected": "(?:F\\s*A\\s*I\\s*L\\s*E\\s*D|FAIVLED)",
+      "min_score": 0.9
+    },
+    "defeat_leave_text": {
+      "node": "OCR.DefeatLeave",
+      "expected": "Leave",
+      "min_score": 0.9
+    },
+    "defeat_retry_text": {
+      "node": "OCR.DefeatRetry",
+      "expected": "Try again",
+      "min_score": 0.9
+    },
+    "chat_heading": {
+      "node": "OCR.ChatHeading",
+      "expected": "Channel\\s*#\\s*\\d+",
+      "min_score": 0.9
+    },
+    "chat_input_hint": {
+      "node": "OCR.ChatInputHint",
+      "expected": "Tap here to type[.]?",
+      "min_score": 0.9
+    },
+    "chat_notification_heading": {
+      "node": "OCR.ChatNotificationHeading",
+      "expected": "Chat Notification Settings",
+      "min_score": 0.9
+    },
+    "notice_disable_question": {
+      "node": "OCR.NoticeDisableQuestion",
+      "expected": ".*These notices will no longer be displayed.*",
+      "min_score": 0.9
+    },
+    "notice_disable_confirm": {
+      "node": "OCR.NoticeDisableConfirm",
+      "expected": "Confirm",
+      "min_score": 0.9
+    },
+    "dap005_location": {
+      "node": "Stove.OCR.Dap005Location",
+      "expected": "Corrupted Forest",
+      "min_score": 0.95
+    },
+    "dap005_stage_title": {
+      "node": "Stove.OCR.Dap005StageTitle",
+      "expected": "An Unpermitted Future",
+      "min_score": 0.95
+    },
+    "dap005_energy_cost": {
+      "node": "Stove.OCR.Dap005EnergyCost",
+      "expected": "8\\s*/\\s*(?:[89]|[1-9]\\d+)",
+      "min_score": 0.98
+    },
+    "dap005_start_quest": {
+      "node": "Stove.OCR.Dap005StartQuest",
+      "expected": "Start\\s+Quest",
+      "min_score": 0.98
+    },
+    "victorika_acquisition_confirm": {
+      "node": "Stove.OCR.VictorikaAcquisitionConfirm",
+      "expected": "Confirm",
+      "min_score": 0.98
+    },
+    "renoa_promo_name": {
+      "node": "Stove.OCR.RenoaPromoName",
+      "expected": "^Renoa$",
+      "min_score": 0.98
+    },
+    "renoa_promotional_confirm": {
+      "node": "Stove.OCR.RenoaPromotionalConfirm",
+      "expected": "^Confirm$",
+      "min_score": 0.98
+    },
+    "victorika_equipment_current_name": {
+      "node": "Stove.OCR.VictorikaEquipmentCurrentName",
+      "expected": "^Victorika$",
+      "min_score": 0.98
+    },
+    "victorika_equipment_current_level": {
+      "node": "Stove.OCR.VictorikaEquipmentCurrentLevel",
+      "expected": "^Lv[.]?\\s*15\\s*/\\s*40$",
+      "min_score": 0.98
+    },
+    "milestone_read_cost": {
+      "node": "Stove.OCR.MilestoneReadCost",
+      "expected": "^\\d+$",
+      "min_score": 0.98,
+      "require_unique": true
+    },
+    "milestone_read_essence": {
+      "node": "Stove.OCR.MilestoneReadEssence",
+      "expected": "^\\d+$",
+      "min_score": 0.98,
+      "require_unique": true
+    },
+    "milestone_read_origin": {
+      "node": "Stove.OCR.MilestoneReadOrigin",
+      "expected": "^\\d+$",
+      "min_score": 0.98,
+      "require_unique": true
+    },
+    "coreloop_read_reward_quantity": {
+      "node": "Stove.OCR.CoreloopReadRewardQuantity",
+      "expected": "^\\+\\s*\\d+$",
+      "min_score": 0.98,
+      "require_unique": true
+    },
+    "tieria_acquisition_name": {
+      "node": "Stove.OCR.TieriaAcquisitionName",
+      "expected": "^Free Spirit Tieria$",
+      "min_score": 0.98,
+      "require_unique": true
+    },
+    "tieria_acquisition_confirm": {
+      "node": "Stove.OCR.RenoaPromotionalConfirm",
+      "expected": "^Confirm$",
+      "min_score": 0.98,
+      "require_unique": true
+    },
+    "tieria_hero_name": {
+      "node": "Stove.OCR.TieriaHeroName",
+      "expected": "^Free Spirit Tieria$",
+      "min_score": 0.98,
+      "require_unique": true
+    }
+  },
+  "profile_scope": "One Epic Seven Windows profile, 1212x682; screen variants retain their calibrated native evidence, independently of client executable.",
+  "ocr_triggers": [
+    [
+      "prequel_ready_header",
+      "dap005_preparation_identity"
+    ]
+  ]
+}

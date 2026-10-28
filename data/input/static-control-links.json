@@ -1,0 +1,616 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-26",
+  "scope": "Static cross references and candidates; not runtime selectors or account state. Navigation live evidence stays in hotkeys.json; scoped formation observations are in docs/validation.md.",
+  "sources": [
+    {
+      "path": "db/key_binding.db",
+      "sha256": "c570c0965a30df1b83bda7411c356d8b7097adf8b697d650bd9ceaec36169971"
+    },
+    {
+      "path": "db/system_option.db",
+      "sha256": "580a5a1ac42cb15f232564e68caa7cf691c493040a87c97066fa343c9b4e26aa"
+    },
+    {
+      "path": "text/en/text.db",
+      "sha256": "b5bbeceb5612ba6b9b80901fea5acbc57c031fb9db3a954451c8beabfc3409b1"
+    },
+    {
+      "path": "wnd/top_bar.csb",
+      "sha256": "a2651949d1acba21455357b07b0a8beb29855b4b145302680dea74b9429eff98"
+    },
+    {
+      "path": "wnd/quick_menu_renew.csb",
+      "sha256": "c095f9581e30d37853ecb6cda967a44623819790974e77fcd3ed7d5a0b946581"
+    },
+    {
+      "path": "wnd/chat_filter.csb",
+      "sha256": "27d2abee2c9ee561a61c15a86e425d19b5f6f782b80dbcb4e2c5d8a9de653458"
+    },
+    {
+      "path": "wnd/formation.csb",
+      "sha256": "8c09cd91aab2927894bf6168198db2e671b7483cf0df09d9f0d66f404d6924ba",
+      "interpretation_status": "partial"
+    },
+    {
+      "path": "wnd/unit_list.csb",
+      "sha256": "71a5f4c9c3b8633381dc7db36bb46283b96aafd85836b8342c86f6d56d2aeb24",
+      "interpretation_status": "partial"
+    }
+  ],
+  "controls": [
+    {
+      "id": "quick_menu",
+      "binding_default": "KEY_TAB",
+      "binding_label": "Tab",
+      "blacklist_scenes": "battle",
+      "whitelist_scenes": "",
+      "binding_attach_path": "btn_top_quickmenu",
+      "layout_source": "wnd/top_bar.csb",
+      "layout_button_candidates": [
+        "/Layer/TOP_BAR_RIGHT/btn_top_quickmenu"
+      ],
+      "resolution": "qualified_suffix",
+      "setting": {
+        "id": "key_quickmenu",
+        "label_id": "ui_option_key_quickmenu",
+        "label": "Open/Close Quick Menu",
+        "binding_text_id": "ui_option_key_binding_26",
+        "binding_text": "Tab",
+        "pc": "y",
+        "sub_category": "n_option_key_public"
+      }
+    },
+    {
+      "id": "close_quick_menu",
+      "binding_default": "KEY_TAB",
+      "binding_label": "Tab",
+      "blacklist_scenes": "battle",
+      "whitelist_scenes": "",
+      "binding_attach_path": "n_quick_menu/btn_close",
+      "layout_source": "wnd/quick_menu_renew.csb",
+      "layout_button_candidates": [
+        "/Layer/n_quick_menu/btn_close"
+      ],
+      "resolution": "qualified_suffix",
+      "setting": {
+        "id": "key_quickmenu",
+        "label_id": "ui_option_key_quickmenu",
+        "label": "Open/Close Quick Menu",
+        "binding_text_id": "ui_option_key_binding_26",
+        "binding_text": "Tab",
+        "pc": "y",
+        "sub_category": "n_option_key_public"
+      }
+    },
+    {
+      "id": "orbis",
+      "binding_default": "KEY_G",
+      "binding_label": "G",
+      "blacklist_scenes": "battle",
+      "whitelist_scenes": "",
+      "binding_attach_path": "quick_menu_renew/btn_guidebook",
+      "layout_source": "wnd/quick_menu_renew.csb",
+      "layout_button_candidates": [
+        "/Layer/n_quick_menu/notch_hide_btn/n_quick_btn/n_guidebook/btn_guidebook"
+      ],
+      "resolution": "unique_name_candidate",
+      "setting": {
+        "id": "key_orbis",
+        "label_id": "ui_option_key_orbis",
+        "label": "Orbis Guide",
+        "binding_text_id": "ui_option_key_binding_18",
+        "binding_text": "G",
+        "pc": "y",
+        "sub_category": "n_option_key_public"
+      }
+    },
+    {
+      "id": "hero",
+      "binding_default": "KEY_C",
+      "binding_label": "C",
+      "blacklist_scenes": "battle",
+      "whitelist_scenes": "",
+      "binding_attach_path": "quick_menu_renew/btn_unit_detail",
+      "layout_source": "wnd/quick_menu_renew.csb",
+      "layout_button_candidates": [
+        "/Layer/n_quick_menu/notch_hide_btn/n_quick_btn/n_unit_detail/btn_unit_detail"
+      ],
+      "resolution": "unique_name_candidate",
+      "setting": {
+        "id": "key_hero",
+        "label_id": "ui_option_key_hero",
+        "label": "Hero",
+        "binding_text_id": "ui_option_key_binding_13",
+        "binding_text": "C",
+        "pc": "y",
+        "sub_category": "n_option_key_public"
+      }
+    },
+    {
+      "id": "option",
+      "binding_default": "KEY_O",
+      "binding_label": "O",
+      "blacklist_scenes": "battle",
+      "whitelist_scenes": "",
+      "binding_attach_path": "quick_menu_renew/n_quick_sub_btn",
+      "layout_source": "wnd/quick_menu_renew.csb",
+      "layout_button_candidates": [
+        "/Layer/n_quick_menu/notch_hide_btn/n_quick_sub_btn/btn_setting"
+      ],
+      "resolution": "unique_name_candidate",
+      "setting": {
+        "id": "key_option",
+        "label_id": "ui_option_key_option",
+        "label": "Settings",
+        "binding_text_id": "ui_option_key_binding_23",
+        "binding_text": "O (alphabet)",
+        "pc": "y",
+        "sub_category": "n_option_key_public"
+      }
+    },
+    {
+      "id": "episode",
+      "binding_default": "KEY_1",
+      "binding_label": "1",
+      "blacklist_scenes": "battle",
+      "whitelist_scenes": "",
+      "binding_attach_path": "quick_menu_renew/btn_map/n_key_view",
+      "layout_source": "wnd/quick_menu_renew.csb",
+      "layout_button_candidates": [
+        "/Layer/n_quick_menu/notch_main_btn/main_btn/btn_map"
+      ],
+      "resolution": "unique_name_candidate",
+      "setting": {
+        "id": "key_epoisode",
+        "label_id": "ui_option_key_epoisode",
+        "label": "Episode",
+        "binding_text_id": "ui_option_key_binding_2",
+        "binding_text": "1",
+        "pc": "y",
+        "sub_category": "n_option_key_public"
+      }
+    },
+    {
+      "id": "battle",
+      "binding_default": "KEY_3",
+      "binding_label": "3",
+      "blacklist_scenes": "battle",
+      "whitelist_scenes": "",
+      "binding_attach_path": "quick_menu_renew/btn_battle/n_key_view",
+      "layout_source": "wnd/quick_menu_renew.csb",
+      "layout_button_candidates": [
+        "/Layer/n_quick_menu/notch_main_btn/main_btn/btn_battle"
+      ],
+      "resolution": "unique_name_candidate",
+      "setting": {
+        "id": "key_battle",
+        "label_id": "ui_option_key_battle",
+        "label": "Battle",
+        "binding_text_id": "ui_option_key_binding_4",
+        "binding_text": "3",
+        "pc": "y",
+        "sub_category": "n_option_key_public"
+      }
+    }
+  ],
+  "known_texts": [
+    {
+      "id": "chat_notice_skip",
+      "text": "These notices will no longer be displayed after clicking Confirm. Are you sure you want to proceed?"
+    },
+    {
+      "id": "chat_notice_title",
+      "text": "Chat Notification Settings"
+    },
+    {
+      "id": "chat_notice_check_chat",
+      "text": "Basic Chat Notifications"
+    },
+    {
+      "id": "chat_notice_keyward_desc",
+      "text": "When chat messages are sent that include a certain keyword, you will receive a notification regardless of whether or not you have chat notifications turned on."
+    },
+    {
+      "id": "orbis_tour_002_group_name",
+      "text": "Path of Heir"
+    }
+  ],
+  "limitations": [
+    "Binding paths may omit intermediate containers.",
+    "Duplicate names require branch context.",
+    "Text keys and platform declarations are not account settings or present dialogs."
+  ],
+  "formation": {
+    "status": "static_candidates_with_separate_scoped_live_evidence",
+    "runtime_enabled": false,
+    "layout_source": "wnd/formation.csb",
+    "roster_source": "wnd/unit_list.csb",
+    "layout_nodes": 346,
+    "named_declared_callbacks": 0,
+    "controls": [
+      {
+        "layout_source": "wnd/formation.csb",
+        "path": "/Layer/new/formation/position/n_scale/base1/bg1/btn1",
+        "class": "Button",
+        "declared_touch_enabled": true,
+        "declared_alpha": 0,
+        "declared_callback": {
+          "type": "",
+          "name": ""
+        },
+        "declared_resources": {
+          "normal": {
+            "path": "Default/Button_Normal.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "pressed": {
+            "path": "Default/Button_Normal.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "disabled": {
+            "path": "Default/Button_Disable.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "font": {
+            "path": "",
+            "plist": "",
+            "resource_type": 0
+          }
+        },
+        "coordinate_space": "local_layout_not_global_client_pixels"
+      },
+      {
+        "layout_source": "wnd/formation.csb",
+        "path": "/Layer/new/formation/position/n_scale/base2/bg2/btn2",
+        "class": "Button",
+        "declared_touch_enabled": true,
+        "declared_alpha": 0,
+        "declared_callback": {
+          "type": "",
+          "name": ""
+        },
+        "declared_resources": {
+          "normal": {
+            "path": "Default/Button_Normal.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "pressed": {
+            "path": "Default/Button_Normal.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "disabled": {
+            "path": "Default/Button_Disable.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "font": {
+            "path": "",
+            "plist": "",
+            "resource_type": 0
+          }
+        },
+        "coordinate_space": "local_layout_not_global_client_pixels"
+      },
+      {
+        "layout_source": "wnd/formation.csb",
+        "path": "/Layer/new/formation/position/n_scale/base3/bg3/btn3",
+        "class": "Button",
+        "declared_touch_enabled": true,
+        "declared_alpha": 0,
+        "declared_callback": {
+          "type": "",
+          "name": ""
+        },
+        "declared_resources": {
+          "normal": {
+            "path": "Default/Button_Normal.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "pressed": {
+            "path": "Default/Button_Normal.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "disabled": {
+            "path": "Default/Button_Disable.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "font": {
+            "path": "",
+            "plist": "",
+            "resource_type": 0
+          }
+        },
+        "coordinate_space": "local_layout_not_global_client_pixels"
+      },
+      {
+        "layout_source": "wnd/formation.csb",
+        "path": "/Layer/new/formation/position/n_scale/base4/bg4/btn4",
+        "class": "Button",
+        "declared_touch_enabled": true,
+        "declared_alpha": 0,
+        "declared_callback": {
+          "type": "",
+          "name": ""
+        },
+        "declared_resources": {
+          "normal": {
+            "path": "Default/Button_Normal.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "pressed": {
+            "path": "Default/Button_Normal.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "disabled": {
+            "path": "Default/Button_Disable.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "font": {
+            "path": "",
+            "plist": "",
+            "resource_type": 0
+          }
+        },
+        "coordinate_space": "local_layout_not_global_client_pixels"
+      },
+      {
+        "layout_source": "wnd/formation.csb",
+        "path": "/Layer/new/formation/btn_change_1",
+        "class": "Button",
+        "declared_touch_enabled": true,
+        "declared_alpha": 255,
+        "declared_callback": {
+          "type": "",
+          "name": ""
+        },
+        "declared_resources": {
+          "normal": {
+            "path": "img/hero_config_btn_change.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "pressed": {
+            "path": "img/hero_config_btn_change.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "disabled": {
+            "path": "Default/Button_Disable.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "font": {
+            "path": "",
+            "plist": "",
+            "resource_type": 0
+          }
+        },
+        "coordinate_space": "local_layout_not_global_client_pixels"
+      },
+      {
+        "layout_source": "wnd/formation.csb",
+        "path": "/Layer/new/formation/btn_change_2",
+        "class": "Button",
+        "declared_touch_enabled": true,
+        "declared_alpha": 255,
+        "declared_callback": {
+          "type": "",
+          "name": ""
+        },
+        "declared_resources": {
+          "normal": {
+            "path": "img/hero_config_btn_change.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "pressed": {
+            "path": "img/hero_config_btn_change.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "disabled": {
+            "path": "Default/Button_Disable.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "font": {
+            "path": "",
+            "plist": "",
+            "resource_type": 0
+          }
+        },
+        "coordinate_space": "local_layout_not_global_client_pixels"
+      },
+      {
+        "layout_source": "wnd/formation.csb",
+        "path": "/Layer/new/formation/btn_change_3",
+        "class": "Button",
+        "declared_touch_enabled": true,
+        "declared_alpha": 255,
+        "declared_callback": {
+          "type": "",
+          "name": ""
+        },
+        "declared_resources": {
+          "normal": {
+            "path": "img/hero_config_btn_change.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "pressed": {
+            "path": "img/hero_config_btn_change.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "disabled": {
+            "path": "Default/Button_Disable.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "font": {
+            "path": "",
+            "plist": "",
+            "resource_type": 0
+          }
+        },
+        "coordinate_space": "local_layout_not_global_client_pixels"
+      },
+      {
+        "layout_source": "wnd/formation.csb",
+        "path": "/Layer/new/formation/btn_change_4",
+        "class": "Button",
+        "declared_touch_enabled": true,
+        "declared_alpha": 255,
+        "declared_callback": {
+          "type": "",
+          "name": ""
+        },
+        "declared_resources": {
+          "normal": {
+            "path": "img/hero_config_btn_change.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "pressed": {
+            "path": "img/hero_config_btn_change.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "disabled": {
+            "path": "Default/Button_Disable.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "font": {
+            "path": "",
+            "plist": "",
+            "resource_type": 0
+          }
+        },
+        "coordinate_space": "local_layout_not_global_client_pixels"
+      },
+      {
+        "layout_source": "wnd/formation.csb",
+        "path": "/Layer/new/formation/selected_btn/btn_remove",
+        "class": "Button",
+        "declared_touch_enabled": true,
+        "declared_alpha": 255,
+        "declared_callback": {
+          "type": "",
+          "name": ""
+        },
+        "declared_resources": {
+          "normal": {
+            "path": "img/hero_config_btn_remove.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "pressed": {
+            "path": "img/hero_config_btn_remove.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "disabled": {
+            "path": "Default/Button_Disable.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "font": {
+            "path": "",
+            "plist": "",
+            "resource_type": 0
+          }
+        },
+        "coordinate_space": "local_layout_not_global_client_pixels"
+      },
+      {
+        "layout_source": "wnd/formation.csb",
+        "path": "/Layer/new/formation/selected_btn/btn_team_detail",
+        "class": "Button",
+        "declared_touch_enabled": true,
+        "declared_alpha": 255,
+        "declared_callback": {
+          "type": "",
+          "name": ""
+        },
+        "declared_resources": {
+          "normal": {
+            "path": "img/hero_config_btn_detail.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "pressed": {
+            "path": "img/hero_config_btn_detail.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "disabled": {
+            "path": "Default/Button_Disable.png",
+            "plist": "",
+            "resource_type": 0
+          },
+          "font": {
+            "path": "",
+            "plist": "",
+            "resource_type": 0
+          }
+        },
+        "coordinate_space": "local_layout_not_global_client_pixels"
+      }
+    ],
+    "hypotheses_supported_by_structure": [
+      "Four individually selectable formation positions exist.",
+      "Selected-member controls distinguish removing from viewing details.",
+      "Four change buttons suggest explicit position choice; dragging is not established by the layout."
+    ],
+    "scoped_live_workflows": {
+      "reference": "docs/validation.md#otherworld-e-formacao",
+      "position_swap": [
+        "select existing member",
+        "observe selected controls and other change targets",
+        "select another occupied slot",
+        "verify identities at both positions"
+      ],
+      "replacement": [
+        "select the roster instance",
+        "activate its observed plus control",
+        "observe slot choices",
+        "choose the occupied target slot",
+        "verify new composition and displaced member absence"
+      ],
+      "removal": {
+        "status": "scoped_manual_roundtrip_validated",
+        "reference": "docs/validation.md#mapeamento-reversivel",
+        "candidate_path": "/Layer/new/formation/selected_btn/btn_remove",
+        "steps": [
+          "select existing member and observe remove/details controls",
+          "activate remove once and verify empty slot",
+          "select the same recently observed roster card and activate plus",
+          "choose the empty purple plus instead of occupied swap arrows",
+          "verify hero identity, positions and restored composition"
+        ],
+        "identity_limit": "Visual name/level/card continuity only; no internal owned-instance identifier exposed.",
+        "runtime_enabled": false
+      }
+    },
+    "unknowns": [
+      "Runtime callback/event bindings and dynamic visibility/selection.",
+      "Full source-layout linkage of the rendered roster plus control.",
+      "Global transforms, client coordinates and temporal stability.",
+      "Owned hero instances and their suitability for a battle.",
+      "Canonical ui_tree exposes paired remove/details controls, but member identity, slot linkage and swap/add controls still require recognition."
+    ]
+  }
+}

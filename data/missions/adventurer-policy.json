@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "path": "heir",
+  "execution_unit": "one_observed_group",
+  "between_groups": "agent_checkpoint",
+  "client_equivalence": "Steam and STOVE share screen contracts; every action still requires current recognition.",
+  "heroes": {
+    "carry_priority": ["Arbiter Vildred", "Free Spirit Tieria", "Tieria"],
+    "allies_if_owned": ["Landy", "Tenebria", "Victorika"],
+    "acquisition": "Only obtain a hero when required by the current mission or an explicit recorded selection.",
+    "selection": "Current owned roster and selected hero must prove the target; static IDs do not prove ownership."
+  },
+  "checkpoint": {
+    "order": ["verify_group", "claim_ready_missions", "verify_claims", "claim_group", "verify_group_reward", "inspect_milestone", "inspect_equipment", "prepare_next_group", "agent_review"],
+    "level_target": "Minimum level needed by the next group; already met targets require no spending.",
+    "awakening_target": "Minimum current/next-group requirement on the selected owned hero; do not repeat an already observed upgrade.",
+    "equipment": "Review the carry after every group; apply only identified equipment with observed comparison and a verified final slot.",
+    "skills": "Prefer skill improvements that satisfy the current group's event count; do not spend future event counts early.",
+    "promotion": "Only when a current or next-group level/grade requirement needs it and cost/target are observed."
+  },
+  "milestone": {
+    "when": "Inspect after each completed group; eligibility depends on current unlock, essence and price, not a fixed Path level.",
+    "max_chests_per_checkpoint": 3,
+    "max_essence_per_checkpoint": 300,
+    "shop_priority": "Observed Epic equipment useful to the selected carry; exact item, price, currency and stock must be verified.",
+    "selector": "A selector requires a named choice recorded by the agent; never infer a choice from its presentation.",
+    "paid_purchases": false,
+    "source_tables": ["db/core_loop_pass_track.db", "db/core_loop_pass_drop.db", "db/core_loop_pass_config.db"],
+    "static_drop_rules": [{"trigger": "to_stamina", "essence": 1}, {"trigger": "to_pvpkey", "essence": 12}, {"trigger": "to_chaosgatekey", "essence": 160}, {"trigger": "rta_win", "essence": 100}],
+    "static_drop_note": "These are package candidates; they do not prove current balance, eligibility or a measured gain."
+  },
+  "limits": {"max_actions_per_level": 30, "max_seconds_per_level": 1800, "max_battle_entries": 20, "max_defeats_per_stage": 2, "energy_refills": false, "real_money": false},
+  "stop_conditions": ["unknown_target", "unknown_cost", "unconfirmed_consuming_result", "unknown_requirement", "unavailable_executor", "resource_limit", "defeat_requires_improvement", "time_gate", "group_finished_agent_checkpoint", "STOP"]
+}

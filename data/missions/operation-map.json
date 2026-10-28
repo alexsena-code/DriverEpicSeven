@@ -1,0 +1,3768 @@
+{
+  "schema_version": 1,
+  "status": "initial_design_only",
+  "runtime_enabled": false,
+  "prepared_date": "2026-10-26",
+  "scope": "Mapear operações sem interagir com o jogo, completar missões ou habilitar executores.",
+  "source": "data/catalogs/steam-demo-quests.json",
+  "coverage": {
+    "tasks": 877,
+    "conditions": 58,
+    "families": 33,
+    "by_path": {
+      "heir": 751,
+      "succession": 71,
+      "arena": 45,
+      "connections": 10
+    },
+    "missing_condition_tasks": 5,
+    "excluded_by_catalog": 25
+  },
+  "demo_availability": {
+    "official_source": "https://store.steampowered.com/app/5129800/",
+    "checked_date": "2026-10-26",
+    "excluded": [
+      "Guild War",
+      "World Arena"
+    ],
+    "note": "Arena NPC/normal, Mock Arena, quizzes, Guild e World Boss exigem checagem própria de acesso. Não generalizar as exclusões."
+  },
+  "common_contract": {
+    "inputs": [
+      "task_id",
+      "group_id",
+      "source_condition",
+      "source_parameters",
+      "target_instance_ids",
+      "observed_counter_before",
+      "resource_budget",
+      "max_runs",
+      "max_failures"
+    ],
+    "stages": [
+      "observar missão e acesso",
+      "normalizar requisito",
+      "resolver operação e parâmetros",
+      "conferir alvo e custo",
+      "executar unidade delimitada quando autorizado",
+      "verificar resultado e contador",
+      "resgatar missão separadamente quando previsto",
+      "verificar grupo e sua recompensa separadamente"
+    ],
+    "outcomes": [
+      "mapped_only",
+      "needs_calibration",
+      "already_satisfied",
+      "counter_advanced",
+      "claimable",
+      "claimed",
+      "blocked_access",
+      "blocked_resource",
+      "failed_no_progress",
+      "needs_decision"
+    ],
+    "evidence": [
+      "estado e captura atuais",
+      "contador antes/depois",
+      "identidade do alvo",
+      "custo observado",
+      "resultado",
+      "resgate quando aplicável"
+    ],
+    "constraints": [
+      "Pipeline Maa conduz transições conhecidas; Python não recria o motor de ações.",
+      "Primitivas continuam válidas para operações ocasionais e exploração autorizada.",
+      "Não criar um pipeline por task_id; parametrizar capacidades por família.",
+      "Sem disponibilidade ou pendências atuais inferidas apenas do pacote.",
+      "Reabrir a missão para confirmar contagem; log ou clique aceito não bastam.",
+      "O campo runtime_enabled=false descreve este mapa; os IDs propostos não são comandos existentes."
+    ]
+  },
+  "families": [
+    {
+      "id": "campaign",
+      "title": "Campanha e capítulos",
+      "conditions": [
+        "syncclear_content_enter_count",
+        "clearepisodechapter_count"
+      ],
+      "approach": "rotina Maa + leitura",
+      "proposed_flow": [
+        "Ler destino e progresso",
+        "selecionar episódio/capítulo/fase",
+        "preparar e conferir custo",
+        "iniciar uma vez",
+        "tratar histórias e resultado",
+        "reler missão"
+      ],
+      "completion_evidence": "Vitória/capítulo exigido e condição da missão confirmados; resgate separado.",
+      "needs_calibration": "Reutiliza seleção e Finish da campanha no perfil calibrado; ainda falta o vínculo automático entre task_id e contador do caminho.",
+      "runtime_enabled": false,
+      "validation": "existing_campaign_components_live_validated; mission_counter_bridge_not_implemented",
+      "task_count": 41,
+      "paths": [
+        "connections",
+        "heir"
+      ],
+      "static_evidence_group": "battles"
+    },
+    {
+      "id": "combat_modes",
+      "title": "Hunt, Altar, Catalyst, Labyrinth, Abyss e outros modos",
+      "conditions": [
+        "clear_enter_count",
+        "clear_entertype_count",
+        "clearessence_count",
+        "clearmaxlevel_enter_count"
+      ],
+      "approach": "rotina Maa por modo",
+      "proposed_flow": [
+        "Resolver destinos permitidos",
+        "abrir modo e dificuldade",
+        "conferir fase/equipe/custo",
+        "iniciar",
+        "concluir combate",
+        "voltar ao painel desse modo",
+        "conferir missão"
+      ],
+      "completion_evidence": "Contador correto, dificuldade elegível e vitória; Abyss exige o andar alcançado.",
+      "needs_calibration": "Navegação, preparação, resultado e retorno de cada modo; Labyrinth também exige percurso/saída. A campanha não valida esses fluxos.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 390,
+      "paths": [
+        "connections",
+        "heir",
+        "succession"
+      ],
+      "static_evidence_group": "battles"
+    },
+    {
+      "id": "consecutive",
+      "title": "Vitórias consecutivas",
+      "conditions": [
+        "repeatclear_enter_succescount_failcount_count"
+      ],
+      "approach": "rotina Maa + diário persistente",
+      "proposed_flow": [
+        "Ler sequência exigida",
+        "validar Repeat/Quick Battling elegível",
+        "registrar vitórias e falhas por execução",
+        "parar no alvo",
+        "reler missão"
+      ],
+      "completion_evidence": "Sequência aceita pela missão; resultados isolados não comprovam uma série.",
+      "needs_calibration": "Tela de repetição, resumo de sucesso/falha, tratamento da quebra da sequência e disponibilidade do recurso na demo.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 9,
+      "paths": [
+        "succession"
+      ],
+      "static_evidence_group": "battles"
+    },
+    {
+      "id": "team_battle",
+      "title": "Vitória com equipe/elemento exigido",
+      "conditions": [
+        "kill_enter_targetid_attribute_member_count"
+      ],
+      "approach": "planejador + rotina de combate",
+      "proposed_flow": [
+        "Resolver boss/fases",
+        "conferir heróis e quantidade por elemento",
+        "salvar equipe",
+        "vencer destino elegível",
+        "conferir missão"
+      ],
+      "completion_evidence": "Composição exigida e contador; observar se apoiador/substituição interfere.",
+      "needs_calibration": "Leitura da composição e elementos, confirmação da equipe e seleção do destino.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 2,
+      "paths": [
+        "succession"
+      ],
+      "static_evidence_group": "battles"
+    },
+    {
+      "id": "drop_farm",
+      "title": "Obter materiais em um modo específico",
+      "conditions": [
+        "materialget_enter_materialid_count"
+      ],
+      "approach": "rotina Maa + inventário",
+      "proposed_flow": [
+        "Ler material e origens",
+        "registrar saldo/contador",
+        "escolher estágio permitido",
+        "vencer",
+        "conferir drops",
+        "atualizar saldo e missão"
+      ],
+      "completion_evidence": "Material de origem elegível e incremento; não prometer quantidade por vitória.",
+      "needs_calibration": "Identificação de material, painel de drops e contador; limitar execuções/custo independentemente do alvo de drops.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 2,
+      "paths": [
+        "succession"
+      ],
+      "static_evidence_group": "battles"
+    },
+    {
+      "id": "world_boss",
+      "title": "World Boss",
+      "conditions": [
+        "clear_worldboss_count"
+      ],
+      "approach": "rotina específica",
+      "proposed_flow": [
+        "Conferir acesso e janela do modo",
+        "montar equipe exigida pela tela",
+        "iniciar",
+        "processar resultado",
+        "conferir missão"
+      ],
+      "completion_evidence": "Conclusão reconhecida no modo e contador da missão.",
+      "needs_calibration": "Acesso, composição, limite de entradas e resultado. A exclusão de Guild War não comprova exclusão de World Boss.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 1,
+      "paths": [
+        "heir"
+      ],
+      "static_evidence_group": "guild"
+    },
+    {
+      "id": "rift",
+      "title": "Rift: nível e pontos",
+      "conditions": [
+        "crevicehuntlv_count",
+        "pointeget_content_count"
+      ],
+      "approach": "planejador + leitura + combate",
+      "proposed_flow": [
+        "Ler temporada/nível/pontos",
+        "escolher etapa disponível",
+        "executar dentro do orçamento",
+        "reler progresso do Rift e missão"
+      ],
+      "completion_evidence": "Nível ou pontos efetivamente atingidos na temporada correta.",
+      "needs_calibration": "Acesso, progresso persistente do boss, temporada e resultados; não reutilizar contador de campanha.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 6,
+      "paths": [
+        "succession"
+      ],
+      "static_evidence_group": "advanced"
+    },
+    {
+      "id": "trials",
+      "title": "Hall of Trials: nota, modo e condições na batalha",
+      "conditions": [
+        "trialclear_enter_score_count",
+        "trialclear_mode_score_count",
+        "party_chrid_enter_cs_cscount_count",
+        "trialclear_enter_benefitcount_count"
+      ],
+      "approach": "planejador + rotina específica",
+      "proposed_flow": [
+        "Ler modo e requisito",
+        "conferir bônus/equipe",
+        "executar batalha",
+        "ler nota/pontos/condições",
+        "conferir missão"
+      ],
+      "completion_evidence": "Score/modo exigidos ou contador da condição dentro de uma mesma batalha.",
+      "needs_calibration": "Painéis de modo e bônus, resultados e indicadores de exaustão. Identificadores internos cs são dados, não uma API de leitura.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 9,
+      "paths": [
+        "succession"
+      ],
+      "static_evidence_group": "advanced"
+    },
+    {
+      "id": "arena",
+      "title": "Arena NPC, normal e modalidades aceitas",
+      "conditions": [
+        "pvpplay_pvptype_count"
+      ],
+      "approach": "rotina Maa por modalidade",
+      "proposed_flow": [
+        "Ler pvptype aceito",
+        "confirmar acesso",
+        "selecionar NPC ou adversário elegível",
+        "conferir custo/equipe",
+        "iniciar uma vez",
+        "ler resultado",
+        "conferir missão"
+      ],
+      "completion_evidence": "Tipo de Arena correto e contador. Participação e vitória são requisitos diferentes.",
+      "needs_calibration": "Listas, cooldown, bandeiras, preparação e resultado de NPC/normal. RTA exclusiva fica excluída da demo segundo a fonte oficial.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 156,
+      "paths": [
+        "arena",
+        "heir"
+      ],
+      "static_evidence_group": "arena"
+    },
+    {
+      "id": "mock_arena",
+      "title": "Mock Arena",
+      "conditions": [
+        "mockarenawin_enter_count"
+      ],
+      "approach": "rotina/planejador próprios",
+      "proposed_flow": [
+        "Conferir acesso ao treino",
+        "selecionar enter exato",
+        "ler regras e escolhas",
+        "vencer",
+        "conferir missão"
+      ],
+      "completion_evidence": "Vitória no cenário mock solicitado; não substitui uma batalha RTA.",
+      "needs_calibration": "Acesso na demo, regras do cenário, escolhas e combate. Não está validado pela Arena NPC.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 15,
+      "paths": [
+        "arena"
+      ],
+      "static_evidence_group": "arena"
+    },
+    {
+      "id": "quiz",
+      "title": "Quiz do caminho da Arena",
+      "conditions": [
+        ""
+      ],
+      "approach": "investigação + primitivas",
+      "proposed_flow": [
+        "Abrir missão do quiz",
+        "ler pergunta e opções",
+        "obter resposta fundamentada",
+        "responder",
+        "confirmar resultado e missão"
+      ],
+      "completion_evidence": "Quiz aceito/concluído na interface.",
+      "needs_calibration": "Os cinco registros não têm condition nem parâmetros: faltam regra de conclusão, acesso e vínculo das perguntas. Nenhum executor deve ser habilitado a partir disso.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 5,
+      "paths": [
+        "arena"
+      ],
+      "static_evidence_group": "arena"
+    },
+    {
+      "id": "hero_growth",
+      "title": "Herói: nível, despertar e promoção",
+      "conditions": [
+        "chrup_count",
+        "chrl_level_count",
+        "chrl_chrid_level_count",
+        "charawaken_grade_level_count",
+        "charawaken_chrid_level_count",
+        "chrevo_grade_count",
+        "chrevo_chrid_grade_count"
+      ],
+      "approach": "leitura + primitivas; rotina se recorrente",
+      "proposed_flow": [
+        "Resolver herói/quantidade",
+        "ler estado atual",
+        "escolher operação e materiais",
+        "conferir custo",
+        "aplicar uma alteração",
+        "verificar estado e missão"
+      ],
+      "completion_evidence": "Nível/despertar/estrelas e quantidade de heróis; Penguin deve ser usado quando explicitamente exigido.",
+      "needs_calibration": "Filtros de herói, aba Growth, seleção de materiais e prévia. Posse atual pode dispensar ação; sync_inven é pista, não prova de retroatividade.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 62,
+      "paths": [
+        "connections",
+        "heir",
+        "succession"
+      ],
+      "static_evidence_group": "heroes"
+    },
+    {
+      "id": "hero_skills",
+      "title": "Melhorar habilidades",
+      "conditions": [
+        "chrskillenhance_count"
+      ],
+      "approach": "primitivas parametrizadas",
+      "proposed_flow": [
+        "Selecionar herói e habilidade",
+        "ler nível/custo/material",
+        "aplicar melhoria autorizada",
+        "conferir habilidade e contador"
+      ],
+      "completion_evidence": "Alteração aplicada e número de melhorias aceito pela missão.",
+      "needs_calibration": "Identidade do herói/habilidade e custo; escolher a habilidade é uma decisão do plano.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 13,
+      "paths": [
+        "heir"
+      ],
+      "static_evidence_group": "heroes"
+    },
+    {
+      "id": "friendship",
+      "title": "Amizade de herói",
+      "conditions": [
+        "chrintimacy_level_count"
+      ],
+      "approach": "leitura + plano de progressão",
+      "proposed_flow": [
+        "Ler amizade e alvo",
+        "selecionar meio de progresso elegível",
+        "executar com limite",
+        "verificar amizade e missão"
+      ],
+      "completion_evidence": "Herói e nível de amizade atingidos; fechar o banner não é progredir por si só.",
+      "needs_calibration": "Painel de amizade e meios elegíveis; distinguir aviso informativo de ação que aumenta amizade.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 1,
+      "paths": [
+        "heir"
+      ],
+      "static_evidence_group": "heroes"
+    },
+    {
+      "id": "specialty",
+      "title": "Specialty Change",
+      "conditions": [
+        "chrclasschange_count"
+      ],
+      "approach": "planejador de pré-requisitos",
+      "proposed_flow": [
+        "Escolher herói elegível",
+        "ler requisitos da troca",
+        "planejar subtarefas",
+        "completar requisitos",
+        "confirmar troca",
+        "conferir missão"
+      ],
+      "completion_evidence": "Troca concluída e personagem resultante confirmado.",
+      "needs_calibration": "Disponibilidade, subquests, árvore de melhorias e confirmação final; abrir o menu não comprova conclusão.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 1,
+      "paths": [
+        "heir"
+      ],
+      "static_evidence_group": "heroes"
+    },
+    {
+      "id": "connections",
+      "title": "Recrutar por Connections",
+      "conditions": [
+        "get_content_chrid_count"
+      ],
+      "approach": "planejador que compõe operações",
+      "proposed_flow": [
+        "Abrir conexão do chrid correto",
+        "ler requisitos e progresso",
+        "planejar subtarefas",
+        "conferir todos os requisitos",
+        "recrutar",
+        "verificar origem e missão"
+      ],
+      "completion_evidence": "Herói recrutado pela origem content exigida; uma cópia de outra origem pode não cumprir.",
+      "needs_calibration": "Painel de requisitos, acesso, inventário e resgate. Connection Unlocked apenas libera o painel.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 3,
+      "paths": [
+        "heir",
+        "succession"
+      ],
+      "static_evidence_group": "connections"
+    },
+    {
+      "id": "supporters",
+      "title": "Configurar apoiadores",
+      "conditions": [
+        "autosetspt_count"
+      ],
+      "approach": "primitivas de configuração",
+      "proposed_flow": [
+        "Abrir Supporters",
+        "registrar configuração anterior",
+        "escolher heróis ou autoatribuição explicitamente prevista",
+        "salvar",
+        "conferir configuração e missão"
+      ],
+      "completion_evidence": "Configuração salva e incremento da missão.",
+      "needs_calibration": "Slots, seleção e botão salvar; escolher apoiador numa batalha é outra operação.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 1,
+      "paths": [
+        "heir"
+      ],
+      "static_evidence_group": "heroes"
+    },
+    {
+      "id": "enhancement",
+      "title": "Melhorar equipamento ou artefato",
+      "conditions": [
+        "equipup_equiptype_count",
+        "equipup_equiptype_level_count"
+      ],
+      "approach": "primitivas; rotina curta quando repetitiva",
+      "proposed_flow": [
+        "Resolver tipo/item",
+        "ler nível atual",
+        "escolher materiais e prévia",
+        "conferir custo",
+        "melhorar",
+        "conferir nível/contador"
+      ],
+      "completion_evidence": "Distinguir vezes que melhorou, nível final +N e quantidade de itens que atingiram +N.",
+      "needs_calibration": "Inventário e telas distintas de equipamento/artefato, prévia, custo e quantidade de ações.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 46,
+      "paths": [
+        "heir"
+      ],
+      "static_evidence_group": "gear"
+    },
+    {
+      "id": "equipping",
+      "title": "Equipar itens ou ativar conjunto",
+      "conditions": [
+        "equiptype_chrid_level_count",
+        "equipwear_chrid_equipset_count"
+      ],
+      "approach": "primitivas + verificador de composição",
+      "proposed_flow": [
+        "Resolver herói/slots/conjunto",
+        "ler equipamentos atuais",
+        "escolher itens",
+        "conferir troca/custo",
+        "equipar",
+        "verificar slots e conjunto ativo"
+      ],
+      "completion_evidence": "Herói correto, quantidade de peças, nível mínimo e efeito de conjunto ativo conforme a missão.",
+      "needs_calibration": "Filtros de inventário, slots, indicação de conjunto e eventual custo de remoção; usar identificador da instância do item.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 6,
+      "paths": [
+        "heir",
+        "succession"
+      ],
+      "static_evidence_group": "gear"
+    },
+    {
+      "id": "crafting",
+      "title": "Fabricar equipamento",
+      "conditions": [
+        "equipcraft_count",
+        "equipcraft_equipid_count"
+      ],
+      "approach": "rotina de fabricação delimitada",
+      "proposed_flow": [
+        "Abrir Blacksmith",
+        "escolher categoria/tabela elegível",
+        "ler custo e quantidade",
+        "fabricar",
+        "identificar resultado",
+        "conferir missão"
+      ],
+      "completion_evidence": "Quantidade de fabricações e origem/equipid elegíveis; qualidade não é garantida pelo processo.",
+      "needs_calibration": "Seleção de origem/slot e painel de custo/resultado; conferir espaço de inventário.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 7,
+      "paths": [
+        "heir",
+        "succession"
+      ],
+      "static_evidence_group": "gear"
+    },
+    {
+      "id": "conversion",
+      "title": "Converter equipamento e fabricar exclusivos",
+      "conditions": [
+        "equipalchemy_equiptype_count"
+      ],
+      "approach": "primitivas ou rotina específica por variante",
+      "proposed_flow": [
+        "Resolver variante",
+        "abrir sistema correto",
+        "selecionar tipo e materiais",
+        "conferir prévia/custo",
+        "converter",
+        "conferir resultado e missão"
+      ],
+      "completion_evidence": "Conversão do tipo solicitado; Exclusive Equipment tem fluxo próprio.",
+      "needs_calibration": "Telas e receitas de cada variante; não presumir uma única interface para toda alquimia.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 6,
+      "paths": [
+        "heir",
+        "succession"
+      ],
+      "static_evidence_group": "gear"
+    },
+    {
+      "id": "reforging",
+      "title": "Reforjar equipamento",
+      "conditions": [
+        "equipupgrade_equiptype_count"
+      ],
+      "approach": "primitivas de transformação",
+      "proposed_flow": [
+        "Selecionar instância elegível",
+        "ler estado e materiais",
+        "conferir transformação",
+        "reforjar",
+        "verificar novo estado e missão"
+      ],
+      "completion_evidence": "Reforja concluída do item elegível e contador.",
+      "needs_calibration": "Elegibilidade, materiais, prévia e resultado. Reforjar e melhorar +N são operações diferentes.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 13,
+      "paths": [
+        "heir"
+      ],
+      "static_evidence_group": "gear"
+    },
+    {
+      "id": "disposal",
+      "title": "Vender ou extrair equipamento/artefato",
+      "conditions": [
+        "euipsell_equiptype_count",
+        "euipextraction_equiptype_count"
+      ],
+      "approach": "primitivas com seleção explícita",
+      "proposed_flow": [
+        "Listar instâncias escolhidas",
+        "excluir equipados/bloqueados/reservados",
+        "conferir seleção e resultado esperado",
+        "vender ou extrair",
+        "verificar inventário e missão"
+      ],
+      "completion_evidence": "Quantidade/tipo corretos e mudança no inventário; venda e extração não são intercambiáveis.",
+      "needs_calibration": "Filtros, bloqueios, seleção múltipla e confirmação; a lista de itens precisa fazer parte do plano.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 7,
+      "paths": [
+        "heir"
+      ],
+      "static_evidence_group": "gear"
+    },
+    {
+      "id": "production",
+      "title": "Forest of Souls: Penguin e Spirit Bloom",
+      "conditions": [
+        "get_content_materialid_count"
+      ],
+      "approach": "primitivas; rotina curta se recorrente",
+      "proposed_flow": [
+        "Abrir Sanctuary/Forest of Souls",
+        "selecionar produto",
+        "ler quantidade/custo",
+        "produzir imediatamente quando exigido",
+        "verificar saldo/inventário",
+        "conferir missão"
+      ],
+      "completion_evidence": "Produto materialid e origem content corretos; produção imediata quando a missão a pede.",
+      "needs_calibration": "Painel de produção, quantidade, moeda, prévia e resultado; content=altar aqui não significa Spirit Altar de combate.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 2,
+      "paths": [
+        "heir"
+      ],
+      "static_evidence_group": "sanctuary"
+    },
+    {
+      "id": "shops",
+      "title": "Trocas e lojas",
+      "conditions": [
+        "buy_shopid_count",
+        "buy_shopcategory_count"
+      ],
+      "approach": "primitivas de transação",
+      "proposed_flow": [
+        "Resolver loja e produto",
+        "ler preço/saldo/limite",
+        "conferir quantidade",
+        "efetuar troca prevista",
+        "verificar saldo/produto e missão"
+      ],
+      "completion_evidence": "Loja/categoria exigida e incremento; comprar o mesmo produto em outra loja pode não cumprir.",
+      "needs_calibration": "AP Exchange, Guild Shop e demais lojas têm adaptadores próprios; não selecionar produto só pelo ícone.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 13,
+      "paths": [
+        "connections",
+        "heir"
+      ],
+      "static_evidence_group": "shops_summons"
+    },
+    {
+      "id": "spending",
+      "title": "Gastar moeda específica / purificar Heart of Orbis",
+      "conditions": [
+        "use_tokentype_count"
+      ],
+      "approach": "planejador que escolhe operação consumidora",
+      "proposed_flow": [
+        "Ler tokentype e total exigido",
+        "resolver operação elegível",
+        "ler saldo e orçamento",
+        "executar uma unidade",
+        "verificar gasto efetivo e contador"
+      ],
+      "completion_evidence": "Quantidade da moeda efetivamente consumida; não basta contar cliques.",
+      "needs_calibration": "Wisdom/Fate Gaze, Conquest Points e Heart of Orbis requerem destinos diferentes; não transformar todo consumo em compra de loja.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 5,
+      "paths": [
+        "heir",
+        "succession"
+      ],
+      "static_evidence_group": "sanctuary"
+    },
+    {
+      "id": "pets",
+      "title": "Pets: invocar, brincar, sintetizar e liberar",
+      "conditions": [
+        "gachapet_count",
+        "petcare_count",
+        "petsyn_grade_count",
+        "petsell_count"
+      ],
+      "approach": "primitivas por ação; rotina se recorrente",
+      "proposed_flow": [
+        "Resolver ação/pet",
+        "ler atributos e recursos",
+        "escolher instâncias/material/herança quando aplicável",
+        "confirmar",
+        "verificar pet/inventário e missão"
+      ],
+      "completion_evidence": "Evento de invocação/brincadeira, grau final ou quantidade liberada, conforme condition.",
+      "needs_calibration": "Telas distintas, herança de habilidades e regras de migração; não selecionar automaticamente pets a consumir/liberar.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 11,
+      "paths": [
+        "heir"
+      ],
+      "static_evidence_group": "pets"
+    },
+    {
+      "id": "summoning",
+      "title": "Invocar heróis",
+      "conditions": [
+        "gacha_gachaid_count"
+      ],
+      "approach": "primitivas com banner e orçamento definidos",
+      "proposed_flow": [
+        "Ler gachaid aceito",
+        "abrir banner",
+        "conferir contador gratuito/custo",
+        "executar invocação prevista",
+        "processar resultado",
+        "conferir missão"
+      ],
+      "completion_evidence": "Invocação no tipo de banner exigido; obter herói específico é outro requisito.",
+      "needs_calibration": "Banner, gratuidade, quantidade e resultados; resultado aleatório não pode ser prometido.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 4,
+      "paths": [
+        "heir"
+      ],
+      "static_evidence_group": "shops_summons"
+    },
+    {
+      "id": "guild",
+      "title": "Guild: presença, ajuda e pedido de ajuda",
+      "conditions": [
+        "clanattend_count",
+        "clansupport_count",
+        "clansupportrequest_count"
+      ],
+      "approach": "primitivas por ação social",
+      "proposed_flow": [
+        "Conferir guild e ação",
+        "ler pedido/recurso/limite",
+        "realizar a ação prevista",
+        "conferir registro e contador"
+      ],
+      "completion_evidence": "Presença, doação ou pedido são eventos separados.",
+      "needs_calibration": "Acesso, destinatário/pedido, recurso e cooldown. Pedidos/doações têm efeito em outros membros e precisam estar definidos no plano.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 5,
+      "paths": [
+        "connections",
+        "heir"
+      ],
+      "static_evidence_group": "guild"
+    },
+    {
+      "id": "time_gates",
+      "title": "Login e reputação diária",
+      "conditions": [
+        "eventlogin_eventid_count",
+        "achievedaily_count"
+      ],
+      "approach": "leitura + plano com dependência temporal",
+      "proposed_flow": [
+        "Ler evento e período",
+        "verificar login/diárias",
+        "concluir subtarefas quando necessário",
+        "coletar recompensa diária elegível",
+        "conferir contador"
+      ],
+      "completion_evidence": "Evento/período e recompensa diária completa reconhecidos; reconectar não comprova novo dia.",
+      "needs_calibration": "Reset, agenda e diferença entre um check de login e um ciclo completo de diárias. Nenhum agendamento foi criado neste mapeamento.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 31,
+      "paths": [
+        "connections",
+        "heir"
+      ],
+      "static_evidence_group": "time"
+    },
+    {
+      "id": "theater",
+      "title": "Moonlight Theater",
+      "conditions": [
+        "moonlighttheaterclear_storyid_count"
+      ],
+      "approach": "rotina de história parametrizada",
+      "proposed_flow": [
+        "Selecionar storyid/ato",
+        "conferir acesso/custo",
+        "executar história",
+        "finalizar",
+        "conferir registro e missão"
+      ],
+      "completion_evidence": "Ato/episódio marcado como concluído e contador.",
+      "needs_calibration": "Seleção do ato e resultado; Skip só pode ser reutilizado se a contagem de assistir/finalizar for comprovada.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 1,
+      "paths": [
+        "heir"
+      ],
+      "static_evidence_group": "advanced"
+    },
+    {
+      "id": "side_story_records",
+      "title": "Adquirir ou concluir Side Story arquivada",
+      "conditions": [
+        "substorydlc_storyid_state_count"
+      ],
+      "approach": "planejador por estado buy/clear",
+      "proposed_flow": [
+        "Resolver storyid e estado pedido",
+        "conferir aquisição/progresso",
+        "adquirir ou concluir subtarefas do registro",
+        "conferir estado e missão"
+      ],
+      "completion_evidence": "buy exige aquisição; clear exige registro completo. Um estado não substitui o outro.",
+      "needs_calibration": "Acesso ao arquivo, custo, etapas e indicador Record Complete; não presumir que a aquisição seja necessária quando já possui.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 2,
+      "paths": [
+        "connections"
+      ],
+      "static_evidence_group": "connections"
+    },
+    {
+      "id": "connection_gift",
+      "title": "Entregar recursos em Connections",
+      "conditions": [
+        "destiny_give_count"
+      ],
+      "approach": "primitiva de entrega",
+      "proposed_flow": [
+        "Abrir requisito give correto",
+        "ler recurso e quantidade real",
+        "conferir saldo",
+        "entregar",
+        "conferir requisito e missão"
+      ],
+      "completion_evidence": "Entrega completa do requisito; count=1 pode representar uma entrega de 30 unidades.",
+      "needs_calibration": "Resolver o ID de give pela tela/tabela e ler quantidade; não interpretar count como quantidade da moeda.",
+      "runtime_enabled": false,
+      "validation": "mapping_only",
+      "task_count": 1,
+      "paths": [
+        "connections"
+      ],
+      "static_evidence_group": "connections"
+    }
+  ],
+  "conditions": [
+    {
+      "condition": "",
+      "family": "quiz",
+      "task_count": 5,
+      "paths": [
+        "arena"
+      ],
+      "parameter_keys": [],
+      "semantics": "Condição ausente nos cinco quizzes; mapear investigação, sem supor critério executável.",
+      "investigation_required": true,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "arena_journey_01_004",
+        "arena_journey_02_004",
+        "arena_journey_03_004",
+        "arena_journey_04_004",
+        "arena_journey_05_004"
+      ],
+      "examples": [
+        {
+          "id": "arena_journey_01_004",
+          "label": "Challenge World Arena Quiz",
+          "parameters": {}
+        },
+        {
+          "id": "arena_journey_02_004",
+          "label": "Challenge World Arena Quiz",
+          "parameters": {}
+        }
+      ]
+    },
+    {
+      "condition": "achievedaily_count",
+      "family": "time_gates",
+      "task_count": 1,
+      "paths": [
+        "connections"
+      ],
+      "parameter_keys": [
+        "count"
+      ],
+      "semantics": "Contagem de recompensas completas de Daily Reputation.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "de_5_c1067_03"
+      ],
+      "examples": [
+        {
+          "id": "de_5_c1067_03",
+          "label": "Acquire all Daily Reputation rewards 3 times",
+          "parameters": {
+            "count": "3"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "autosetspt_count",
+      "family": "supporters",
+      "task_count": 1,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count"
+      ],
+      "semantics": "Ler o alvo e count na missão; conferir alteração correspondente e contador antes/depois.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_05_002_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_05_002_001",
+          "label": "Assign Supporters",
+          "parameters": {
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "buy_shopcategory_count",
+      "family": "shops",
+      "task_count": 1,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count",
+        "shopcategory"
+      ],
+      "semantics": "Ler o alvo e count na missão; conferir alteração correspondente e contador antes/depois.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_35_003_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_35_003_001",
+          "label": "Purchase item from the Guild Member Shop",
+          "parameters": {
+            "shopcategory": "clanshop",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "buy_shopid_count",
+      "family": "shops",
+      "task_count": 12,
+      "paths": [
+        "connections",
+        "heir"
+      ],
+      "parameter_keys": [
+        "count",
+        "shopid"
+      ],
+      "semantics": "Ler o alvo e count na missão; conferir alteração correspondente e contador antes/depois.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_11_005_001",
+        "guide_15_005_001",
+        "guide_21_005_001",
+        "guide_28_005_001",
+        "guide_45_004_001",
+        "guide_47_004_001",
+        "guide_51_004_001",
+        "guide_53_004_001",
+        "guide_57_004_001",
+        "guide_59_004_001",
+        "guide_63_004_001",
+        "de_4_c1087_04"
+      ],
+      "examples": [
+        {
+          "id": "guide_11_005_001",
+          "label": "Exchange Catalyst in the Catalyst Exchange",
+          "parameters": {
+            "shopid": "shop_cp_adv1;shop_cp_adv2;shop_cp_adv3;shop_cp_adv4;shop_cp_adv5;shop_cp_adv6;shop_cp_adv7;shop_cp_adv8;shop_cp_adv9;shop_cp_adv10;shop_cp_adv11;shop_cp_adv12",
+            "count": "1"
+          }
+        },
+        {
+          "id": "guide_15_005_001",
+          "label": "Exchange Catalyst in the AP Exchange",
+          "parameters": {
+            "shopid": "shop_cp_adv1;shop_cp_adv2;shop_cp_adv3;shop_cp_adv4;shop_cp_adv5;shop_cp_adv6;shop_cp_adv7;shop_cp_adv8;shop_cp_adv9;shop_cp_adv10;shop_cp_adv11;shop_cp_adv12",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "charawaken_chrid_level_count",
+      "family": "hero_growth",
+      "task_count": 7,
+      "paths": [
+        "succession"
+      ],
+      "parameter_keys": [
+        "chrid",
+        "count",
+        "level",
+        "sync_inven"
+      ],
+      "semantics": "Despertar do chrid específico ao nível exigido.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "waybern_01_003",
+        "waybern_03_003",
+        "waybern_04_003",
+        "golem_01_003",
+        "golem_02_003",
+        "benshi_01_003",
+        "benshi_02_003"
+      ],
+      "examples": [
+        {
+          "id": "waybern_01_003",
+          "label": "Awaken Furious to 3★",
+          "parameters": {
+            "chrid": "c1087",
+            "level": "3",
+            "sync_inven": "y",
+            "count": "1"
+          }
+        },
+        {
+          "id": "waybern_03_003",
+          "label": "Awaken Sigret to 3★",
+          "parameters": {
+            "chrid": "c1072",
+            "level": "3",
+            "sync_inven": "y",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "charawaken_grade_level_count",
+      "family": "hero_growth",
+      "task_count": 16,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count",
+        "grade",
+        "level",
+        "sync_inven"
+      ],
+      "semantics": "Quantidade de heróis com grau e nível de despertar exigidos.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_01_005_001",
+        "guide_04_002_001",
+        "guide_06_003_001",
+        "guide_09_003_001",
+        "guide_12_001_001",
+        "guide_16_005_001",
+        "guide_21_003_001",
+        "guide_26_003_001",
+        "guide_30_005_001",
+        "guide_33_004_001",
+        "guide_38_005_001",
+        "guide_44_005_001",
+        "guide_50_001_001",
+        "guide_54_001_001",
+        "guide_58_001_001",
+        "guide_62_001_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_01_005_001",
+          "label": "Awaken a Hero to 1★",
+          "parameters": {
+            "grade": "all",
+            "level": "1",
+            "count": "1"
+          }
+        },
+        {
+          "id": "guide_04_002_001",
+          "label": "Awaken a Hero to 2★",
+          "parameters": {
+            "grade": "all",
+            "level": "2",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "chrclasschange_count",
+      "family": "specialty",
+      "task_count": 1,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count"
+      ],
+      "semantics": "Ler o alvo e count na missão; conferir alteração correspondente e contador antes/depois.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_44_003_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_44_003_001",
+          "label": "Complete a Hero Specialty Change 1 time",
+          "parameters": {
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "chrevo_chrid_grade_count",
+      "family": "hero_growth",
+      "task_count": 6,
+      "paths": [
+        "succession"
+      ],
+      "parameter_keys": [
+        "chrid",
+        "count",
+        "grade",
+        "sync_inven"
+      ],
+      "semantics": "Promoção/posse do chrid na categoria exigida; verificar retroatividade.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "waybern_01_004",
+        "waybern_02_002",
+        "waybern_03_002",
+        "waybern_04_002",
+        "golem_01_005",
+        "benshi_01_005"
+      ],
+      "examples": [
+        {
+          "id": "waybern_01_004",
+          "label": "Promote Furious to 5★",
+          "parameters": {
+            "chrid": "c1087",
+            "grade": "5",
+            "sync_inven": "y",
+            "count": "1"
+          }
+        },
+        {
+          "id": "waybern_02_002",
+          "label": "Promote Muwi to 5★",
+          "parameters": {
+            "chrid": "c3132",
+            "grade": "5",
+            "sync_inven": "y",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "chrevo_grade_count",
+      "family": "hero_growth",
+      "task_count": 11,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count",
+        "grade",
+        "sync_inven"
+      ],
+      "semantics": "Quantidade de heróis na categoria de estrelas exigida.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_14_001_001",
+        "guide_20_001_001",
+        "guide_25_003_001",
+        "guide_29_005_001",
+        "guide_32_002_001",
+        "guide_37_004_001",
+        "guide_43_004_001",
+        "guide_48_001_001",
+        "guide_52_001_001",
+        "guide_56_001_001",
+        "guide_60_001_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_14_001_001",
+          "label": "Own two 6★ Heroes",
+          "parameters": {
+            "grade": "6",
+            "sync_inven": "y",
+            "count": "2"
+          }
+        },
+        {
+          "id": "guide_20_001_001",
+          "label": "Own three 6★ Heroes",
+          "parameters": {
+            "grade": "6",
+            "sync_inven": "y",
+            "count": "3"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "chrintimacy_level_count",
+      "family": "friendship",
+      "task_count": 1,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count",
+        "level"
+      ],
+      "semantics": "Ler o alvo e count na missão; conferir alteração correspondente e contador antes/depois.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_23_003_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_23_003_001",
+          "label": "Reach Friendship Level 10 with 1 Hero",
+          "parameters": {
+            "level": "10",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "chrl_chrid_level_count",
+      "family": "hero_growth",
+      "task_count": 4,
+      "paths": [
+        "succession"
+      ],
+      "parameter_keys": [
+        "chrid",
+        "count",
+        "level",
+        "sync_inven"
+      ],
+      "semantics": "Nível mínimo do chrid específico.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "waybern_01_002",
+        "waybern_02_003",
+        "golem_01_002",
+        "benshi_01_002"
+      ],
+      "examples": [
+        {
+          "id": "waybern_01_002",
+          "label": "Reach Level 50 with Furious",
+          "parameters": {
+            "chrid": "c1087",
+            "level": "50",
+            "sync_inven": "y",
+            "count": "1"
+          }
+        },
+        {
+          "id": "waybern_02_003",
+          "label": "Reach Level 50 with Muwi",
+          "parameters": {
+            "chrid": "c3132",
+            "level": "50",
+            "sync_inven": "y",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "chrl_level_count",
+      "family": "hero_growth",
+      "task_count": 17,
+      "paths": [
+        "connections",
+        "heir"
+      ],
+      "parameter_keys": [
+        "count",
+        "level",
+        "sync_inven"
+      ],
+      "semantics": "Nível mínimo e quantidade de heróis; sync_inven indica possível conferência do inventário.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_02_002_001",
+        "guide_03_004_001",
+        "guide_05_005_001",
+        "guide_06_002_001",
+        "guide_07_002_001",
+        "guide_08_002_001",
+        "guide_11_002_001",
+        "guide_16_001_001",
+        "guide_18_001_001",
+        "guide_21_002_001",
+        "guide_28_002_001",
+        "guide_47_002_001",
+        "guide_49_003_001",
+        "guide_53_002_001",
+        "guide_57_002_001",
+        "guide_61_002_001",
+        "de_4_c1087_02"
+      ],
+      "examples": [
+        {
+          "id": "guide_02_002_001",
+          "label": "Reach Level 15 with a Hero",
+          "parameters": {
+            "level": "15",
+            "count": "1"
+          }
+        },
+        {
+          "id": "guide_03_004_001",
+          "label": "Reach Level 20 with a Hero",
+          "parameters": {
+            "level": "20",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "chrskillenhance_count",
+      "family": "hero_skills",
+      "task_count": 13,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count"
+      ],
+      "semantics": "Ler o alvo e count na missão; conferir alteração correspondente e contador antes/depois.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_05_003_001",
+        "guide_10_005_001",
+        "guide_12_003_001",
+        "guide_14_005_001",
+        "guide_17_003_001",
+        "guide_22_005_001",
+        "guide_25_005_001",
+        "guide_33_005_001",
+        "guide_38_004_001",
+        "guide_43_005_001",
+        "guide_46_005_001",
+        "guide_49_004_001",
+        "guide_56_005_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_05_003_001",
+          "label": "Enhance Hero Skill 1 time",
+          "parameters": {
+            "count": "1"
+          }
+        },
+        {
+          "id": "guide_10_005_001",
+          "label": "Enhance Hero's Skill 1 time",
+          "parameters": {
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "chrup_count",
+      "family": "hero_growth",
+      "task_count": 1,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count"
+      ],
+      "semantics": "Ação de usar Penguin/XP conforme texto; nível já possuído não substitui a ação pedida.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_01_003_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_01_003_001",
+          "label": "Level up Hero using Penguin",
+          "parameters": {
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "clanattend_count",
+      "family": "guild",
+      "task_count": 1,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count"
+      ],
+      "semantics": "Ler o alvo e count na missão; conferir alteração correspondente e contador antes/depois.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_26_005_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_26_005_001",
+          "label": "Check-In to Guild 1 time",
+          "parameters": {
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "clansupport_count",
+      "family": "guild",
+      "task_count": 3,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count"
+      ],
+      "semantics": "Ler o alvo e count na missão; conferir alteração correspondente e contador antes/depois.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_33_002_001",
+        "guide_36_005_001",
+        "guide_55_004_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_33_002_001",
+          "label": "Send aid to your fellow Guild members 3 times",
+          "parameters": {
+            "count": "3"
+          }
+        },
+        {
+          "id": "guide_36_005_001",
+          "label": "Send aid to your fellow Guild members 5 times",
+          "parameters": {
+            "count": "5"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "clansupportrequest_count",
+      "family": "guild",
+      "task_count": 1,
+      "paths": [
+        "connections"
+      ],
+      "parameter_keys": [
+        "count"
+      ],
+      "semantics": "Ler o alvo e count na missão; conferir alteração correspondente e contador antes/depois.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "de_5_c1067_01"
+      ],
+      "examples": [
+        {
+          "id": "de_5_c1067_01",
+          "label": "Request Guild Aid 1 time",
+          "parameters": {
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "clear_enter_count",
+      "family": "combat_modes",
+      "task_count": 158,
+      "paths": [
+        "heir",
+        "succession"
+      ],
+      "parameter_keys": [
+        "count",
+        "enter",
+        "entertype"
+      ],
+      "semantics": "Vitórias em um dos enter permitidos; interpretar dificuldade pelos destinos e texto.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_01_004_001",
+        "guide_03_003_001",
+        "guide_04_004_001",
+        "guide_06_004_001",
+        "guide_07_004_001",
+        "guide_12_002_001",
+        "guide_14_003_001",
+        "guide_14_004_001",
+        "guide_16_004_001",
+        "guide_18_005_001",
+        "guide_19_002_001",
+        "guide_20_005_001",
+        "guide_22_001_001",
+        "guide_24_001_001",
+        "guide_26_002_001",
+        "guide_27_001_001",
+        "guide_27_002_001",
+        "guide_29_001_001",
+        "guide_31_001_001",
+        "guide_33_003_001",
+        "guide_35_001_001",
+        "guide_37_001_001",
+        "guide_38_003_001",
+        "guide_39_001_001",
+        "guide_39_005_001",
+        "guide_41_001_001",
+        "guide_43_001_001",
+        "guide_45_002_001",
+        "guide_46_001_001",
+        "guide_48_002_001",
+        "guide_50_002_001",
+        "guide_51_002_001",
+        "guide_52_002_001",
+        "guide_54_002_001",
+        "guide_55_002_001",
+        "guide_56_002_001",
+        "guide_58_002_001",
+        "guide_59_002_001",
+        "guide_60_002_001",
+        "guide_62_002_001",
+        "guide_62_005_001",
+        "guide_63_002_001",
+        "guide_64_004_001",
+        "event_repeat_004_001",
+        "event_repeat_004_002",
+        "event_repeat_004_003",
+        "event_repeat_004_004",
+        "event_repeat_004_005",
+        "event_repeat_004_006",
+        "event_repeat_004_007",
+        "event_repeat_004_008",
+        "event_repeat_004_009",
+        "event_repeat_004_010",
+        "event_repeat_004_011",
+        "event_repeat_004_012",
+        "event_repeat_004_013",
+        "event_repeat_004_014",
+        "event_repeat_004_015",
+        "event_repeat_004_016",
+        "event_repeat_004_017",
+        "event_repeat_004_018",
+        "event_repeat_004_019",
+        "event_repeat_004_020",
+        "event_repeat_004_021",
+        "event_repeat_004_022",
+        "event_repeat_004_023",
+        "event_repeat_004_024",
+        "event_repeat_004_025",
+        "event_repeat_004_026",
+        "event_repeat_004_027",
+        "event_repeat_004_028",
+        "event_repeat_004_029",
+        "event_repeat_004_030",
+        "event_repeat_004_031",
+        "event_repeat_004_032",
+        "event_repeat_004_033",
+        "event_repeat_004_034",
+        "event_repeat_004_035",
+        "event_repeat_004_036",
+        "event_repeat_004_037",
+        "event_repeat_004_038",
+        "event_repeat_004_039",
+        "event_repeat_004_040",
+        "event_repeat_004_041",
+        "event_repeat_004_042",
+        "event_repeat_004_043",
+        "event_repeat_004_044",
+        "event_repeat_004_045",
+        "event_repeat_004_046",
+        "event_repeat_004_047",
+        "event_repeat_004_048",
+        "event_repeat_004_049",
+        "event_repeat_004_050",
+        "event_repeat_004_051",
+        "event_repeat_004_052",
+        "event_repeat_004_053",
+        "event_repeat_004_054",
+        "event_repeat_004_055",
+        "event_repeat_004_056",
+        "event_repeat_004_057",
+        "event_repeat_004_058",
+        "event_repeat_004_059",
+        "event_repeat_004_060",
+        "event_repeat_004_061",
+        "event_repeat_004_062",
+        "event_repeat_004_063",
+        "event_repeat_004_064",
+        "event_repeat_004_065",
+        "event_repeat_004_066",
+        "event_repeat_004_067",
+        "event_repeat_004_068",
+        "event_repeat_004_069",
+        "event_repeat_004_070",
+        "event_repeat_004_071",
+        "event_repeat_004_072",
+        "event_repeat_004_073",
+        "event_repeat_004_074",
+        "event_repeat_004_075",
+        "event_repeat_004_076",
+        "event_repeat_004_077",
+        "event_repeat_004_078",
+        "event_repeat_004_079",
+        "event_repeat_004_080",
+        "event_repeat_004_081",
+        "event_repeat_004_082",
+        "event_repeat_004_083",
+        "event_repeat_004_084",
+        "event_repeat_004_085",
+        "event_repeat_004_086",
+        "event_repeat_004_087",
+        "event_repeat_004_088",
+        "event_repeat_004_089",
+        "event_repeat_004_090",
+        "event_repeat_004_091",
+        "event_repeat_004_092",
+        "event_repeat_004_093",
+        "event_repeat_004_094",
+        "event_repeat_004_095",
+        "event_repeat_004_096",
+        "event_repeat_004_097",
+        "event_repeat_004_098",
+        "event_repeat_004_099",
+        "event_repeat_004_100",
+        "waybern_01_005",
+        "waybern_02_001",
+        "waybern_03_001",
+        "waybern_04_001",
+        "golem_01_001",
+        "golem_02_002",
+        "golem_03_001",
+        "golem_04_001",
+        "benshi_01_001",
+        "benshi_02_002",
+        "benshi_03_001",
+        "benshi_04_001",
+        "rift_01_001",
+        "rift_02_001",
+        "rift_03_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_01_004_001",
+          "label": "Clear Spirit Altar 1 time",
+          "parameters": {
+            "enter": "cmon001;ctue001;cwed001;cthu001;cfri001;cmon002;ctue002;cwed002;cthu002;cfri002;cmon003;ctue003;cwed003;cthu003;cfri003;cmon004;ctue004;cwed004;cthu004;cfri004",
+            "count": "1"
+          }
+        },
+        {
+          "id": "guide_03_003_001",
+          "label": "Clear Tirel Castle Labyrinth 1 time",
+          "parameters": {
+            "enter": "bmzije001;bmzije002;bmzije003;bmzije004;bmzije005",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "clear_entertype_count",
+      "family": "combat_modes",
+      "task_count": 201,
+      "paths": [
+        "connections",
+        "heir"
+      ],
+      "parameter_keys": [
+        "count",
+        "entertype"
+      ],
+      "semantics": "Vitórias em um tipo de conteúdo aceito; escolher interseção com modos disponíveis.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "event_repeat_002_001",
+        "event_repeat_002_002",
+        "event_repeat_002_003",
+        "event_repeat_002_004",
+        "event_repeat_002_005",
+        "event_repeat_002_006",
+        "event_repeat_002_007",
+        "event_repeat_002_008",
+        "event_repeat_002_009",
+        "event_repeat_002_010",
+        "event_repeat_002_011",
+        "event_repeat_002_012",
+        "event_repeat_002_013",
+        "event_repeat_002_014",
+        "event_repeat_002_015",
+        "event_repeat_002_016",
+        "event_repeat_002_017",
+        "event_repeat_002_018",
+        "event_repeat_002_019",
+        "event_repeat_002_020",
+        "event_repeat_002_021",
+        "event_repeat_002_022",
+        "event_repeat_002_023",
+        "event_repeat_002_024",
+        "event_repeat_002_025",
+        "event_repeat_002_026",
+        "event_repeat_002_027",
+        "event_repeat_002_028",
+        "event_repeat_002_029",
+        "event_repeat_002_030",
+        "event_repeat_002_031",
+        "event_repeat_002_032",
+        "event_repeat_002_033",
+        "event_repeat_002_034",
+        "event_repeat_002_035",
+        "event_repeat_002_036",
+        "event_repeat_002_037",
+        "event_repeat_002_038",
+        "event_repeat_002_039",
+        "event_repeat_002_040",
+        "event_repeat_002_041",
+        "event_repeat_002_042",
+        "event_repeat_002_043",
+        "event_repeat_002_044",
+        "event_repeat_002_045",
+        "event_repeat_002_046",
+        "event_repeat_002_047",
+        "event_repeat_002_048",
+        "event_repeat_002_049",
+        "event_repeat_002_050",
+        "event_repeat_002_051",
+        "event_repeat_002_052",
+        "event_repeat_002_053",
+        "event_repeat_002_054",
+        "event_repeat_002_055",
+        "event_repeat_002_056",
+        "event_repeat_002_057",
+        "event_repeat_002_058",
+        "event_repeat_002_059",
+        "event_repeat_002_060",
+        "event_repeat_002_061",
+        "event_repeat_002_062",
+        "event_repeat_002_063",
+        "event_repeat_002_064",
+        "event_repeat_002_065",
+        "event_repeat_002_066",
+        "event_repeat_002_067",
+        "event_repeat_002_068",
+        "event_repeat_002_069",
+        "event_repeat_002_070",
+        "event_repeat_002_071",
+        "event_repeat_002_072",
+        "event_repeat_002_073",
+        "event_repeat_002_074",
+        "event_repeat_002_075",
+        "event_repeat_002_076",
+        "event_repeat_002_077",
+        "event_repeat_002_078",
+        "event_repeat_002_079",
+        "event_repeat_002_080",
+        "event_repeat_002_081",
+        "event_repeat_002_082",
+        "event_repeat_002_083",
+        "event_repeat_002_084",
+        "event_repeat_002_085",
+        "event_repeat_002_086",
+        "event_repeat_002_087",
+        "event_repeat_002_088",
+        "event_repeat_002_089",
+        "event_repeat_002_090",
+        "event_repeat_002_091",
+        "event_repeat_002_092",
+        "event_repeat_002_093",
+        "event_repeat_002_094",
+        "event_repeat_002_095",
+        "event_repeat_002_096",
+        "event_repeat_002_097",
+        "event_repeat_002_098",
+        "event_repeat_002_099",
+        "event_repeat_002_100",
+        "event_repeat_003_001",
+        "event_repeat_003_002",
+        "event_repeat_003_003",
+        "event_repeat_003_004",
+        "event_repeat_003_005",
+        "event_repeat_003_006",
+        "event_repeat_003_007",
+        "event_repeat_003_008",
+        "event_repeat_003_009",
+        "event_repeat_003_010",
+        "event_repeat_003_011",
+        "event_repeat_003_012",
+        "event_repeat_003_013",
+        "event_repeat_003_014",
+        "event_repeat_003_015",
+        "event_repeat_003_016",
+        "event_repeat_003_017",
+        "event_repeat_003_018",
+        "event_repeat_003_019",
+        "event_repeat_003_020",
+        "event_repeat_003_021",
+        "event_repeat_003_022",
+        "event_repeat_003_023",
+        "event_repeat_003_024",
+        "event_repeat_003_025",
+        "event_repeat_003_026",
+        "event_repeat_003_027",
+        "event_repeat_003_028",
+        "event_repeat_003_029",
+        "event_repeat_003_030",
+        "event_repeat_003_031",
+        "event_repeat_003_032",
+        "event_repeat_003_033",
+        "event_repeat_003_034",
+        "event_repeat_003_035",
+        "event_repeat_003_036",
+        "event_repeat_003_037",
+        "event_repeat_003_038",
+        "event_repeat_003_039",
+        "event_repeat_003_040",
+        "event_repeat_003_041",
+        "event_repeat_003_042",
+        "event_repeat_003_043",
+        "event_repeat_003_044",
+        "event_repeat_003_045",
+        "event_repeat_003_046",
+        "event_repeat_003_047",
+        "event_repeat_003_048",
+        "event_repeat_003_049",
+        "event_repeat_003_050",
+        "event_repeat_003_051",
+        "event_repeat_003_052",
+        "event_repeat_003_053",
+        "event_repeat_003_054",
+        "event_repeat_003_055",
+        "event_repeat_003_056",
+        "event_repeat_003_057",
+        "event_repeat_003_058",
+        "event_repeat_003_059",
+        "event_repeat_003_060",
+        "event_repeat_003_061",
+        "event_repeat_003_062",
+        "event_repeat_003_063",
+        "event_repeat_003_064",
+        "event_repeat_003_065",
+        "event_repeat_003_066",
+        "event_repeat_003_067",
+        "event_repeat_003_068",
+        "event_repeat_003_069",
+        "event_repeat_003_070",
+        "event_repeat_003_071",
+        "event_repeat_003_072",
+        "event_repeat_003_073",
+        "event_repeat_003_074",
+        "event_repeat_003_075",
+        "event_repeat_003_076",
+        "event_repeat_003_077",
+        "event_repeat_003_078",
+        "event_repeat_003_079",
+        "event_repeat_003_080",
+        "event_repeat_003_081",
+        "event_repeat_003_082",
+        "event_repeat_003_083",
+        "event_repeat_003_084",
+        "event_repeat_003_085",
+        "event_repeat_003_086",
+        "event_repeat_003_087",
+        "event_repeat_003_088",
+        "event_repeat_003_089",
+        "event_repeat_003_090",
+        "event_repeat_003_091",
+        "event_repeat_003_092",
+        "event_repeat_003_093",
+        "event_repeat_003_094",
+        "event_repeat_003_095",
+        "event_repeat_003_096",
+        "event_repeat_003_097",
+        "event_repeat_003_098",
+        "event_repeat_003_099",
+        "event_repeat_003_100",
+        "de_5_c1067_02"
+      ],
+      "examples": [
+        {
+          "id": "event_repeat_002_001",
+          "label": "Complete Episode & Side Story (Step 1)",
+          "parameters": {
+            "entertype": "quest;free;dungeon_quest;defense_quest;descent",
+            "count": "5"
+          }
+        },
+        {
+          "id": "event_repeat_002_002",
+          "label": "Complete Episode & Side Story (Step 2)",
+          "parameters": {
+            "entertype": "quest;free;dungeon_quest;defense_quest;descent",
+            "count": "10"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "clear_worldboss_count",
+      "family": "world_boss",
+      "task_count": 1,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count"
+      ],
+      "semantics": "Ler o alvo e count na missão; conferir alteração correspondente e contador antes/depois.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_41_005_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_41_005_001",
+          "label": "Complete World Boss Battle 1 time",
+          "parameters": {
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "clearepisodechapter_count",
+      "family": "campaign",
+      "task_count": 20,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count"
+      ],
+      "semantics": "count representa capítulos concluídos, não fases nem novas entradas.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_26_001_001",
+        "guide_28_001_001",
+        "guide_30_001_001",
+        "guide_32_001_001",
+        "guide_34_001_001",
+        "guide_36_001_001",
+        "guide_38_001_001",
+        "guide_40_001_001",
+        "guide_42_001_001",
+        "guide_44_001_001",
+        "guide_45_001_001",
+        "guide_47_001_001",
+        "guide_49_001_001",
+        "guide_51_001_001",
+        "guide_53_001_001",
+        "guide_55_001_001",
+        "guide_57_001_001",
+        "guide_59_001_001",
+        "guide_61_001_001",
+        "guide_63_001_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_26_001_001",
+          "label": "Clear 21 Episode Chapter(s)",
+          "parameters": {
+            "count": "21"
+          }
+        },
+        {
+          "id": "guide_28_001_001",
+          "label": "Clear 22 Episode Chapter(s)",
+          "parameters": {
+            "count": "22"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "clearessence_count",
+      "family": "combat_modes",
+      "task_count": 13,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count"
+      ],
+      "semantics": "Contagem de Catalyst Stage; selecionar esse modo explicitamente.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_11_004_001",
+        "guide_15_004_001",
+        "guide_18_004_001",
+        "guide_21_004_001",
+        "guide_28_004_001",
+        "guide_32_005_001",
+        "guide_45_003_001",
+        "guide_47_003_001",
+        "guide_51_003_001",
+        "guide_53_003_001",
+        "guide_57_003_001",
+        "guide_59_003_001",
+        "guide_63_003_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_11_004_001",
+          "label": "Complete Catalyst Stage 3 times",
+          "parameters": {
+            "count": "3"
+          }
+        },
+        {
+          "id": "guide_15_004_001",
+          "label": "Complete Catalyst Stage 3 times",
+          "parameters": {
+            "count": "3"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "clearmaxlevel_enter_count",
+      "family": "combat_modes",
+      "task_count": 18,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count",
+        "enter"
+      ],
+      "semantics": "count é o andar/nível máximo exigido, não o número de repetições.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_02_005_001",
+        "guide_03_005_001",
+        "guide_07_005_001",
+        "guide_10_004_001",
+        "guide_13_004_001",
+        "guide_17_004_001",
+        "guide_20_002_001",
+        "guide_24_003_001",
+        "guide_26_004_001",
+        "guide_30_004_001",
+        "guide_34_004_001",
+        "guide_37_005_001",
+        "guide_40_004_001",
+        "guide_42_004_001",
+        "guide_50_004_001",
+        "guide_54_005_001",
+        "guide_58_004_001",
+        "guide_64_001_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_02_005_001",
+          "label": "Clear Floor 1 in Abyss",
+          "parameters": {
+            "enter": "abyss*",
+            "count": "1"
+          }
+        },
+        {
+          "id": "guide_03_005_001",
+          "label": "Clear Floor 3 in Abyss",
+          "parameters": {
+            "enter": "abyss*",
+            "count": "3"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "crevicehuntlv_count",
+      "family": "rift",
+      "task_count": 3,
+      "paths": [
+        "succession"
+      ],
+      "parameter_keys": [
+        "count"
+      ],
+      "semantics": "count é o nível de controle alvo do Rift.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "rift_01_002",
+        "rift_02_002",
+        "rift_03_002"
+      ],
+      "examples": [
+        {
+          "id": "rift_01_002",
+          "label": "Reach Rift Control Level 3",
+          "parameters": {
+            "count": "3"
+          }
+        },
+        {
+          "id": "rift_02_002",
+          "label": "Reach Rift Control Level 8",
+          "parameters": {
+            "count": "8"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "destiny_give_count",
+      "family": "connection_gift",
+      "task_count": 1,
+      "paths": [
+        "connections"
+      ],
+      "parameter_keys": [
+        "count",
+        "give"
+      ],
+      "semantics": "count conta entregas; recurso/quantidade vêm do requisito give.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "de_4_c1087_03"
+      ],
+      "examples": [
+        {
+          "id": "de_4_c1087_03",
+          "label": "Gift 30 Brave Crests",
+          "parameters": {
+            "give": "de_4_c1087_03",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "equipalchemy_equiptype_count",
+      "family": "conversion",
+      "task_count": 6,
+      "paths": [
+        "heir",
+        "succession"
+      ],
+      "parameter_keys": [
+        "count",
+        "equiptype"
+      ],
+      "semantics": "Conversão/fabricação do equiptype; exclusive é variante própria.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_22_002_001",
+        "guide_31_002_001",
+        "guide_35_004_001",
+        "guide_41_004_001",
+        "guide_43_002_001",
+        "trial_02_002"
+      ],
+      "examples": [
+        {
+          "id": "guide_22_002_001",
+          "label": "Weapon Conversion",
+          "parameters": {
+            "equiptype": "weapon",
+            "count": "1"
+          }
+        },
+        {
+          "id": "guide_31_002_001",
+          "label": "Convert Equipment 1 time",
+          "parameters": {
+            "equiptype": "weapon;helm;armor;boot;neck;ring",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "equipcraft_count",
+      "family": "crafting",
+      "task_count": 5,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count"
+      ],
+      "semantics": "Ler o alvo e count na missão; conferir alteração correspondente e contador antes/depois.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_12_005_001",
+        "guide_24_002_001",
+        "guide_27_003_001",
+        "guide_36_004_001",
+        "guide_39_003_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_12_005_001",
+          "label": "Craft 1 Piece of Equipment",
+          "parameters": {
+            "count": "1"
+          }
+        },
+        {
+          "id": "guide_24_002_001",
+          "label": "Craft Equipment 10 times",
+          "parameters": {
+            "count": "10"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "equipcraft_equipid_count",
+      "family": "crafting",
+      "task_count": 2,
+      "paths": [
+        "succession"
+      ],
+      "parameter_keys": [
+        "count",
+        "equipid"
+      ],
+      "semantics": "Fabricação de uma das receitas/origens equipid permitidas.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "golem_02_001",
+        "benshi_02_001"
+      ],
+      "examples": [
+        {
+          "id": "golem_02_001",
+          "label": "Craft Golem Equipment 10 times",
+          "parameters": {
+            "equipid": "ecg6w;ecg6h;ecg6a;ecg6b;ecg6n;ecg6r",
+            "count": "10"
+          }
+        },
+        {
+          "id": "benshi_02_001",
+          "label": "Craft Banshee Equipment 10 times",
+          "parameters": {
+            "equipid": "ecb6w;ecb6h;ecb6a;ecb6b;ecb6n;ecb6r",
+            "count": "10"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "equiptype_chrid_level_count",
+      "family": "equipping",
+      "task_count": 3,
+      "paths": [
+        "heir",
+        "succession"
+      ],
+      "parameter_keys": [
+        "chrid",
+        "count",
+        "equiptype",
+        "level"
+      ],
+      "semantics": "Quantidade de peças equipadas no herói, com tipo e nível mínimo.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_02_004_001",
+        "waybern_03_004",
+        "waybern_04_004"
+      ],
+      "examples": [
+        {
+          "id": "guide_02_004_001",
+          "label": "Equip any Hero with Equipment",
+          "parameters": {
+            "equiptype": "weapon;helm;armor;boot;neck;ring",
+            "chrid": "all",
+            "level": "0",
+            "count": "1"
+          }
+        },
+        {
+          "id": "waybern_03_004",
+          "label": "Equip 3 pieces of +15 Enhanced Equipment on Sigret",
+          "parameters": {
+            "equiptype": "weapon;helm;armor;boot;neck;ring",
+            "chrid": "c1072",
+            "level": "15",
+            "count": "3"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "equipup_equiptype_count",
+      "family": "enhancement",
+      "task_count": 39,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count",
+        "equiptype"
+      ],
+      "semantics": "Contagem de ações de melhoria, não necessariamente de níveis ganhos.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_02_003_001",
+        "guide_04_003_001",
+        "guide_07_003_001",
+        "guide_08_003_001",
+        "guide_09_004_001",
+        "guide_10_002_001",
+        "guide_10_003_001",
+        "guide_13_003_001",
+        "guide_14_002_001",
+        "guide_16_002_001",
+        "guide_16_003_001",
+        "guide_17_002_001",
+        "guide_19_003_001",
+        "guide_20_003_001",
+        "guide_22_003_001",
+        "guide_24_005_001",
+        "guide_27_004_001",
+        "guide_30_002_001",
+        "guide_30_003_001",
+        "guide_32_004_001",
+        "guide_34_002_001",
+        "guide_34_005_001",
+        "guide_36_002_001",
+        "guide_37_002_001",
+        "guide_40_002_001",
+        "guide_41_002_001",
+        "guide_42_002_001",
+        "guide_44_002_001",
+        "guide_46_002_001",
+        "guide_46_004_001",
+        "guide_48_003_001",
+        "guide_49_002_001",
+        "guide_52_003_001",
+        "guide_52_005_001",
+        "guide_56_003_001",
+        "guide_56_004_001",
+        "guide_60_003_001",
+        "guide_60_005_001",
+        "guide_62_003_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_02_003_001",
+          "label": "Enhance Equipment 1 time",
+          "parameters": {
+            "equiptype": "weapon;helm;armor;boot;neck;ring",
+            "count": "1"
+          }
+        },
+        {
+          "id": "guide_04_003_001",
+          "label": "Enhance Equipment 1 time",
+          "parameters": {
+            "equiptype": "weapon;helm;armor;boot;neck;ring",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "equipup_equiptype_level_count",
+      "family": "enhancement",
+      "task_count": 7,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count",
+        "equiptype",
+        "level"
+      ],
+      "semantics": "Quantidade de itens do tipo exigido que atingem +level.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_05_004_001",
+        "guide_08_004_001",
+        "guide_11_003_001",
+        "guide_18_002_001",
+        "guide_20_004_001",
+        "guide_23_004_001",
+        "guide_64_005_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_05_004_001",
+          "label": "Enhance 1 Artifact +6 Levels or higher",
+          "parameters": {
+            "equiptype": "artifact",
+            "level": "6",
+            "count": "1"
+          }
+        },
+        {
+          "id": "guide_08_004_001",
+          "label": "Enhance any Artifact +15 Levels",
+          "parameters": {
+            "equiptype": "artifact",
+            "level": "15",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "equipupgrade_equiptype_count",
+      "family": "reforging",
+      "task_count": 13,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count",
+        "equiptype"
+      ],
+      "semantics": "Reforja, sem confundir com enhancement.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_23_002_001",
+        "guide_28_003_001",
+        "guide_32_003_001",
+        "guide_34_003_001",
+        "guide_36_003_001",
+        "guide_38_002_001",
+        "guide_40_003_001",
+        "guide_42_003_001",
+        "guide_48_004_001",
+        "guide_54_003_001",
+        "guide_55_003_001",
+        "guide_58_003_001",
+        "guide_62_004_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_23_002_001",
+          "label": "Reforging",
+          "parameters": {
+            "equiptype": "weapon;helm;armor;boot;neck;ring",
+            "count": "1"
+          }
+        },
+        {
+          "id": "guide_28_003_001",
+          "label": "Reforging",
+          "parameters": {
+            "equiptype": "weapon;helm;armor;boot;neck;ring",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "equipwear_chrid_equipset_count",
+      "family": "equipping",
+      "task_count": 3,
+      "paths": [
+        "succession"
+      ],
+      "parameter_keys": [
+        "chrid",
+        "count",
+        "equipset"
+      ],
+      "semantics": "Conjunto ativo no chrid, não apenas posse de uma peça.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "waybern_02_004",
+        "golem_01_004",
+        "benshi_01_004"
+      ],
+      "examples": [
+        {
+          "id": "waybern_02_004",
+          "label": "Equip and activate the Destruction Set on Muwi.",
+          "parameters": {
+            "chrid": "c3132",
+            "equipset": "set_cri_dmg",
+            "count": "1"
+          }
+        },
+        {
+          "id": "golem_01_004",
+          "label": "Activate Destruction Set by Equipping it on Cermia",
+          "parameters": {
+            "chrid": "c1079",
+            "equipset": "set_cri_dmg",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "euipextraction_equiptype_count",
+      "family": "disposal",
+      "task_count": 5,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count",
+        "equiptype"
+      ],
+      "semantics": "Ler o alvo e count na missão; conferir alteração correspondente e contador antes/depois.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_31_003_001",
+        "guide_46_003_001",
+        "guide_48_005_001",
+        "guide_52_004_001",
+        "guide_60_004_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_31_003_001",
+          "label": "Extract Equipment 10 times",
+          "parameters": {
+            "equiptype": "weapon;helm;armor;boot;neck;ring",
+            "count": "10"
+          }
+        },
+        {
+          "id": "guide_46_003_001",
+          "label": "Extract Equipment 3 times",
+          "parameters": {
+            "equiptype": "weapon;helm;armor;boot;neck;ring",
+            "count": "3"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "euipsell_equiptype_count",
+      "family": "disposal",
+      "task_count": 2,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count",
+        "equiptype"
+      ],
+      "semantics": "Ler o alvo e count na missão; conferir alteração correspondente e contador antes/depois.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_23_005_001",
+        "guide_39_004_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_23_005_001",
+          "label": "Sell Artifact 3 times",
+          "parameters": {
+            "equiptype": "artifact",
+            "count": "3"
+          }
+        },
+        {
+          "id": "guide_39_004_001",
+          "label": "Sell Equipment 5 times",
+          "parameters": {
+            "equiptype": "weapon;helm;armor;boot;neck;ring",
+            "count": "5"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "eventlogin_eventid_count",
+      "family": "time_gates",
+      "task_count": 30,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count",
+        "eventid"
+      ],
+      "semantics": "Contagem de login no evento/período correto; conferir reset e contador.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "event_repeat_001_001",
+        "event_repeat_001_002",
+        "event_repeat_001_003",
+        "event_repeat_001_004",
+        "event_repeat_001_005",
+        "event_repeat_001_006",
+        "event_repeat_001_007",
+        "event_repeat_001_008",
+        "event_repeat_001_009",
+        "event_repeat_001_010",
+        "event_repeat_001_011",
+        "event_repeat_001_012",
+        "event_repeat_001_013",
+        "event_repeat_001_014",
+        "event_repeat_001_015",
+        "event_repeat_001_016",
+        "event_repeat_001_017",
+        "event_repeat_001_018",
+        "event_repeat_001_019",
+        "event_repeat_001_020",
+        "event_repeat_001_021",
+        "event_repeat_001_022",
+        "event_repeat_001_023",
+        "event_repeat_001_024",
+        "event_repeat_001_025",
+        "event_repeat_001_026",
+        "event_repeat_001_027",
+        "event_repeat_001_028",
+        "event_repeat_001_029",
+        "event_repeat_001_030"
+      ],
+      "examples": [
+        {
+          "id": "event_repeat_001_001",
+          "label": "Login to the game (Step 1)",
+          "parameters": {
+            "eventid": "masterbook",
+            "count": "1"
+          }
+        },
+        {
+          "id": "event_repeat_001_002",
+          "label": "Login to the game (Step 2)",
+          "parameters": {
+            "eventid": "masterbook",
+            "count": "2"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "gacha_gachaid_count",
+      "family": "summoning",
+      "task_count": 4,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count",
+        "gachaid"
+      ],
+      "semantics": "Ler o alvo e count na missão; conferir alteração correspondente e contador antes/depois.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_01_006_001",
+        "guide_29_003_001",
+        "guide_37_003_001",
+        "guide_43_003_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_01_006_001",
+          "label": "Proceed with Covenant Summon",
+          "parameters": {
+            "gachaid": "gacha_rare;gacha_tutorial",
+            "count": "1"
+          }
+        },
+        {
+          "id": "guide_29_003_001",
+          "label": "Try a Fire Element 4-5★ Summon",
+          "parameters": {
+            "gachaid": "gacha_tk_fire45",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "gachapet_count",
+      "family": "pets",
+      "task_count": 5,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count"
+      ],
+      "semantics": "Ler o alvo e count na missão; conferir alteração correspondente e contador antes/depois.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_09_002_001",
+        "guide_29_002_001",
+        "guide_50_003_001",
+        "guide_54_004_001",
+        "guide_61_003_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_09_002_001",
+          "label": "Summon Pet 1 time",
+          "parameters": {
+            "count": "1"
+          }
+        },
+        {
+          "id": "guide_29_002_001",
+          "label": "Summon Pet 10 times",
+          "parameters": {
+            "count": "10"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "get_content_chrid_count",
+      "family": "connections",
+      "task_count": 3,
+      "paths": [
+        "heir",
+        "succession"
+      ],
+      "parameter_keys": [
+        "chrid",
+        "content",
+        "count"
+      ],
+      "semantics": "Origem content e herói chrid específicos.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_01_002_001",
+        "guide_25_002_001",
+        "waybern_01_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_01_002_001",
+          "label": "Acquire Connection Hero by Completing Missions",
+          "parameters": {
+            "content": "chrrwd",
+            "chrid": "c3026",
+            "count": "1"
+          }
+        },
+        {
+          "id": "guide_25_002_001",
+          "label": "Obtain Hero Tamarinne from Connections",
+          "parameters": {
+            "content": "chrrwd",
+            "chrid": "c1067",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "get_content_materialid_count",
+      "family": "production",
+      "task_count": 2,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "content",
+        "count",
+        "materialid"
+      ],
+      "semantics": "Produção/origem exigidas; os dois exemplos são Forest of Souls imediatos.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_03_002_001",
+        "guide_13_002_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_03_002_001",
+          "label": "Produce Penguin in the Forest of Souls immediately",
+          "parameters": {
+            "content": "altar",
+            "materialid": "ma_m8011;ma_m8021;ma_m8031",
+            "count": "1"
+          }
+        },
+        {
+          "id": "guide_13_002_001",
+          "label": "Produce Spirit Bloom in the Forest of Souls",
+          "parameters": {
+            "content": "altar",
+            "materialid": "ma_elemental_1;ma_elemental_2;ma_elemental_3",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "kill_enter_targetid_attribute_member_count",
+      "family": "team_battle",
+      "task_count": 2,
+      "paths": [
+        "succession"
+      ],
+      "parameter_keys": [
+        "attribute",
+        "count",
+        "enter",
+        "member",
+        "targetid"
+      ],
+      "semantics": "Alvo, estágio, elemento e número de membros precisam coincidir na mesma vitória.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "golem_04_002",
+        "benshi_04_002"
+      ],
+      "examples": [
+        {
+          "id": "golem_04_002",
+          "label": "Clear Golem Hunt on Hell difficulty or higher 10 times with 4 Fire Heroes in the team",
+          "parameters": {
+            "enter": "hung013;hung101",
+            "targetid": "golem_w_b_golem13;golem_w_b_golem_chaos",
+            "attribute": "fire",
+            "member": "4",
+            "count": "10"
+          }
+        },
+        {
+          "id": "benshi_04_002",
+          "label": "Clear Banshee Hunt on Hell difficulty or higher 10 times with 4 Earth Heroes in the team",
+          "parameters": {
+            "enter": "hunb013;hunb101",
+            "targetid": "banshee_queen_i_b_banshee_queen13;b_q_i_b_bq_chaos",
+            "attribute": "wind",
+            "member": "4",
+            "count": "10"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "materialget_enter_materialid_count",
+      "family": "drop_farm",
+      "task_count": 2,
+      "paths": [
+        "succession"
+      ],
+      "parameter_keys": [
+        "count",
+        "enter",
+        "materialid"
+      ],
+      "semantics": "Obter materialid a partir de enter elegível; inventário de outra origem não é prova.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "golem_03_002",
+        "benshi_03_002"
+      ],
+      "examples": [
+        {
+          "id": "golem_03_002",
+          "label": "Collect 20 Golem Reforging Materials",
+          "parameters": {
+            "enter": "hung009;hung011;hung013;hung101",
+            "materialid": "ma_golem_reforge",
+            "count": "20"
+          }
+        },
+        {
+          "id": "benshi_03_002",
+          "label": "Collect 20 Banshee Reforging Materials",
+          "parameters": {
+            "enter": "hunb009;hunb011;hunb013;hunb101",
+            "materialid": "ma_banshee_reforge",
+            "count": "20"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "mockarenawin_enter_count",
+      "family": "mock_arena",
+      "task_count": 15,
+      "paths": [
+        "arena"
+      ],
+      "parameter_keys": [
+        "count",
+        "enter"
+      ],
+      "semantics": "Vitória no enter de treino específico.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "arena_journey_01_001",
+        "arena_journey_01_002",
+        "arena_journey_01_003",
+        "arena_journey_02_001",
+        "arena_journey_02_002",
+        "arena_journey_02_003",
+        "arena_journey_03_001",
+        "arena_journey_03_002",
+        "arena_journey_03_003",
+        "arena_journey_04_001",
+        "arena_journey_04_002",
+        "arena_journey_04_003",
+        "arena_journey_05_001",
+        "arena_journey_05_002",
+        "arena_journey_05_003"
+      ],
+      "examples": [
+        {
+          "id": "arena_journey_01_001",
+          "label": "Challenge Mock World Arena 1",
+          "parameters": {
+            "enter": "mock_arena_stage_01",
+            "count": "1"
+          }
+        },
+        {
+          "id": "arena_journey_01_002",
+          "label": "Challenge Mock World Arena 2",
+          "parameters": {
+            "enter": "mock_arena_stage_02",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "moonlighttheaterclear_storyid_count",
+      "family": "theater",
+      "task_count": 1,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count",
+        "storyid"
+      ],
+      "semantics": "Ler o alvo e count na missão; conferir alteração correspondente e contador antes/depois.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_25_004_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_25_004_001",
+          "label": "Watch Moonlight Theater, Fallen Land, Act 1.",
+          "parameters": {
+            "storyid": "theater1_s1_e01",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "party_chrid_enter_cs_cscount_count",
+      "family": "trials",
+      "task_count": 3,
+      "paths": [
+        "succession"
+      ],
+      "parameter_keys": [
+        "chrid",
+        "count",
+        "cs",
+        "cscount",
+        "enter"
+      ],
+      "semantics": "cscount eventos cs dentro de uma mesma batalha elegível; não somar batalhas distintas.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "trial_01_002",
+        "trial_03_002",
+        "trial_04_002"
+      ],
+      "examples": [
+        {
+          "id": "trial_01_002",
+          "label": "Exhaust Boss at least 1 time in one Battle",
+          "parameters": {
+            "chrid": "all",
+            "enter": "tryu001;tryu002;trel001;trel002;trha001;trha002;trra001;trra002",
+            "cs": "groggy_check_cs",
+            "cscount": "1",
+            "count": "1"
+          }
+        },
+        {
+          "id": "trial_03_002",
+          "label": "Exhaust Boss at least 2 times in one Battle",
+          "parameters": {
+            "chrid": "all",
+            "enter": "tryu001;tryu002;trel001;trel002;trha001;trha002;trra001;trra002",
+            "cs": "groggy_check_cs",
+            "cscount": "2",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "petcare_count",
+      "family": "pets",
+      "task_count": 1,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count"
+      ],
+      "semantics": "Ler o alvo e count na missão; conferir alteração correspondente e contador antes/depois.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_15_002_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_15_002_001",
+          "label": "Play with Pet 1 time",
+          "parameters": {
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "petsell_count",
+      "family": "pets",
+      "task_count": 1,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count"
+      ],
+      "semantics": "Ler o alvo e count na missão; conferir alteração correspondente e contador antes/depois.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_19_005_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_19_005_001",
+          "label": "Release Pets 5 times",
+          "parameters": {
+            "count": "5"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "petsyn_grade_count",
+      "family": "pets",
+      "task_count": 4,
+      "paths": [
+        "heir"
+      ],
+      "parameter_keys": [
+        "count",
+        "grade",
+        "migration"
+      ],
+      "semantics": "Grau final e eventual migration; não contar só cliques de síntese.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_15_003_001",
+        "guide_19_004_001",
+        "guide_61_004_001",
+        "guide_64_003_001"
+      ],
+      "examples": [
+        {
+          "id": "guide_15_003_001",
+          "label": "Reach 3★ with one Pet",
+          "parameters": {
+            "grade": "3",
+            "count": "1"
+          }
+        },
+        {
+          "id": "guide_19_004_001",
+          "label": "Reach 4★ with one Pet",
+          "parameters": {
+            "grade": "4",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "pointeget_content_count",
+      "family": "rift",
+      "task_count": 3,
+      "paths": [
+        "succession"
+      ],
+      "parameter_keys": [
+        "content",
+        "count"
+      ],
+      "semantics": "count é o total de pontos no conteúdo/temporada.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "rift_01_003",
+        "rift_02_003",
+        "rift_03_003"
+      ],
+      "examples": [
+        {
+          "id": "rift_01_003",
+          "label": "Acquire 100 points in Rift Season",
+          "parameters": {
+            "content": "crevicehunt",
+            "count": "100"
+          }
+        },
+        {
+          "id": "rift_02_003",
+          "label": "Acquire 180 points in Rift Season",
+          "parameters": {
+            "content": "crevicehunt",
+            "count": "180"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "pvpplay_pvptype_count",
+      "family": "arena",
+      "task_count": 156,
+      "paths": [
+        "arena",
+        "heir"
+      ],
+      "parameter_keys": [
+        "count",
+        "pvptype"
+      ],
+      "semantics": "Respeitar pvptype; participar não implica vencer. NPC só é alternativa se constar entre os valores aceitos.",
+      "investigation_required": false,
+      "excluded_by_catalog": 25,
+      "task_ids": [
+        "guide_04_005_001",
+        "guide_06_005_001",
+        "guide_08_005_001",
+        "guide_09_005_001",
+        "guide_13_005_001",
+        "guide_17_005_001",
+        "guide_22_004_001",
+        "guide_24_004_001",
+        "guide_27_005_001",
+        "guide_29_004_001",
+        "guide_31_005_001",
+        "guide_33_001_001",
+        "guide_35_002_001",
+        "guide_35_005_001",
+        "guide_40_005_001",
+        "guide_41_003_001",
+        "guide_42_005_001",
+        "guide_44_004_001",
+        "guide_45_005_001",
+        "guide_47_005_001",
+        "guide_49_005_001",
+        "guide_50_005_001",
+        "guide_51_005_001",
+        "guide_53_005_001",
+        "guide_55_005_001",
+        "guide_57_005_001",
+        "guide_58_005_001",
+        "guide_59_005_001",
+        "guide_61_005_001",
+        "guide_63_005_001",
+        "guide_64_002_001",
+        "event_repeat_005_001",
+        "event_repeat_005_002",
+        "event_repeat_005_003",
+        "event_repeat_005_004",
+        "event_repeat_005_005",
+        "event_repeat_005_006",
+        "event_repeat_005_007",
+        "event_repeat_005_008",
+        "event_repeat_005_009",
+        "event_repeat_005_010",
+        "event_repeat_005_011",
+        "event_repeat_005_012",
+        "event_repeat_005_013",
+        "event_repeat_005_014",
+        "event_repeat_005_015",
+        "event_repeat_005_016",
+        "event_repeat_005_017",
+        "event_repeat_005_018",
+        "event_repeat_005_019",
+        "event_repeat_005_020",
+        "event_repeat_005_021",
+        "event_repeat_005_022",
+        "event_repeat_005_023",
+        "event_repeat_005_024",
+        "event_repeat_005_025",
+        "event_repeat_005_026",
+        "event_repeat_005_027",
+        "event_repeat_005_028",
+        "event_repeat_005_029",
+        "event_repeat_005_030",
+        "event_repeat_005_031",
+        "event_repeat_005_032",
+        "event_repeat_005_033",
+        "event_repeat_005_034",
+        "event_repeat_005_035",
+        "event_repeat_005_036",
+        "event_repeat_005_037",
+        "event_repeat_005_038",
+        "event_repeat_005_039",
+        "event_repeat_005_040",
+        "event_repeat_005_041",
+        "event_repeat_005_042",
+        "event_repeat_005_043",
+        "event_repeat_005_044",
+        "event_repeat_005_045",
+        "event_repeat_005_046",
+        "event_repeat_005_047",
+        "event_repeat_005_048",
+        "event_repeat_005_049",
+        "event_repeat_005_050",
+        "event_repeat_005_051",
+        "event_repeat_005_052",
+        "event_repeat_005_053",
+        "event_repeat_005_054",
+        "event_repeat_005_055",
+        "event_repeat_005_056",
+        "event_repeat_005_057",
+        "event_repeat_005_058",
+        "event_repeat_005_059",
+        "event_repeat_005_060",
+        "event_repeat_005_061",
+        "event_repeat_005_062",
+        "event_repeat_005_063",
+        "event_repeat_005_064",
+        "event_repeat_005_065",
+        "event_repeat_005_066",
+        "event_repeat_005_067",
+        "event_repeat_005_068",
+        "event_repeat_005_069",
+        "event_repeat_005_070",
+        "event_repeat_005_071",
+        "event_repeat_005_072",
+        "event_repeat_005_073",
+        "event_repeat_005_074",
+        "event_repeat_005_075",
+        "event_repeat_005_076",
+        "event_repeat_005_077",
+        "event_repeat_005_078",
+        "event_repeat_005_079",
+        "event_repeat_005_080",
+        "event_repeat_005_081",
+        "event_repeat_005_082",
+        "event_repeat_005_083",
+        "event_repeat_005_084",
+        "event_repeat_005_085",
+        "event_repeat_005_086",
+        "event_repeat_005_087",
+        "event_repeat_005_088",
+        "event_repeat_005_089",
+        "event_repeat_005_090",
+        "event_repeat_005_091",
+        "event_repeat_005_092",
+        "event_repeat_005_093",
+        "event_repeat_005_094",
+        "event_repeat_005_095",
+        "event_repeat_005_096",
+        "event_repeat_005_097",
+        "event_repeat_005_098",
+        "event_repeat_005_099",
+        "event_repeat_005_100",
+        "arena_journey_01_005",
+        "arena_journey_02_005",
+        "arena_journey_03_005",
+        "arena_journey_04_005",
+        "arena_journey_05_005",
+        "arena_journey_06_001",
+        "arena_journey_06_002",
+        "arena_journey_06_003",
+        "arena_journey_06_004",
+        "arena_journey_06_005",
+        "arena_journey_06_006",
+        "arena_journey_06_007",
+        "arena_journey_06_008",
+        "arena_journey_06_009",
+        "arena_journey_06_010",
+        "arena_journey_06_011",
+        "arena_journey_06_012",
+        "arena_journey_06_013",
+        "arena_journey_06_014",
+        "arena_journey_06_015",
+        "arena_journey_06_016",
+        "arena_journey_06_017",
+        "arena_journey_06_018",
+        "arena_journey_06_019",
+        "arena_journey_06_020"
+      ],
+      "examples": [
+        {
+          "id": "guide_04_005_001",
+          "label": "Complete Arena Battles 3 times",
+          "parameters": {
+            "pvptype": "normal;rta;npc;draft;rta_event;chaos",
+            "count": "3"
+          }
+        },
+        {
+          "id": "guide_06_005_001",
+          "label": "Complete Arena Battles 3 times",
+          "parameters": {
+            "pvptype": "normal;rta;npc;draft;rta_event;chaos",
+            "count": "3"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "repeatclear_enter_succescount_failcount_count",
+      "family": "consecutive",
+      "task_count": 9,
+      "paths": [
+        "succession"
+      ],
+      "parameter_keys": [
+        "count",
+        "enter",
+        "succescount"
+      ],
+      "semantics": "succescount é a série exigida; count conta séries completas. Ler regra de falha e Repeat/Quick na missão.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "waybern_02_005",
+        "waybern_03_005",
+        "waybern_04_005",
+        "golem_02_004",
+        "golem_03_003",
+        "golem_04_003",
+        "benshi_02_004",
+        "benshi_03_003",
+        "benshi_04_003"
+      ],
+      "examples": [
+        {
+          "id": "waybern_02_005",
+          "label": "Clear Wyvern Hunt on Normal difficulty or higher 10 times in a row through Repeat Battling or Quick Battling without failing",
+          "parameters": {
+            "enter": "hunw009;hunw011;hunw013;hunw101",
+            "succescount": "10",
+            "count": "1"
+          }
+        },
+        {
+          "id": "waybern_03_005",
+          "label": "Clear Wyvern Hunt on Hard difficulty or higher 10 times in a row through Repeat Battling or Quick Battling without failing",
+          "parameters": {
+            "enter": "hunw011;hunw013;hunw101",
+            "succescount": "10",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "substorydlc_storyid_state_count",
+      "family": "side_story_records",
+      "task_count": 2,
+      "paths": [
+        "connections"
+      ],
+      "parameter_keys": [
+        "count",
+        "state",
+        "storyid"
+      ],
+      "semantics": "Distinguir aquisição buy de conclusão clear do storyid.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "de_5_c1067_04",
+        "de_5_c1067_05"
+      ],
+      "examples": [
+        {
+          "id": "de_5_c1067_04",
+          "label": "Purchase Bittersweet Dessert Festival",
+          "parameters": {
+            "storyid": "vva0xa",
+            "state": "buy",
+            "count": "1"
+          }
+        },
+        {
+          "id": "de_5_c1067_05",
+          "label": "Record Complete the Bittersweet Dessert Festival",
+          "parameters": {
+            "storyid": "vva0xa",
+            "state": "clear",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "syncclear_content_enter_count",
+      "family": "campaign",
+      "task_count": 21,
+      "paths": [
+        "connections",
+        "heir"
+      ],
+      "parameter_keys": [
+        "content",
+        "count",
+        "enter"
+      ],
+      "semantics": "Conteúdo/enter exatos; sincronização de progresso precisa ser confirmada na missão.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_01_001_001",
+        "guide_02_001_001",
+        "guide_03_001_001",
+        "guide_04_001_001",
+        "guide_05_001_001",
+        "guide_06_001_001",
+        "guide_07_001_001",
+        "guide_08_001_001",
+        "guide_09_001_001",
+        "guide_10_001_001",
+        "guide_11_001_001",
+        "guide_12_004_001",
+        "guide_13_001_001",
+        "guide_15_001_001",
+        "guide_17_001_001",
+        "guide_19_001_001",
+        "guide_21_001_001",
+        "guide_23_001_001",
+        "guide_25_001_001",
+        "de_4_c3026_01",
+        "de_4_c1087_01"
+      ],
+      "examples": [
+        {
+          "id": "guide_01_001_001",
+          "label": "Clear 6th World Episode, Chapter 3",
+          "parameters": {
+            "content": "masterbook",
+            "enter": "tar008",
+            "count": "1"
+          }
+        },
+        {
+          "id": "guide_02_001_001",
+          "label": "Clear 6th World Episode, Chapter 4",
+          "parameters": {
+            "content": "masterbook",
+            "enter": "ijp008",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "trialclear_enter_benefitcount_count",
+      "family": "trials",
+      "task_count": 1,
+      "paths": [
+        "succession"
+      ],
+      "parameter_keys": [
+        "benefitcount",
+        "count",
+        "enter"
+      ],
+      "semantics": "benefitcount benefícios exigidos em uma batalha; count conta conclusões elegíveis.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "trial_02_003"
+      ],
+      "examples": [
+        {
+          "id": "trial_02_003",
+          "label": "Complete one Battle with Power of Hero fulfilled",
+          "parameters": {
+            "enter": "tryu001;tryu002;trel001;trel002;trha001;trha002;trra001;trra002",
+            "benefitcount": "2",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "trialclear_enter_score_count",
+      "family": "trials",
+      "task_count": 3,
+      "paths": [
+        "succession"
+      ],
+      "parameter_keys": [
+        "count",
+        "enter",
+        "score"
+      ],
+      "semantics": "Score mínimo em enter elegível.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "trial_01_001",
+        "trial_02_001",
+        "trial_03_001"
+      ],
+      "examples": [
+        {
+          "id": "trial_01_001",
+          "label": "Reach Grade A or higher in Hall of Trials",
+          "parameters": {
+            "enter": "all",
+            "score": "1000000",
+            "count": "1"
+          }
+        },
+        {
+          "id": "trial_02_001",
+          "label": "Reach Grade S or higher in Hall of Trials",
+          "parameters": {
+            "enter": "all",
+            "score": "2000000",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "trialclear_mode_score_count",
+      "family": "trials",
+      "task_count": 2,
+      "paths": [
+        "succession"
+      ],
+      "parameter_keys": [
+        "count",
+        "mode",
+        "score"
+      ],
+      "semantics": "Score mínimo no modo específico.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "trial_03_003",
+        "trial_04_001"
+      ],
+      "examples": [
+        {
+          "id": "trial_03_003",
+          "label": "Achieve Grade S or higher in Hall of Trials on Challenge Mode",
+          "parameters": {
+            "mode": "hard",
+            "score": "2000000",
+            "count": "1"
+          }
+        },
+        {
+          "id": "trial_04_001",
+          "label": "Achieve Grade SSS+ or higher in Hall of Trials on Challenge Mode",
+          "parameters": {
+            "mode": "hard",
+            "score": "4500000",
+            "count": "1"
+          }
+        }
+      ]
+    },
+    {
+      "condition": "use_tokentype_count",
+      "family": "spending",
+      "task_count": 5,
+      "paths": [
+        "heir",
+        "succession"
+      ],
+      "parameter_keys": [
+        "count",
+        "tokentype"
+      ],
+      "semantics": "count mede unidades gastas da moeda, não o número de operações.",
+      "investigation_required": false,
+      "excluded_by_catalog": 0,
+      "task_ids": [
+        "guide_18_003_001",
+        "guide_31_004_001",
+        "guide_39_002_001",
+        "trial_01_003",
+        "trial_04_003"
+      ],
+      "examples": [
+        {
+          "id": "guide_18_003_001",
+          "label": "Use 40 Wisdom's Gaze",
+          "parameters": {
+            "tokentype": "to_exclusive",
+            "count": "40"
+          }
+        },
+        {
+          "id": "guide_31_004_001",
+          "label": "Use Conquest Points",
+          "parameters": {
+            "tokentype": "to_pvpgold",
+            "count": "500"
+          }
+        }
+      ]
+    }
+  ],
+  "static_evidence_file": "data/missions/static-family-evidence.json"
+}
