@@ -173,7 +173,8 @@ def test_stage_adapter_retains_identity_cost_and_start_guards():
     inspector = StageInspector(ROOT / "data/stages/campaign-initial.json")
     observation = {"state": "battle_ready", "stage": {"requested_id": "pen002", "requested_title": "Permeating Darkness",
         "identity_verified": True, "context_verified": True, "expected_energy": 8, "row_box": None,
-        "row_locked": None, "energy": {"cost": 8, "available": 900}, "already_cleared": False},
+        "row_locked": None, "energy": {"cost": 8, "available": 900}, "already_cleared": False,
+        "preparation_composition_verified": True, "visible_hero_levels": [50]},
         "matches": {"start_quest_label": {"hit": True, "box": [1040, 615, 100, 30]}}}
     observation["ui_tree"] = build_tree(observation)
     observation["stage"]["energy"]["cost"] = 1
@@ -204,3 +205,18 @@ def test_saved_pipeline_evidence_binds_tree_to_actual_frame(snapshot, tmp_path):
     assert saved["ui_tree"]["context"]["frame"] == saved["frame"]
     assert saved["ui_tree"]["context"]["observation_file"] == str(file)
     assert snapshot == original
+
+
+def test_legacy_campaign_cannot_prepare_or_start_under_selected_member_overlay():
+    from driver_epic_seven.stages import StageInspector
+    from driver_epic_seven.config import ROOT
+    inspector=StageInspector(ROOT/'data/stages/campaign-initial.json')
+    d={'state':'battle_ready','stage':{'requested_id':'pen002','requested_title':'Permeating Darkness',
+        'identity_verified':True,'context_verified':True,'energy':{'cost':8,'available':900},
+        'already_cleared':False,'preparation_composition_verified':True,'visible_hero_levels':[50]},
+       'matches':{'start_quest_label':{'hit':True,'box':[1040,615,100,30]},
+                  'formation_remove':{'hit':True,'box':[218,336,42,19]},
+                  'formation_details':{'hit':True,'box':[305,328,38,39]}}}
+    d['ui_tree']=build_tree(d)
+    assert inspector.target(d,{'state':'battle_ready','target':'stage_start','max_energy':8}) is None
+    assert inspector.target(d,{'state':'battle_ready','max_energy':8}) is None

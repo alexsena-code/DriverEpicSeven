@@ -122,6 +122,7 @@ def hero_nodes(c):
     p=c.panel(view,[header,body_name,level,search,equip,entry],'wnd/unit_detail.csb',match_keys=('victorika_hero_tab',) if hero_tab else (),
               back_destinations=[{'view':'lobby'}])
     parsed=re.fullmatch(r'Lv[.]\s*(\d+)\s*/\s*(\d+)',level[1]['text'].strip(),re.I)
+    from .operational_equipment import attributes
     c.detail(p,hero_name=_hero_name(c,header,body_name),level=c.value(level,lambda _:int(parsed[1])) if parsed else fact(),
              level_cap=c.value(level,lambda _:int(parsed[2])) if parsed else fact(),
              traits_text=c.value(c.one(r'.*(?:Dark|Light|Fire|Earth|Ice).*(?:Thief|Warrior|Knight|Mage|Ranger|Soul Weaver).*',(90,65,380,45))),
@@ -129,6 +130,8 @@ def hero_nodes(c):
              awakened_stars=fact(),
              cp=c.value(c.one(r'[Xx×]?\s*\d[\d,.]*',(90,335,250,55)),lambda s:int(re.sub(r'\D','',s))) if equip else fact(),
              stat_lines=c.lines((90,380,285,210)) if equip else fact(),
+             attributes=attributes(c) if equip else fact(),
+             recommendation_status=c.value(c.one(r'There is no better E[qg]uipment[.]?',(450,600,370,50)),lambda _:'no_better_equipment') if equip else fact(),
              set_labels=c.lines((90,585,300,75),r'.*set effect|.* Set') if equip else fact())
     for j,row in enumerate(c.find(r'.+',(925,105,285,480))):
         if any(char.isalpha() for char in row[1]['text']):
@@ -142,7 +145,7 @@ def hero_nodes(c):
                      'level_up':[{'view':'hero_level_up'}]}.get(name)
         marker={'awaken':'tieria_hero_awaken_entry','level_up':'tieria_hero_level_up_entry','equip_all':'equip_all_control'}.get(name)
         c.control(p,name,c.one(pattern,area),'wnd/unit_detail.csb',path,
-                  consuming=False if destination else None,navigation=destination,match_key=marker)
+                  consuming=True if name=='unequip_all' else False,navigation=destination,match_key=marker)
     if view=='hero_equipment' and c.match('equip_all_control'):
         src=derived('/text','calibrated_weapon_container_1212x682_with_current_equipment_panel')
         c.add(node(p+'/weapon_slot','control',p,semantic_id=fact('weapon_slot',src),adapter=fact('operations',src),

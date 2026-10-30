@@ -12,7 +12,7 @@ def plan_and_view():
         'guide_02_001_001':{'from_stage':'ijp001','to_stage':'ijp008','max_energy':40},
         'guide_02_005_001':{'max_energy':10},
         'guide_02_004_001':{'hero_name':hero},
-        'guide_02_003_001':{'hero_name':hero,'max_gold':10000}}}
+        'guide_02_003_001':{'hero_name':hero,'max_gold':10000,'material_limits':{'Lesser Equipment Charm':1}}}}
     view={'group_id':'group_guide_02','group_counter':{'current':1,'total':5},'visible_tasks':[
         {'task_id':t['task_id'],'status':'incomplete','claim_ready':False} for t in route_level(2)['tasks']
         if t['task_id']!='guide_02_002_001']}

@@ -25,7 +25,7 @@ def operational_nodes(observation, parent, add):
     state = observation.get('state', 'unknown')
     # Never reinterpret text behind a known unrelated overlay.
     if state not in ('unknown', 'battle_ready', 'battle_running', 'hero_screen', 'tap_to_close_notice',
-                     'prequel_story_map', 'prequel_ready_map', 'prequel_preparation',
+                     'prequel_story_map', 'prequel_ready_map', 'prequel_preparation', 'episode_map',
                      'battle_nightmare_keeper', 'battle_mercenary_lydia', 'stage_clear', 'hero_joined_notice',
                      'victorika_acquisition_dialogue', 'victorika_acquisition_result'):
         return None
@@ -35,6 +35,9 @@ def operational_nodes(observation, parent, add):
     from .reading import ReadContext
     reader = ReadContext(observation, parent, add)
     rows, find, one, source = reader.rows, reader.find, reader.one, reader.source
+    from .operational_equipment import enhancement_nodes, attributes
+    equipment_view=enhancement_nodes(reader)
+    if equipment_view:return equipment_view
 
     def value(row, transform=lambda s: s, rule='calibrated_operation_composition'):
         if row is None:
@@ -209,32 +212,36 @@ def operational_nodes(observation, parent, add):
         for item in objective_nodes:
             add(item)
         return 'campaign_result'
-    if state in ('prequel_story_map', 'prequel_ready_map'):
+    if state in ('prequel_story_map', 'prequel_ready_map', 'episode_map'):
         # Current visual composition, separate from the legacy stage executor.
-        if (not supports_reading(observation)
-                or not all(observation.get('matches', {}).get(name, {}).get('hit')
-                           for name in ('prequel_episode_header',
-                                        'prequel_view_story' if state == 'prequel_story_map' else 'map_ready_label'))):
+        matches = observation.get('matches', {})
+        heading_hit = (matches.get('map_episode_header', {}).get('hit') if state == 'episode_map' else
+                       matches.get('prequel_episode_header', {}).get('hit') or matches.get('episode1_heading', {}).get('hit')
+                       or matches.get('map_episode_header', {}).get('hit'))
+        if (not supports_reading(observation) or not heading_hit
+                or not matches.get('prequel_view_story' if state == 'prequel_story_map' else 'map_ready_label', {}).get('hit')):
             return None
-        episode = one('6th World Episode', heading)
+        episode = one(r'6th World Episode|Episode\s+\d+', heading)
         view_story = one('View Story' if state == 'prequel_story_map' else 'Ready', (980, 590, 160, 75))
         story_kind = one('Story', (835, 75, 150, 55))
-        rewards = one('Obtainable Rewards', (835, 230, 320, 60))
-        # Chapter 2's wrapped title extends left to x50; preserve the actual OCR,
-        # including any arrow glyph, without inferring a selected stage.
-        chapter = one(r'Chapter\s+\d+\s*[.].+', (45, 75, 235, 55))
-        chapter_rows = find(r'.+', (45, 75, 235, 55))
-        if not all((episode, view_story, story_kind, rewards, chapter)):
+        map_content = one('Obtainable Rewards|Enemies', (835, 230, 320, 60))
+        # The current chapter label can include its left navigation arrow in
+        # one OCR box (x41). Preserve the text; the arrow is not a stage ID.
+        chapter_area = (35, 75, 245, 55)
+        chapter = one(r'<?\s*Chapter\s*\d+\s*[.].+', chapter_area)
+        chapter_rows = find(r'.+', chapter_area)
+        if not all((episode, view_story, story_kind, map_content, chapter)):
             return None
         # Decision overlays and partial reads do not expose the underlying map.
         if (find('Cancel|Confirm', (300, 200, 600, 350))
                 or find(r'.*Tap to close[.]?', (350, 480, 600, 202))):
             return None
-        p = panel(state, [episode, view_story, story_kind, rewards],
+        view_name = 'prequel_ready_map' if state == 'episode_map' else state
+        p = panel(view_name, [episode, view_story, story_kind, map_content],
                   'wnd/battle_prequel.csb', 'adventure_prequel')
         detail(p, episode_label=value(episode),
                chapter_label=joined(chapter_rows, 'aligned_chapter_header_lines'),
-               chapter_number=value(chapter, lambda s: int(re.search(r'Chapter\s+(\d+)', s, re.I)[1])),
+               chapter_number=value(chapter, lambda s: int(re.search(r'Chapter\s*(\d+)', s, re.I)[1])),
                selected_kind_label=value(story_kind),
                selected_description=joined(find(r'.+', (835, 125, 360, 85)),
                                            'aligned_story_description_lines'),
@@ -281,7 +288,7 @@ def operational_nodes(observation, parent, add):
                  box=fact(view_story[1]['box'], source(view_story)), box_role=fact('text_anchor', source(view_story)),
                  consuming=fact(), visible=fact(True, source(view_story)),
                  layout_reference={'source':'wnd/story_ready.csb','path':'/Layer/btn_go','scope':'static_hint'}))
-        return state
+        return view_name
     episode_team = one(r'Episode\s*-\s*Team',(0,55,145,60))
     story_team = one('Story Team',(150,65,150,55))
     own_preparation = state in ('unknown','battle_ready') and (episode_team or story_team) and one('Ready',heading)
@@ -346,8 +353,13 @@ def operational_nodes(observation, parent, add):
                              text=value(story),box=fact(story[1]['box'],source(story)),box_role=fact('text_anchor',source(story)),
                              hero_name=fact(),hero_instance_id=fact(),slot_id=fact(),visible=fact(True,source(story))))
             return 'prequel_formation'
-        location = one(r'[A-Za-z][A-Za-z\s\u0027-]+', (870, 65, 330, 45))
-        title_rows = find(r'[A-Za-z][A-Za-z\s\u0027-]+', (870, 105, 330, 50))
+        # An unreadable/ambiguous roster row must not turn the formation
+        # editor into the battle preparation behind its shared Ready shell.
+        if search:
+            return None
+        location = reader.label((870, 65, 330, 45))
+        title_rows = [r for r in find(r'.+', (870, 100, 330, 55))
+                      if any(char.isalpha() for char in r[1]['text'])]
         title_rows = [row for row in title_rows if row[1]['text'].strip()!='No Record']
         title_rows.sort(key=lambda row: row[1]['box'][1])
         title_ambiguous = (len(title_rows) > 3 or any(
@@ -355,13 +367,14 @@ def operational_nodes(observation, parent, add):
             for a,b in zip(title_rows,title_rows[1:])))
         current_cost = cost((900, 590, 120, 75), 'energy')
         enemies=one(r'(?:[Xx]\s*)?Enemies',(875,245,300,65))
-        if (not all((ready, team, location, title_rows)) or not (start or enemies)
-                or title_ambiguous
+        if (not all((ready, team)) or not (start or enemies)
                 or find('Cancel|Confirm', (300, 200, 600, 350))
                 or find(r'.*Tap to close[.]?', (350, 480, 600, 202))):
             return None
         p = panel('prequel_preparation', [ready, team, start, enemies], 'wnd/battle_ready.csb', 'adventure_own_team' if episode_team else 'adventure_prequel',
                   back_destinations=[{'view':'prequel_ready_map'},{'view':'prequel_story_map'}])
+        hero_levels=find(r'\d{1,2}',(180,140,420,220))
+        story_members=find('Story',(180,140,420,220))
         detail(p, location=value(location),
                story_title=joined(title_rows, 'aligned_current_prequel_preparation_title') if not title_ambiguous else fact(),
                identity_basis=(fact('current_location_and_title_labels', source(location), *(source(r) for r in title_rows))
@@ -369,7 +382,12 @@ def operational_nodes(observation, parent, add):
                stage_id=fact(), team_kind_label=value(team),
                team_label=joined(find(r'[A-Za-z][A-Za-z\s\u0027-]+', (130, 105, 210, 60)), 'aligned_story_team_label'),
                team_cp=value(one(r'\d[\d,.]*', (210, 610, 180, 65)), integer),
-               cost=current_cost, hero_instances=fact(), earned_stars=fact(), objectives_complete=fact())
+               cost=current_cost, hero_instances=fact(), earned_stars=fact(), objectives_complete=fact(),
+               preparation_composition_verified=fact(True,source(ready),source(team)),
+               visible_story_member_markers=(fact(len(story_members),*(source(r) for r in story_members))
+                                             if story_members else fact()),
+               visible_hero_levels=(fact([int(r['text'].strip()) for _,r in hero_levels],
+                   *(source(r) for r in hero_levels)) if hero_levels else fact()))
         for slot, y in enumerate((155, 185, 215), 1):
             label = one(r'.+', (905, y, 305, 40))
             add(node(p+f'/objective:{slot}', 'item', p,
@@ -471,7 +489,10 @@ def operational_nodes(observation, parent, add):
         p = panel('equipment_change_confirmation', [equipment_change, change_message], 'wnd/equip_change_popup.csb')
         detail(p, current_cp=value(one(r'\d[\d,.]*', (380, 375, 170, 65)), integer),
                candidate_cp=value(one(r'\d[\d,.]*', (650, 375, 200, 65)), integer),
-               current_instance_id=fact(), candidate_instance_id=fact())
+               current_instance_id=fact(), candidate_instance_id=fact(),
+               gold_cost=(fact(0,{'kind':'recognition','pointer':'/matches/equipment_free_change'},
+                              derived('/matches','calibrated_fee_free_second_confirmation'))
+                          if (reader.match('equipment_free_change') or {}).get('box')==[614,472,227,59] else fact()))
         control(p, 'confirm_change', one('Change', (630, 460, 220, 85)), True,
                 ('wnd/equip_change_popup.csb', '/Layer/n_show_eff/btn_buy'))
         control(p, 'cancel', one('Cancel', (380, 460, 220, 85)), path=
@@ -483,11 +504,12 @@ def operational_nodes(observation, parent, add):
         if not (change_preview and len(find('Attack|Defense|Health|Speed', (300, 300, 190, 110))) >= 3):
             return None
         p = panel('equip_all_preview', [equip_all, change_preview], 'wnd/equip_change_popup.csb')
-        candidate_cp = (one(r'[Xx×]?\s*\d{1,3}(?:[,.]\d{3})+(?:\s+\d[\d,.]*)?', (630,255,135,65))
-                        or one(r'[Xx×]\s*\d{1,3}(?:[,.]\d{3})+(?:\s+\d[\d,.]*)?', (630,255,290,65)))
+        candidate_cp = (one(r'[XxÃ—]?\s*\d{1,3}(?:[,.]\d{3})+(?:\s+\d[\d,.]*)?', (630,255,135,65))
+                        or one(r'[XxÃ—]\s*\d{1,3}(?:[,.]\d{3})+(?:\s+\d[\d,.]*)?', (630,255,290,65)))
         detail(p, current_cp=value(one(r'\d[\d,.]*', (475, 255, 120, 65)), integer),
                candidate_cp=value(candidate_cp, lambda s: integer(re.search(r'\d{1,3}(?:[,.]\d{3})+', s)[0])),
-               hero_instance_id=fact(), current_items=fact(), candidate_items=fact(), selection_applied=fact())
+               hero_instance_id=fact(), current_items=fact(), candidate_items=fact(), selection_applied=fact(),
+               current_attributes=attributes(reader,preview=True),candidate_attributes=attributes(reader,preview=True,candidate=True))
         control(p, 'review_change', change_preview)
         return 'equip_all_preview'
 
@@ -540,12 +562,12 @@ def operational_nodes(observation, parent, add):
     abyss = one('Abyss', (400, 345, 410, 75))
     floor_result = one(r'Floor\s+\d+', (400, 395, 410, 75))
     clear = one(r'C\s*L\s*E\s*A\s*R', (300, 170, 620, 160))
-    if abyss and floor_result and clear and one('Conquer Reward', (400, 435, 410, 80)):
+    if abyss and floor_result and clear and one(r'Con[qg]uer Reward', (400, 435, 410, 80)):
         p = panel('abyss_result', [abyss, floor_result, clear], 'wnd/result_base.csb', 'abyss')
         detail(p, floor=value(floor_result, lambda s: int(re.search(r'\d+', s)[0])),
                result=value(clear, lambda s: 'victory'))
         control(p, 'back', one('Back', footer))
-        control(p, 'next_floor', one('Next Floor', footer), path=
+        control(p, 'next_floor', one('Next Floor', footer), False, path=
                 ('wnd/result_base.csb', '/Layer/n_hell/n_btns_normal/btn_hell_next'))
         return 'abyss_result'
     victory = one(r'V\s*I\s*C\s*T\s*O\s*R\s*Y', (280, 160, 680, 160))
@@ -650,10 +672,14 @@ def operational_nodes(observation, parent, add):
     floor_ready = one(r'Floor\s+\d+', (860, 85, 340, 85))
     if one('Abyss', (860, 65, 340, 60)) and floor_ready and one('Start', (1020, 590, 180, 80)):
         p = panel('abyss_preparation', [floor_ready], 'wnd/battle_ready.csb', 'abyss')
+        hero_levels=find(r'\d{1,2}',(180,140,420,220))
         detail(p, floor=value(floor_ready, lambda s: int(re.search(r'\d+', s)[0])),
                cost=cost((900, 590, 130, 80), 'energy'),
                team_cp=value(one(r'\d{1,3}(?:[,.]\d{3})+|\d+', (200, 610, 240, 65)), integer),
-               team_instance_id=fact())
+               team_instance_id=fact(),
+               preparation_composition_verified=fact(True,source(floor_ready)),
+               visible_hero_levels=(fact([int(r['text'].strip()) for _,r in hero_levels],
+                   *(source(r) for r in hero_levels)) if hero_levels else fact()))
         control(p, 'start', one('Start', (1020, 590, 180, 80)), True)
         return 'abyss_preparation'
     floor_selected = one(r'Floor\s+\d+', (960, 180, 240, 90))
@@ -665,7 +691,7 @@ def operational_nodes(observation, parent, add):
             f = int(re.search(r'\d+', row['text'])[0])
             statuses = [(j, r) for j, r in rows if 700 <= r['box'][0] <= 820
                         and row['box'][1]+15 <= r['box'][1] <= row['box'][1]+45
-                        and re.fullmatch(r'(?:[Vv✓]\s*)?Conquered|Available|Cannot proceed[.]?', r['text'].strip(), re.I)]
+                        and re.fullmatch(r'(?:[Vvâœ“]\s*)?Conquered|Available|Cannot proceed[.]?', r['text'].strip(), re.I)]
             s = statuses[0] if len(statuses) == 1 else None
             add(node(p+f'/floor:{f}', 'item', p, semantic_id=fact('abyss_floor', source((i,row))),
                      value=value((i,row), lambda t: f), status=value(s, lambda t:
@@ -725,10 +751,11 @@ def operational_nodes(observation, parent, add):
             and hero_header[1]['text'].casefold() == hero_label[1]['text'].casefold()
             and len(find('Attack|Defense|Health', (90, 380, 150, 80))) >= 3):
         p = panel('hero_equipment', [hero_header, hero_label, equip_all_control, unequip_all_control], 'wnd/unit_detail.csb')
-        cp = one(r'[Xx×]?\s*\d{1,3}(?:[,.]\d{3})+', (90, 340, 200, 50))
+        cp = one(r'[XxÃ—]?\s*\d{1,3}(?:[,.]\d{3})+', (90, 340, 200, 50))
         sets = find(r'.+ Set', (90, 580, 310, 85))
         detail(p, hero_name=value(hero_label), hero_instance_id=fact(),
-               cp=value(cp, lambda s: integer(re.sub(r'^[Xx×]\s*', '', s))),
+               attributes=attributes(reader),
+               cp=value(cp, lambda s: integer(re.sub(r'^[XxÃ—]\s*', '', s))),
                set_labels=fact([row['text'] for _, row in sets], *(source(r) for r in sets)) if sets else fact(),
                equipped_items=fact(), equipment_slots=fact(),
                recommendation_status=value(one(r'There is no better E[qg]uipment[.]?', (450, 600, 370, 50)),
@@ -786,23 +813,5 @@ def auto_nodes(observation, parent, add):
 
 
 def formation_nodes(observation, parent, add):
-    if (observation.get('state') != 'battle_ready'
-            or observation.get('window', {}).get('client_size', [1212,682]) != [1212,682]):
-        return
-    matches = observation.get('matches', {})
-    remove, detail = (matches.get(k, {}) for k in ('formation_remove','formation_details'))
-    if not all(m.get('hit') and m.get('box') for m in (remove,detail)):
-        return
-    a,b = remove['box'],detail['box']
-    if not 55 <= (b[0]+b[2]/2)-(a[0]+a[2]/2) <= 115 or abs((a[1]+a[3]/2)-(b[1]+b[3]/2)) > 25:
-        return
-    src = {'kind':'recognition','pointer':'/matches/formation_remove'}
-    p = 'formation:selection'
-    add(node(p,'panel',parent, semantic_id=fact('formation_selection',src),
-             adapter=fact('formation',src),view=fact('formation_selection',src),
-             selected_member_id=fact(), selected_slot=fact(), team_members=fact()))
-    for name,match,path in [('remove_member',remove,'btn_remove'),('member_details',detail,'btn_team_detail')]:
-        source = {'kind':'recognition','pointer':'/matches/formation_'+('remove' if name=='remove_member' else 'details')}
-        add(node(p+'/'+name,'control',p, semantic_id=fact(name,source),adapter=fact('formation',source),
-                 box=fact(match['box'],source),box_role=fact('template_extent',source),visible=fact(True,source),
-                 layout_reference={'source':'wnd/formation.csb','path':'/Layer/new/formation/selected_btn/'+path,'scope':'static_hint'}))
+    from .operational_formation import formation_nodes as adapt
+    return adapt(observation,parent,add)

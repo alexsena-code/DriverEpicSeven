@@ -66,6 +66,11 @@ class Outcome:
 
 
 class ApplicationError(ValueError):
-    def __init__(self, message, status=Status.INVALID, identity=None):
+    def __init__(self, message, status=Status.INVALID, identity=None, proof=None):
         super().__init__(message)
         self.status, self.identity = status, identity
+        self.proof = proof or {}
+
+    def as_dict(self):
+        return {'status':self.status.value,'identity':self.identity.as_dict() if self.identity else None,
+                'proof':deepcopy(self.proof),'error':str(self)}

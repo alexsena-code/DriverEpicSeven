@@ -48,6 +48,8 @@ def test_discovery_reads_existing_sources_without_runtime():
     assert result['mapped_families_are_executors'] is False
     assert result['account_access'] is None
     assert result['read_only']
+    assert {'path.equipment','path.formation','path.collect','path.run-group'} <= set(result['operations'])
+    assert result['session_controls']['queries_capture'] is False
 
 
 def test_request_rejected_and_identity_correlated_without_dispatch(tmp_path):
@@ -67,3 +69,32 @@ def test_disconnected_request_is_blocked():
     with pytest.raises(ApplicationError) as error:
         Application({}).execute(Request('observe'))
     assert error.value.status == Status.BLOCKED
+
+
+def test_accepted_input_is_not_reported_as_observation_or_completion(tmp_path):
+    runtime=FakeRuntime(tmp_path);runtime.config={}
+    runtime.primitive=lambda *a,**k:{'dispatch_succeeded':True,'postcondition_verified':False}
+    result=execute_live(parser().parse_args(['key','escape']),runtime)
+    assert result['execution']['status']==Status.ACCEPTED
+    assert result['execution']['proof']['postcondition_verified'] is False
+
+
+@pytest.mark.parametrize('attempted',[False,True])
+def test_failure_boundary_reports_block_or_uncertainty_with_same_identity(tmp_path,attempted):
+    runtime=FakeRuntime(tmp_path);runtime.config={}
+    def fail(*a,**k):
+        runtime.execution_dispatched=attempted
+        raise RuntimeError('boundary failure')
+    runtime.primitive=fail
+    request=request_from_args(parser().parse_args(['key','escape']),Identity('g','p','o','a'))
+    with pytest.raises(ApplicationError) as error:Application({}).execute(request,runtime)
+    assert error.value.status==(Status.UNCERTAIN if attempted else Status.BLOCKED)
+    assert error.value.identity==request.identity
+def test_stage_inspection_does_not_require_start_only_parameters():
+    from types import SimpleNamespace
+    from driver_epic_seven.application import Parameters, _execute_operation
+    calls=[]
+    runtime=SimpleNamespace(stage_operation=lambda *args: calls.append(args) or {'state':'episode_map'})
+    result=_execute_operation(Parameters(command='stage',stage_operation='inspect',stage_id='jer001'),runtime)
+    assert result['state']=='episode_map'
+    assert calls == [('inspect','jer001',None,False)]

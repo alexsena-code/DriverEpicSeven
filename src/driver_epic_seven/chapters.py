@@ -7,7 +7,7 @@ from .stages import compile_pipeline, load_stages
 from .composition import append_fragment, validate_graph
 
 
-def compile_chapter(config, from_stage, max_energy, finish_current=False):
+def compile_chapter(config, from_stage, max_energy, finish_current=False, *, require_three_stars=True):
     catalog=load_stages(config["stage_file"])
     if from_stage not in catalog:
         raise ValueError("Fase inicial ausente do catálogo.")
@@ -32,6 +32,9 @@ def compile_chapter(config, from_stage, max_energy, finish_current=False):
                for name,node in source.items() if not name.startswith("$")}
         for name,override in compile_pipeline(stage["id"],"start",stage["energy"]).items():
             nodes[name].update(override)
+        from .execution import annotate_campaign_result
+        annotate_campaign_result(nodes, stage['id'],require_three_stars=require_three_stars)
+        nodes['Finish.Clear']['custom_recognition_param'].update(require_three_stars=require_three_stars,read_text=True)
         for name in ("Stage.EnteredStory","Stage.EnteredIntro","Stage.EnteredBattle"):
             nodes[name]["next"]=["Finish.Entry"]
         append_fragment(graph,nodes,prefix)
@@ -47,6 +50,8 @@ def compile_chapter(config, from_stage, max_energy, finish_current=False):
     graph["Chapter.Done"]={"recognition":"Custom","custom_recognition":"ScreenTarget",
         "custom_recognition_param":{"state":"episode_map"},"action":"DoNothing","max_hit":1}
     validate_graph(graph,"Chapter.Entry",["Chapter.Done"])
-    return {"stage_ids":[stage["id"] for stage in plan],"episode":first["episode"],
+    from .plans import contract, sequential_units
+    finite = contract("chapter", sequential_units([stage["id"] for stage in plan]), graph, energy=required)
+    return {"finite_plan":finite,"stage_ids":[stage["id"] for stage in plan],"episode":first["episode"],
             "chapter":first["chapter"],"energy_limit":required,"max_starts":len(plan),
             "finish_current":finish_current},graph

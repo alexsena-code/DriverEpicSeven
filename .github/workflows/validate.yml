@@ -1,0 +1,29 @@
+name: Validate
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        python: ['3.11', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install and validate resources
+        shell: pwsh
+        run: ./tools/bootstrap.ps1 -WithOcr
+      - name: Run audited fast tests
+        shell: pwsh
+        run: ./.venv/Scripts/python.exe -m pytest --test-tier=fast -ra --junitxml=var/tests/ci.xml
+      - name: Save test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tests-python-${{ matrix.python }}
+          path: var/tests/ci.xml

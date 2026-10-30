@@ -3615,6 +3615,421 @@
       "source_layout": "wnd/unit_detail.csb /Layer/n_menu_equipment/center_equipment/btn_equip",
       "authorship": "Epic Seven game artwork; local recognition crop only",
       "scope": "1212x682 equipment panel icon; needs current composed hero equipment and label. White glyph pixels only; no item identity."
+    },
+    "altar_quick_on": {
+      "origin": "screen_crop",
+      "source_file": "var\\runs\\20261028T200703Z_4e4a3ba2\\agent_000009.png",
+      "source_sha256": "04a42a4276364d7eae77257d1294e1855574b5ea3d16039f7fbbaa6866bcad94",
+      "crop_xyxy": [
+        1146,
+        606,
+        1194,
+        654
+      ],
+      "sha256": "712f4e2cd9c1f955a59277751eb3d2b5ba0f59d7d92e3f579c33a0d086f0ce29",
+      "source_layout": "wnd/battle_ready.csb /base/n_window_ready/RIGHT/clipper/_/n_content/n_btn_quick1/btn_quick_off",
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "scope": "1212x682 Spirit Altar preparation. State on confirmed by user references on 28/10/2026; pixels are read-only evidence, not a toggle executor."
+    },
+    "altar_quick_off": {
+      "origin": "screen_crop",
+      "source_file": "var\\runs\\20261028T200703Z_4e4a3ba2\\observation.png",
+      "source_sha256": "16d5e1db078529588709b0eee88cfcf79f33c161e15dd6da343adfd440efe696",
+      "crop_xyxy": [
+        1146,
+        606,
+        1194,
+        654
+      ],
+      "sha256": "e56fd666f96b77165478320acd7c5909dd98d16eed0144a3e77d43d36bf84773",
+      "source_layout": "wnd/battle_ready.csb /base/n_window_ready/RIGHT/clipper/_/n_content/n_btn_quick0/btn_quick_on",
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "scope": "1212x682 Spirit Altar preparation. State off confirmed by user references on 28/10/2026; pixels are read-only evidence, not a toggle executor."
+    },
+    "equipment_material_empty": {
+      "origin": "screen_crop",
+      "source_file": "var\\runs\\20261028T112001Z_b231004c\\agent_000008.png",
+      "source_sha256": "9673b31cb93ea327285a95df7cad6b44c17f8b4c70c06110c88a42a4db10f816",
+      "crop_xyxy": [
+        564,
+        416,
+        626,
+        497
+      ],
+      "sha256": "a8f7df28936eeac840d70066d963926a9b6eba7568d87dd6a7f06c25cea2b4ce",
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "scope": "Empty material slot, current enhancement composition only; native ROI per five visual slots; no item instance inferred."
+    },
+    "equipment_material_empty_1": {
+      "origin": "screen_crop",
+      "source_file": "var\\runs\\20261028T112001Z_b231004c\\agent_000004.png",
+      "source_sha256": "83366d213be500441d7c4d77826209afe399f78c5b313c3c3b8fa95f9510c2e7",
+      "crop_xyxy": [
+        416,
+        416,
+        478,
+        497
+      ],
+      "sha256": "13ed543de0d69834d91c16f9b492bd986fc25b486c9cf11332ec4ea878912d7f",
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "scope": "Empty material visual position 1; no global target or instance identity."
+    },
+    "equipment_material_empty_2": {
+      "origin": "screen_crop",
+      "source_file": "var\\runs\\20261028T112001Z_b231004c\\agent_000004.png",
+      "source_sha256": "83366d213be500441d7c4d77826209afe399f78c5b313c3c3b8fa95f9510c2e7",
+      "crop_xyxy": [
+        490,
+        416,
+        552,
+        497
+      ],
+      "sha256": "c65eaf2db2490590a6249e6b5bb6f2c38b54a354b5617fca1034cf0bb15d84d5",
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "scope": "Empty material visual position 2; no global target or instance identity."
+    },
+    "equipment_material_empty_4": {
+      "origin": "screen_crop",
+      "source_file": "var\\runs\\20261028T112001Z_b231004c\\agent_000008.png",
+      "source_sha256": "9673b31cb93ea327285a95df7cad6b44c17f8b4c70c06110c88a42a4db10f816",
+      "crop_xyxy": [
+        638,
+        416,
+        700,
+        497
+      ],
+      "sha256": "541522bf7b2d26d37fca37d9be2b9e553da71e66a08019bdc3bd9ea6d2740772",
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "scope": "Empty material visual position 4; no global target or instance identity."
+    },
+    "equipment_material_empty_5": {
+      "origin": "screen_crop",
+      "source_file": "var\\runs\\20261028T112001Z_b231004c\\agent_000008.png",
+      "source_sha256": "9673b31cb93ea327285a95df7cad6b44c17f8b4c70c06110c88a42a4db10f816",
+      "crop_xyxy": [
+        712,
+        416,
+        774,
+        497
+      ],
+      "sha256": "600c800d63d734527bba4005df9b0aa4320949d818b04017c700b09673677c8c",
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "scope": "Empty material visual position 5; no global target or instance identity."
+    },
+    "equipment_free_change": {
+      "origin": "screen_crop",
+      "source_file": "var\\runs\\20261026T231721Z_98aecbed\\agent_000051.png",
+      "source_sha256": "e83f2c89bb2c5cb221cdcd740cf86266bd532cb2bd1a70061a71ef26de6370ae",
+      "crop_xyxy": [
+        614,
+        472,
+        841,
+        531
+      ],
+      "sha256": "23f897104c3f82981199674e8bfb444344a41fd331b68831e71d628a81e7df6e",
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "scope": "Calibrated fee-free Equip All second confirmation, full active button; requires preview/hero continuity. Paid or unknown variants blocked."
+    },
+    "formation_swap_upper": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261026T201921Z_d656a3d9/agent_000039.png",
+      "source_sha256": "17074c5be9f95a7f3afbdddaaea6a6b64a6e8867beb05e5bb6ddaffb2ae0776a",
+      "crop_xyxy": [
+        382,
+        228,
+        429,
+        276
+      ],
+      "sha256": "f261ab469eb0700b6f9e23eb0a973dbb3af04a36bf97ed3da58dff964ef2af2f",
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "scope": "Current formation control, 1212x682. Yellow glyph mask excludes animated background."
+    },
+    "formation_swap_left": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261026T192147Z_72af049c/agent_000063.png",
+      "source_sha256": "1086072ee63c1669c2952d978c89422de73bb4a7c170685a294321393814aaa1",
+      "crop_xyxy": [
+        258,
+        326,
+        305,
+        374
+      ],
+      "sha256": "c0e65a80ffd99f1c43a60716062c78676bfa27f4cfcfbcf5948ef17b35636da5",
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "scope": "Current formation control, 1212x682. Yellow glyph mask excludes animated background."
+    },
+    "formation_swap_right": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261026T201921Z_d656a3d9/agent_000039.png",
+      "source_sha256": "17074c5be9f95a7f3afbdddaaea6a6b64a6e8867beb05e5bb6ddaffb2ae0776a",
+      "crop_xyxy": [
+        507,
+        308,
+        554,
+        356
+      ],
+      "sha256": "ee750fde9e4ea7f8ef2cfdf6acc0c26f10a456973dd059d94b09dface5a35b99",
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "scope": "Current formation control, 1212x682. Yellow glyph mask excludes animated background."
+    },
+    "formation_swap_lower": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261026T201921Z_d656a3d9/agent_000039.png",
+      "source_sha256": "17074c5be9f95a7f3afbdddaaea6a6b64a6e8867beb05e5bb6ddaffb2ae0776a",
+      "crop_xyxy": [
+        392,
+        385,
+        439,
+        433
+      ],
+      "sha256": "3b0b972a2e6c64ea9b9d74873a0953677b2e1b846eb742b755950435905ee744",
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "scope": "Current formation control, 1212x682. Yellow glyph mask excludes animated background."
+    },
+    "formation_assign_left": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261026T201921Z_d656a3d9/agent_000039.png",
+      "source_sha256": "17074c5be9f95a7f3afbdddaaea6a6b64a6e8867beb05e5bb6ddaffb2ae0776a",
+      "crop_xyxy": [
+        261,
+        324,
+        305,
+        368
+      ],
+      "sha256": "86c8fcc3482794380f61f00aaed091dff575c254146e18185f9f50341e66e674",
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "scope": "Current formation control, 1212x682. Yellow glyph mask excludes animated background."
+    },
+    "formation_candidate_add": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261026T201921Z_d656a3d9/agent_000039.png",
+      "source_sha256": "17074c5be9f95a7f3afbdddaaea6a6b64a6e8867beb05e5bb6ddaffb2ae0776a",
+      "crop_xyxy": [
+        889,
+        244,
+        925,
+        280
+      ],
+      "sha256": "b4eebc6ff229520283681f902d4100b2730fe893a8d76308829b09bc23c1b58b",
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "scope": "Current formation control, 1212x682. Yellow glyph mask excludes animated background."
+    },
+    "formation_empty_left": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261026T201921Z_d656a3d9/agent_000036.png",
+      "source_sha256": "b3efb6bb604cbac6c0bf82ef32ece54d3432e6446d6f7d24a840277eca860353",
+      "crop_xyxy": [
+        218,
+        323,
+        263,
+        367
+      ],
+      "sha256": "f99558e45b1dea1add6b203931a5e2b3354519790bc340fb34f73174c525a679",
+      "authorship": "Epic Seven game artwork; local recognition crop only",
+      "scope": "Empty left visual position only."
+    },
+    "lobby_stained_window_day": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261029T092057Z_aa9a2d96/agent_000171.png",
+      "source_sha256": "3f63c34caeedefe2ae414d11ca546ef483c4918187651746986acfa1f30a9ad0",
+      "crop_xyxy": [
+        750,
+        80,
+        830,
+        125
+      ],
+      "sha256": "002967b009f6b8e76d43662604e9f9f58ba2d08f325636e9ebfe453649a892c3",
+      "transformation": "Exact crop, no mask or scaling. Existing narrow ROI and full-color pixel limits unchanged.",
+      "pack_texture": false,
+      "profile": "Single 1212x682 profile; daylight illustrated lobby variant",
+      "purpose": "runtime_template",
+      "live_action_validation": true,
+      "live_evidence": "var/runs/20261029T101017Z_53e5332e/agent_000001.json -> agent_000002.json",
+      "live_transition": "lobby_idle -> one mouse4 wake click -> lobby, postcondition_verified=true"
+    },
+    "lobby_idle_upper_left_day": {
+      "origin": "screen_crop",
+      "source_file": "var/runs/20261029T092057Z_aa9a2d96/agent_000171.png",
+      "source_sha256": "3f63c34caeedefe2ae414d11ca546ef483c4918187651746986acfa1f30a9ad0",
+      "crop_xyxy": [
+        30,
+        20,
+        90,
+        60
+      ],
+      "sha256": "152b7cee216811a6817c2435734fa05c1fe5d73a7adbe05ac153c4f85784b763",
+      "transformation": "Exact crop, no mask or scaling. Existing narrow ROI and full-color pixel limits unchanged.",
+      "pack_texture": false,
+      "profile": "Single 1212x682 profile; daylight illustrated lobby variant",
+      "purpose": "runtime_template",
+      "live_action_validation": true,
+      "live_evidence": "var/runs/20261029T101017Z_53e5332e/agent_000001.json -> agent_000002.json",
+      "live_transition": "lobby_idle -> one mouse4 wake click -> lobby, postcondition_verified=true"
+    },
+    "map_episode2_plain_header": {
+      "source_file": "var\\runs\\20261029T163233Z_68ef9287\\agent_000001.png",
+      "crop_xyxy": [
+        65,
+        20,
+        169,
+        47
+      ],
+      "source_sha256": "df5c5c483aa88596c49e22c51c11ebd07bc96e7a306c8a9e8c8aa166f38979c6",
+      "sha256": "23464889fdc076260fc6fa10e0347a0f060a8db13968b42e45f658947d6df40b",
+      "purpose": "runtime_template",
+      "pack_texture": false
+    },
+    "friend_prompt_current": {
+      "source_file": "var\\runs\\20261030T043311Z_c1b210d0\\observation.png",
+      "crop_xyxy": [
+        422,
+        227,
+        790,
+        270
+      ],
+      "source_sha256": "e8285cd4a074ac0d5503708f0f55753ac3e008276247637fd8c902f70c1d9563",
+      "sha256": "56d526e9a4adc78c95fe45b992a83874b484209e9cb8513dcf70ec9a40800dd7",
+      "purpose": "runtime_template",
+      "pack_texture": false,
+      "attribution": "Epic Seven rendered game UI; local calibration crop"
+    },
+    "story_history_town": {
+      "source_file": "var\\runs\\20261030T044651Z_4975d8f8\\observation.png",
+      "crop_xyxy": [
+        1023,
+        20,
+        1059,
+        53
+      ],
+      "source_sha256": "779fc30e590ad977c00e610418fad3c4c8526c8744dbda89f4205b3b3f9ed0d0",
+      "sha256": "c29ee3772772b24de912075241a3b43e7973a48bf9fc0da20af348c0ce76c763",
+      "purpose": "runtime_template",
+      "pack_texture": false,
+      "attribution": "Epic Seven rendered game UI; local calibration crop"
+    },
+    "story_skip_dialogue_roof": {
+      "source_file": "var/runs/20261030T193537Z_99cd4ea6/agent_000054.png",
+      "source_sha256": "a1936614a81f3d0cabe9cf14521d75b5eff5d9eed946157eef8a8498cb485aaf",
+      "crop_xyxy": [
+        1123,
+        18,
+        1191,
+        56
+      ],
+      "sha256": "a2781a805de366dceebf5ee4ee510796bc012d3e23d0d23f4303dfb5fc2b81dd",
+      "origin": "screen_crop",
+      "pack_texture": false,
+      "profile": "1212x682 mouse4",
+      "transformation": "Unscaled native crop; no threshold changes.",
+      "layout_reference": "wnd/story.csb /Layer/n_skip",
+      "purpose": "Gray story controls over roof background; paired Skip and History proof.",
+      "live_action_validation": {
+        "method": "LongPress 1200ms mouse4",
+        "input": "var/runs/20261030T193537Z_99cd4ea6/agent_000048.json",
+        "destination": "var/runs/20261030T193537Z_99cd4ea6/agent_000049.json"
+      }
+    },
+    "story_history_dialogue_roof": {
+      "source_file": "var/runs/20261030T193537Z_99cd4ea6/agent_000054.png",
+      "source_sha256": "a1936614a81f3d0cabe9cf14521d75b5eff5d9eed946157eef8a8498cb485aaf",
+      "crop_xyxy": [
+        1023,
+        20,
+        1059,
+        53
+      ],
+      "sha256": "d96f78d350af7ca7f20478e0a8c6af09a3b81a71f1fa125eaf9cf65c066fbd21",
+      "origin": "screen_crop",
+      "pack_texture": false,
+      "profile": "1212x682 mouse4",
+      "transformation": "Unscaled native crop; no threshold changes.",
+      "layout_reference": "wnd/story.csb /Layer/n_skip",
+      "purpose": "Gray story controls over roof background; paired Skip and History proof.",
+      "live_action_validation": {
+        "method": "LongPress 1200ms mouse4",
+        "input": "var/runs/20261030T193537Z_99cd4ea6/agent_000048.json",
+        "destination": "var/runs/20261030T193537Z_99cd4ea6/agent_000049.json"
+      }
+    },
+    "path_prequel_portal_available": {
+      "source_file": "var/runs/20261030T202253Z_f3164114/path_failure_after.png",
+      "source_sha256": "819bf2f55e1852b23477fcaea4c4de2d12bdaa0ba5715fb12bb853c58aee0b69",
+      "crop_xyxy": [
+        18,
+        185,
+        85,
+        255
+      ],
+      "sha256": "2f390aef39ffd8a759899f45e69c4606d3b5cf0814818c07c93353a8f6fa7f37",
+      "origin": "screen_crop",
+      "pack_texture": false,
+      "profile": "1212x682 mouse4",
+      "layout_reference": "wnd/battle_prequel.csb /Layer/left/scrollview_stage",
+      "purpose": "Observed highlighted portal combat row; ordinal/title/episode/chapter guards remain required. Does not prove entry cost or supported combat mode."
+    },
+    "story_skip_dialogue_market": {
+      "source_file": "var/runs/20261030T215208Z_c13d8ed7/agent_000001.png",
+      "source_sha256": "03e11c1e1145d2ee99b830671b04578d0e1495c826bcddf89903405482703d7f",
+      "sha256": "24bd263955cb4410bfe2a10e4816f20c75adf4f920e6ef1b43cb788784835f7c",
+      "crop_xyxy": [
+        1123,
+        18,
+        1191,
+        56
+      ],
+      "origin": "screen_crop",
+      "pack_texture": false,
+      "profile": "1212x682 mouse4",
+      "transformation": "Neutral glyph core, min channel135, spread35; no dilation, other pixels native green mask; no scaling.",
+      "purpose": "Paired gray story controls over market background; no global thresholds changed."
+    },
+    "story_history_dialogue_market": {
+      "source_file": "var/runs/20261030T215208Z_c13d8ed7/agent_000001.png",
+      "source_sha256": "03e11c1e1145d2ee99b830671b04578d0e1495c826bcddf89903405482703d7f",
+      "sha256": "1cc74120ac6c237fc2ce5ba93ff1d8fc5d021d09863f6993847e7a4ecf817d49",
+      "crop_xyxy": [
+        1023,
+        20,
+        1059,
+        53
+      ],
+      "origin": "screen_crop",
+      "pack_texture": false,
+      "profile": "1212x682 mouse4",
+      "transformation": "Neutral glyph core, min channel135, spread35; no dilation, other pixels native green mask; no scaling.",
+      "purpose": "Paired gray story controls over market background; no global thresholds changed."
+    },
+    "story_skip_dialogue_market_motion": {
+      "source_file": "var/runs/20261030T215208Z_c13d8ed7/agent_000004.png",
+      "source_sha256": "d5459192bca633f75026dd4ac78e8fafae557d1f5c2f749a27bc78528a5cba7b",
+      "sha256": "951edcc2082537440b581e33751ad6d8e6f652b519136172434bbffd6f22b6e6",
+      "crop_xyxy": [
+        1123,
+        18,
+        1191,
+        56
+      ],
+      "origin": "screen_crop",
+      "pack_texture": false,
+      "profile": "1212x682 mouse4",
+      "transformation": "Neutral glyph core, min channel135, spread35; no dilation, other pixels native green mask; no scaling.",
+      "purpose": "Paired gray story controls over market background; no global thresholds changed."
+    },
+    "story_history_dialogue_market_motion": {
+      "source_file": "var/runs/20261030T215208Z_c13d8ed7/agent_000004.png",
+      "source_sha256": "d5459192bca633f75026dd4ac78e8fafae557d1f5c2f749a27bc78528a5cba7b",
+      "sha256": "01d2412909ef1e28a32440584d34b5e8f1b010cff142daccb5557d1280340a08",
+      "crop_xyxy": [
+        1023,
+        20,
+        1059,
+        53
+      ],
+      "origin": "screen_crop",
+      "pack_texture": false,
+      "profile": "1212x682 mouse4",
+      "transformation": "Neutral glyph core, min channel135, spread35; no dilation, other pixels native green mask; no scaling.",
+      "purpose": "Paired gray story controls over market background; no global thresholds changed."
     }
   },
   "scope": "Shared Epic Seven bundle. Original run/client labels are historical provenance, not runtime profiles."

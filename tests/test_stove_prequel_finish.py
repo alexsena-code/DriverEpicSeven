@@ -36,13 +36,18 @@ def test_preparation_start_read_control_requires_current_cost_and_identity_label
     ticket={'wdp002':{'epoch_seconds':time.time(),'window':d['window']}}
     params={'kind':'prequel_start','stage_id':'wdp002','max_energy':8}
     assert target(v,params,d,ticket)==v['controls'][0]['box']
+    assert c['visible_story_member_markers']==1 and c['visible_hero_levels'] is None
+    no_cp=deepcopy(d);no_cp['text']=[r for r in no_cp['text'] if r['text']!='9,381']
+    assert target(operation_view({'ui_tree':build_tree(no_cp)}),params,no_cp,ticket)
+    no_member=deepcopy(d);no_member['text']=[r for r in no_member['text'] if r['text']!='Story']
+    assert target(operation_view({'ui_tree':build_tree(no_member)}),params,no_member,ticket) is None
     for text in ('8/83','Burning Village','Start Quest'):
         partial=deepcopy(d);partial['text']=[r for r in partial['text'] if r['text']!=text]
         view=operation_view({'ui_tree':build_tree(partial)})
         if text=='Burning Village':
-            # Location/title distinguish preparation from formation's shared
-            # Ready/Team shell; without them the composition is unproven.
-            assert view=={} and target(view,params,partial,ticket) is None
+            assert view['view']=='prequel_preparation'
+            assert view['items'][0]['location'] is None
+            assert target(view,params,partial,ticket) is None
             continue
         assert view['view']=='prequel_preparation' and view['items'][0]['team_cp']==9381
         assert target(view,params,partial,ticket) is None
@@ -53,7 +58,8 @@ def test_preparation_start_read_control_requires_current_cost_and_identity_label
     assert view['items'][0]['cost'] is None and target(view,params,ambiguous,ticket) is None
     ambiguous=deepcopy(d);ambiguous['text'].append({'text':'Another Story Title','score':.99,'box':[878,111,147,18]})
     view=operation_view({'ui_tree':build_tree(ambiguous)})
-    assert view=={} and target(view,params,ambiguous,ticket) is None
+    assert view['view']=='prequel_preparation' and view['items'][0]['story_title'] is None
+    assert target(view,params,ambiguous,ticket) is None
 
 
 @pytest.mark.fixtures

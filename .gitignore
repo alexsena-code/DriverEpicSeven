@@ -19,3 +19,10 @@ AGENTS.override.md
 resources/epic-seven/model/
 
 config/local.json
+
+# Diagnósticos de terceiros e arquivos pessoais de editores.
+NVIDIA Corporation/
+.vscode/
+.idea/
+*.log
+*.dmp

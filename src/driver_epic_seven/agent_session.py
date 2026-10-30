@@ -1,4 +1,4 @@
-"""Sequential JSONL transport over one Runtime, using the common UI tree."""
+"""JSONL consultation and a single execution worker over the common UI tree."""
 
 from contextlib import redirect_stderr
 from copy import deepcopy
@@ -8,11 +8,11 @@ from pathlib import Path
 import shutil
 import sys
 
-from .observed_ui import screen_state, operation_view, quest_view
+from .observed_ui import screen_state, operation_view, quest_view, formation_view
 
 
 LIVE_COMMANDS = {"observe", "read-screen", "session", "quest", "swipe", "hold", "skill-double-tap",
-                 "key", "click", "wait-state", "stage", "run", "finish-battle", "chapter", "battle-auto", "path"}
+                 "key", "click", "wait-state", "stage", "run", "finish-battle", "chapter", "battle-auto", "path", "capabilities"}
 ERRORS = (RuntimeError, ValueError, OSError, ImportError)
 
 
@@ -27,6 +27,8 @@ def parse_request(line):
         raise ValueError("args deve ser uma lista de argumentos, sem comando de shell.")
     if not isinstance(request.get("inspect_image", False), bool):
         raise ValueError("inspect_image deve ser booleano.")
+    if not isinstance(request.get('async', False), bool):
+        raise ValueError('async deve ser booleano.')
     if argv == ["disconnect"]:
         return request, None
     diagnostic = StringIO()
@@ -37,9 +39,11 @@ def parse_request(line):
         raise ValueError("Argumentos inválidos. Consulte driver-epic-seven --help.") from None
     if args.config is not None:
         raise ValueError("A configuração é fixa durante a conexão; reinicie agent para mudá-la.")
-    if args.command == "snapshot":
+    if args.command in ('snapshot', 'status', 'events'):
         if args.file:
-            raise ValueError("Na sessão agent, snapshot consulta a conexão atual; omita --file.")
+            raise ValueError("Na sessão agent, a consulta usa a conexão atual; omita --file.")
+    elif args.command == 'cancel':
+        pass
     elif args.command not in LIVE_COMMANDS or (
         args.command == 'path' and args.path_operation in ('roadmap','plan')
     ) or (
@@ -71,9 +75,14 @@ def agent_view(snapshot, *, artifact, observer_file, result=None, error=None, in
     image_available = bool(image_path and Path(image_path).is_file())
     if reasons and image_available:
         saved_image = Path(artifact).with_suffix(".png")
-        shutil.copyfile(image_path, saved_image)
-        image_path = str(saved_image)
+        try:
+            shutil.copyfile(image_path, saved_image)
+            image_path = str(saved_image)
+        except OSError:
+            image_available, image_path = False, None
+            reasons.append('image_preservation_failed')
     nodes = []
+    controls = []
     if tree:
         for item in tree["nodes"].values():
             # Geometry and template scores stay in the canonical tree. Unknown
@@ -82,6 +91,29 @@ def agent_view(snapshot, *, artifact, observer_file, result=None, error=None, in
                       if name not in ("box", "anchor_box", "box_role", "match_score")}
             nodes.append({"id": item["id"], "kind": item["kind"],
                           "parent_id": item["parent_id"], "fields": values})
+            if item['kind'] == 'control':
+                fields = item['fields']
+                value = lambda name: deepcopy(fields.get(name, {}).get('value'))
+                role, box = value('box_role'), value('box')
+                blockers = ['current_action_guards_required']
+                if not snapshot['validity']['valid']:
+                    blockers.append('snapshot_invalid')
+                if value('visible') is not True:
+                    blockers.append('visibility_unproven')
+                if value('enabled') is not True:
+                    blockers.append('enabled_unknown' if value('enabled') is None else 'disabled')
+                if role == 'text_anchor':
+                    blockers.append('text_anchor_requires_calibrated_operation')
+                if not box:
+                    blockers.append('active_region_unknown')
+                controls.append({'node_id': item['id'], 'parent_id': item['parent_id'],
+                    'semantic_id': value('semantic_id'), 'observation_id': tree['observation_id'],
+                    'validity': deepcopy(snapshot['validity']), 'box_role': role,
+                    'active_region': box if role in ('calibrated_point', 'template_extent', 'active_region') else None,
+                    'visible': value('visible'), 'enabled': value('enabled'),
+                    'actionability': {'eligible': False if (not snapshot['validity']['valid']
+                        or value('visible') is False or value('enabled') is False) else None,
+                        'blockers': blockers}})
     operation = None
     if result is not None and "ui_tree" not in result:
         operation = {key: deepcopy(result[key]) for key in (
@@ -104,8 +136,9 @@ def agent_view(snapshot, *, artifact, observer_file, result=None, error=None, in
         "events": deepcopy(snapshot["events"]), "history_lost": snapshot["history_lost"],
         "ui": {"schema_version": tree["schema_version"] if tree else None,
                "observation_id": tree["observation_id"] if tree else None,
-               "coverage": tree["coverage"] if tree else "no_observation", "nodes": nodes,
+               "coverage": tree["coverage"] if tree else "no_observation", "nodes": nodes, 'controls': controls,
                "operation_view": operation_view({'ui_tree': tree}) if tree else {},
+               "formation_view": formation_view({'ui_tree': tree}) if tree else {},
                "quest_view": quest_view({'ui_tree': tree}) if tree else {}},
         "evidence": {"response_file": str(artifact), "tree_pointer": "/snapshot/snapshot/ui_tree",
                      "observer_file": str(observer_file), "observation_file": context.get("observation_file")},
@@ -122,6 +155,7 @@ def serve(config, input_stream=None, output_stream=None, runtime_factory=None):
     from .application import Application
     from .contracts import Identity
     from .runtime import Runtime
+    from .execution_session import ExecutionSession
 
     input_stream = input_stream if input_stream is not None else sys.stdin
     output_stream = output_stream if output_stream is not None else sys.stdout
@@ -133,13 +167,16 @@ def serve(config, input_stream=None, output_stream=None, runtime_factory=None):
 
     application = Application(config)
     disconnect_requested, disconnect_id = False, None
-    with runtime_factory(config) as runtime:
+    with runtime_factory(config) as runtime, ExecutionSession(application, runtime) as execution:
         observer_file = runtime.evidence.path / "observer.json"
-        emit({"type": "ready", "protocol_version": 1, "observer_file": str(observer_file),
+        emit({"type": "ready", "protocol_version": 2, "observer_file": str(observer_file),
+              'execution_file': str(runtime.evidence.path / 'execution.json'),
+              'async_supported': True,
               "evidence_dir": str(runtime.evidence.path), "captures_started": False})
         cursor = 0
         for number, line in enumerate(input_stream, 1):
-            request, args, result, error = {}, None, None, None
+            request, args, result, error, execution_error = {}, None, None, None, None
+            persistence_errors = []
             max_age_ms = 500
             try:
                 # Retain the caller's correlation ID when argument validation fails.
@@ -151,26 +188,53 @@ def serve(config, input_stream=None, output_stream=None, runtime_factory=None):
                 if args is None:
                     disconnect_requested, disconnect_id = True, request.get("id")
                     break
-                if args.command == "snapshot":
+                if args.command in ('snapshot', 'events'):
                     max_age_ms = args.max_age_ms
                     if args.after_sequence < 0:
                         raise ValueError("after-sequence não pode ser negativo.")
                     explicit_cursor = any(arg == "--after-sequence" or arg.startswith("--after-sequence=")
                                           for arg in request["args"])
                     cursor = args.after_sequence if explicit_cursor else cursor
-                    runtime.read_snapshot(max_age_ms, refresh=False, after_sequence=cursor)
+                elif args.command == 'status':
+                    current = execution.status()
+                    result = current.get('result') or {'operation': 'status'}
+                    if current.get('error'):
+                        execution_error = {**current['error'], 'request_id': current['request_id']}
+                        error = execution_error['error']
+                elif args.command == 'cancel':
+                    execution.cancel()
+                    result = {'operation': 'cancel'}
+                elif args.command == 'capabilities':
+                    identity = Identity(**request['identity']) if 'identity' in request else None
+                    result = application.execute(request_from_args(args, identity))
                 else:
-                    identity = Identity(**request["identity"]) if "identity" in request else Identity()
-                    result = application.execute(request_from_args(args, identity), runtime)
+                    identity = Identity(**request["identity"]) if "identity" in request else None
+                    execution.submit(request_from_args(args, identity), request.get('id'))
+                    if request.get('async', False):
+                        result = {'operation': 'submitted'}
+                    else:
+                        completed = execution.wait()
+                        result, execution_error = completed['result'], completed['error']
+                        if execution_error:
+                            error = execution_error['error']
             except (*ERRORS, TypeError) as exc:
                 error = str(exc)
+                from .contracts import ApplicationError
+                if isinstance(exc,ApplicationError):execution_error=exc.as_dict()
                 # A rejected command cannot leave its previous snapshot marked current.
-                runtime.observer.invalidate("agent_command_failed")
+                if not execution.status()['running']:
+                    try:
+                        runtime.observer.invalidate("agent_command_failed")
+                    except OSError as persistence_error:
+                        persistence_errors.append(str(persistence_error))
                 max_age_ms = 500
             try:
-                window = runtime.guard()
+                window = None if execution.status()['running'] else runtime.guard()
             except (*ERRORS, TypeError) as exc:
-                runtime.observer.invalidate("window_unavailable")
+                try:
+                    runtime.observer.invalidate("window_unavailable")
+                except OSError as persistence_error:
+                    persistence_errors.append(str(persistence_error))
                 window = None
                 error = error or str(exc)
             snapshot = runtime.observer.snapshot(max_age_ms, cursor, window)
@@ -178,8 +242,21 @@ def serve(config, input_stream=None, output_stream=None, runtime_factory=None):
             artifact = runtime.evidence.path / f"{name}.json"
             view = agent_view(snapshot, artifact=artifact, observer_file=observer_file,
                               result=result, error=error, inspect_image=request.get("inspect_image", False))
-            runtime.evidence.write(name, {"request": request, "result": result,
-                                         "snapshot": snapshot, "response": view})
+            view['session_execution'] = {key: value for key, value in execution.status().items() if key != 'result'}
+            if result and args and args.command == 'capabilities':
+                view['capabilities'] = result
+            view['request_identity'] = request.get('identity')
+            if execution_error:view['execution_error']=execution_error
+            try:
+                runtime.evidence.write(name, {"request": request, "result": result,
+                                             "snapshot": snapshot, "response": view})
+            except OSError as persistence_error:
+                persistence_errors.append(str(persistence_error))
+                view['evidence']['response_file'] = None
+            if persistence_errors:
+                view['persistence_errors'] = persistence_errors
+                view['ok'] = False
+                view['error'] = error or 'Falha ao persistir evidência da resposta.'
             emit({"id": request.get("id"), "type": "response", **view})
             cursor = snapshot["event_sequence"]
     if disconnect_requested:

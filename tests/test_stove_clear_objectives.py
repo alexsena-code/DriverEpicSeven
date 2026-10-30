@@ -9,6 +9,48 @@ from driver_epic_seven.observed_ui import build_tree, operation_view, target_box
 from driver_epic_seven.vision import Vision
 
 
+@pytest.mark.fixtures
+def test_native_clear_heading_survives_result_animation_and_missing_anchors_are_rejected(tmp_path):
+    from maa.custom_recognition import CustomRecognition
+    from maa.resource import Resource
+    from maa.tasker import Tasker
+    from maa.pipeline import JCustomRecognition
+    from maa.library import Library
+    from maa.define import LoggingLevelEnum
+    run=ROOT/'var/runs/20261029T164550Z_b18bd1fc'
+    sources=[run/name for name in ('012_Path.Campaign.mel010.Clear.png','agent_000006.png','agent_000007.png')]
+    sources.append(ROOT/'tests/fixtures/local/26_stage_clear.png')
+    current=ROOT/'var/runs/20261030T033722Z_e29bdbc1/observation.png'
+    if current.exists():sources.append(current)
+    if not all(p.exists() for p in sources):pytest.skip('Private animated CLEAR calibration frames unavailable.')
+    v=Vision(ROOT/'resources/epic-seven/vision.json',ROOT/'resources/epic-seven')
+    v.spec['states']={'stage_clear':v.spec['states']['stage_clear']}
+    needed=set(v.spec['states']['stage_clear']['all'])|{'clear_three_stars','clear_objective_check_1','clear_objective_check_2','clear_objective_check_3'}
+    v.spec['templates']={k:s for k,s in v.spec['templates'].items() if k in needed}
+    v.spec['ocr']={'clear_heading':v.spec['ocr']['clear_heading']};found=[]
+    class Replay(CustomRecognition):
+        def analyze(self,context,argv):
+            found.append(v.inspect(argv.image,lambda n:context.run_recognition(n,argv.image)))
+            return self.AnalyzeResult(box=[0,0,1,1],detail=found[-1])
+    Tasker.set_stdout_level(LoggingLevelEnum.Off);Tasker.set_log_dir(tmp_path/'maa')
+    resource=Resource();resource.set_cpu();resource.register_custom_recognition('ClearAnimation',Replay())
+    assert resource.post_bundle(ROOT/'resources/epic-seven').wait().succeeded
+    tasker=Tasker();assert Library.framework().MaaTaskerBindResource(tasker._handle,resource._handle)
+    for index,path in enumerate(sources):
+        frame=np.asarray(Image.open(path).convert('RGB'))[:,:,::-1].copy()
+        cases=[('positive',frame,True),('dimmed',(frame*.5).astype(np.uint8),False)]
+        for label,box in [('missing_heading',(450,390,760,455)),('missing_continue',(1140,605,1208,675))]:
+            image=frame.copy();x,y,x2,y2=box;image[y:y2,x:x2]=0;cases.append((label,image,False))
+        for label,image,positive in cases:
+            assert tasker.post_recognition('Custom',JCustomRecognition(custom_recognition='ClearAnimation'),image).wait().succeeded
+            a=found[-1]
+            assert (a['state']=='stage_clear') is positive,(path.name,label,a['matches'])
+            if positive and index<3:
+                a.update(window={'process_name':'EpicSeven.exe','client_size':[1212,682]},text=[])
+                view=operation_view({'ui_tree':build_tree(a,v.spec)})
+                assert view['items'][0]['earned_stars']==3
+
+
 def sample_observation():
     matches={name:{'hit':True} for name in ('clear_initial','clear_continue','clear_heading')}
     matches['clear_three_stars']={'hit':True,'box':[490,245,230,135]}

@@ -1,5 +1,4 @@
 import json
-import hashlib
 from copy import deepcopy
 from pathlib import Path
 
@@ -11,6 +10,7 @@ from driver_epic_seven.config import ROOT, load_config
 from driver_epic_seven.stages import StageInspector, check_start, compile_pipeline, parse_energy
 from driver_epic_seven.vision import Vision
 from driver_epic_seven.chapters import compile_chapter
+from fixture_cache import transition_overrides
 
 
 @pytest.mark.parametrize("energy,budget,cleared", [
@@ -81,18 +81,16 @@ def stage_engine(tmp_path_factory):
     inspector=StageInspector(config["stage_file"])
     campaign_inspector=StageInspector(ROOT/"data/stages/campaign.json")
     observations=[]
-    # The controller reuses immutable fixture pixels across candidate nodes.
-    # Replay native matching once per exact frame; stage-specific checks and
-    # every selector/action still run. This is no live capture/performance test.
-    fixture_readings={}
-
     class Recognition(CustomRecognition):
         def analyze(self,context,argv):
             params=json.loads(argv.custom_recognition_param)
-            fingerprint=hashlib.sha256(argv.image.tobytes()).digest()
-            if fingerprint not in fixture_readings:
-                fixture_readings[fingerprint]=vision.inspect(argv.image,lambda name:context.run_recognition(name,argv.image))
-            analysis=deepcopy(fixture_readings[fingerprint])
+            # The shared offline cache validates pixels, effective nodes,
+            # configuration, templates and models. No frame-only cache here.
+            analysis=vision.inspect(argv.image,lambda name:context.run_recognition(name,argv.image))
+            analysis['window']={'process_name':'EpicSeven.exe','client_size':[1212,682]}
+            if params.get('read_text'):
+                analysis['text']=StageInspector._ocr(
+                    lambda kind,args:context.run_recognition_direct(kind,args,argv.image),(0,0,1212,682))
             if params.get("stage_id"):
                 chosen=inspector if params["stage_id"] in inspector.catalog else campaign_inspector
                 analysis["stage"]=chosen.inspect(params["stage_id"],analysis,
@@ -253,7 +251,8 @@ def test_native_start_pipeline_in_offline_controller_starts_once(stage_engine):
     assert controller.post_connection().wait().succeeded
     tasker=Tasker()
     assert tasker.bind(stage_engine.resource,controller)
-    job=tasker.post_task("Stage.Entry",compile_pipeline("pen001","start",8)).wait()
+    definitions=json.loads((load_config()['resource_dir']/'pipeline/stage_selection.json').read_text(encoding='utf-8'))
+    job=tasker.post_task("Stage.Entry",transition_overrides(definitions,compile_pipeline("pen001","start",8))).wait()
     assert job.succeeded
     assert len(controller.clicks)==1
     assert any(node.name=="Stage.EnteredStory" and node.completed for node in job.get().nodes)
@@ -293,7 +292,8 @@ def test_finish_pipeline_retries_unchanged_confirmation_and_result_offline(stage
     assert controller.post_connection().wait().succeeded
     tasker=Tasker()
     assert tasker.bind(stage_engine.resource,controller)
-    override={name:{"timeout":1500} for name in ("Finish.Entry","Finish.Skip","Finish.ConfirmSkip","Finish.Clear","Finish.Rewards","Finish.StoryReward")}
+    definitions=json.loads((load_config()['resource_dir']/'pipeline/battle_finish.json').read_text(encoding='utf-8'))
+    override=transition_overrides(definitions)
     job=tasker.post_task("Finish.Entry",override).wait()
     assert job.succeeded
     assert len(controller.clicks)==16
@@ -310,7 +310,7 @@ def test_chapter_native_graph_advances_two_stages_without_another_task(stage_eng
     path=tmp_path/"stages.json"
     path.write_text(json.dumps(catalog),encoding="utf-8")
     plan,graph=compile_chapter({**config,"stage_file":path},"pen001",16)
-    for node in graph.values():node["timeout"]=1500
+    graph=transition_overrides(graph)
 
     class ChapterController(CustomController):
         def __init__(self):
@@ -343,6 +343,7 @@ def test_chapter_native_graph_advances_two_stages_without_another_task(stage_eng
     assert sum(node.name.endswith("Stage.CheckReady") and node.completed for node in job.get().nodes)==2
 
 
+@pytest.mark.temporal
 def test_intro_longpress_releases_mouse_before_dialog_skip(stage_engine):
     import time
     from maa.controller import CustomController
@@ -375,7 +376,7 @@ def test_intro_longpress_releases_mouse_before_dialog_skip(stage_engine):
     assert controller.post_connection().wait().succeeded
     tasker=Tasker();assert tasker.bind(stage_engine.resource,controller)
     definitions=json.loads((load_config()["resource_dir"]/"pipeline/battle_finish.json").read_text(encoding="utf-8"))
-    override={name:{"timeout":1500} for name in definitions if not name.startswith("$")}
+    override=transition_overrides(definitions)
     job=tasker.post_task("Finish.Entry",override).wait()
     assert job.succeeded
     assert [(kind,index) for kind,index,_ in controller.events]==[(kind,index) for index in range(6) for kind in ("down","up")]
@@ -427,7 +428,8 @@ def test_rankup_and_info_notice_can_precede_clear(stage_engine):
     controller=NoticeController();controller.set_screenshot_use_raw_size(True)
     assert controller.post_connection().wait().succeeded
     tasker=Tasker();assert tasker.bind(stage_engine.resource,controller)
-    overrides={name:{"timeout":1500} for name in ["Finish.Entry","Finish.RankUp","Finish.TapToClose","Finish.Clear","Finish.Rewards","Finish.StoryReward"]}
+    definitions=json.loads((load_config()['resource_dir']/'pipeline/battle_finish.json').read_text(encoding='utf-8'))
+    overrides=transition_overrides(definitions)
     job=tasker.post_task("Finish.Entry",overrides).wait()
     assert job.succeeded and controller.index==5
     assert any(node.name=="Finish.Clear" and node.completed for node in job.get().nodes)

@@ -1,6 +1,454 @@
 # Validação
 
-Os resultados abaixo são registros históricos de evidência, não uma instrução para repetir suítes completas durante cada ajuste. A estratégia atual é testes focados durante desenvolvimento/calibração e suíte completa no fechamento estabilizado, conforme [AGENTS.md](../AGENTS.md) e [procedimento técnico](architecture.md#preparacao-antes-da-calibracao). Não executar testes pesados junto da calibração ao vivo; alterações somente em documentação não exigem pytest.
+### Capítulo 2 ao vivo e falhas de fechamento — 29/10/2026
+
+Execuções `20261029T163456Z_d5250004` e `20261029T164550Z_b18bd1fc`:
+episódio 2, mel007–mel010, uma entrada por fase e **36 de energia** no total.
+As quatro telas de resultado provaram 3★. mel007/008/009 voltaram ao mapa;
+mel010 teve vitória, um segundo clique observado no CLEAR e destino
+`battle_rewards` confirmado antes de o usuário assumir o jogo. Não declarar
+retorno final nem 27/27 com essa evidência. As conexões foram encerradas.
+Captura FramePool, mouse/teclado PostMessage 4, cliente 1212×682; sem fallback.
+
+Medição passiva nos eventos Maa, com 12 pares: reconhecimento de Skip com
+mediana **1,723 s**, confirmação **1,783 s**; entre conclusão dos cliques de
+Skip e confirmação, **3,338 s** (mínimo 3,064 s, máximo 7,111 s). Reconhecimento
+inclui guardas, OCR/árvore e evidências; o intervalo entre cliques também inclui
+transições e esperas. Não foi medido o instante visual de aparecimento do
+botão. Eventos de diagnóstico acrescentam custo; comparação com outra sessão
+não é benchmark controlado. Relatório, pares e limites em
+`var/live-chapter2-20261029-run3/measurements.json`.
+
+O alerta de Side Story foi reconhecido, mas faltava no grafo compartilhado.
+O fluxo foi cancelado, o controle atual fechado uma vez e mel009 concluída sem
+outro Start. O tratamento compartilhado passou a incluir esse fechamento e o
+cancelamento de amizade, também nas retomadas. A rota nova tem prova nativa
+offline; o fechamento manual observado não é validação automática dessa rota.
+
+No CLEAR de mel010, o OCR antigo passou no primeiro quadro e falhou em dois
+quadros posteriores: `LEAR` e `YLEAR`, embora seta/checks/estrelas permanecessem.
+A região `[450,390,310,65]` leu CLEAR nos três quadros (confianças ≥0,998),
+mantendo padrão exato e piso 0,90. O teste reproduziu a falha antes da correção
+e passou depois com positivos históricos e negativos escurecidos, sem título
+ou sem seta. Diagnóstico: `var/live-chapter2-20261029-run3/ocr-diagnosis.json`.
+Não foi adicionado clique cego quando o estado perde a composição.
+
+O diagnóstico também encontrou candidatos recusados de Auto e Map com OCR
+completo. A triagem passou a exigir prova possível de Auto desligado e uma
+composição possível de mapa, respectivamente, conservando o leitor completo
+em todo positivo. Os 103 testes focados passaram em 107,80 s; após o último
+ajuste de Map, 70 rápidos passaram em 2,00 s e o replay ampliado do callback
+de produção passou em 66,60 s. Cobertura do catálogo dos próximos capítulos
+é estática/offline e não comprova acesso atual nem vitória nesses capítulos.
+
+A execução completa do conjunto estabilizado terminou com **756 passed e uma
+falha no roteiro sintético de grupo**, em 799,52 s, sem skips. O novo tratamento
+de aviso oferecia ao gerador de menor caminho uma aresta até Map sem simular
+CLEAR; o oráculo ignora reconhecimento, mas o diário corretamente conservou
+as entradas como `sent`, sem vitória. Corrigido somente esse produtor de teste
+para simular CLEAR e Map, mantendo todos os asserts. Os quatro consumidores
+do roteiro passaram em **141,80 s** (sete testes não afetados foram deselecionados
+nessa repetição e tinham passado na execução completa). Os hashes de todos
+os arquivos de produção permaneceram idênticos aos da execução completa;
+por isso não se repetiu novamente todo o corpus por uma alteração local do
+oráculo. Logs, XML, manifesto e justificativa em
+`var/tests/chapter2-live-corrections-final/coverage-audit.json`; `validate`
+confirmou **278 nós, zero erros**. A falha original e o replay reparado estão
+preservados, sem apresentar a execução completa inicial como integralmente verde.
+
+### Triagem de combate/história e retry de CLEAR — 29/10/2026
+
+Revisados os 16 turnos do chat “Conectar ao Epic Seven”, as correções locais e
+as evidências privadas, sem descobrir, conectar ou controlar a janela enquanto
+o usuário jogava. A triagem negativa usa os mesmos leitores nativos Maa 5.14.3
+e os mesmos limites de templates/OCR/pixels; um candidato compatível conserva
+a leitura completa, a árvore canônica, as exclusões e a prova atual de alvo.
+O grafo prioriza derrota e controles de história antes do leitor genérico de
+avisos. Não foi criado observador concorrente nem reduzida espera/gesto.
+
+Na comparação offline do callback de produção com a ordem anterior, dois
+ensaios por quadro/modo e ordem invertida no segundo: Skip **7,964 → 1,759 s**,
+confirmação **6,717 → 1,584 s**, CLEAR **12,342 → 3,924 s** e hold
+**3,470 → 1,025 s**, com os mesmos alvos. Esses tempos incluem reconhecimento
+e evidências; excluem transição do jogo, entrada e esperas. A amostra de quatro
+quadros não é benchmark de latência ao vivo ou de combate inteiro. Comparação,
+traces, revisão da sessão, hashes e comandos em `var/tests/skip-flow-offline/`.
+
+O replay do callback real comparou positivos e negativos de história comum e
+cinza, confirmação, preparação/apoiador, CLEAR, HUD, derrota e escurecimento,
+preservando alvos/recusas e o conteúdo completo dos positivos. O retry de
+CLEAR foi exercitado em controlador de memória: avanço no segundo clique e
+limite de três quando a tela persiste; cada clique exige outro reconhecimento.
+Start não aparece na retomada de vitória. Uma regressão de catálogo também
+protege a recuperação da história contra fases de outro episódio com o mesmo
+capítulo. A validação ao vivo desse conjunto permanece pendente de liberação
+do usuário; jer001 não foi reiniciada e nenhum diário foi alterado.
+
+Fechamento estabilizado: `python -m pytest -q --durations=20 --durations-min=0.1
+--junitxml=var/tests/skip-flow-offline/full.xml` — **728 passed, 0 skipped**, sem
+warnings, em **824,98 s**. `driver-epic-seven validate`: **277 nós, zero erros**.
+O manifesto confirmou arquivos funcionais idênticos antes/depois da suíte;
+nenhum profiling, teste pesado adicional ou operação ao vivo foi sobreposto.
+Os 37 testes focados finais de fechamento/composição/campanha passaram em
+7,64 s; a suíte completa também cobre o replay ampliado do callback real.
+
+### Retomada de resultado desconhecido e capítulo 6 — 29/10/2026
+
+A política explícita `kind=uncertain` preservou a entrada de tae009 interrompida
+por patch como desconhecida e autorizou uma segunda entrada vinculada; ela e
+tae010 tiveram vitória com 3★. O recibo mostrou 24/24; o destino observado
+após tae010 foi o mapa do episódio 2, confirmado sem nova entrada. Evidências
+em `var/runs/20261029T150252Z_351071f6` e `var/runs/20261029T152248Z_2b0f2e4e`.
+O limite de três entradas, incluindo as anteriores, e a recusa da quarta foram
+testados offline; apenas a segunda foi exercitada ao vivo. Os testes focados
+passaram (77 em 1,47 s); a suíte completa passou com **710 testes**, sem skips,
+em 763,55 s; `validate` confirmou 277 nós. Comandos, XML e hashes ficam em
+`var/tests/uncertain-retry-final/`.
+
+### Latência de candidatos de história — 29/10/2026
+
+Replay nativo offline, sem entrada, com os mesmos quatro quadros salvos e dois
+candidatos por quadro: história, confirmação, seleção de apoiador e CLEAR.
+Os oito estados/alvos foram iguais antes/depois; nos seis candidatos recusados
+a soma dos tempos caiu de 12,407 s para 7,693 s. O OCR desses seis candidatos
+custou 4,753 s antes. A amostra é única por caso, em processos separados, e não
+é benchmark de latência ao vivo. Capturas de confirmação/Skip que podem agir
+continuam com OCR completo. Relatórios privados: `var/story-latency-before.json`,
+`var/story-latency-after.json` e `var/tests/story-latency-final/comparison.json`
+(o rótulo `map` nesse primeiro ensaio corresponde ao quadro de apoiador).
+Os testes focados passaram: 38 em 1,64 s. No fechamento da versão funcional,
+`python -m pytest -q --durations=20 --durations-min=0.1` passou com 694 testes,
+sem skips, em 633,10 s; `driver-epic-seven validate` confirmou 277 nós. XML,
+log, hashes e escopo estão em `var/tests/story-latency-final/`. A manutenção
+impediu confirmação ao vivo da redução de latência nesta sessão.
+
+### Lobby ilustrado diurno — 29/10/2026
+
+A progressão de uma conta nova encontrou a iluminação diurna do mesmo lobby ilustrado. Foram acrescentadas apenas duas variantes de recorte de fundo, com as mesmas ROIs, correlação, limites de pixels e exclusões de HUD/sobreposição; nenhum limite global ou método de entrada mudou. O teste existente passou a incluir dez positivos diurnos (HUD e ocioso), cinco negativos reais e negativos com âncoras cobertas/escurecidas, preservando os casos noturnos e históricos. `tests/test_stove_lobby.py`, `tests/test_stove_tutorial.py` e `tests/test_stove_milestone_entry.py`: **3 passed, 0 skipped, 26,94 s**; `validate`: **275 nós, zero erros**. Registro privado: `var/heir-progression-mvtc17zn/day-lobby-focused.{log,xml}`.
+
+Após desconexão normal e recarga do bundle, `20261029T101017Z_53e5332e/agent_000001→000002` confirmou `lobby_idle` → um clique mouse 4 → `lobby`, com destino comprovado. FramePool 2, teclado 4, 1212×682; testes focados encerrados antes da calibração ao vivo. Essa prova cobre restaurar o HUD diurno, sem promover outras operações. No fechamento estabilizado, com o jogo fora da sessão e sem operação ao vivo concorrente, a suíte completa passou: **682 passed, zero failures/errors/skips, 618,57 s**. Comando, XML, log e versão funcional ficam em `var/heir-progression-mvtc17zn/day-lobby-*`; essa execução inclui os dois novos templates e substitui a pendência de fechamento desta alteração.
+
+<a id="wave3-offline"></a>
+
+## Wave 3: planos e superfície do agente offline — 29/10/2026
+
+**Fechada offline:** 682 testes passaram em 634,65 s (wall 635,61 s), sem
+falhas, erros, skips ou xfails, em uma única suíte completa da versão estabilizada.
+O inventário funcional desta verificação cobre 393 arquivos de fontes, testes,
+recursos, configuração, dados, ferramentas e TOML; hashes antes/depois idênticos.
+O escopo exclui fixtures locais privadas e está registrado no relatório, portanto
+essa contagem não substitui o inventário de 433 arquivos da Wave 2.
+Auditoria final: **39 respostas, 11 provas integradas e 268 eventos de diário**,
+sem divergência de identidade/observação/janela/arquivo. A consulta durante Maa
+ativo acrescentou zero capturas e zero reconhecimentos; cancelamento conservou
+incerteza e reserva única, com parada comprovada antes do encerramento.
+`var/wave3/final/summary.json`, `evidence-audit.json` e `closure-summary.json`
+registram o fechamento; `validate-closure.json` confirma 275 nós/zero erros.
+Nenhuma alteração funcional ocorreu após essa suíte; a finalização altera somente
+documentação, evidências privadas e estado no Linear.
+
+ALE-213/214/215 seguem o aceite offline autorizado durante a manutenção.
+Nenhuma descoberta, conexão, captura ou entrada na janela do jogo, `doctor` ou
+bridge de gameplay foi executado nesta wave. O controlador dos testes nativos
+é `CustomController` em memória, com arrays de 1212×682, no Maa v5.14.3/Python
+3.11.3. Não é FramePool/PostMessage nem nova validação dos métodos Windows.
+Wave 1, Wave 2 e ALE-216 foram preservadas no checkout local; o commit
+`58af5bec` não foi usado para reconstruir o estado funcional.
+
+Os contratos de plano/checkpoint, recuperação, orçamento e sessão consultável
+estão em [architecture.md](architecture.md#wave3-planos); uso no README.
+As provas distinguem três camadas:
+
+| Camada | Prova offline | Limite |
+| --- | --- | --- |
+| Contratos e transporte | Pedidos CLI/JSONL, identidade, worker único, status/eventos/cancelamento, persistência, erro, cursor/histórico perdido e fechamento | Mocks não comprovam comportamento da janela. |
+| Árvore e alvos | Claims e prêmio de grupo com OCR/marcadores sintéticos passam pelos adaptadores e `path_target` reais, recibos, contador e próximo grupo | Não são imagens atuais da conta nem calibração de pixels. Positivos/negativos históricos permanecem replays com proveniência. |
+| Motor completo | Um pedido `run-group`, capacidades compiladas reais, Maa nativo, fronteira de reserva/envio, diários, eventos, checkpoint e recursos finitos | O grupo misto usa um **oráculo de reconhecimento programado**. Prova composição e contratos de execução; não valida reconhecimento visual das unidades ou progresso no jogo. |
+
+Matriz do bloco migrado:
+
+| Requisito/entidade | Controle/retorno e prova | Positivos, negativos e limites |
+| --- | --- | --- |
+| Capítulo e trecho do prólogo | Identidades ordenadas, preparação/Start, história, resultado e mapa; dependências e escopos de diário explícitos | Retomada omite retornados, conclui pendentes sem Start e mantém orçamento/prazo. 3★ ilegível/inferior continua revisão, nunca derrota. |
+| Recuperar o mesmo objetivo | Rotas Maa calibradas lobby/Orbis Diary→Heir/mapa/preparação/Abyss/equipamento; grupo/contador atual antes de avançar | STOP, janela alterada, dados ausentes, prazo, teto e ausência de progresso encerram. Contexto legado insuficiente não é completado por catálogo. |
+| Abyss, equipamento e formação | Guardas existentes de andar/modo, custo, equipe/integrante, item/material, resultado e retorno | CP opcional; formação versus preparação, overlays, Auto ambíguo e captura/retorno falhos cobertos pelos consumidores vizinhos. Equipamento incerto exige `finish-current` específico antes de retomar o grupo. |
+| Crédito e recompensa de grupo | Condição, Receive reservado uma vez, recibo, contador, prêmio e próximo checkpoint separados | Vitória isolada, contador inalterado, marcador ausente e próximo grupo sem recibo vinculado não concluem grupo. Retomada de claim usa continuação sem Receive e exige contexto durável. |
+| Ajuste após derrota | Política já existente, mesma identidade objetivo/plano, nova tentativa, prova de derrota e tetos iniciais explícitos | Não há retry automático; energia restante não cria autorização. Timeout, vitória parcial/ilegível e aplicação incerta não permitem Start novo. Nenhuma derrota foi provocada ao vivo. |
+| Consulta e parada | `async:true`, status/events/snapshot/capabilities durante execução; um emissor, nenhuma captura/OCR de consulta | Teste nativo pausa após envio para provar consulta e cancelamento antes da conclusão. Envios permanecem no diário; parada Maa é confirmada antes de liberar perfil/mutex. Falha ao provar parada mantém a reserva. |
+| Erros e evidência | Reserva anterior ao envio; identidade/pedido/resposta, observação/janela e arquivos correlacionados | Falha de gravação inicial não inicia worker/entrada. Falha posterior conserva incerteza/erro original e invalida a árvore anterior; não inventa rollback. |
+
+Integração curta antecedeu o grupo misto. Os 11 cenários nativos passaram em
+152,58 s no ensaio `var/wave3/integration/all-03`; cópia estável e limites em
+`accepted-summary.json` e `accepted-all-03/` no mesmo diretório. No percurso
+misto positivo: **um pedido de aplicação, uma tarefa Maa, 63 ações nativas,
+13 reservas consumidoras, nove entradas/Starts, 11 tratamentos e seis ações de
+recuperação**. Foram 108 capturas de arrays em RAM, 289 tentativas de reconhecimento
+e 105 reconhecimentos aceitos. Os nove Starts incluem histórias; não equivalem
+a nove batalhas. Foram reservados **50 de energia e 100 de ouro simulados**;
+mudança real de recursos da conta permanece desconhecida.
+
+Zero intervenções por controle significa que o roteiro de teste já fornecia o
+oráculo e as escolhas. Não mede decisões humanas/modelo, tokens, FPS ou autonomia
+ao vivo. Grupo 2 com 1/5 e grupo 3 com 0/5 são estados **da simulação**, não um
+checkpoint atual da conta. Os negativos permitem prosseguir para unidades novas
+admitidas no plano, mas conferem que o consumidor físico incerto não se repete.
+Falhas iniciais do instrumento foram preservadas: diretório temporário ausente,
+formato `v5.14.3`, proveniência de processo da fixture, teto de 30 ações não
+explicitado no cenário e um atalho de oráculo que omitia resultado de Abyss.
+Foram corrigidos no teste, mantendo as guardas e os asserts de prova.
+
+Antes do fechamento completo, passaram 149 casos focados em 6,32 s e 59 vizinhos
+em 76,47 s; a descoberta de capacidades recebeu oito casos em 0,32 s após o
+último ajuste de metadados. Os conjuntos se sobrepõem e não são somados.
+`validate-final.json`: 275 nós/zero erros, capítulo compilado de 362 nós,
+12 Starts máximos/104 de energia. Logs, JUnit, auditoria de tier, comandos,
+versões e hashes ficam em `var/wave3/`. O fechamento estabilizado é registrado
+em `var/wave3/final/`, incluindo o novo teste nativo de consulta/cancelamento.
+
+A prova de um grupo legítimo **ao vivo** fica adiada para depois da manutenção
+na ALE-218 e não bloqueia este aceite offline. Ausência de recibo/contexto,
+instâncias não lidas, variantes sem calibração, as 33 famílias como executores,
+MCP, daemon/serviço permanente e otimizadores gerais permanecem fora. Esta wave
+não altera a proveniência das conquistas históricas descritas abaixo.
+
+<a id="wave2-batalhas"></a>
+
+## Wave 2: capacidades sobre o núcleo comum — 28/10/2026
+
+ALE-210/211/212 consolidadas sobre o checkout da Wave 1/ALE-216, preservado sem
+reset/limpeza. Contrato em [architecture.md](architecture.md#nucleo-local).
+**Fechada:** 621 testes passaram em 467,90 s (wall 468,86 s), sem falhas,
+erros, skips ou xfails. Os 433 arquivos funcionais tiveram hashes idênticos antes
+e depois. SDK Maa v5.14.3, Python 3.11.3, perfil 1212×682/2/4/4. `validate`:
+275 nós, zero erros; grafo de capítulo 362 nós, 12 Starts máximos/104 de energia.
+`git diff --check` passou. Relatórios finais e hashes em
+`var/wave2/final-corrected/`.
+
+A primeira completa terminou com 619 pass/1 fail em 506,18 s: a simulação de
+capítulo omitia perfil/read_text para o checkpoint 3★. O instrumento foi corrigido;
+21 casos nativos vizinhos passaram em 46,18 s. Também foi acrescentado o negativo
+para prepare/Start de campanha sob formação selecionada. A execução anterior e
+o motivo da repetição estão preservados em `var/wave2/final/`; a completa acima
+cobre a versão funcional atual.
+
+ALE-213 a ALE-215, MCP, otimizadores gerais e expansão de modos permanecem fora.
+
+| Capacidade | Prova e limite |
+| --- | --- |
+| Batalhas parametrizadas | Campanha/prólogo, Abyss e altar compartilham guardas de identidade, custo/saldo, equipe e validade, com CP opcional. Preparação/Next Floor/finish não iniciam batalha. Escopos explícitos são independentes de missão; aliases ficam na aplicação/plano. Andares diferentes compilados não provam acesso/derrota/conquista atual. |
+| Equip All | Variante sem item melhor observada em `20261028T215329Z_e9a26e17/agent_000002`; zero aplicação/reserva. Prévia, confirmação gratuita nativa e atributos atuais/candidatos são cobertos pelas fixtures históricas positivas/negativas, sem exigir aumento ou leitura de CP. |
+| Melhorar arma | Uma aplicação em `20261028T221729Z_f5c88d45`: Hellish Essence Orb +3 → +6; EXP 31/1.050 → 6/2.887; ouro 1.461.534 → 1.415.134; dois Equipment Enhancement Powder e três Lesser Equipment Charm. Materiais reservados foram relidos antes do envio. O resultado foi persistido antes de falhar o retorno. |
+| Reconciliação da melhoria | `20261028T222221Z_82265018/agent_000002` concluiu `--finish-current` do detalhe ao herói, sem Enhance/Change. Attack 1.290 → 1.350; CP é contexto opcional. A reserva única conserva custo 46.400 e prova de aplicação/retorno. |
+| Formação | `20261028T223039Z_22d10fc2`: Arbiter Vildred direita → superior, Ras no sentido inverso. A primeira confirmação parou no seletor superior; ponto da base foi calibrado, nome lido no detalhe e retorno relido. A reconciliação explícita em `var/wave2/formation-reconciliation.json` cruza seis artefatos, sem segunda mutação. |
+| Reposição de volta | `20261028T223817Z_2079d744/agent_000001`: grafo completo superior → direita, identidade antes/depois e retorno. Níveis por posição restaurados: superior 16, esquerda 9, direita 42, inferior 19; conferência visual Ras/Aither/Arbiter Vildred/Tenebria. Seletores, remoção e destinos/substituições reutilizam positivos históricos de Brieg/Muwi/Furious; vazio está calibrado na esquerda. Não há leitura de IDs internos nem busca/rolagem arbitrária. |
+| Progresso legítimo | Mesmo run, `agent_000005`: uma entrada Dark Normal `cmon002`, custo 10, vitória e retorno ao lobby. `agent_000012` e o checkpoint imutável `037_recognition_Custom_838f9220-ce04-435f-8b2d-a252273c7c8a` mostram Normal Complete e Hard Available. Rank 11 → 12; o aviso de rank foi tratado no fluxo. Nenhum Start no Hard. |
+| Encerramento live | Mesmo run, `agent_000017`: lobby, seguido de disconnect normal. FramePool 2, mouse/teclado 4, 1212×682, conexões elevadas, um emissor por vez, sem fallback e sem testes pesados concorrentes. |
+| Derrota/retry e 3★ | Testes comprovam nova identidade no mesmo plano, derrota vinculada, reserva anterior ao envio, teto de tentativas/custo/prazo e bloqueios para vitória/3★ não comprovadas, timeout, captura falha e resultado desconhecido. Não foi provocada derrota ao vivo. O agente decide ajustes disponíveis; a política não repete automaticamente nem calibra capacidades durante uma run. Campanha para em vitória sem prova atual de 3★ e não a classifica como derrota. |
+
+**Contagem consumidora desta conclusão:** uma melhoria, uma batalha e duas
+reposições da equipe. Não houve refill, summon, compra ou Receive de missão.
+Vitória, liberação de dificuldade e crédito da missão são provas separadas;
+nenhum crédito/resgate novo de Path of Heir é alegado. O saldo de energia após
+Normal também inclui o rank up observado; não é usado como débito líquido puro.
+
+**Guardas e falhas corrigidas:** a primeira chamada Apply Preview foi recusada
+antes do envio por entrar num nó de ação; a entrada agora é DoNothing. A aplicação
+comprovada não foi repetida quando a saída expirou. O finisher passou a reconhecer
+o detalhe aplicado e a validade do ticket é renovada nas provas de snapshot/efeito.
+O status `applied` com evento `return_verified` existente foi reconciliado para
+`returned` após corrigir a guarda do diário, sem remover eventos nem inventar
+uma nova captura. Backups e auditoria ficam em `var/wave2/`.
+
+Os espaços vazios de melhoria receberam correlação local 0,75, conservando MAE
+10, após medir fundos animados; itens ocupados e imagens escurecidas são negativos.
+Setas/`+` de formação usam máscara dos glifos amarelos, com negativos escurecidos.
+Uma formação em `state=unknown` exige também prova nativa positiva da composição;
+OCR legível sob escurecimento não libera seleção. O reread de dificuldade é
+limitado ao título ilegível num hub já comprovado, sem completar `Norma` por regra.
+
+O tutorial Quick Battle e os estados ativo/inativo fornecidos pelo usuário ficam
+preservados nos runs iniciais `20261028T200037Z_2c75c487` e
+`20261028T200703Z_4e4a3ba2`. A referência clara é ativa; a escura é inativa. A
+composição Quick separa quantidade/custo e não oferece Start normal nem toggle
+pelo agente. Os 37 pedidos iniciais estão em `var/wave2/live-proof.json`.
+
+`var/wave2/closure-proof-audit.json` conferiu **134 respostas em nove sessões**:
+identidade do pedido/arquivo/árvore, janela e resolução; quatro escopos finais têm
+uma reserva cada e resultado/retorno preservados. Checkpoints nativos imutáveis
+vinculam as observações a pixels; aliases mutáveis `observation.png`/`live.png`
+não são usados como se preservassem imagens antigas. As provas históricas de
+Abyss 31/32 e Next Floor 32→33 abaixo conservam sua origem. Não houve novo andar
+ou campanha iniciado para testar estrutura.
+
+**Verificação de fechamento:** completa estabilizada acima, mais testes focados
+e 134 respostas live auditadas. Comandos, versões, hashes, diagnósticos e
+durações ficam em `var/wave2/`; conjuntos sobrepostos não são somados. A suíte
+da ALE-216 permanece baseline histórico. Não houve edição funcional após a
+completa aprovada; a finalização posterior altera somente documentação/status.
+
+## Wave 1: núcleo local — 28/10/2026
+
+Extração de ALE-206 a ALE-209 no checkout local existente, preservado integralmente
+sem reset/limpeza. A cópia privada anterior e o manifesto estão em
+`var/wave1/baseline/`; hashes do conjunto estabilizado em
+`var/wave1/final-source-hashes.json`. Contratos e inventário de reutilização em
+[architecture.md](architecture.md#nucleo-local).
+
+**Provas focadas:** aplicação/transportes, leitura parcial/controle contextual,
+persistência antes/depois do envio, diário legado, retomadas e composição foram
+testados durante os ajustes. Um conjunto adjacente passou com 178 casos; depois
+das alterações de fronteira/retomada, 105 casos passaram em 96,84 s. O último
+conjunto de contrato/fronteira nativa teve 22 casos passando em 3,02 s. Esses
+conjuntos se sobrepõem e não devem ser somados. Logs finais de foco estão em
+`var/wave1/focused-final.txt`.
+
+O teste nativo usa o Maa **5.14.3** instalado e um controlador em memória exclusivo
+do teste, sem janela do jogo. Confirma uma ação nativa e zero entrada se a
+persistência falhar antes da fronteira. A DLL opcional `MaaDbgControlUnit` não
+está instalada; essa limitação foi identificada antes de usar o controlador em
+memória. Não é fallback de entrada ao jogo. Os testes de falha depois do envio
+conservam a tentativa e recusam replay, incluindo nova sessão/janela e retorno
+sem resultado. Repetir leitura não cria reservas. Prova terminal Maa continua
+preservada se a captura adicional falhar.
+
+**Percurso ao vivo reversível:** primeiro `doctor` encontrou o Epic Seven
+minimizado (cliente 0×0); a conexão foi recusada. O usuário restaurou a janela e
+reafirmou a execução como administrador. As duas conexões seguintes foram
+elevadas, com privilégio confirmado, descoberta atual de processo/título/classe,
+cliente **1212×682**, captura **FramePool 2**, mouse/teclado **PostMessage 4**,
+sem fallback 64. Cada conexão usou um Runtime/Tasker/controlador; nenhuma suíte
+pesada rodou em paralelo. O primeiro quadro e o retorno final foram conferidos
+visualmente. O processo permaneceu sem foco nas observações registradas; isso
+não valida minimização ou toda tela/condição de cobertura.
+
+| Evidência privada | Transição/prova |
+| --- | --- |
+| `20261028T161234Z_7d58a5e3/agent_000001` | Orbis, Path of Heir 3 em 0/5; origem atual conferida. |
+| Mesmo run, `agent_000002→000003` | Uma tecla Escape foi aceita; o destino bruto ficou unknown. Nova leitura/imagem comprovou lobby, sem repetir entrada. O leitor dependia de Rank legível; correção passou positivos e negativos, conservando seis legendas e âncora nativa, rejeitando composição incompleta ou popup. Conexão encerrada antes de editar/reiniciar. |
+| `20261028T161534Z_b46cc47c/agent_000001→000002` | Lobby pela árvore; `path navigate --view lobby --control orbis --expect-view orbis_guide` atravessou Application → controle contextual → OperationBoundary → LongPress Maa 100 ms → terminal/destino comprovados. Identidades explícitas conservadas. |
+| Mesmo run, `agent_000003→000004` | Escape único; quadro imediato ainda em transição, `postcondition_verified=false`. Nova leitura confirmou `operation_view=lobby`, sem reenviar. |
+| Mesmo run, `agent_000005→000006` | Repetição curta: `path open` chegou novamente ao Orbis pelo mesmo núcleo/conexão; grupo 3 relido em 0/5. |
+| Mesmo run, `agent_000007→000008` | Retorno por Escape com observação explícita e guarda semântica; quadro imediato em transição. Leitura posterior e imagem final comprovaram lobby. Desconexão explícita confirmada. |
+
+`var/wave1/live-proof.json` confere **11 artefatos**, IDs de pedido, caminhos de
+resposta, árvore/observação, janela e métodos. O fio condutor foi o Orbis, uma
+operação existente de navegação e retorno; não foi necessário abrir ou evoluir
+Abyss para testar estrutura. **Zero Start, resgate, compra, gasto, mudança de
+equipe ou progresso do grupo.** O envio da tecla foi mantido separado da prova
+posterior do retorno. Não há promoção de um roundtrip autônomo inteiro nem
+benchmark de velocidade. As últimas mudanças em classificação de saída e
+guardas de diário foram verificadas offline; nenhum combate foi iniciado para
+revalidá-las.
+
+`validate` do conjunto estabilizado: **260 nós, zero erros**, capítulo compilado
+com 350 nós, 12 inícios máximos e orçamento 104. **Regressão completa: 551 testes
+passaram em 635,71 s, sem falhas ou skips**, em uma única execução sobre a versão
+estabilizada, com o driver desconectado e sem calibração concorrente. Log:
+`var/wave1/pytest-final.txt`; validação: `var/wave1/validate-final.json`. Os hashes
+funcionais permaneceram idênticos durante a suíte. O resultado não promove
+ALE-210 a ALE-215, as 33 famílias mapeadas, avisos desativados ou variantes sem
+evidência. Permanecem os limites de conta/identidade/equipe dos consumidores
+existentes e a política de 3★ nas próximas fases.
+
+A verificação adicional somente leitura em `var/wave1/partial-current-fixtures.json`
+confirma nome de candidato fora do catálogo com CP desconhecido na composição
+de formação já calibrada, e o novo lobby com Rank ilegível. Essas variantes de
+texto não acionam controles nem substituem negativos nativos. O manifesto de
+alterações em `var/wave1/change-manifest.json` confirma a presença de todos os
+arquivos anteriores; nenhuma limpeza, commit ou reset foi usado para substituir
+a base que estava sem rastreamento.
+
+Os resultados abaixo são registros históricos de evidência, não uma instrução para repetir suítes completas durante cada ajuste. A estratégia atual é testes focados durante desenvolvimento/calibração e suíte completa no fechamento estabilizado da wave ou entrega independente, conforme [AGENTS.md](../AGENTS.md) e [estratégia técnica](architecture.md#estrategia-de-testes). Não executar testes pesados junto da calibração ao vivo ou enquanto outra sessão edita o conjunto; alterações somente em documentação não exigem pytest.
+
+<a id="custo-suite-testes"></a>
+
+## Custo da suíte — diagnóstico inicial de 28/10/2026
+
+O fechamento histórico em `var/group2-final/pytest-final.txt` registrou **510 testes em 584,52 s (9 min 44,52 s)**. As dez maiores durações de `call` somam **300,77 s (51,46% do total)**. Entre elas: corpus Coreloop (40,78 s), corpus geral de visão (39,30 s), simulação de retries de confirmação/resultado (32,66 s), linha de Arby (30,34 s) e Recruit/quickmenu (28,84 s). São vários quadros/negativos dentro de uma função, não um único assert lento. O tempo `call` também inclui construção de recursos feita dentro do teste.
+
+A inspeção estática durante a Wave 1 encontrou 39 locais de construção/carregamento de Resource, 40 de Vision e 45 de Tasker; esses números representam pontos no código, não quantidade medida de instâncias ou parcela do tempo. O perfil inspecionado tem 141 templates lógicos, 158 aparências em 155 nós nativos e 31 definições de OCR. Cada `Vision.inspect` percorre os templates do seu spec e, diante de estado desconhecido ou gatilhos, as definições de OCR. Replays que escurecem/cobrem quadros mantêm os negativos importantes e podem acionar esse caminho adicional. Havia reconhecimento completo de quadros usados por mais de um teste; naquele diagnóstico, o cache de pixels exatos de `stage_engine` estava restrito àquele módulo.
+
+As simulações de `Finish.Entry` também conservam esperas dos pipelines: o teste lento de retries substitui timeouts, mas não todos os `pre_delay`/`post_delay`/gestos. Um teste separado exige duração real de hold. Assim, setup nativo, matching/OCR repetidos e esperas são candidatos concretos a decompor; suas parcelas e os ganhos de cada mudança **ainda não foram medidos isoladamente**. A seleção `not fixtures` tampouco elimina todo o custo nativo: testes sem marcador dependem de `stage_engine`.
+
+Não foi executada outra suíte nem benchmark nativo neste levantamento, pois havia implementação/testes da Wave 1 ativos. Nenhum teste, limiar, duração de gesto ou cobertura foi reduzido. Próximo passo: perfilar um pequeno conjunto lento em janela exclusiva, separar setup/reconhecimento/esperas e ensaiar reutilização isolada de fixtures e separação das camadas; comparar mesmos casos/modelos/negativos antes/depois. Procedimento e restrições em [architecture.md](architecture.md#estrategia-de-testes). Esse diagnóstico não mede latência do jogo, FPS ou desempenho da refatoração.
+
+### ALE-216: seleção auditada e reutilização offline — 28/10/2026
+
+Implementação solicitada antes da próxima wave. O perfil inicial foi coletado
+somente nos três casos selecionados abaixo, com outras sessões do repositório
+ociosas e sem outro pytest/profiling/calibração ao vivo. Python 3.11.3, pytest
+8.4.2, Maa 5.14.3, 16 CPUs lógicas; mesmas seleções e hashes dos 190 arquivos de
+recurso/modelos nos relatórios antes/depois. Os quadros positivos, negativos,
+variantes e asserts dos testes originais foram mantidos. A auditoria AST confere
+**1.510 asserts anteriores em 78 arquivos**, sem remoções. Nenhum arquivo Python
+do driver ou pipeline/template/modelo de produção foi alterado por esta entrega.
+
+| Caso, na mesma ordem de execução | Call antes | Call depois | Consultas nativas antes → depois |
+| --- | --- | --- | --- |
+| Coreloop: fases e negativos de prévia | 46,91 s | 36,18 s | 5.150 → 4.870 |
+| Corpus geral positivo/negativo | 40,43 s | 35,22 s | 7.245 → 6.795 |
+| Confirmação/resultado que ignoram o primeiro clique | 34,94 s | 6,51 s | 1.980 → 0 |
+
+**Tempo pytest da amostra: 123,84 → 79,84 s**, redução observada de **35,5%**.
+É uma amostra ordenada por versão, sem estimativa de variância ou projeção desse
+percentual para a suíte inteira. A última linha reutiliza provas nativas dos
+mesmos pixels/configuração já exercitados pelo corpus anterior; seus callbacks,
+seletores, fluxo Maa e 16 cliques/duas tentativas ignoradas continuam verificados.
+Quando rodada em outro conjunto/ordem, essa função levou 15,25 s no foco final;
+não confundir cache aquecido da amostra com tempo universal do caso.
+
+O perfil inicial registrou 44,99 s de consultas por nó no Coreloop e 38,41 s no
+corpus; o wait de bundle foi 13,8/8,8 ms. O wait da tarefa de retries incluiu
+34,80 s, dentro dos quais houve reconhecimento. Esses tempos são aninhados;
+inicialização preguiçosa de OCR pode estar dentro da primeira consulta, sem
+decomposição interna adicional do SDK. Não foi criado um Resource global para
+economizar um setup pequeno. A versão final da amostra registrou 11.665 consultas
+nativas e 33.090 hits do cache, sem evicções, com cerca de 5,8 MiB retidos. O cache
+local antigo de `stage_engine`, baseado só nos pixels, foi retirado.
+
+A seleção auditada classificou **498 rápidos e 63 nativos**. Os rápidos passaram
+em **9,42 s** com guarda contra construção nativa não classificada; os mesmos 498
+passaram em 8,86 s com o cache instalado, sem mudar a seleção. Os casos nativos
+antes sem `fixtures`, especialmente dependentes de `stage_engine`, aparecem nas
+razões do relatório. O comando pytest padrão segue selecionando todos os casos.
+
+Os testes novos invalidam cache por pixels, configuração, definição efetiva de
+nó, bytes de pipeline/template/modelo e configuração de inferência não provada.
+Conferem cópia de resultados, limite/evicção e erro não cacheado. A prova nativa
+compara resultados idênticos, pixels escurecidos e override de threshold; outro
+Resource/Tasker executa seu callback próprio e não herda o override anterior.
+Os dez casos do cache passaram também com `--fixture-cache=off`. O foco final,
+incluindo todo `test_stage_selection`, cache, fronteira de ação e confirmações,
+passou com **49 casos em 50,58 s**. O hold real permanece em 1500 ms e a prova
+temporal exige ≥1,3 s; só esperas dispensáveis da simulação foram sobrescritas.
+
+Após medir CPU/memória/threads, dois processos foram ensaiados apenas nos corpora
+Coreloop e visão, com logs, temporários e cache pytest separados. Ambos passaram;
+wall conjunto **48,63 s**, tempos pytest por processo de 46,23/47,68 s. Picos de working set
+por worker: cerca de 332/285 MiB; threads nativas de 4 no início a 21 ao final de
+cada worker. O total de picos não comprova pico simultâneo; o ensaio não valida
+particionamento ou ganho da suíte inteira. **Nenhum paralelismo foi ativado por
+padrão**: o fechamento permanece sequencial, com cache por processo.
+
+Evidências privadas: `var/test-performance/ale216/{before,after-final}/profile.json`,
+XMLs correspondentes, `comparison.json`, `collection.json`, `fast-audit.json`,
+`assertions-preserved.json`, `cache-temporal.txt`, `focused-final.txt` e
+`parallel/comparison.json`. Os perfis finais incluem contagem por nó/quadro,
+setup/call/teardown, esperas, CPU/memória/threads, residual de asserts/Python e
+hashes. O residual não é atribuído somente aos asserts. Não houve entrada no
+jogo; os controladores de integração eram offline.
+
+**Fechamento estabilizado:** uma suíte completa sequencial, **561 passed em
+407,02 s (6 min 47,02 s)**, sem skips, xfails, falhas ou erros. Os 498 rápidos e
+63 nativos coletados constam nos resultados; são os 551 casos anteriores mais
+dez casos do cache. O manifesto confere que fontes, testes e recursos não mudaram
+durante a execução, e os 190 hashes de recurso/modelos continuam iguais ao
+baseline. O cache registrou 51.266 consultas nativas (2.744 positivas e 48.522
+negativas) e 109.089 hits, sem evicções, com 26,1 MiB retidos. Este total não é
+uma comparação percentual com fechamentos históricos de seleção diferente.
+`driver-epic-seven validate`: **260 nós, zero erros**. Resultados e identidade em
+`var/test-performance/ale216/final/{profile.json,audit.json,pytest.xml}`,
+`final.txt`, `final-version.json`, `closure.json` e `validate-final.json`.
 
 ## Perfil STOVE: conexão e primeiros controles — 26/10/2026
 
@@ -540,7 +988,7 @@ Ao encerramento desse bloco, o grupo 1 ainda não estava concluído; o fechament
 A suíte usa capturas privadas quando instaladas. Na simulação de seleção/combate, o resultado nativo de Vision é reutilizado somente para pixels de fixture exatamente idênticos; verificações específicas da fase, seletores, contagens e ações continuam executadas. Isso reduz OCR repetido no teste e não altera Runtime nem demonstra ganho de desempenho no jogo. O relatório completo e diagnósticos intermediários ficam em `var/path-level-live/`.
 
 
-A preparação preserva CP e outros campos legíveis quando o custo ou Start não podem ser lidos, desde que Ready/equipe, localização/título e a composição de preparação estejam comprovados. Localização/título continuam necessários para distinguir formação do shell compartilhado Ready/Team. Custo ambíguo fica desconhecido; os testes conferem que isso nunca habilita Start. O histórico gráfico compartilhado com a variante cinza também não expõe o alvo genérico de história no diálogo específico de Connection. Diários explícitos de contas/perfis distintos têm teste de isolamento; trocar para Steam não apaga nem reaproveita as reservas STOVE.
+A preparação preserva CP e outros campos legíveis quando o custo ou Start não podem ser lidos. Na atualização de 30/10/2026, Ready/equipe e composição atual sustentam o painel mesmo com localização/título desconhecidos; a busca de heróis continua sendo uma composição distinta e nunca vira preparação quando ambígua. Identidade e custo atuais continuam necessários para Start. Custo ambíguo fica desconhecido; os testes conferem que isso nunca habilita Start. O histórico gráfico compartilhado com a variante cinza também não expõe o alvo genérico de história no diálogo específico de Connection. Diários explícitos de contas/perfis distintos têm teste de isolamento; trocar para Steam não apaga nem reaproveita as reservas STOVE.
 
 
 Verificação final deste bloco: `python -m pytest` — **372 passed**, 431,86 s, sem skips nesta máquina com fixtures privadas; `driver-epic-seven validate` — Steam 135 nós, STOVE 112 nós, ambos válidos. Resultado e manifesto de fontes em `var/path-level-live/validation-summary.json`. O driver foi desconectado normalmente e o transporte encerrado, com mouse4 mantido no perfil. O término do Caminho e a tela CHAPTER COMPLETE não foram declarados validados por esses testes offline.
@@ -611,3 +1059,216 @@ Em `20261028T104056Z_9b87074e`, o Skip/Confirm mapeado chegou ao combate; uma co
 Os pontos de releitura, custos de reconhecimento, input aceito sem efeito, atualização de evidências e retomadas estão na pauta de revisão em [mission-operations.md](mission-operations.md#roteiro-por-nivel). A suíte completa desta versão ampliada é executada após o fechamento e a desconexão; os 471 testes acima pertencem à versão anterior.
 
 **Fechamento consolidado:** `python -m pytest -q --durations=10 --maxfail=1` — **510 passed em 584,52 s**, sem falhas/skips; uma execução completa após as alterações funcionais estabilizadas e o encerramento da conexão. `driver-epic-seven validate` — **260 nós, zero erros**. Logs em `var/group2-final/pytest-final.txt` e `validate-final.json`; checkpoint em `var/group2-final/checkpoint.json`. Esse resultado de regressão não promove o compilador de grupo ou a melhoria a ciclos autônomos validados; os limites ao vivo acima continuam aplicáveis. Próxima etapa acordada: revisão e estruturação da refatoração, antes da interface MCP.
+# Progressão autorizada em 30/10/2026
+
+O episódio 2, capítulo 9, foi concluído na composição atual STOVE: dez
+entradas únicas, 84 de energia, 30/30 estrelas, sem derrotas. Os bloqueios
+de OCR foram tratados sem repetir Start. A retomada de `com010` usou
+`path finish-stage`, com zero novos inícios, e terminou no mapa do capítulo
+10. Evidências privadas: `20261030T032227Z_f4969f8d`,
+`20261030T033722Z_e29bdbc1` e `20261030T035220Z_b37e5050` em `var/runs/`.
+Métodos: FramePool 2, mouse/teclado PostMessage 4, cliente 1212 × 682;
+driver elevado para obter acesso ao estilo da janela.
+
+O capítulo 10 também terminou com 30/30 estrelas, dez entradas únicas e 84
+de energia. Houve cancelamento por primitiva observada de dois convites de
+amizade com o texto atual `This friend supported you during the battle`;
+os resultados foram retomados sem Start. A abertura do episódio 3/capítulo
+1 foi observada e o retorno de `dis010` reconciliado em
+`20261030T043311Z_c1b210d0`. O mapa do episódio 3 usa o mesmo leitor e
+guardas de episódio/capítulo/linha/descrição, com negativos de episódio 2/4;
+61 testes focados passaram em 6,72 s (`episode-three.xml`). Isso não comprova
+conclusão dos capítulos seguintes.
+
+A preparação de `lfs001` confirmou custo 8 e objetivo de um herói de Fogo.
+Manage Team, candidato Kawerik de Fogo no nível máximo e a substituição
+única da posição visual esquerda foram conferidos por primitivas observadas,
+com evidências 000010–000017 da mesma execução. O retrato/sprite e o nível
+60 com elemento Fogo foram observados no destino; CP foi apenas auxiliar.
+Não houve Start durante a troca. O executor de seleção de formação não
+concluiu nessa composição; o uso das primitivas não amplia sua validação.
+
+O OCR do cabeçalho CLEAR usa `only_rec` no mesmo recorte calibrado
+`[450,390,310,65]`, mantendo texto e confiança mínima 0,90. A captura atual
+de `com010`, capturas positivas anteriores, versões escurecidas e ausência
+de cabeçalho/seta passaram nos testes focados: 22 testes, sem skips, em
+15,54 s (`var/tests/chapter-nine-reader/clear-fix.xml`); `validate` válido.
+Isso não dispensa a prova separada dos três ícones e três checks atuais.
+
+O capítulo 1 do episódio 3 foi concluído com três estrelas nas dez fases.
+`lfs010` teve duas derrotas comprovadas e vitória na terceira entrada; o
+diário conserva as três identidades e seus resultados. A terceira luta
+excedeu o prazo do pedido original enquanto ainda estava ativa; a conclusão
+usou `path finish-stage`, zero Start, e comprovou CLEAR/3★ e abertura do
+capítulo 2 em `20261030T054117Z_b2e21f36/agent_000038.json`. Timeout não foi
+convertido em derrota nem em autorização para outra entrada.
+
+Antes da segunda entrada, um Equip All gratuito de Fenne foi aplicado por
+primitivas observadas: ouro inalterado, ataque 1841→1968, defesa 1075→1222,
+vida 10182→13078 e velocidade 165→197. Antes da terceira, Elena de Gelo
+substituiu Vivian na posição frontal; Kawerik de Fogo foi mantido para o
+objetivo do capítulo. As outras prévias de equipamento não foram aplicadas.
+Essas intervenções não promovem o executor genérico de formação/equipamento.
+
+O capítulo 2 do episódio 3 também terminou com 30/30 estrelas: dez entradas
+únicas, 88 de energia e nenhuma derrota. Arbiter Vildred de Trevas substituiu
+Kawerik por uma troca observada, mantendo Fenne e Elena de Gelo: o requisito
+de `pow003` difere das demais fases. `20261030T061107Z_29a3f259` conserva a
+troca e o encadeamento. A história de `pow010` precisou de um Skip por
+primitiva observada, com confirmação reconhecida; `finish-stage` concluiu a
+mesma reserva, zero Start, com 3★ e mapa do capítulo 3 em `agent_000050.json`.
+O reconhecimento do Skip sobre o fundo de neve motivou o diagnóstico
+seguinte; esse percurso isolado não prova independência de fundo para todos os controles.
+
+O diagnóstico seguinte em `wis001` isolou o candidato nativo de Skip com
+correlação 0,983659 e MAE 28,526 nas bordas translúcidas. A máscara auxiliar
+de pixels claros existente passou a conferir o miolo do Skip atual, mantendo
+MAE 18 e o limiar Maa; sem novo template por cenário. O replay da neve,
+positivos anteriores e negativos escurecidos/cobertos/modais passaram:
+16 testes em 56,52 s, sem skips (`story-glyph-current.xml`), pacote válido.
+A retomada `20261030T064818Z_22f4010d/agent_000002.json` pulou essa história,
+concluiu `wis001` com 3★ e retornou ao mapa, com zero novos inícios.
+
+O capítulo 3 do episódio 3 terminou com 30/30 estrelas, dez entradas únicas,
+88 de energia e nenhuma derrota. Vivian de Terra substituiu Arbiter Vildred
+uma vez, por primitiva observada na preparação; os demais heróis permaneceram.
+Após a correção do Skip, `wis002..wis010` encadearam sem outra intervenção
+até o mapa do capítulo 4 em `20261030T064818Z_22f4010d/agent_000025.json`.
+
+O capítulo 4 terminou com 30/30 estrelas, dez entradas únicas, 88 de energia
+e nenhuma derrota. O trecho de 30 minutos venceu após a vitória de `dra010`,
+em um recibo de Star Reward. Um `received_reward_close` reconhecido fechou
+o recibo; `finish-stage` confirmou o retorno sem Start. Evidência:
+`20261030T064818Z_22f4010d/agent_000050..000055.json`; capítulo 5 aberto.
+O limite não foi estendido no checkpoint original; os próximos percursos
+podem usar blocos menores com seus próprios prazos finitos.
+
+O capítulo 5 terminou com 3★ em dez fases, 88 de energia, dez entradas
+únicas e nenhuma derrota. O resultado de `wip010` foi comprovado às
+05:16:59 da Bahia; o acompanhamento parou às 05:27:10 em um Side Story
+Alert cujo título estava coberto pelo banner de manutenção. O recibo
+posterior mostrou 30/30, sem novo Start. A reserva conserva a vitória;
+uma janela reiniciada não herda a identidade da sessão antiga.
+
+Na revisão antes de retomar, os hashes das correções anteriores coincidiam
+com a versão testada. A nova variante de Side Story Alert reutiliza o alvo
+nativo e exige as duas linhas do corpo mais luminosidade, sem nomes dos
+cards e sem alterar limiares globais. O replay inclui título coberto,
+cards cobertos, linha/controle ausentes, escurecidos e telas alheias.
+Verificação focada: 104 testes em 18,10 s, zero falhas/skips; `validate`
+válido, 281 nós. Relatórios `resume-review-focused-final.xml` e
+`resume-review-validate-final.json` em `var/tests/chapter-nine-reader/`.
+As execuções focadas anteriores falhas estão preservadas como diagnóstico;
+a suíte completa continua dispensada pelo usuário. A variante sob o banner
+tem prova offline; não se reativa aviso nem se reproduz manutenção para teste.
+
+Na retomada, `epi001` e `epi002` terminaram com 3★, uma entrada por fase.
+O grafo parou na passagem ao mapa seguinte porque o OCR uniu a seta ao
+cabeçalho (`<Chapter 6.The Right Decision >`, x41), fora da região anterior.
+Os callbacks nativos foram preservados em
+`var/admin-campaign-20261030s/epi003-merged-chapter.json`. A correção aceita
+essa seta delimitada e preserva a identidade do capítulo; o filtro do novo
+aviso verifica o fechamento antes de OCR. Verificação da mudança e dos
+consumidores: 65 testes em 18,58 s, zero falhas/skips; `validate` válido.
+Relatórios `chapter-arrow-focused.xml` e `chapter-arrow-validate.json`.
+
+`epi003` também terminou com 3★ em uma entrada. O mapa seguinte de Politis
+expôs outro acoplamento ao fundo: os candidatos do cabeçalho tiveram
+correlação 0,9341/0,953306, mas MAE 19,413/25,116. O mecanismo existente
+de pixels claros passou a conferir esse cabeçalho com o mesmo MAE 18,
+preservando OCR do episódio e demais âncoras. Replay nativo do novo fundo e
+regressão dos leitores: 66 testes em 15,43 s, sem falhas/skips; pacote válido.
+Relatórios `map-glyph-focused.xml` e `map-glyph-validate.json`; captura privada
+em `var/admin-campaign-20261030t/politis-map-live.{json,png}`.
+
+O mapa de Politis foi reconhecido ao vivo e `finish-stage epi003` confirmou
+o retorno com zero Start em `20261030T092758Z_a4f85e77/agent_000003.json`.
+A navegação seguinte parou antes de Start porque `epi004` mostra o título
+em duas linhas na seleção de apoiador. A preparação já juntava esse campo;
+o alvo de Select Team passou a exigir a mesma junção completa, local e
+linhas atuais confiáveis/alinhadas. Verificação focada: 69 testes em 18,08 s,
+sem falhas/skips; `validate` válido. Relatórios `wrapped-title-focused-final.xml`
+e `wrapped-title-validate.json`; a primeira execução com erro na organização
+do teste permanece preservada e não representa aprovação.
+
+A preparação de `epi004` revelou a primeira linha em y102, acima da faixa
+anterior y105. Não houve reserva nem Start (`entries=[]`). A faixa atual
+y100..155 conserva todas as linhas antes de comparar a identidade. O replay
+verifica título/local/custo, ausência de linha, duplicidade sobreposta, ticket
+e equipe, incluindo negativos da formação. Resultado: 72 testes em 23,66 s,
+sem falhas/skips; pacote válido. Relatórios `wrapped-preparation-focused.xml`
+e `wrapped-preparation-validate.json` em `var/tests/chapter-nine-reader/`.
+
+`20261030T094206Z_b53db264/agent_000007.json` confirma a aplicação ao vivo:
+`epi004` e `epi005` tiveram uma entrada cada e 3★, encadeadas até o mapa
+15/30. A captura final conserva a seta em `<Chapter6.The Right Decision`.
+O título completo em duas linhas, custo e ocupação foram exigidos antes
+do início; a correção não dispensou esses campos nem repetiu fases anteriores.
+
+
+O capítulo 6 terminou com 30/30, dez entradas únicas, 88 de energia e nenhuma derrota. A virada diária cobriu o retorno final; o aviso foi fechado e os painéis de check-in foram tratados um por vez. A volta ao mapa permanece separada da vitória já comprovada.
+
+O lobby animado recusou duas entradas antes do envio. Episode recebeu somente o destino de navegação `prequel_ready_map`, reutilizando painel, controle e glifos atuais da guarda existente. Outros menus não receberam esse papel; nenhum limiar global ou início foi alterado. O shell `lobby_ui_renew.csb` contém a composição aninhada RIGHT/n_quick_menu, sem botão Episode literal nem binding adventure encontrado; essa lacuna permanece no índice. Replay do par privado congelado `var/admin-campaign-20261030w/lobby-navigation.{json,png}`, destino observado e negativos: 35 testes em 9,19 s, zero skips/falhas; validate válido, 281 nós. Relatórios `episode-navigation-focused-final2.xml` e `episode-navigation-validate.json`. A primeira tentativa do novo replay usou uma captura cujo OCR unia New Substory a Side Story; foi corretamente recusada, preservada e substituída pelo par integral reconhecido, sem relaxar a composição.
+
+A navegacao Episode foi confirmada ao vivo em `20261030T101748Z_d2b919d9/agent_000002.json`: lobby atual → mapa do episodio 3, capitulo 7, sem consumo. `finish-stage epi010` terminou em 000005 com zero Start, reconciliando o retorno pendente da virada diaria na mesma janela. O trecho lfn001..005 comeca com orcamento 48 de energia e prazo de 1800 s; identidade, equipe e objetivos continuam exigidos.
+
+No trecho lfn001..005, as quatro primeiras fases terminaram com 3★. A gravacao de `path-actions.json` falhou com WinError 5 apos dispatch_accepted de lfn005. O arquivo temporario e o diario anterior foram preservados; um processo elevado separado, apos desconexao, confirmou que a unica diferenca era o evento aceito da mesma reserva e salvou esse evento sem declarar entrada/vitoria. A causa do bloqueio de arquivo nao foi identificada alem de ser transitorio nessa retomada. AttemptLedger agora tenta somente a substituicao atomica ate quatro vezes, com espera total maxima de 0,6 s; erro persistente continua interrompendo e preserva os arquivos. Nao repete comandos do jogo. 65 testes focados em 1,18 s, zero skips/falhas; validate valido, 281 nos (`ledger-write-focused.xml`, `ledger-write-validate.json`). A nova leitura 20261030T103029Z_3dfbdb6e/000001 confirmou historia de lfn005; retomada por finish-stage, zero Start.
+
+lfn005 concluiu com 3★, mapa 15/30, sem novo Start (20261030T103029Z_3dfbdb6e/000004). Em lfn006, a captura ficou preta por mais de um minuto apos os dialogos; doctor confirmou mesma janela nao minimizada. Antes de desconectar, o callback ja voltou ao mapa; a renovacao da captura nao e apresentada como causa da recuperacao. A nova leitura 20261030T103610Z_d4f6d3a5/000001 confirmou 18/30 e o diario conserva result_verified/victory da unica entrada. A rotina foi interrompida e finish-stage reconciliou somente o retorno.
+
+Na pausa solicitada, a automacao foi cancelada e desconectada durante lfn009, apos uma entrada e sem resultado observado. Na retomada autorizada, a mesma janela foi redescoberta e o mapa confirmou 27/30 com apenas lfn010 disponivel (20261030T112841Z_d13ad789/000002). O progresso ocorrido durante a pausa foi registrado separadamente em var/admin-campaign-20261030aa/resume-observed-progress.json; nao foi fabricado um evento CLEAR para o diario antigo. Nenhuma repeticao de lfn009 foi enviada. lfn010 terminou com 3★ em uma entrada de 16 de energia, abrindo o capitulo 8 em 000007; capitulo 7 completo, sem derrota na progressao acompanhada.
+
+Antes de for001, a preparacao atual exigiu Earth (000008). Vivian Max Earth +1 foi selecionada na lista atual e substituiu somente Kawerik no slot esquerdo; imagens 000017/000020 provam opcao e destino, CP 502.080, sem custo de ouro. Tieria, Fenne e Elena foram mantidas. Escape voltou ao mapa 0/30 (000023), sem Start; inicio do bloco for001..005 autorizado com 40 de energia e prazo finito de 1800 s. A formacao foi operada por primitivas observadas; isso nao promove o executor generico de formacao.
+
+Capitulo 8 concluido com 30/30, dez entradas unicas, 96 de energia e nenhuma derrota. Os blocos for001..005 (40) e for006..010 (56) terminaram em 20261030T112841Z_d13ad789/000038 e 000054. Solitaria e Kanna foram vencidas na primeira entrada; requisito Ice de for007 atendido pela formacao mantida. O mapa abriu capitulo 9, 0/30, saldo observado 178/286; nenhuma recarga enviada.
+
+win001 terminou com 3★; win002 parou em Select Supporter, sem reserva ou Start, pela divergencia do artigo The no local. A calibracao especifica preservou location_source_text; 59 testes focados passaram em 24,46 s, zero skips/falhas, validate valido (281 nos), sem suite completa. 20261030T112841Z_d13ad789/000059 confirmou a preparacao atual de win002, local Path of a Fierce Fight, titulo An Obstacle e custo 8/171. Retomada somente de win002..005 (32 de energia), sem repeticao de win001.
+
+A segunda passagem por win002 enviou Select Team, mas permaneceu no apoiador: os logs nativos confirmam mouse 4, ponto 1054,625, dispatch aceito e ausencia do destino. O alvo atual continua exato; nao houve reserva de Start. O no Supporter agora admite no maximo duas passagens, reavaliando estado/local/titulo/alvo a cada uma, com Start antes do proprio retry (apos os handlers de interrupcao) e max_hit=1 em Start. Nenhum metodo de entrada ou limiar mudou. 74 testes focados em 14,69 s, zero falhas/skips; validate valido, 281 nos. A primeira versao do novo teste desconsiderava os handlers de interrupcao inseridos pelo compilador; o teste final confere a ordem integral, sem mudar esses handlers. A nova conexao confirmou a preparacao em 20261030T121557Z_d637c26a/000002.
+
+A retomada win002..005 concluiu com 3★ em cada fase, uma entrada de 8 por fase, zero derrotas; mapa 15/30 em 20261030T121557Z_d637c26a/000016. A navegacao Select Team e a calibracao especifica de win002 foram exercitadas no fluxo real, sem fallback nem repeticao de Start. O proximo bloco win006..010 tem custo total 48 e prazo de 1800 s.
+
+win006 teve a primeira derrota contra Enraged Mort, com resultado comprovado em 20261030T121557Z_d637c26a/000023; Leave voltou ao mapa 15/30 em 000026, sem Continue ou Try again. O usuario solicitou substituir Tieria por Watcher Schuri. A lista atual confirmou Watcher Schuri Max Light +10 e a troca somente do slot superior (000033..000039), CP observado 489.989; Vivian/Fenne/Elena mantidas, sem ouro gasto. A segunda entrada usa politica finita vinculada a derrota, mesmo objetivo, novo plano e no maximo tres entradas totais/24 de energia para win006.
+
+Abyss normal 51 foi observado disponivel em 20261030T151058Z_16af356f/000005, com Fenne/Watcher Schuri/Arbiter Vildred/Vivian e custo 10/33. O primeiro envio ficou incerto apos bloqueio de artefatos relatado pelo usuario e minimizacao; nenhuma derrota foi declarada. O usuario expandiu a capacidade e autorizou tentar novamente. A conexao fatal foi encerrada; nova leitura 20261030T151549Z_bbb87800/000001 confirmou preparacao do mesmo andar/janela, saldo 34. A retomada incerta existente passou a cobrir abyss_start, com mesmos vinculos de objetivo, tentativa anterior, fase, janela, evidencia, limite e prazo. 78 testes focados em 1,43 s, zero skips/falhas; validate valido, 281 nos. Historico conservado; apenas uma nova entrada autorizada, maximo dois envios/20 de energia incluindo o incerto; parar na primeira derrota.
+
+Andar 51 vencido: a captura corrente mostrou CLEAR/Abyss/Floor 51, mas o OCR leu Conguer Reward (.9529), impedindo o painel especifico. A variante q/g foi limitada ao rotulo nessa regiao do resultado, mantendo CLEAR/Abyss/Floor e o destino Back; o leitor do banner comum exclui a mesma composicao para nao interceptar o resultado. 32 testes focados em 9,62 s, zero skips/falhas; validate valido, 281 nos. A primeira execucao do teste demonstrou a precedencia do banner comum e foi preservada. Fixture correta: var/admin-abyss-20261030ad/result51-live.{json,png}; clear51.{json,png} e uma copia equivocada da preparacao antiga apos read-screen recusado por cancelamento ainda em andamento, nao prova de resultado. A nova leitura 20261030T152321Z_6934b0e3/000001 reconheceu abyss_result Floor 51 victory; finish-current iniciou apenas o retorno.
+
+Abyss 51..53 concluidos, primeiro combate confirmado do 51 e uma entrada por 52/53, custo observado 10 cada. Resultados/retornos em 20261030T152321Z_6934b0e3/000003/000005/000008. Com energia 7, Purchase Energy abriu pela barra superior; folha selecionada 1→80, Owned 36, cristais 30→60 nao selecionados (000011). Um Buy enviou uma unica compra (orcamento 1 folha/0 cristais); recibo Energy 80 e Your purchase was successful, saldo 88 apos regeneracao, cristais mantidos em 13993 (000014). O saldo restante de folhas nao foi relido. Primitivas, FramePool2/mouse4, 1212x682; sem fallback. Esse teste unitario nao habilita recarga automatica generica.
+
+Abyss 54..56 concluidos na primeira entrada, custo 10 por andar. Em 57, o aviso de amizade Vivian Good Friends→Comfortable cobriu o resultado; a rotina nao o fechou. Cancelamento seguido de nova leitura e um tap_close_text reconhecido fechou o aviso (20261030T152321Z_6934b0e3/000034→000035). friendship_result_close havia sido recusado antes de entrada por nao pertencer ao estado atual; nao foi repetido. CLEAR/Abyss/Floor 57 reconhecidos; finish-current retornou ao painel com 57 Conquered e 58 Available em 000036, zero Start. Nenhuma derrota nesse trecho.
+
+Abyss 58,59,60 concluidos na primeira entrada, custo 10 cada, abrindo 61 em 20261030T152321Z_6934b0e3/000046. O trecho 51..60 acumulou dez andares vencidos, sem derrota; primeiro envio de 51 continua separado como incerto por bloqueio de capacidade/minimizacao, com retry explicitamente autorizado. Total observado de recargas do agente neste percurso: uma folha para 80, zero cristais. Nenhuma equipe foi alterada no Abyss.
+
+O percurso Abyss autorizado ate a primeira derrota encerrou no 67: 51..66 vencidos (16 andares), primeira derrota comprovada contra Taranor Royal Guard em 20261030T152321Z_6934b0e3/000080. Nenhuma repeticao apos derrota, Continue ou Try again. Duas recargas de uma folha produziram 160 de energia no total; a segunda mostrou estoque 35 antes da compra, recibo 80 e saldo 85, cristais 14993 mantidos. A equipe permaneceu Fenne/Watcher Schuri/Arbiter Vildred/Vivian. Leave e desconexao encerram a operacao; relatorio privado em var/admin-abyss-20261030ae/final-report.json. A prova do andar 51 inclui um envio anterior bloqueado/incerto, separado da entrada que venceu; nao e contabilizado como derrota nem como vitoria extra.
+
+O usuario autorizou progressao no episodio 4 desde 1-1 com a logica anterior e pediu cobertura ate o 6. O catalogo existente tinha 382 entradas dos episodios 2..5; adventure_ma acrescentou 32 fases principais do 6 (quatro capitulos, 12 story/18 quest/2 tile), com 17 subentradas excluidas e energia null em ma2005/ma3004. Requisitos de estrelas tambem incorporados, preservando referencias ausentes. Leitura numerica sem whitelist; fase/capitulo/episodio atuais e custo continuam guardas independentes. A nova prova do mapa Episode4/Chapter1/0/30 esta em 20261030T192122Z_bd1277b8/000001. 74 testes focados em 22,85 s, zero skips/falhas; assert adicional de dados de estrelas passou em 0,18 s. Validate valido, 281 nos; suite completa continua dispensada pelo usuario. A primeira execucao detectou duas expectativas antigas: rejeitar leitura de outro episodio em vez de bloquear sua fase, e considerar abertura de historia gratuita como ausencia de Start; o teste final preserva a guarda consumidora e distingue story_start de battle_start.
+A preparacao Episode4 trd001 foi confirmada ao vivo em 20261030T193159Z_2c005d15/000002, titulo/local/custo 8/270 e equipe completa. Imagem confirma Arby/Vivian/WatcherSchuri/Fenne; Earth de Vivian atende a condicao atual. Episodios 5/6 ainda nao possuem nova prova live; catalogo nao comprova acesso nem compatibilidade dos novos modos.
+
+## Preparação para compartilhamento — 30/10/2026
+
+O README passou a conter instalação por clone e guia do agente: responsabilidades,
+leitura/ação/prova, diagnóstico, consulta de fontes, calibração e limites de conta.
+O bootstrap verifica Windows/Python 3.11–3.12 de 64 bits. O workflow do GitHub
+instala com OCR e executa validate e a seleção rápida nas duas versões do Python.
+
+Verificação local: 44 testes focados passaram em 1,37 s; seleção rápida final,
+721 passaram, 90 deselecionados, 19,55 s. Uma expectativa antiga de painel inteiro
+foi corrigida para o contrato de campos parciais: o teste conserva a leitura,
+exige desconhecido no campo ausente e comprova recusa de preparação/Start.
+A primeira execução falha permanece no diagnóstico privado.
+
+Uma cópia exportada somente dos arquivos preparados para o Git foi instalada
+em ambiente novo pelo bootstrap com OCR. Validate: válido, 282 nós, sem erros.
+Nessa cópia, a seleção rápida teve 598 passed, 123 skipped por evidências privadas
+ausentes e 90 deselected, em 22,22 s. Nenhuma captura ou progresso foi copiado.
+Esses números não equivalem à suíte completa nem a compatibilidade ao vivo em
+outra conta. A suíte nativa/completa não foi executada neste fechamento por haver
+uma sessão live ativa; a alteração de compartilhamento não muda reconhecedores
+ou gestos de produção. Os resultados anteriores pertencem às versões descritas
+em cada relato e não são promovidos a uma aprovação completa desta versão.
+
+Relatórios e logs ficam em var/tests/github-closure/, var/github-clean-bootstrap.txt
+e var/github-clean-fast-output.txt. A auditoria dos 419 arquivos candidatos não
+encontrou os padrões de credenciais pesquisados, arquivos privados proibidos ou
+arquivos acima de 10 MB; é uma verificação por padrões, não garantia universal.

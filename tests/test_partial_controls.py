@@ -49,7 +49,7 @@ def test_selected_member_overlay_blocks_underlying_preparation():
 def test_abyss_preparation_does_not_require_optional_cp_but_keeps_identity_and_cost():
     current = {'view':'abyss_preparation','items':[{'semantic_id':'context','floor':1,
                'cost':{'currency':'energy','cost':10,'available':20},'team_cp':None}]}
-    params = {'kind':'abyss_prepared','stage_id':'abyss001'}
+    params = {'kind':'abyss_prepared','stage_id':'abyss001','floor':1,'mode':'normal','expected_energy':10}
     assert target(current,params,{},None)
     for key in ('floor','cost'):
         altered = deepcopy(current); altered['items'][0][key] = None
@@ -65,3 +65,20 @@ def test_read_context_filters_invalid_numbers_and_preserves_sources_without_io()
     row = c.one('Valid')
     assert len(c.rows) == 1 and c.value(row)['sources'][0]['pointer'] == '/text/0'
     assert c.one('Missing') is None and c.value(None) == fact()
+
+
+def test_current_lobby_without_rank_requires_complete_menu_and_native_anchor():
+    rows=[(name,[1050,145+i*60,100,25]) for i,name in enumerate(('Episode','Side Story','Battle','Arena','Summon','Shop'))]
+    data=observation(*rows,matches={'lobby_menu_grid':{'hit':True,'box':[1090,290,100,220]}})
+    data['window']['process_name']='EpicSeven.exe'
+    current=operation_view(data)
+    assert current['view']=='lobby' and current['items'][0]['rank_text'] is None
+    for missing in range(6):
+        altered=deepcopy(data);altered['text'].pop(missing)
+        assert operation_view(altered)=={}
+    data['matches']['lobby_menu_grid']['hit']=False
+    assert operation_view(data)=={}
+    data['matches']['lobby_menu_grid']['hit']=True
+    data['text'].extend([{'text':'Confirm','score':.99,'box':[640,400,100,30]},
+                         {'text':'Cancel','score':.99,'box':[400,400,100,30]}])
+    assert operation_view(data)=={}

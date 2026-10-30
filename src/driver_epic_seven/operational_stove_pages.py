@@ -218,12 +218,16 @@ def page_nodes(c):
 
     lobby_labels=[c.one(name,(1000,135,210,390)) for name in ('Episode','Side Story','Battle','Arena','Summon','Shop')]
     lobby_rank=c.one(r'Rank[.]\d+',(90,30,150,45))
-    if c.state in ('lobby','lobby_idle') or (c.state=='unknown' and all(lobby_labels) and lobby_rank):
+    if c.state in ('lobby','lobby_idle') or (c.state=='unknown' and all(lobby_labels)
+            and (lobby_rank or c.match('lobby_menu_grid'))):
+        if c.find('Confirm|Cancel', (300,200,600,350)):
+            return 'stove_overlay_unresolved'
         p=c.panel('lobby',lobby_labels+[lobby_rank],'wnd/lobby_ui_renew.csb','idle' if c.state=='lobby_idle' else 'visible_hud',match_keys=('lobby_stained_window','lobby_menu_grid','lobby_idle_upper_left'))
         c.detail(p,rank_text=c.value(c.one(r'Rank[.]\d+',(90,30,150,45))),unlocked_modes=fact())
         if c.state!='lobby_idle':
             for name in ('Episode','Side Story','Battle','Arena','Summon','Shop'):
-                c.control(p,name.casefold().replace(' ','_'),c.one(name,(1000,135,210,390)),consuming=False)
+                c.control(p,name.casefold().replace(' ','_'),c.one(name,(1000,135,210,390)),consuming=False,
+                          navigation=[{'view':'prequel_ready_map'}] if name=='Episode' else None)
             c.control(p,'hero',c.one('Hero',(890,620,140,55)),consuming=False,
                       navigation=[{'view':'hero_detail'},{'view':'hero_equipment'}],shortcut='c')
             orbis=c.one('Orbis',(800,615,100,40))

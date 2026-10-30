@@ -70,6 +70,16 @@ def executor_for(task):
     return operation
 
 
+def equipment_operation(task):
+    """Adapt a mission requirement to an existing capability, without input."""
+    if not task.get('condition'):raise ValueError('Missão de equipamento ausente do catálogo.')
+    executor=executor_for(task)
+    if executor=='equip':return 'equip_all'
+    if executor=='equipment_enhance' and 'weapon' in str(task.get('parameters',{}).get('equiptype','')).split(';'):
+        return 'enhance_weapon'
+    raise ValueError('Requisito sem operação de equipamento no escopo mapeado.')
+
+
 def route_level(level, config=None):
     cat = catalog(config)
     identity = group_id(level)

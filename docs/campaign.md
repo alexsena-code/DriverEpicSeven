@@ -1,10 +1,225 @@
 # Campanha até um bloqueio
 
+Na seleção de apoiador, títulos quebrados em linhas seguem a mesma prova
+de campo já usada na preparação: até três linhas atuais, dentro da faixa
+do título, cada uma com score ≥0,90, sem sobreposição vertical ambígua.
+A junção precisa corresponder ao título completo e ao local independente;
+não se relê um sufixo ausente a partir do catálogo. `epi004` forneceu o
+positivo em duas linhas (The Lady with the Gentle / Smile). Select Team
+continua separado de Start e conserva alvo/estabilidade/limites Maa.
+
+A faixa do título atual cobre y100..155: a primeira linha de um título
+quebrado foi observada em y102 na preparação. A localização acima e o
+primeiro objetivo abaixo permanecem campos separados; nenhuma linha do
+título pode ser omitida para autorizar início. Ambiguidade, custo, ocupação
+da equipe e ticket recente continuam bloqueios independentes de Start.
+
+O cabeçalho de episódio no mapa também usa os pixels claros dos templates
+existentes (`glyph_min=190`), mantendo MAE 18 e limiares Maa. No fundo de
+Politis, o candidato tinha correlação positiva, mas a comparação do fundo
+translúcido recusava o painel. O número do episódio continua vindo do OCR
+atual, junto do capítulo, Story, descrição e Ready; o template isolado não
+identifica episódio nem autoriza Start. O replay novo inclui escurecidos,
+cabeçalho/Ready ausentes, fase e episódio incorretos.
+
+O cabeçalho do mapa preserva a seta esquerda quando ela vem no mesmo bloco
+OCR (`<Chapter 6.The Right Decision >`, caixa observada x41). A região
+calibrada inclui esse limite e aceita no máximo um `<` antes de Chapter;
+episódio, número do capítulo, disponibilidade da linha e identidade na
+preparação continuam obrigatórios. Isso corrigiu a pausa entre `epi002`
+e `epi003`, sem aumentar o timeout nem repetir Start. O aviso Side Story
+testa primeiro seu fechamento nativo no filtro de candidatos; se ausente,
+não executa OCR do corpo para esse candidato.
+
+Na revisão antes da retomada de 30/10/2026, o último bloqueio de `wip010`
+foi identificado: o banner de manutenção cobria o título de Side Story Alert.
+A variante adicional exige ambas as linhas exatas do corpo, únicas e com
+score ≥0,90, luminosidade atual e o fechamento nativo já calibrado. Uma
+única leitura OCR do corpo alimenta os dois campos; não depende de nomes
+dos cards. O candidato e a árvore continuam usando o mesmo frame Maa,
+o alvo permanece `side_alert_close` e o tratamento mantém três passagens.
+Telas escurecidas, falta de qualquer linha/fechamento e diálogos alheios
+foram recusados no replay; o título e os cards podem estar cobertos nessa
+composição específica. Esse replay não fabrica um banner ao vivo.
+
+Em 30/10/2026, o leitor da preparação passou a conservar o painel e os
+demais campos diante de localização/título ilegíveis ou título ambíguo;
+o campo sem prova permanece desconhecido e não autoriza Start. Títulos
+aceitam pontuação e conteúdo atual, sem restringir nomes a letras. A
+comparação da identidade admite `O` isolado lido como `0` somente mantendo
+o restante do título e a localização correspondente; não reescreve o OCR.
+Uma composição de busca de heróis ambígua não vira preparação por fallback.
+Validação focada: 44 testes passaram em 17,32 s, sem skips; `validate` válido.
+Comandos, versão e hashes em `var/tests/chapter-nine-reader/scope.json`.
+Suíte completa dispensada explicitamente pelo usuário nesta entrega.
+
+Quando o detector separa número e título de uma linha disponível do mapa,
+o callback pode reler essa linha no mesmo frame Maa. Exige primeiro mapa
+completo, episódio/capítulo esperados e ícone nativo de disponibilidade;
+os fragmentos servem apenas para localizar o recorte. Há no máximo duas
+leituras `only_rec`, confiança mínima 0,90, número e título completos iguais
+à fase solicitada. Só o texto efetivamente reconhecido alimenta a árvore;
+o catálogo nunca preenche o OCR. A variante foi calibrada em `pow001` e
+validada em mapa→apoiador→preparação, sem Start na calibração. O callback
+confere a identidade da janela antes de compor essa leitura. Positivos e
+negativos junto dos consumidores: 63 testes em 7,11 s, sem skips;
+`var/tests/chapter-nine-reader/split-map-current.xml`, `validate` válido.
+
+Na história de `wis001`, o candidato nativo de Skip atingiu correlação
+0,983659, mas o erro de pixels foi 28,526 sobre bordas translúcidas do
+template cinza. A conferência auxiliar do Skip atual usa o mecanismo
+existente de pixels claros (`glyph_min=190`), preservando o máximo MAE 18
+e os candidatos/limiares nativos. O miolo claro exclui o verde da máscara
+e a composição continua exigindo histórico e ausência de confirmação.
+Isso remove a dependência das bordas misturadas ao cenário; fundos novos
+continuam sujeitos à prova positiva e às exclusões do leitor.
+
+Em `trd008` (episódio 4), o histórico cinza sobre telhado não passou nos
+templates anteriores, deixando a história desconhecida. Foram acrescentados
+recortes nativos desse fundo aos controles compartilhados e ao par cinza que
+determina o gesto hold, sem alterar limiares. O replay focado cobre dois frames
+positivos, controles cobertos, escurecimento e confirmação sobreposta;
+16 testes passaram em 62,92 s. Proveniência em `assets/template-provenance.json`
+e evidências em `var/admin-episode4-20261030ah/roof-story-tests.xml`. Após
+reconectar, a mesma tela foi reconhecida como história com gesto hold.
+
+A linha `trd009` acrescentou uma variante observada de disponibilidade com
+ícone de portal. O template próprio preserva correlação 0,90, MAE 8 e pixels
+claros 210; a árvore continua exigindo alinhamento com número/título e o
+executor confere episódio, capítulo, preparação e custo. O replay com a
+variante anterior de chefe, escurecimento, ícone coberto e fase vizinha passou
+em 38 testes (14,87 s), sem skips. Evidência:
+`var/admin-episode4-20261030ai/portal-map-tests.xml`; isso valida seleção,
+não pressupõe execução de um modo novo.
+
+No retorno de `kae002`, o mapa com View Story do episódio 4 revelou que o
+classificador de história ainda exigia o cabeçalho do prólogo. A composição
+passou a aceitar também o cabeçalho numérico já reconhecido, junto de View
+Story e das mesmas exclusões de sobreposição. Foram 44 testes focados em
+17,01 s; a nova conexão confirmou `prequel_story_map` e concluiu o retorno
+de `kae002` sem Start. Para `kae003`, a linha íntegra de
+`level_enter_adventure.db` informa `type=story` e `use_enterpoint=0`; título,
+descrição, capítulo e View Story foram conferidos ao vivo. O catálogo resolve
+somente essa entrada como história gratuita, com proveniência própria. O grafo
+não contém início de combate; nove testes focados passaram em 0,24 s. Provas
+em `var/admin-episode4-20261030aj/story-map-tests.xml` e
+`var/admin-episode4-20261030ak/story-cost-tests.xml`.
+
+Em `kae004`, o histórico cinza sobre o mercado voltou a impedir a composição
+de história; uma recuperação por coordenada também foi recusada pela animação.
+Foram acrescentadas duas variantes do par Skip/histórico, com máscara verde
+nativa restrita ao miolo neutro dos glifos, sem dilatação ou mudança de limiar.
+O replay inclui três frames do mercado, escurecimento, controles cobertos e
+os cenários anteriores: três testes passaram em 6,99 s, sem skips, com validate
+válido. A conexão seguinte comprovou história e gesto hold no frame atual.
+Proveniência dos recortes em `assets/template-provenance.json`; evidências em
+`var/admin-episode4-20261030al/market-story-tests.xml`. A retomada preservou a
+tentativa original, sem novo Start.
+
+No mesmo percurso, o detector omitiu o `I` de `Desperate Struggle I` em
+`com004`. Os alvos de apoiador/preparação relêem o recorte nativo da linha
+com OCR `only_rec` no mesmo frame quando o texto não corresponde. A releitura
+precisa comprovar o título completo com confiança mínima 0,90; não infere
+sufixo ausente e preserva originais, candidatos e método em
+`campaign_title_reread`. A captura positiva recuperou `I`; o alvo `II` foi
+recusado sobre os mesmos pixels. A fonte é a captura privada em
+`var/runs/20261030T032227Z_f4969f8d/`.
+O mesmo mecanismo cobre a linha de localização: a leitura `Prophei` foi
+reconciliada com `Prophet` pelos pixels atuais, mantendo comparação exata.
+Os recortes permanecem dentro das regiões consumidas pela árvore; os testes
+nativos incluem apoiador e preparação com o alvo Start e seus bloqueios.
+Validação focada final desse ajuste: 53 testes em 6,63 s, sem skips, em
+`var/tests/chapter-nine-reader/identity-current.xml`; `validate` válido.
+
+Em `dis002`, Skip atual e histórico reconhecido corresponderam a variantes
+de templates diferentes. A composição de história aceita os dois controles
+positivos do perfil único, conservando o Skip da composição atual, as
+exclusões de confirmação e os limiares individuais. Não exige proveniência
+histórica STOVE/Steam idêntica para os dois controles. Testes focados de
+história: 15 passaram em 55,50 s; a captura atual, ausência de cada controle
+e confirmação sobreposta passaram em teste adicional (0,16 s). Evidência
+privada `20261030T035220Z_b37e5050/live.{json,png}`; relatórios em
+`var/tests/chapter-nine-reader/`.
+
+Títulos curtos usam no máximo uma segunda releitura, recortada pelo retângulo
+atual da linha, quando a faixa inteira falha. A posição de uma detecção com
+score baixo pode orientar o recorte, mas o conteúdo continua desconhecido até
+uma nova leitura nativa com score ≥0,90 e identidade correspondente. Originais,
+ambos os recortes/candidatos e aceitação ficam preservados. Em `dis005`,
+`HonorlIl` (0,805243) foi relido como `Honor II` sem aceitar o alvo `Honor I`.
+A comparação compartilhada também conserva a normalização já calibrada de
+sufixos romanos I/II/III (`l`/`1`), com prefixo e contagem exatos; não infere
+um numeral ausente. Testes focados: 58 passaram em 6,69 s, sem skips,
+`var/tests/chapter-nine-reader/tight-fixed.xml`; `validate` válido.
+
+O convite atual `This friend supported you during the battle` possui variante
+de template de mensagem própria, com proveniência em
+`assets/template-provenance.json`. Cabeçalho, mensagem e Cancel continuam
+obrigatórios; somente o Cancel existente é acionado, com os limites anteriores.
+Quatro capturas positivas (incluindo a antiga) e negativos sem cada controle
+ou escurecidos passaram em testes nativos: oito testes focados em 0,87 s,
+sem skips. A retomada de `lfs002` fechou o convite e confirmou o mapa (6/30)
+com zero novos inícios em `20261030T044651Z_4975d8f8`.
+
+O ícone de histórico da história com fundo de cidade claro do episódio 3
+tem variante `story_history_town.png`, extraída do controle atual com origem
+e hashes no catálogo. Usa TemplateMatch ≥0,92 e erro de pixels ≤18, sem
+elevar limites globais. Skip e histórico continuam positivos, com exclusão
+de confirmação. As primitivas por ponto recusadas nessa animação não
+enviaram entrada; não foi relaxado seu limite de diferença da tela.
+Replays nativos, ausência de controles e overlays: 16 testes focados passaram
+em 58,59 s, sem skips (`town-story.xml`); `validate` válido.
+
+O mapa de chefe do episódio 3 mantém episódio, capítulo, Story e Ready, mas
+troca a seção `Obtainable Rewards` por `Enemies`. O leitor aceita essas duas
+composições atuais sem transformar inimigos em recompensas. Disponibilidade,
+linha/descrição e identidade da fase continuam sendo guardas de entrada; o
+retorno exige a prova de vitória da fase anterior na mesma janela. Captura
+`20261030T045816Z_05101aea/agent_000005.json`; 62 testes focados passaram em
+7,50 s, sem skips (`boss-map-current.xml`); `validate` válido.
+
+No grafo compartilhado `path campaign`, a verificação de derrota precede os
+controles de história; Skip/hold e confirmação precedem o leitor genérico de
+avisos. Candidatos incompatíveis com as âncoras atuais são recusados antes da
+análise completa, conforme [arquitetura](architecture.md#estrategia-de-testes).
+Uma possibilidade positiva continua exigindo árvore, OCR e alvo atuais.
+O acompanhamento conserva Auto, vitória/3★, derrota e interrupções; isso não
+promove ausência de Skip ou Auto a prova de que o combate continua ativo.
+
+O fechamento CLEAR admite até três cliques no total por fase, sem `repeat`:
+cada passagem Maa reconhece novamente o resultado com 3★ e o controle atual.
+O retry permanece acessível após avisos e na retomada de uma vitória pendente.
+Recompensas mantêm os limites próprios; nenhum desses fechamentos retorna ao
+Start. Durações, estabilidade e método de entrada foram preservados. Essa
+alteração tem prova offline; a aceitação do novo percurso no jogo aguarda a
+liberação do usuário para reconectar.
+
+A busca da última fase usada na recuperação de histórias filtra episódio e
+capítulo juntos. Ampliar o catálogo com outro episódio não pode trocar nem
+remover a missão de recuperação de uma história existente.
+
+O mesmo compilador aceita as identidades estáticas do episódio 2 sem limitar
+o capítulo ao prólogo ou à primeira tela exercitada. Presença no catálogo não
+comprova acesso: antes de cada trecho, conferir episódio, capítulo, linha atual
+disponível e custo/equipe da preparação; custo desconhecido continua recusado.
+O cabeçalho simples do episódio 2 tem variante de recorte própria, com origem
+em captura de 29/10/2026 e os mesmos limites de pixels. Novos episódios e
+condições de combate continuam precisando de prova própria.
+
+Side Story Alert e convite de amizade usam os tratamentos calibrados do
+grafo Finish também na campanha compartilhada e na retomada de vitória.
+Há até três tentativas reconhecidas de fechar/cancelar, sem abrir Side Story,
+aceitar amizade ou repetir Start. Esses nós permanecem no orçamento de
+tratamentos. O título CLEAR usa a região de OCR calibrada `[450,390,310,65]`:
+o recorte anterior incluía o efeito luminoso e, após um primeiro clique sem
+avanço, podia ler `LEAR`/`YLEAR` e bloquear os retries. Texto exato e confiança
+0,90 foram mantidos, assim como seta, três estrelas e três checks atuais.
+
 **Entrada vigente:** mouse 4 como padrão em `config/campaign.json`; fallback 64 apenas de forma explícita em `config/campaign-fallback.json`, após nova observação. Registros abaixo que mencionam 64 descrevem o histórico da madrugada. Nenhuma ação consumidora com resultado incerto deve ser repetida para testar outro método.
 
 O usuário autorizou avançar a campanha até não conseguir progredir, com no máximo três entradas por fase; depois disso, pesquisar e testar outros tipos de quests dos caminhos e produzir um HTML enxuto. O limite não é autorização para repetir uma batalha de resultado desconhecido. Não há recargas ou compras automáticas.
 
-Use o perfil explícito `--config config/campaign.json`. O catálogo `data/stages/campaign.json` deriva do pacote e inclui 382 fases de episódios 2 a 5. Isso não comprova que todas estejam acessíveis na demo. Custo `null` significa desconhecido; a compilação recusa esses trechos até haver calibração, em vez de supor entrada gratuita.
+Use o perfil explícito `--config config/campaign.json`. O catálogo `data/stages/campaign.json` deriva do pacote e inclui 414 fases de episódios 2 a 6. Isso não comprova que todas estejam acessíveis na demo. Custo `null` significa desconhecido; a compilação recusa esses trechos até haver calibração, em vez de supor entrada gratuita.
 
 ```powershell
 driver-epic-seven --config config/campaign.json chapter --from-stage ake001 --max-energy 84 --timeout 900
@@ -38,6 +253,15 @@ O relatório final deve separar rotina validada ao vivo, navegação/entrada par
 <a id="selecao-de-fase"></a>
 
 ## Seleção de fase
+
+Na Wave 3 (29/10/2026), capítulo e campanha do prólogo passam pelo contrato
+finito e checkpoint comuns de [architecture.md](architecture.md#wave3-planos).
+Uma retomada conserva objetivo, orçamento e prazo, omite fases retornadas e
+conclui entradas pendentes sem Start. Histórias, confirmação específica, avisos,
+Auto e resultado continuam em grafos Maa. Vitória sem prova de 3★ mantém o
+checkpoint de revisão. Derrota só admite nova tentativa sob a política explícita
+existente; timeout e captura falha permanecem incertos. Esta wave é verificada
+offline durante manutenção e não registra nova progressão da conta.
 
 Perfil validado: demo Steam em inglês, área cliente 1212 × 682, MaaFramework 5.14.3, FramePool e PostMessage. Data local: 25/10/2026.
 
@@ -212,7 +436,7 @@ Acompanhamento: [ALE-190](https://linear.app/akxl/issue/ALE-190), parte da [ALE-
 
 ### Fontes e diagnóstico
 
-[star-requirements.json](../data/stages/star-requirements.json) cruza `level_enter_adventure.mission1..3`, `mission_data` e textos para as 382 entradas de `steam-campaign.json`. Há 1.092 condições: 379 de conclusão, 273 sem Continue, 199 de elemento, 165 de sobrevivência e 76 de história. São ocorrências de condições, não quantidades de fases distintas. Dezoito entradas têm as três referências vazias e permanecem parciais.
+[star-requirements.json](../data/stages/star-requirements.json) cruza `level_enter_adventure.mission1..3`, `mission_data` e textos para as 414 entradas de `campaign.json`. São 1146 ocorrências de condições, com parâmetros brutos preservados; 30 entradas sem as três referências permanecem parciais. A inclusão do episódio 6 acrescenta condições de classe e exploração; isso não prova equipe elegível nem execução do modo.
 
 - `lfs001`: conclusão + sem Continue + ao menos um herói Fire (`attribute=fire,count=1`).
 - `dis003`: conclusão + sem Continue + ao menos três heróis sobreviventes (`aliverole=all,count=3`). A vitória de duas estrelas é evidência histórica; investigar ou repetir essa fase não faz parte do objetivo atual.
@@ -233,11 +457,65 @@ Implementar como extensão da `ui_tree`, do catálogo e das primitivas/pipelines
 
 ## Prólogo STOVE no roteiro do Caminho — 27/10/2026
 
+### Episódio 1, capítulo 6 — adaptação em andamento
+
+O catálogo `data/stages/episode1-chapter6-candidates.json` associa as oito
+linhas do capítulo 6 a `mission_data`, `level_enter_adventure` e textos do
+pacote; a energia estática total é 64, sem comprovar custos ou acesso atuais.
+O compilador compartilhado distingue episódio e capítulo, e a composição de
+mapa pode reconhecer o cabeçalho `Episode 1` por OCR e o Ready nativo.
+Na leitura ao vivo `var/runs/20261029T131551Z_3e5e4fe8`, a árvore identificou
+o capítulo 6 e a primeira linha disponível. `path prepare taw002` clicou a
+linha e Ready, chegando à seleção de apoiador da própria fase; o grafo esperava
+preparação e terminou em timeout. Não houve Start nessa tentativa. O grafo
+passou a reconhecer Select Supporter/Select Supnorter e a confirmar localização,
+título, ausência de carregamento e botão único antes de Select Team. No trecho
+`var/runs/20261029T133033Z_8db1d4b4`, a seleção de apoiador levou à preparação
+de taw002; custo 8, equipe e objetivos foram observados antes de uma única
+entrada. História e combate foram observados; o indicador de Auto desta tela
+não foi comprovado pelos templates existentes, e o usuário o ativou. Em
+`var/runs/20261029T134159Z_64ab46d1`, as seis primeiras fases terminaram
+com 18/24 estrelas; a fase 7 teve uma entrada e foi interrompida por Patch
+Update durante as histórias finais, sem resultado comprovado. A fase 8 não foi
+iniciada. Após a manutenção, a janela e o progresso foram observados novamente
+antes de considerar qualquer Start; o resultado original permanece desconhecido.
+O usuário autorizou em 29/10/2026 uma nova tentativa quando o resultado
+anterior permanece desconhecido e a fase ainda precisa ser feita. A política
+explícita `kind=uncertain` exige evidência preservada da tentativa e observação
+atual, mesma janela, identidade da tentativa anterior, nova tentativa, objetivo,
+no máximo três tentativas no total, limite de custo total e prazo;
+não altera o resultado desconhecido para derrota nem autoriza replay automático.
+O recibo de Story Clear com título coberto foi reconhecido pelo texto completo
+e controle nativo de fechamento. O encadeamento até o fim, interrupções no
+mapa e a variante atual de Auto continuam pendentes de validação.
+
+Na retomada autorizada `var/runs/20261029T150252Z_351071f6`, a segunda entrada
+de tae009 consumiu 8 de energia e terminou com 3★; tae010 consumiu mais 8 e
+também terminou com 3★. A tela de recibo de For Hope mostrou 24/24, após os
+avisos Specialty Change, Side Story e Grace of Growth. O jogo abriu diretamente
+o mapa do episódio 2, sem Start nessa nova etapa. O retorno específico após a
+vitória de tae010 foi então reconhecido sem entrada em
+`var/runs/20261029T152248Z_2b0f2e4e`. A entrada anterior de tae009 continua
+desconhecida no diário; o êxito posterior não reclassifica sua causa.
+
 `data/stages/adventurer-prequel.json` resolve 30 identidades estáticas por `mission_data` e preserva títulos/localizações e proveniência. Por exemplo, tar007 usa a localização A Rift in the Frustration e título One Last Strike; tar008 usa Fate's Crossroads e Failed to Protect. A preparação precisa provar os dois textos e o custo atual. Histórias gratuitas conhecidas têm um ramo próprio: capítulo, descrição atual, linha e View Story antes de uma entrada; Skip/hold e confirmação compartilhados, recibo identificado e retorno ao mapa. Custo desconhecido continua recusado.
 
 `path campaign` compila um trecho contíguo do mesmo capítulo com orçamento total, um Start máximo por fase, Auto somente diante de HUD positivamente desligado e resultado 3★ antes do retorno. `path finish-stage` retoma somente uma entrada pendente, sem nós de início. A trava persistente recusa repetir uma fase registrada por um pedido novo. Não existe reparo retroativo ou replay automático.
 
-O grafo de retomada remove também os nós de entrada que referenciavam seleção/preparação removidas. Suas arestas precisam permanecer fechadas; uma recusa Maa (`job_id=0`) falha imediatamente, sem consultar um job inexistente até o timeout. A entrada sem ação pode aguardar um combate já em Auto dentro do prazo finito do pedido. A preparação de ijp007 observada apenas com Genesis Ras convidado não iniciou; acrescentar um herói possuído resolveu aquele caso. Isso não estabelece uma exigência de quatro integrantes. O retry autorizado foi reconciliado individualmente no diário com prova da equipe corrigida, energia e identidade da janela; não é recuperação automática de Start incerto.
+Na Wave 1, o grafo de retomada passou a emitir diretamente apenas os ramos de conclusão, sem gerar seleção, preparação ou Start. O compositor verifica suas arestas fechadas; uma recusa Maa (`job_id=0`) falha imediatamente, sem consultar um job inexistente até o timeout. A entrada sem ação pode aguardar um combate já em Auto dentro do prazo finito do pedido. A preparação de ijp007 observada apenas com Genesis Ras convidado não iniciou; acrescentar um herói possuído resolveu aquele caso. Isso não estabelece uma exigência de quatro integrantes. O retry autorizado foi reconciliado individualmente no diário com prova da equipe corrigida, energia e identidade da janela; não é recuperação automática de Start incerto.
 
 As unidades tar007/tar008 foram iniciadas uma vez cada, custo de 8 de energia por fase, com três condições cumpridas; o capítulo 3 alcançou 15/15 estrelas. A primeira entrada usou mouse64; tar008 usou mouse4, que também passou na seleção e no retorno à preparação. O fechamento encontrou Rank Up, histórias, desbloqueio de Abyss e recompensas. Pausas para calibração e retomadas têm zero Start. Esse percurso não comprova o encadeamento longo, o restante do prólogo ou a preparação automática de equipes para objetivos diferentes.
 
+
+
+Na Wave 2, o trecho de campanha conserva vitória, 3★ e retorno como provas
+separadas. O checkpoint `three_star_proof_missing` devolve a vitória observada e
+interrompe o encadeamento se faltarem 3★ atuais; não autoriza política de derrota.
+A nova tentativa depois de derrota é solicitada pelo agente com identidade nova,
+mesmo objetivo/plano/escopo, vínculo anterior e tetos de custo/tentativas/prazo.
+Timeout ou captura falha preservam a reserva, sem novo Start. O planejador geral
+3★ de ALE-190 continua separado; [contrato e limites](architecture.md#nucleo-local).
+
+Na calibracao de win002 (episodio 3, capitulo 9), o Ready/Select Supporter atual mostra `Path of a Fierce Fight`, enquanto a fonte estatica declara `The Path of a Fierce Fight`. Apenas essa entrada do catalogo usa o rotulo observado, com `location_source_text` e proveniencia preservados. O comparador permanece exato; nao retirar artigos globalmente nem preencher campos a partir do titulo solicitado.
+
+A leitura de episódio usa o número atual com as âncoras do mapa, sem lista fixa de episódios no compilador. A fase pedida ainda precisa existir no catálogo e coincidir em episódio, capítulo, título/descrição e custo; ler outro episódio não autoriza a fase solicitada. O pacote acrescentou 32 fases principais de `adventure_ma` (referências `ep6_ch*`), quatro capítulos, com 12 histórias/18 combates/2 explorações tile. As 17 subentradas tile não foram convertidas em fases principais, e as duas entradas tile mantêm energia null. Os controles e percursos do episódio 6 ainda precisam de observação própria ao chegar.

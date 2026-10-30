@@ -139,6 +139,7 @@ def test_diary_reuses_one_heir_control_and_can_open_calibrated_tab():
 def test_own_team_preparation_has_one_panel_even_when_generic_ready_also_matches():
     import json
     from driver_epic_seven.config import ROOT
+    from driver_epic_seven.prequel import target
     path=ROOT/'var/group2-live/ijp006-preparation-before-composition-fix.json'
     if not path.exists():pytest.skip('Private own-team preparation unavailable.')
     data=json.loads(path.read_text(encoding='utf-8'))
@@ -148,10 +149,18 @@ def test_own_team_preparation_has_one_panel_even_when_generic_ready_also_matches
         assert view['view']=='prequel_preparation'
         assert view['items'][0]['story_title']=='An Invitation to Despair'
         assert view['items'][0]['cost']['cost']==8
+        assert target(view,{'kind':'prequel_prepared','stage_id':'ijp006'})==[0,0,1,1]
         for missing in ('The Deepest Darkness','An Invitation to Despair'):
             negative=deepcopy(current);negative['text']=[r for r in negative['text'] if r['text']!=missing]
             negative['ui_tree']=build_tree(negative)
-            assert operation_view(negative).get('view')!='prequel_preparation'
+            partial=operation_view(negative)
+            # The composed panel remains readable; incomplete stage identity
+            # must block preparation completion and consuming input.
+            assert partial['view']=='prequel_preparation'
+            field='location' if missing=='The Deepest Darkness' else 'story_title'
+            assert partial['items'][0][field] is None
+            assert target(partial,{'kind':'prequel_prepared','stage_id':'ijp006'}) is None
+            assert target(partial,{'kind':'prequel_start','stage_id':'ijp006','max_energy':8},negative) is None
 
 
 @pytest.mark.fixtures

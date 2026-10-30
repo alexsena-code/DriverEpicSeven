@@ -15,6 +15,12 @@ def path_target(observation, params, frame, prepared=None):
     """A box is returned only for a mapped current target in this Maa frame."""
     tree = observation['ui_tree']
     current = current_view(observation)
+    if str(params.get('kind','')).startswith('formation_'):
+        from .formation_operations import target
+        return target(observation,params,prepared)
+    if params.get('kind') in ('story_skip','story_hold'):
+        from .interruptions import story_target
+        return story_target(observation,params)
     if params.get('kind')=='mapped_back':
         if current.get('view') not in ('hero_detail','hero_equipment','equipment_detail','item_enhancement',
                                       'prequel_preparation','prequel_ready_map','prequel_story_map','abyss_floors','abyss_hub'):
@@ -229,12 +235,20 @@ def run_graph(runtime, graph, entry, success, timeout=25):
         raise ValueError('Tempo da operação fora do limite.')
     runtime.guard(input_active=True)
     runtime.evidence.write('path_graph',{'entry':entry,'success':success,'graph':graph})
-    job = runtime.tasker.post_task(entry, graph)
+    from .composition import validate_graph
+    terminals=list(success) if isinstance(success,(tuple,list)) else [success]
+    validate_graph(graph,entry,terminals)
+    post = getattr(runtime,'post_task',runtime.tasker.post_task)
+    job = post(entry, graph)
     try:
         runtime.wait(job, timeout, task=True)
         nodes = [{'name':n.name,'completed':n.completed,
                   'action_success':n.action.success if n.action else None} for n in job.get().nodes]
-        reached = any(n['name']==success and n['completed'] for n in nodes)
+        completed=[n['name'] for n in nodes if n['name'] in terminals and n['completed']]
+        reached=bool(completed)
+        defeats=[n['name'] for n in nodes if n['completed'] and (
+            graph.get(n['name'],{}).get('custom_recognition_param',{}).get('execution',{}).get('phase')=='defeat'
+            or graph.get(n['name'],{}).get('custom_recognition_param',{}).get('path',{}).get('kind') in ('prequel_defeat','abyss_defeat','altar_defeat'))]
         # The terminal Maa recognition is the action's proof. A later capture
         # may fail independently and must not turn that proof into a retry.
         observation_error = None
@@ -244,13 +258,16 @@ def run_graph(runtime, graph, entry, success, timeout=25):
             after = None
             observation_error = str(exc)
         result = {'operation':'path','completed':reached,'postcondition_verified':reached,
+                  'completion_node':completed[-1] if completed else None,
+                  'battle_result':'defeat' if defeats else None,
                   'needs_review':not reached or observation_error is not None,
                   'observation_error':observation_error,'nodes':nodes,'after':after,
                   'agent_checkpoint':True,'evidence_dir':str(runtime.evidence.path)}
         runtime.evidence.write('path_result',result)
         return result
     except Exception as exc:
-        runtime.evidence.write('path_failure',{'entry':entry,'error':str(exc),'no_automatic_retry':True})
+        try:runtime.evidence.write('path_failure',{'entry':entry,'error':str(exc),'no_automatic_retry':True})
+        except Exception as failure:exc.add_note('Falha ao preservar evidência: '+str(failure))
         try:
             runtime.observe('path_failure_after',read_text=True)
         except (RuntimeError, OSError, ValueError):

@@ -1,10 +1,40 @@
 {
+  "OCR.Episode1Heading": {
+    "recognition": "OCR",
+    "roi": [
+      55,
+      8,
+      200,
+      48
+    ],
+    "expected": [
+      "Episode 1"
+    ],
+    "model": "en_us",
+    "action": "DoNothing"
+  },
+  "OCR.StoryClearReceipt": {
+    "recognition": "OCR",
+    "roi": [
+      410,
+      210,
+      440,
+      75
+    ],
+    "expected": "You have received Story Clear Reward[.]?",
+    "model": "en_us",
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
   "Stove.Template.StorySkip": {
     "recognition": "TemplateMatch",
     "template": [
       "story_skip.png",
       "story_skip_light_room.png",
-      "story_skip_dialogue_gray.png"
+      "story_skip_dialogue_gray.png",
+      "story_skip_dialogue_roof.png",
+      "story_skip_dialogue_market.png",
+      "story_skip_dialogue_market_motion.png"
     ],
     "roi": [
       1100,
@@ -21,7 +51,10 @@
     "template": [
       "story_history.png",
       "story_history_camp.png",
-      "story_history_dialogue_gray.png"
+      "story_history_dialogue_gray.png",
+      "story_history_dialogue_roof.png",
+      "story_history_dialogue_market.png",
+      "story_history_dialogue_market_motion.png"
     ],
     "roi": [
       1010,
@@ -103,7 +136,10 @@
   },
   "Stove.Template.LobbyStainedWindow": {
     "recognition": "TemplateMatch",
-    "template": "lobby_stained_window.png",
+    "template": [
+      "lobby_stained_window.png",
+      "lobby_stained_window_day.png"
+    ],
     "roi": [
       742,
       72,
@@ -115,7 +151,10 @@
   },
   "Stove.Template.LobbyIdleUpperLeft": {
     "recognition": "TemplateMatch",
-    "template": "lobby_idle_upper_left.png",
+    "template": [
+      "lobby_idle_upper_left.png",
+      "lobby_idle_upper_left_day.png"
+    ],
     "roi": [
       22,
       12,
@@ -1465,7 +1504,12 @@
   },
   "Path.Template.StorySkipGray": {
     "recognition": "TemplateMatch",
-    "template": "story_skip_dialogue_gray.png",
+    "template": [
+      "story_skip_dialogue_gray.png",
+      "story_skip_dialogue_roof.png",
+      "story_skip_dialogue_market.png",
+      "story_skip_dialogue_market_motion.png"
+    ],
     "roi": [
       1100,
       8,
@@ -1478,7 +1522,12 @@
   },
   "Path.Template.StoryHistoryGray": {
     "recognition": "TemplateMatch",
-    "template": "story_history_dialogue_gray.png",
+    "template": [
+      "story_history_dialogue_gray.png",
+      "story_history_dialogue_roof.png",
+      "story_history_dialogue_market.png",
+      "story_history_dialogue_market_motion.png"
+    ],
     "roi": [
       1010,
       8,
@@ -1643,6 +1692,197 @@
       88
     ],
     "threshold": 0.94,
+    "action": "DoNothing"
+  },
+  "Altar.Template.QuickOn": {
+    "recognition": "TemplateMatch",
+    "template": "altar_quick_on.png",
+    "roi": [
+      1135,
+      585,
+      77,
+      87
+    ],
+    "threshold": 0.93,
+    "action": "DoNothing"
+  },
+  "Altar.Template.QuickOff": {
+    "recognition": "TemplateMatch",
+    "template": "altar_quick_off.png",
+    "roi": [
+      1135,
+      585,
+      77,
+      87
+    ],
+    "threshold": 0.93,
+    "action": "DoNothing"
+  },
+  "Equipment.Template.EmptyMaterial1": {
+    "recognition": "TemplateMatch",
+    "template": "equipment_material_empty_1.png",
+    "roi": [
+      410,
+      410,
+      74,
+      95
+    ],
+    "threshold": 0.75,
+    "action": "DoNothing"
+  },
+  "Equipment.Template.EmptyMaterial2": {
+    "recognition": "TemplateMatch",
+    "template": "equipment_material_empty_2.png",
+    "roi": [
+      484,
+      410,
+      74,
+      95
+    ],
+    "threshold": 0.75,
+    "action": "DoNothing"
+  },
+  "Equipment.Template.EmptyMaterial3": {
+    "recognition": "TemplateMatch",
+    "template": "equipment_material_empty.png",
+    "roi": [
+      558,
+      410,
+      74,
+      95
+    ],
+    "threshold": 0.75,
+    "action": "DoNothing"
+  },
+  "Equipment.Template.EmptyMaterial4": {
+    "recognition": "TemplateMatch",
+    "template": "equipment_material_empty_4.png",
+    "roi": [
+      632,
+      410,
+      74,
+      95
+    ],
+    "threshold": 0.75,
+    "action": "DoNothing"
+  },
+  "Equipment.Template.EmptyMaterial5": {
+    "recognition": "TemplateMatch",
+    "template": "equipment_material_empty_5.png",
+    "roi": [
+      706,
+      410,
+      74,
+      95
+    ],
+    "threshold": 0.75,
+    "action": "DoNothing"
+  },
+  "Equipment.Template.FreeChange": {
+    "recognition": "TemplateMatch",
+    "template": "equipment_free_change.png",
+    "roi": [
+      610,
+      460,
+      245,
+      90
+    ],
+    "threshold": 0.93,
+    "action": "DoNothing"
+  },
+  "Formation.Template.formation_swap_upper": {
+    "recognition": "TemplateMatch",
+    "template": "formation_swap_upper.png",
+    "roi": [
+      374,
+      220,
+      63,
+      64
+    ],
+    "threshold": 0.92,
+    "green_mask": true
+  },
+  "Formation.Template.formation_swap_left": {
+    "recognition": "TemplateMatch",
+    "template": "formation_swap_left.png",
+    "roi": [
+      250,
+      318,
+      63,
+      64
+    ],
+    "threshold": 0.92,
+    "green_mask": true
+  },
+  "Formation.Template.formation_swap_right": {
+    "recognition": "TemplateMatch",
+    "template": "formation_swap_right.png",
+    "roi": [
+      499,
+      300,
+      63,
+      64
+    ],
+    "threshold": 0.92,
+    "green_mask": true
+  },
+  "Formation.Template.formation_swap_lower": {
+    "recognition": "TemplateMatch",
+    "template": "formation_swap_lower.png",
+    "roi": [
+      384,
+      377,
+      63,
+      64
+    ],
+    "threshold": 0.92,
+    "green_mask": true
+  },
+  "Formation.Template.formation_assign_left": {
+    "recognition": "TemplateMatch",
+    "template": "formation_assign_left.png",
+    "roi": [
+      253,
+      316,
+      60,
+      60
+    ],
+    "threshold": 0.92,
+    "green_mask": true
+  },
+  "Formation.Template.formation_candidate_add": {
+    "recognition": "TemplateMatch",
+    "template": "formation_candidate_add.png",
+    "roi": [
+      881,
+      236,
+      52,
+      52
+    ],
+    "threshold": 0.92,
+    "green_mask": true
+  },
+  "Formation.Template.EmptyLeft": {
+    "recognition": "TemplateMatch",
+    "template": "formation_empty_left.png",
+    "roi": [
+      210,
+      315,
+      62,
+      62
+    ],
+    "threshold": 0.9
+  },
+  "Path.Template.PrequelPortalAvailable": {
+    "recognition": "TemplateMatch",
+    "template": "path_prequel_portal_available.png",
+    "roi": [
+      10,
+      125,
+      85,
+      430
+    ],
+    "threshold": 0.9,
     "action": "DoNothing"
   }
 }

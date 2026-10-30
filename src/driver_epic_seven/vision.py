@@ -11,7 +11,7 @@ from PIL import Image
 def classify(matches: dict, states: dict) -> str:
     def composition(spec):
         def hit(key):
-            match = matches[key]
+            match = matches.get(key, {"hit": False})
             source = spec.get("source_nodes", {}).get(key)
             if source is None:
                 return match["hit"]
@@ -91,6 +91,47 @@ class Vision:
             self.templates[name]=load(spec)
             self._alternative_templates[name]=[load(variant) for variant in spec.get("alternatives", [])]
 
+    def match_template(self, name, frame, matcher):
+        """Use the same native filtered candidates and pixel checks for one anchor."""
+        spec = self.spec['templates'][name]
+        specs = [spec, *spec.get('alternatives', [])]
+        images = [self.templates[name], *getattr(self, '_alternative_templates', {}).get(name, [])]
+        results = [dict(validated_template_match(frame, templates, matcher(variant['node']),
+            variant['max_pixel_mae'], variant.get('glyph_min'), variant.get('green_mask', False),
+            variant.get('green_glyph', False)), source_node=variant['node'])
+            for variant, templates in zip(specs, images)]
+        valid = [result for result in results if result['hit']]
+        match = dict(max(valid or results,
+            key=lambda result: result['score'] if result['score'] is not None else -float('inf')))
+        if spec.get('alternatives'):
+            match['source_matches'] = {result['source_node']: result for result in results}
+        return match
+
+    def match_ocr(self, name, frame, matcher):
+        spec = self.spec['ocr'][name]
+        match = {'hit':False,'box':None,'score':None,'text':None,'pixel_mae':None}
+        result = matcher(spec['node'])
+        rows = result.filtered_results if result else []
+        def visible(row):
+            if not spec.get('min_bright_pixels'):
+                return True
+            x,y,w,h = row.box
+            if min(x,y)<0 or min(w,h)<1 or x+w>frame.shape[1] or y+h>frame.shape[0]:
+                return False
+            return int(np.count_nonzero(np.min(frame[y:y+h,x:x+w,:3],axis=2)
+                       >=spec['bright_glyph_min'])) >= spec['min_bright_pixels']
+        valid = [row for row in rows if row.score >= spec['min_score']
+                 and re.fullmatch(spec['expected'],row.text.strip(),re.IGNORECASE) and visible(row)]
+        if spec.get('require_unique'):
+            match['filtered_candidates'] = [{'box':list(row.box),'score':row.score,'text':row.text} for row in rows]
+            match['ambiguous'] = len(valid)>1
+            found = valid[0] if len(valid)==1 else None
+        else:
+            found = next(iter(valid),None)
+        if found:
+            match.update(hit=True,box=list(found.box),score=found.score,text=found.text)
+        return match
+
     def inspect(self, frame, matcher) -> dict:
         matches = {}
         recognized = {}
@@ -98,17 +139,8 @@ class Vision:
             if node not in recognized:
                 recognized[node] = matcher(node)
             return recognized[node]
-        for name, spec in self.spec["templates"].items():
-            specs = [spec, *spec.get("alternatives", [])]
-            images = [self.templates[name], *getattr(self, "_alternative_templates", {}).get(name, [])]
-            results = [dict(validated_template_match(frame, templates, recognize(variant["node"]),
-                variant["max_pixel_mae"], variant.get("glyph_min"), variant.get('green_mask', False),variant.get('green_glyph',False)),
-                source_node=variant["node"]) for variant, templates in zip(specs, images)]
-            valid = [result for result in results if result["hit"]]
-            matches[name] = dict(max(valid or results,
-                key=lambda result: result["score"] if result["score"] is not None else -float("inf")))
-            if spec.get("alternatives"):
-                matches[name]["source_matches"] = {result["source_node"]: result for result in results}
+        for name in self.spec['templates']:
+            matches[name] = self.match_template(name, frame, recognize)
         for name in self.spec.get("ocr",{}):
             matches[name]={"hit":False,"box":None,"score":None,"text":None,"pixel_mae":None}
         state=classify(matches,self.spec["states"])
@@ -116,28 +148,8 @@ class Vision:
         # informational notice. Only use its explicit close label as fallback.
         if state=="unknown" or any(all(matches.get(key, {}).get('hit', False) for key in anchors)
                                   for anchors in self.spec.get('ocr_triggers', [])):
-            for name,spec in self.spec.get("ocr",{}).items():
-                result=recognize(spec["node"])
-                rows=result.filtered_results if result else []
-                def visible(row):
-                    if not spec.get('min_bright_pixels'):
-                        return True
-                    x,y,w,h=row.box
-                    if min(x,y)<0 or min(w,h)<1 or x+w>frame.shape[1] or y+h>frame.shape[0]:
-                        return False
-                    return int(np.count_nonzero(np.min(frame[y:y+h,x:x+w,:3],axis=2)
-                               >=spec['bright_glyph_min']))>=spec['min_bright_pixels']
-                valid=[row for row in rows if row.score>=spec["min_score"]
-                    and re.fullmatch(spec["expected"],row.text.strip(),re.IGNORECASE) and visible(row)]
-                if spec.get("require_unique"):
-                    matches[name]["filtered_candidates"]=[{"box":list(row.box),"score":row.score,"text":row.text}
-                                                          for row in rows]
-                    matches[name]["ambiguous"]=len(valid)>1
-                    found=valid[0] if len(valid)==1 else None
-                else:
-                    found=next(iter(valid),None)
-                if found:
-                    matches[name].update(hit=True,box=list(found.box),score=found.score,text=found.text)
+            for name in self.spec.get('ocr', {}):
+                matches[name] = self.match_ocr(name, frame, recognize)
             state=classify(matches,self.spec["states"])
         return {"state":state,"matches":matches}
 
@@ -150,6 +162,14 @@ class Vision:
             from .observed_ui import auto_state
             if auto_state({'ui_tree': tree}) is not params['auto_state']:
                 return None
+        if params.get('require_three_stars'):
+            from .observed_ui import operation_view
+            from .battle_operations import context
+            if context(operation_view({'ui_tree':tree})).get('earned_stars')!=3:return None
+        if params.get('three_star_checkpoint'):
+            from .observed_ui import operation_view
+            from .battle_operations import context
+            if context(operation_view({'ui_tree':tree})).get('earned_stars')==3:return None
         name = params.get("target")
         if name:
             return target_box(tree, name)

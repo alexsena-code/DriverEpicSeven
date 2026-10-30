@@ -56,7 +56,11 @@
         "wdp001",
         "wdp002",
         "view story",
-        "mapa do preludio"
+        "mapa do preludio",
+        "episodio 4",
+        "episodio 5",
+        "episodio 6",
+        "adventure_ma"
       ],
       "sources": [
         "wnd/battle_prequel.csb",
@@ -80,7 +84,8 @@
         "Linhas visiveis, descricao e contador bruto de estrelas nao comprovam selected, locked, completed, ID interno de fase ou custo; todos permanecem desconhecidos sem reconhecimento proprio.",
         "O mapa privado tem candidatos adventure_ep0 e requisitos do pacote Steam; nao foi promovido a catalogo executavel STOVE. Historias do tipo story e quests com equipe NPC forcada sao variantes distintas.",
         "View Story e apenas item de leitura neste adapter, sem target_states ou inicio generico. As guardas de preparacao/inicio do seletor antigo nao foram ampliadas.",
-        "Callbacks, textos placeholders e posicoes CSB nao sao controles vivos; confirmar variantes com tela atual. Custos estaticos zero/8 nao substituem o valor observado."
+        "Callbacks, textos placeholders e posicoes CSB nao sao controles vivos; confirmar variantes com tela atual. Custos estaticos zero/8 nao substituem o valor observado.",
+        "A leitura numérica não tem whitelist de episódio; ação exige identidade do catálogo e painel/controle atuais. Episódio 6: 49 linhas adventure_ma, 32 principais, 17 subentradas tile; duas fases tile com energia null e percurso não calibrado. Sem prova de acesso ou execução por presença estática."
       ]
     },
     {
@@ -672,7 +677,8 @@
         "db/system_option.db",
         "wnd/top_bar.csb",
         "wnd/quick_menu_renew.csb",
-        "text/en/text.db"
+        "text/en/text.db",
+        "wnd/lobby_ui_renew.csb"
       ],
       "repository_refs": [
         "data/input/hotkeys.json",
@@ -682,7 +688,8 @@
       ],
       "gaps": [
         "Bindings do pacote são defaults; confirmar contexto, configuração da conta e destino.",
-        "Consulte a versão instalada do SDK antes de escolher reconhecimento ou entrada."
+        "Consulte a versão instalada do SDK antes de escolher reconhecimento ou entrada.",
+        "Lobby /Layer/BUTTONS/RIGHT/n_quick_menu e composicao aninhada; nenhum btn_story/Episode ou binding adventure foi encontrado no shell/key_binding. A legenda Episode atual e a chegada ao prequel_ready_map foram observadas; papel de navegacao nao prova acesso nem inicia combate."
       ]
     },
     {
@@ -695,20 +702,27 @@
         "checkbox",
         "public",
         "guild",
-        "aviso demo"
+        "aviso demo",
+        "side story alert",
+        "aviso de historias desbloqueadas"
       ],
       "sources": [
         "wnd/chat_filter.csb",
         "db/system_option.db",
-        "text/en/text.db"
+        "text/en/text.db",
+        "wnd/result_story_unlocked.csb",
+        "db/key_binding.db"
       ],
       "repository_refs": [
         "data/input/static-control-links.json",
-        "docs/architecture.md#preparação-da-sessão"
+        "docs/architecture.md#preparação-da-sessão",
+        "docs/campaign.md",
+        "docs/assets.md#consulta-por-operacao"
       ],
       "gaps": [
         "Selecionar categoria, distinguir caixa principal/individual e preservar estado ambíguo.",
-        "Não reativar os avisos da demo para produzir teste; validação positiva adiada."
+        "Não reativar os avisos da demo para produzir teste; validação positiva adiada.",
+        "systemsubstory_unlock_popup_desc2 resolve as duas linhas atuais no text/en/text.db. O indice de referencias nao liga a chave ao CSB; result_story_unlocked contem txt_desc placeholder diferente e btn_close /base/btn_close. Variante com banner cobrindo titulo: reconhecer ambas as linhas e controle nativo close, sem usar nomes dos cards. Dados estaticos nao provam alvo atual."
       ]
     },
     {
@@ -1228,7 +1242,10 @@
         "spirit altar",
         "dark spirit altar",
         "cmon001",
-        "runas"
+        "runas",
+        "quick battle",
+        "quick battling",
+        "combate rapido"
       ],
       "sources": [
         "wnd/dungeon.csb",
@@ -1244,12 +1261,42 @@
       "repository_refs": [
         "data/stages/spirit-altars.json",
         "docs/mission-operations.md#roteiro-por-nivel",
-        "docs/validation.md#fechamento-altar-resgates"
+        "docs/validation.md#fechamento-altar-resgates",
+        "docs/assets.md#altar-quick-battle",
+        "docs/validation.md#wave2-batalhas"
       ],
       "gaps": [
         "dungeon_home é outra composição (Shadow Module); não substitui dungeon para Spirit Altar.",
         "Disponibilidade, seleção de equipe, saldo, custo e resultado exigem evidência atual.",
-        "Uma unidade Dark Easy cmon001 foi validada; outros elementos/dificuldades são candidatos estáticos."
+        "Uma unidade Dark Easy cmon001 foi validada; outros elementos/dificuldades são candidatos estáticos.",
+        "Quick Battle: n_btn_quick0/btn_quick_on e n_btn_quick1/btn_quick_off são controles de troca de variante; fundos claro/escuro foram confirmados pelo usuário. Os nomes indicam a ação do botão, não o estado atual.",
+        "Dark Normal cmon002 teve navegação/preparação e retorno observados em 28/10, sem Start. Quick Battle ativo tem quantidade/custo próprios e nenhum executor neste ciclo."
+      ]
+    },
+    {
+      "id": "energy_refill",
+      "title": "Compra de energia com folhas na barra superior",
+      "aliases": [
+        "recarregar energia",
+        "recarga de energia",
+        "folha",
+        "Leif",
+        "Purchase Energy"
+      ],
+      "sources": [
+        "wnd/battle_ready_buy.csb",
+        "wnd/top_bar.csb",
+        "db/key_binding.db",
+        "db/system_option.db",
+        "text/en/text.db"
+      ],
+      "repository_refs": [
+        "docs/assets.md",
+        "docs/validation.md"
+      ],
+      "gaps": [
+        "battle_ready_buy possui grupos n_1/n_2, recursos before/after, selecao e btn_yes/Buy; texto e numeros declarados sao placeholders, nao precos ou estoque atuais. A variante atual mostra folha selecionada 1 para 80, Owned 36; cristais 30 para 60 nao selecionados.",
+        "Somente uma compra por primitiva foi observada em 1212x682, mouse 4, FramePool 2. Confirmar selecao/custo/estoque atuais e manter orcamento finito antes de Buy; aceite de entrada sem recibo/saldo nao autoriza repetir. Nao ha executor generico de recarga."
       ]
     }
   ]

@@ -8,7 +8,8 @@ from driver_epic_seven.altar import graph, stage, target
 
 def preparation():
     return {'view':'spirit_altar_preparation','items':[{'semantic_id':'context','altar_name':'Dark Spirit Altar',
-            'stage_label':'Dark Spirit Altar - Easy','difficulty':'easy','identity_conflict':False,'cost':{'currency':'energy','cost':9,'available':846},'team_cp':36643}],
+            'stage_label':'Dark Spirit Altar - Easy','difficulty':'easy','identity_conflict':False,'cost':{'currency':'energy','cost':9,'available':846},'team_cp':36643,
+            'preparation_composition_verified':True,'visible_hero_levels':[50]}],
             'controls':[{'semantic_id':'start','box':[1049,615,46,24],'consuming':True}]}
 
 
@@ -22,7 +23,7 @@ def test_altar_start_requires_current_identity_cost_team_and_recent_available_en
     assert target(preparation(),params,{'window':window},{}) is None
     old=deepcopy(ticket);old['altar:cmon001']['epoch_seconds']-=31
     assert target(preparation(),params,{'window':window},old) is None
-    for key,value in [('altar_name','Flame Spirit Altar'),('difficulty','hard'),('identity_conflict',True),('cost',None),('team_cp',0)]:
+    for key,value in [('altar_name','Flame Spirit Altar'),('difficulty','hard'),('identity_conflict',True),('cost',None),('visible_hero_levels',[])]:
         view=preparation();view['items'][0][key]=value
         assert target(view,params,{'window':window},ticket) is None
     assert target(preparation(),params,{'window':{**window,'pid':99}},ticket) is None
@@ -38,7 +39,7 @@ def test_altar_graph_never_restarts_or_uses_next_difficulty_and_finish_has_no_st
     assert plan['max_starts']==0 and not any(n.endswith('.Start') for n in resume)
     assert not any('next_difficulty' in str(n) or 'try_again' in str(n) for n in nodes.values())
     with pytest.raises(ValueError):graph('cmon001','guide_01_004_001',8)
-    with pytest.raises(ValueError):graph('cmon001','guide_01_006_001',9)
+    assert graph('cmon001','another_objective',9)[0]['task_id']=='another_objective'
     assert stage('cmon001')['energy']==9
 
 

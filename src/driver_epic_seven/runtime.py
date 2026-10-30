@@ -1,7 +1,7 @@
 import json
-import re
 import time
 from pathlib import Path
+from threading import Event
 
 import numpy as np
 from PIL import Image
@@ -55,18 +55,22 @@ class Runtime:
         self.ctrl = None
         self.tasker = None
         self.fatal = None
+        self._execution_cancel = Event()
+        self.execution_dispatched = False
         self.window_profile = None
         from .attempts import AttemptLedger
         self.attempts=AttemptLedger(config["campaign_ledger"],config.get("attempt_limit",3)) if config.get("campaign_ledger") else None
         self.start_reservations={}
-        self.path_attempts=AttemptLedger(config['path_ledger'],1)
+        # Normal Path actions remain single-use in OperationCycle. Only a new
+        # explicit, proven-defeat permit can reach another battle reservation.
+        self.path_attempts=AttemptLedger(config['path_ledger'],3)
         self.path_reservations={}
         self.path_prepared={}
         self.path_completion_scopes={}
         self.path_group_actions=set()
         self.path_group_action_count=0
         self.path_group_action_limit=None
-        self.path_battles=AttemptLedger(config['path_ledger'],2)
+        self.path_battles=AttemptLedger(config['path_ledger'],3)
         try:
             self.windows = Windows()
             self.original = self.windows.discover(config["target"])
@@ -106,16 +110,35 @@ class Runtime:
                     analysis_started, cpu_started = time.perf_counter(), time.process_time()
                     params = json.loads(argv.custom_recognition_param)
                     runtime.guard(input_active=not params.get("observe", False))
-                    analysis = runtime.vision.inspect(argv.image,
-                        lambda name: context.run_recognition(name, argv.image))
+                    from .story_performance import candidate_matcher
+                    matcher = candidate_matcher(runtime.vision, argv.image,
+                        lambda name: context.run_recognition(name, argv.image), params)
+                    if matcher is None:
+                        runtime.observer.count('candidate_rejections')
+                        runtime.observer.count('candidate_rejection_wall_ms',
+                            (time.perf_counter() - analysis_started) * 1000)
+                        return None
+                    analysis = runtime.vision.inspect(argv.image, matcher)
                     if params.get("stage_id"):
                         analysis["stage"] = runtime.stage_inspector.inspect(params["stage_id"], analysis,
                             lambda kind, args: context.run_recognition_direct(kind,args,argv.image))
-                    if params.get("read_text") or params.get("session"):
+                    from .story_performance import needs_story_text
+                    wants_text = params.get("read_text") or params.get("session")
+                    read_text = wants_text and (params.get('session') or needs_story_text(params, analysis['state']))
+                    if read_text:
                         from .stages import StageInspector
                         analysis["text"] = StageInspector._ocr(
                             lambda kind, args: context.run_recognition_direct(kind,args,argv.image),
                             params.get("text_roi", [0, 0, *runtime.config["reference_size"]]))
+                        from .operational_equipment import augment_text
+                        from .operational_formation import augment_text as augment_formation
+                        augment_text(analysis,lambda kind,args:context.run_recognition_direct(kind,args,argv.image))
+                        augment_formation(analysis,lambda kind,args:context.run_recognition_direct(kind,args,argv.image))
+                        from .operational_altar import augment_text as augment_altar
+                        augment_altar(analysis,lambda kind,args:context.run_recognition_direct(kind,args,argv.image))
+                    elif wants_text:
+                        analysis['text'] = []
+                        analysis['text_scope'] = 'skipped_incompatible_story_candidate'
                     if params.get("session"):
                         from .session import CheckboxReader, inspect_session
                         from maa.pipeline import JTemplateMatch
@@ -142,6 +165,10 @@ class Runtime:
                     from .quests import navigation_context
                     analysis.update(window=runtime.guard(),epoch_seconds=time.time())
                     analysis["navigation"] = navigation_context(analysis)
+                    if read_text:
+                        from .prequel import augment_title
+                        augment_title(analysis, params.get('path', {}),
+                            lambda kind,args:context.run_recognition_direct(kind,args,argv.image))
                     analysis["ui_tree"] = build_tree(analysis, runtime.vision.spec)
                     runtime.observer.count("recognitions")
                     runtime.observer.count("analysis_wall_ms", (time.perf_counter() - analysis_started) * 1000)
@@ -167,86 +194,14 @@ class Runtime:
                     else:
                         box = runtime.vision.target(analysis, params)
                     if box is not None:
-                        if argv.node_name in runtime.path_group_actions:
-                            if runtime.path_group_action_count>=runtime.path_group_action_limit:
-                                raise RuntimeError('Limite de ações do grupo atingido; revisar antes de continuar.')
-                            runtime.path_group_action_count+=1
-                            runtime.observer.count('group_input_decisions')
-                        if str(params.get('path',{}).get('kind','')).startswith('equipment_'):
-                            proof=params['path'];kind=proof['kind'];key='equipment:'+proof['task_id']
-                            info=next((i for i in operation_view(analysis).get('items',[]) if i.get('semantic_id')=='context'),{})
-                            if kind in ('equipment_equip_all','equipment_weapon'):
-                                runtime.path_prepared[key]={'hero_name':proof['hero_name'],'window':analysis['window'],'epoch_seconds':time.time()}
-                            ticket=runtime.path_prepared.get(key,{})
-                            if kind=='equipment_review_change':ticket.update(current_cp=info['current_cp'],candidate_cp=info['candidate_cp'])
-                            if kind=='equipment_open_enhancement':ticket.update(item_name=info['item_name'],before_level=info.get('enhancement_level'))
-                            if kind=='equipment_auto_materials' and ticket.get('before_level') is None:
-                                ticket['before_level']=info.get('enhancement_level')
-                            if kind=='equipment_enhance':ticket.update(gold_cost=info['gold_cost'],gold_balance=info['gold_balance'],before_exp=info.get('exp'))
-                        if params.get('path',{}).get('kind')=='abyss_prepared':
-                            runtime.path_prepared['abyss:abyss001']={'epoch_seconds':time.time(),'window':analysis['window']}
-                        if params.get('path',{}).get('kind') in ('abyss_advance','abyss_result_back'):
-                            proof=params['path']
-                            runtime.path_prepared['abyss_victory:'+proof['stage_id']]={'window':analysis['window']}
-                            entries=runtime.path_attempts.read()['stages'].get(proof['task_id'],[])
-                            if entries:
-                                runtime.path_attempts.mark(proof['task_id'],entries[-1]['key'],'victory')
-                                data=runtime.path_attempts.read();data['stages'][proof['task_id']][-1]['verification_window']=analysis['window']
-                                runtime.path_attempts.save(data)
-                        if params.get('path',{}).get('kind')=='prequel_story_receipt':
-                            runtime.path_prepared['story_seen:'+params['path']['stage_id']]={'window':analysis['window']}
-                        if (params.get('path',{}).get('kind') in ('prequel_story_skip','prequel_story_hold')
-                                and params['path'].get('stage_id')):
-                            identity=params['path']['stage_id']
-                            if runtime.path_battles.read()['stages'].get('prequel:'+identity):
-                                runtime.path_prepared['story_seen:'+identity]={'window':analysis['window']}
-                        if params.get('path',{}).get('kind')=='mission_claim':
-                            proof=params['path']
-                            runtime.path_prepared['mission_claim:'+proof['group_id']]={
-                                'window':analysis['window'],'mission_id':proof['mission_id'],
-                                'before_count':proof['before_count']}
-                            runtime.path_prepared.pop('mission_receipt:'+proof['group_id'],None)
-                        if params.get('path',{}).get('kind')=='mission_receipt':
-                            proof=params['path']
-                            runtime.path_prepared['mission_receipt:'+proof['group_id']]=dict(
-                                runtime.path_prepared['mission_claim:'+proof['group_id']])
-                        if params.get('path',{}).get('kind')=='prequel_ready':
-                            runtime.path_prepared[params['path']['stage_id']]={'epoch_seconds':time.time(),'window':analysis['window']}
-                        if params.get('path',{}).get('kind')=='altar_open':
-                            runtime.path_prepared['altar:'+params['path']['stage_id']]={'epoch_seconds':time.time(),'window':analysis['window']}
-                        if params.get('path',{}).get('kind')=='altar_advance':
-                            runtime.path_prepared['altar_victory:'+params['path']['stage_id']]={'epoch_seconds':time.time(),'window':analysis['window']}
-                            entries=runtime.path_attempts.read()['stages'].get(params['path']['task_id'],[])
-                            if entries:
-                                runtime.path_attempts.mark(params['path']['task_id'],entries[-1]['key'],'victory')
-                                data=runtime.path_attempts.read()
-                                data['stages'][params['path']['task_id']][-1]['verification_window']=analysis['window']
-                                runtime.path_attempts.save(data)
-                        if params.get('path',{}).get('kind') in ('group_claim','group_receipt'):
-                            phase='group_claim:' if params['path']['kind']=='group_claim' else 'group_receipt:'
-                            runtime.path_prepared[phase+params['path']['group_id']]={'window':analysis['window'],'epoch_seconds':time.time()}
-                        if params.get('path',{}).get('consuming'):
-                            task_id=params['path'].get('task_id') or 'prequel:'+params['path']['stage_id']
-                            key=str(runtime.evidence.path)+f'/task-{context.get_task_job().job_id}/'+argv.node_name
-                            ledger=runtime.path_battles if params['path']['kind'] in ('prequel_start','prequel_story_start') else runtime.path_attempts
-                            if params['path']['kind'] in ('prequel_start','prequel_story_start'):
-                                from .prequel import reserve_entry
-                                reserve_entry(ledger,params['path']['stage_id'],key,params['path'].get('energy',0),analysis)
-                            else:
-                                cost=params['path'].get('energy',0)
-                                if params['path']['kind']=='equipment_enhance':
-                                    cost=runtime.path_prepared['equipment:'+task_id]['gold_cost']
-                                ledger.reserve(task_id,key,cost)
-                            runtime.path_reservations[argv.node_name]=(task_id,key)
-                        if runtime.attempts and params.get("target")=="stage_start":
-                            key=str(runtime.evidence.path)+f"/task-{context.get_task_job().job_id}/"+argv.node_name
-                            runtime.attempts.reserve(params["stage_id"],key,runtime.stage_inspector.get(params["stage_id"])["energy"])
-                            runtime.start_reservations[argv.node_name]=(params["stage_id"],key)
                         runtime.evidence.recognized(argv.node_name, argv.image, analysis)
                     return self.AnalyzeResult(box=box, detail=analysis)
                 except Exception as exc:
                     # Exceptions must not escape a ctypes callback.
-                    runtime.fatal = str(exc)
+                    if not runtime.execution_cancelled:
+                        runtime.fatal = str(exc)
+                    try:runtime.observer.invalidate('recognition_failed')
+                    except Exception:pass  # Never escape a native callback.
                     return None
 
         Tasker.set_log_dir(self.evidence.path / "maa")
@@ -255,8 +210,13 @@ class Runtime:
                                     self.config["mouse_method"], self.config["keyboard_method"])
         self.ctrl.set_screenshot_use_raw_size(True)
         self.wait(self.ctrl.post_connection())
+        from .execution import OperationCycle, boundary_action
+        runtime.operation_cycle = OperationCycle(runtime)
+        self.action_boundary = boundary_action(runtime)
         self.resource = Resource()
         self.resource.set_cpu()
+        if not self.resource.register_custom_action('OperationBoundary',self.action_boundary):
+            raise RuntimeError('Não foi possível registrar a fronteira de ação Maa.')
         self.bridge = ScreenTarget()
         if not self.resource.register_custom_recognition("ScreenTarget", self.bridge):
             raise RuntimeError("Não foi possível registrar o reconhecimento ScreenTarget.")
@@ -271,21 +231,6 @@ class Runtime:
                 try:
                     if noti_type == NotificationType.Starting:
                         runtime.observer.invalidate("pipeline_action_started", node=detail.name)
-                    if noti_type == NotificationType.Succeeded and detail.name in runtime.path_reservations:
-                        runtime.path_attempts.mark(*runtime.path_reservations[detail.name],'sent')
-                    if noti_type == NotificationType.Succeeded:
-                        if detail.name in runtime.path_group_actions:
-                            runtime.observer.count('group_native_input_actions')
-                        if detail.name in runtime.path_completion_scopes:
-                            scope=runtime.path_completion_scopes[detail.name]
-                            entries=runtime.path_attempts.read()['stages'].get(scope,[])
-                            if entries:runtime.path_attempts.mark(scope,entries[-1]['key'],'verified')
-                        found=re.search(r'(?:^|[.])Path[.]Campaign[.]([a-z0-9]+)[.](Clear|Map)$',detail.name)
-                        if found:
-                            scope='prequel:'+found[1]
-                            entries=runtime.path_battles.read()['stages'].get(scope,[])
-                            if entries:
-                                runtime.path_battles.mark(scope,entries[-1]['key'],'victory' if found[2]=='Clear' else 'returned')
                 except Exception as exc:
                     runtime.fatal = str(exc)
         self.observer_events = ObserverEvents()
@@ -304,63 +249,116 @@ class Runtime:
         self.observer_tasks = ObserverTasks()
         if self.tasker.add_sink(self.observer_tasks) is None:
             raise RuntimeError("Não foi possível registrar a conclusão observada do Maa.")
-        if self.attempts:
-            from maa.context import ContextEventSink
-            from maa.event_sink import NotificationType
-            class Audit(ContextEventSink):
-                def on_node_action(self,context,noti_type,detail):
-                    if noti_type!=NotificationType.Succeeded:return
-                    try:
-                        name=detail.name
-                        status="sent"
-                        for ending,result in (("Stage.EnteredStory","entered"),("Stage.EnteredIntro","entered"),("Stage.EnteredBattle","entered"),("Finish.Clear","victory"),("Finish.Defeat","defeat")):
-                            if name.endswith(ending):
-                                name=name[:-len(ending)]+"Stage.CheckReady";status=result;break
-                        reservation=runtime.start_reservations.get(name)
-                        if reservation:runtime.attempts.mark(*reservation,status)
-                    except Exception as exc:
-                        runtime.fatal=str(exc)
-            self.audit=Audit()
-            if self.tasker.add_context_sink(self.audit) is None:
-                raise RuntimeError("Não foi possível registrar auditoria de entradas da campanha.")
+    def post_task(self, entry, override=None):
+        """Materialize overrides before wrapping; one Tasker/controller remains."""
+        if self.execution_cancelled:
+            raise RuntimeError('Execução cancelada antes de iniciar o Maa.')
+        from copy import deepcopy
+        from .execution import wrap_graph
+        if not hasattr(self,'pipeline_nodes'):
+            self.pipeline_nodes = {}
+            for path in sorted((self.config['resource_dir']/'pipeline').glob('*.json')):
+                self.pipeline_nodes.update({k:v for k,v in json.loads(path.read_text(encoding='utf-8')).items()
+                                            if not k.startswith('$')})
+        graph = deepcopy(self.pipeline_nodes)
+        for name,node in (override or {}).items():
+            graph[name] = {**graph.get(name,{}),**deepcopy(node)}
+        if entry == 'Finish.Entry' and getattr(self,'current_campaign_reservation',None):
+            from .execution import annotate_campaign_result
+            annotate_campaign_result(graph,*self.current_campaign_reservation,require_three_stars=True)
+        return self.tasker.post_task(entry,wrap_graph(graph))
+
+    @property
+    def execution_cancelled(self):
+        event = getattr(self, '_execution_cancel', None)
+        return bool(event and event.is_set())
+
+    def prepare_execution(self, identity):
+        """Only the session's single worker may prepare another request."""
+        if self.tasker and self.tasker.running:
+            raise RuntimeError('Há uma execução Maa ativa; não iniciar outra entrada.')
+        if not hasattr(self, '_execution_cancel'):
+            self._execution_cancel = Event()
+        self._execution_cancel.clear()
+        self.execution_identity = identity
+        self.execution_dispatched = False
+
+    def cancel_execution(self):
+        """Signal only. The owning worker stops Maa and preserves its ledger."""
+        if not hasattr(self, '_execution_cancel'):
+            self._execution_cancel = Event()
+        self._execution_cancel.set()
+
+    def stop_task(self, timeout=10):
+        """Do not release the emitter until Maa confirms it has stopped."""
+        if not self.tasker or not self.tasker.running:
+            return
+        stop=self.tasker.post_stop()
+        deadline=time.monotonic()+timeout
+        while (not stop.done or self.tasker.running) and time.monotonic()<deadline:
+            time.sleep(.01)
+        if not stop.done or self.tasker.running:
+            self.fatal='Parada Maa não comprovada; conexão e perfil permanecem reservados.'
+            raise RuntimeError(self.fatal)
 
     def guard(self, input_active=False):
-        if self.fatal:
-            raise RuntimeError(self.fatal)
-        if input_active and self.config["stop_file"].exists():
-            raise RuntimeError("Execução interrompida por var/STOP.")
-        current = self.windows.inspect(self.original["hwnd"])
-        verify_window(current, self.original, self.config, input_active)
-        return current
+        try:
+            if input_active and self.execution_cancelled:
+                raise RuntimeError('Execução cancelada; conferir o diário antes de continuar.')
+            if self.fatal:
+                raise RuntimeError(self.fatal)
+            if input_active and self.config["stop_file"].exists():
+                raise RuntimeError("Execução interrompida por var/STOP.")
+            current = self.windows.inspect(self.original["hwnd"])
+            verify_window(current, self.original, self.config, input_active)
+            return current
+        except Exception:
+            if hasattr(self, 'observer'):
+                self.observer.invalidate('runtime_guard_failed')
+            raise
 
     def wait(self, job, timeout=None, task=False):
         if job.job_id <= 0:
             raise RuntimeError(f"Maa recusou a operação (job_id inválido); consulte a evidência em {self.evidence.path}.")
         end = time.monotonic() + (timeout or self.config["job_timeout_seconds"])
         while not job.done:
-            if self.fatal or (task and self.config["stop_file"].exists()) or time.monotonic() > end:
+            if self.execution_cancelled or self.fatal or (task and self.config["stop_file"].exists()) or time.monotonic() > end:
                 if task and self.tasker:
-                    stop = self.tasker.post_stop()
-                    deadline = time.monotonic()+2
-                    while not stop.done and time.monotonic()<deadline:
-                        time.sleep(.02)
-                raise RuntimeError(self.fatal or "Execução interrompida ou tempo limite excedido.")
+                    self.stop_task()
+                if hasattr(self, 'observer'):
+                    self.observer.invalidate('execution_cancelled' if self.execution_cancelled else 'execution_interrupted')
+                raise RuntimeError(self.fatal or ('Execução cancelada.' if self.execution_cancelled else "Execução interrompida ou tempo limite excedido."))
             time.sleep(.01)
         if not job.succeeded:
+            if hasattr(self, 'observer'):
+                self.observer.invalidate('maa_operation_failed')
             raise RuntimeError(f"Operação Maa não concluiu; consulte a evidência em {self.evidence.path}.")
         return job
 
     def capture(self):
-        self.guard()
-        frame = self.wait(self.ctrl.post_screencap()).get()
-        if hasattr(self, "observer"):
-            self.observer.count("driver_captures")
-        if list(frame.shape[:2][::-1]) != self.config["reference_size"]:
-            raise RuntimeError("A captura tem dimensão diferente do perfil.")
-        self.guard()
-        return frame
+        try:
+            self.guard()
+            frame = self.wait(self.ctrl.post_screencap()).get()
+            if hasattr(self, "observer"):
+                self.observer.count("driver_captures")
+            if list(frame.shape[:2][::-1]) != self.config["reference_size"]:
+                raise RuntimeError("A captura tem dimensão diferente do perfil.")
+            self.guard()
+            return frame
+        except Exception:
+            if hasattr(self, 'observer'):
+                self.observer.invalidate('capture_failed')
+            raise
 
     def observe(self, name="observation", stage_id=None, read_text=False, text_roi=None, quest=False, session=False):
+        try:
+            return self._observe(name, stage_id, read_text, text_roi, quest, session)
+        except Exception:
+            if hasattr(self, 'observer'):
+                self.observer.invalidate('observation_failed')
+            raise
+
+    def _observe(self, name="observation", stage_id=None, read_text=False, text_roi=None, quest=False, session=False):
         from maa.pipeline import JCustomRecognition
         frame = self.capture()
         captured_at = time.time()
@@ -439,7 +437,7 @@ class Runtime:
             check_start(stage,info,max_energy,allow_replay)
         self.guard(input_active=True)
         began=time.perf_counter()
-        job=self.tasker.post_task("Stage.Entry",override)
+        job=self.post_task("Stage.Entry",override)
         try:
             self.wait(job,120 if operation=="start" else 45,task=True)
             nodes=[{"name":node.name,"completed":node.completed,
@@ -501,7 +499,7 @@ class Runtime:
             return {'completed': True, 'changed': False, 'before_state': 'battle_running',
                     'after_state': 'battle_running', 'max_clicks': 0}
         self.guard(input_active=True)
-        job = self.tasker.post_task('Auto.Entry')
+        job = self.post_task('Auto.Entry')
         self.wait(job, 12, task=True)
         after = self.observe('auto_after')
         nodes = [{'name': n.name, 'completed': n.completed} for n in job.get().nodes]
@@ -513,23 +511,36 @@ class Runtime:
         self.evidence.write('auto_result', result)
         return result
 
+    def campaign_terminal(self,nodes,success,observation_name,stage_id=None):
+        completed=[n['name'] for n in nodes if n['completed'] and n['action_success'] is not False]
+        defeat=any(n.endswith('Finish.Defeat') for n in completed)
+        criteria=any(n.endswith('Finish.CriteriaUnverified') for n in completed)
+        reached=success in completed
+        error=None
+        try:after=self.observe(observation_name,stage_id) if stage_id else self.observe(observation_name)
+        except (RuntimeError,OSError,ValueError) as exc:after=None;error=str(exc)
+        if not (defeat or criteria or reached):raise RuntimeError('Conclusão não comprovada; não repetir Start.')
+        return {'completed':reached,'postcondition_verified':reached,'battle_result':'defeat' if defeat else 'victory' if criteria or reached else None,
+                'criteria_verified':False if criteria else True if reached else None,
+                'diagnostic':'three_star_proof_missing' if criteria else 'defeat_requires_agent_decision' if defeat else None,
+                'needs_review':defeat or criteria or error is not None,'observation_error':error,'after':after,
+                'nodes':nodes,'evidence_dir':str(self.evidence.path)}
+
     def finish_battle(self, timeout=240):
         if not 1 <= timeout <= 600:
             raise ValueError("Limite de batalha deve estar entre 1 e 600 segundos.")
         before=self.observe("battle_finish_before")
-        if screen_state(before) not in ("story","story_intro","story_confirmation","battle_running","stage_clear","battle_rewards","story_reward","side_story_alert","friend_request","received_reward","tap_to_close_notice","rank_up","connection_unlocked"):
+        if screen_state(before) not in ("story","story_intro","story_confirmation","battle_running","stage_clear","battle_rewards","story_reward","side_story_alert","friend_request","received_reward","tap_to_close_notice","rank_up","connection_unlocked","battle_failed"):
             raise ValueError("Conclusão de batalha exige história, combate ou resultado reconhecido.")
         self.guard(input_active=True)
-        job=self.tasker.post_task("Finish.Entry")
+        job=self.post_task("Finish.Entry")
         try:
             self.wait(job,timeout,task=True)
             nodes=[{"name":node.name,"completed":node.completed,
                     "action_success":node.action.success if node.action else None} for node in job.get().nodes]
-            after=self.observe("battle_finish_after")
-            if screen_state(after)!="episode_map" or not any(n["name"]=="Finish.VerifyDone" and n["completed"] for n in nodes):
-                raise RuntimeError("Retorno ao mapa não confirmado.")
-            result={"completed":True,"nodes":nodes,"before_state":screen_state(before),
-                    "after_state":screen_state(after),"frame":after["frame"],"evidence_dir":str(self.evidence.path)}
+            result=self.campaign_terminal(nodes,'Finish.VerifyDone','battle_finish_after')
+            result.update(before_state=screen_state(before),after_state=screen_state(result['after']) if result['after'] else None,
+                          frame=result['after'].get('frame') if result['after'] else None)
             self.evidence.write("battle_finish_result",result)
             return result
         except Exception as exc:
@@ -541,36 +552,58 @@ class Runtime:
         if not 1<=timeout<=3600:
             raise ValueError("Limite do trecho deve estar entre 1 e 3600 segundos.")
         plan,graph=compile_chapter(self.config,from_stage,max_energy,finish_current)
+        from .plans import begin_runtime_plan, existing_runtime_plan, resume_chapter
+        original_specification=plan['finite_plan']
+        previous=existing_runtime_plan(self)
+        entry,terminal='Chapter.Entry','Chapter.Done'
+        if previous:
+            plan,graph,entry,terminal=resume_chapter(self.config,from_stage,max_energy,self.attempts.read()['stages'],
+                allow_defeat_retry=bool(getattr(self,'execution_retry',None)))
         before=self.observe("chapter_before",from_stage)
         finishing_states=("lobby","lobby_idle","story","story_intro","story_confirmation","battle_running","stage_clear","battle_rewards","story_reward","side_story_alert","friend_request","received_reward","tap_to_close_notice","rank_up","connection_unlocked")
-        resume_allowed=finish_current and screen_state(before) in finishing_states
+        resume_allowed=(finish_current or previous is not None) and screen_state(before) in (
+            *finishing_states,'episode_map','supporter_selection','battle_ready')
         if not resume_allowed and (screen_state(before) not in ("episode_map","supporter_selection","battle_ready") or not stage_view(before)["context_verified"]):
             raise ValueError("O trecho começa no capítulo correto ou na preparação da fase inicial.")
-        if finish_current and self.attempts:
+        if finish_current and self.attempts and previous is None:
             pending=self.attempts.pending_before(self.stage_inspector.catalog,from_stage)
-            if pending:self.start_reservations["Chapter.Current.Stage.CheckReady"]=pending
+            if pending:
+                from .execution import annotate_campaign_result
+                current={name.removeprefix('Chapter.Current.'):node for name,node in graph.items()
+                         if name.startswith('Chapter.Current.')}
+                annotate_campaign_result(current,*pending,require_three_stars=True)
+                graph['Chapter.Current.Finish.CriteriaUnverified']=current['Finish.CriteriaUnverified']
+                for node in graph.values():
+                    following=node.get('next',[])
+                    clear='Chapter.Current.Finish.Clear'
+                    checkpoint='Chapter.Current.Finish.CriteriaUnverified'
+                    if clear in following and checkpoint not in following:
+                        following.insert(following.index(clear),checkpoint)
+            else:raise ValueError("Não há tentativa anterior vinculada para concluir antes do trecho.")
         self.guard(input_active=True)
         self.evidence.write("chapter_plan",{**plan,"graph":graph})
-        job=self.tasker.post_task("Chapter.Entry",graph)
+        checkpoint=begin_runtime_plan(self,original_specification,timeout,resume=previous is not None)
         try:
-            self.wait(job,timeout,task=True)
+            remaining=min(timeout,checkpoint.read()['deadline_epoch_seconds']-time.time())
+            if remaining<=0:
+                raise RuntimeError('Prazo original do plano expirou.')
+            job=self.post_task(entry,graph)
+            self.wait(job,remaining,task=True)
             nodes=[{"name":node.name,"completed":node.completed,
                     "action_success":node.action.success if node.action else None} for node in job.get().nodes]
-            for stage_id in plan["stage_ids"]:
-                prefix=f"Chapter.{stage_id}."
-                if not all(any(n["name"]==prefix+name and n["completed"] and n["action_success"] for n in nodes)
-                           for name in ("Stage.CheckReady","Finish.VerifyDone")):
-                    raise RuntimeError("O trecho não confirmou início e retorno de todas as fases.")
-            after=self.observe("chapter_after",plan["stage_ids"][-1])
-            if screen_state(after)!="episode_map" or not any(n["name"]=="Chapter.Done" and n["completed"] for n in nodes):
-                raise RuntimeError("O trecho não terminou no mapa.")
-            result={**plan,"completed":True,"nodes":nodes,"before":before,"after":after,
-                    "evidence_dir":str(self.evidence.path)}
+            result={**plan,**self.campaign_terminal(nodes,terminal,'chapter_after',plan['stage_ids'][-1]),'before':before,
+                    'finite_plan':original_specification}
+            result['plan_checkpoint']=checkpoint.finish(result)
             self.evidence.write("chapter_result",result)
             return result
         except Exception as exc:
-            self.evidence.write("chapter_failure",{"error":str(exc),"plan":plan})
+            try:checkpoint.finish(error=exc)
+            except Exception as failure:exc.add_note('Falha ao preservar checkpoint: '+str(failure))
+            try:self.evidence.write("chapter_failure",{"error":str(exc),"plan":plan})
+            except Exception as failure:exc.add_note('Falha ao preservar evidência: '+str(failure))
             raise
+        finally:
+            self.active_plan_checkpoint=None
 
     def primitive(self, action, *, target=None, point=None, observation=None,
                   from_state=None, expect=None, key=None, duration_ms=1500, end_point=None, key_duration_ms=100):
@@ -677,6 +710,7 @@ class Runtime:
                 raise ValueError("Atalho de navegação exige uma tela calibrada fora de combate e de confirmações.")
         self.guard(input_active=True)
         started = time.perf_counter()
+        self.execution_dispatched = True
         if hasattr(self, "observer"):
             self.observer.invalidate("primitive_action_started")
         if action == "click":
@@ -688,7 +722,7 @@ class Runtime:
                 "point": list(point), "from_state": from_state, "requested_clicks": 2,
                 "observation": observation, "graph": gesture_graph,
                 "dispatch_succeeded": None, "postcondition_verified": False})
-            job = self.tasker.post_task("SkillDoubleTap.Entry", gesture_graph)
+            job = self.post_task("SkillDoubleTap.Entry", gesture_graph)
             try:
                 self.wait(job, 5, task=True)
                 if not any(n.name == "SkillDoubleTap.Done" and n.completed for n in job.get().nodes):
@@ -758,7 +792,7 @@ class Runtime:
         entry = "Notice.Entry" if operation == "dismiss-notices" else "Session.Entry"
         override = {"Session.ReturnToLobby": {"next": ["Session.OffDone"]}} if operation == "notifications-off" else {}
         self.guard(input_active=True)
-        job = self.tasker.post_task(entry, override)
+        job = self.post_task(entry, override)
         try:
             self.wait(job, 90, task=True)
             nodes = [{"name": n.name, "completed": n.completed} for n in job.get().nodes]
@@ -901,7 +935,7 @@ class Runtime:
             raise ValueError("Estado inicial incompatível: "+screen_state(before))
         self.guard(input_active=True)
         started = time.perf_counter()
-        job = self.tasker.post_task(routine["entry"])
+        job = self.post_task(routine["entry"])
         try:
             self.wait(job, routine["max_seconds"], task=True)
             detail = job.get()
@@ -926,6 +960,10 @@ class Runtime:
             raise
 
     def close(self):
+        # A failed stop must not restore the profile or unlock another emitter
+        # while a native gesture still owns the controller.
+        if self.tasker and self.tasker.running:
+            self.stop_task()
         try:
             if hasattr(self, "observer"):
                 self.observer.invalidate("disconnected")

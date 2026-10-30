@@ -26,10 +26,22 @@ def test_saved_stove_skip_and_history_require_both_positive_controls(tmp_path):
     gray_run = ROOT / 'var/runs/20261027T233054Z_89604c75'
     positives += [gray_run / f'agent_{number:06}.png' for number in (1,2)
                   if (gray_run / f'agent_{number:06}.png').exists()]
+    town=ROOT/'var/runs/20261030T044651Z_4975d8f8/observation.png'
+    if town.exists():positives.append(town)
+    snow=ROOT/'var/admin-campaign-20261030q/wis001-story-live.png'
+    if snow.exists():positives.append(snow)
+    roof_run=ROOT/'var/runs/20261030T193537Z_99cd4ea6'
+    roofs=[roof_run/f'agent_{number:06}.png' for number in (47,54)]
+    positives += [path for path in roofs if path.exists()]
+    markets=[ROOT/'var/runs/20261030T214551Z_b837e52d/agent_000010.png',
+             ROOT/'var/runs/20261030T215208Z_c13d8ed7/agent_000001.png',
+             ROOT/'var/runs/20261030T215208Z_c13d8ed7/agent_000004.png']
+    positives += [path for path in markets if path.exists()]
     if not all(path.exists() for path in positives):
         pytest.skip('Private STOVE calibration frames are not installed.')
     bundle = ROOT / 'resources/epic-seven'
     vision = Vision(bundle / 'vision.json', bundle)
+    production_story=vision.spec['states']['story']
     # This fixture deliberately tests the story subset if the profile grows.
     names = {'story_skip', 'story_history', 'path_story_skip_gray', 'path_story_history_gray'}
     vision.spec['templates'] = {k:v for k,v in vision.spec['templates'].items() if k in names}
@@ -72,16 +84,51 @@ def test_saved_stove_skip_and_history_require_both_positive_controls(tmp_path):
     if modal.exists():
         cases.append(('stove-light-room-modal',
                       np.asarray(Image.open(modal).convert('RGB'))[:,:,::-1].copy(), 'unknown'))
+    roof_modal=roof_run/'agent_000049.png'
+    if roof_modal.exists():
+        cases.append(('roof-story-confirmation-modal',
+                      np.asarray(Image.open(roof_modal).convert('RGB'))[:,:,::-1].copy(), 'unknown'))
     for name, frame, expected in cases:
         assert tasker.post_recognition('Custom', JCustomRecognition(
             custom_recognition='StoveStoryFixture'), frame).wait().succeeded
-        assert found[-1]['state'] == expected, (name, found[-1])
-        if expected == 'story' and str(gray_run) in name:
+        assert found[-1]['state'] == expected, (name, {
+            key:{k:v for k,v in value.items() if k in ('hit','score','pixel_mae')}
+            for key,value in found[-1]['matches'].items()})
+        if name in (str(town),str(snow)):
+            from driver_epic_seven.vision import classify
+            assert classify(found[-1]['matches'],{'story':production_story})=='story'
+        if expected == 'story' and (str(gray_run) in name or name in map(str,roofs+markets)):
             assert found[-1]['matches']['path_story_skip_gray']['hit']
             assert found[-1]['matches']['path_story_history_gray']['hit']
     report = [{'case':case[0], 'expected':case[2], 'observed':result}
               for case,result in zip(cases,found)]
     (tmp_path/'stove-story-replay.json').write_text(json.dumps(report,indent=2),encoding='utf-8')
+
+
+@pytest.mark.fixtures
+def test_current_story_can_combine_verified_control_variants():
+    from copy import deepcopy
+    from driver_epic_seven.vision import classify
+    from driver_epic_seven.observed_ui import build_tree, operation_view
+    from driver_epic_seven.interruptions import story_target
+    path=ROOT/'var/runs/20261030T035220Z_b37e5050/live.json'
+    if not path.exists():pytest.skip('Private mixed-control story unavailable.')
+    data=json.loads(path.read_text(encoding='utf-8'))['analysis']
+    vision=Vision(ROOT/'resources/epic-seven/vision.json',ROOT/'resources/epic-seven')
+    spec={'story':vision.spec['states']['story']}
+    matches=data['matches']
+    assert matches['story_skip']['source_node']=='Stove.Template.StorySkip'
+    assert matches['story_history']['source_node']=='Template.StoryHistory'
+    data['state']=classify(matches,spec)
+    assert data['state']=='story'
+    data['ui_tree']=build_tree(data,vision.spec)
+    assert operation_view(data)['view']=='story_dialogue'
+    assert story_target(data,{'kind':'story_skip'})
+    for missing in ('story_skip','story_history'):
+        wrong=deepcopy(matches);wrong[missing]={'hit':False}
+        assert classify(wrong,spec)=='unknown'
+    wrong=deepcopy(matches);wrong['story_confirm_question']={'hit':True}
+    assert classify(wrong,spec)=='unknown'
 
 
 @pytest.mark.fixtures

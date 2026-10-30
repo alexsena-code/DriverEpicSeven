@@ -10,7 +10,7 @@ import pytest
 
 from driver_epic_seven.config import ROOT
 from driver_epic_seven.observed_ui import build_tree, operation_view
-from driver_epic_seven.input_guards import navigation_proof
+from driver_epic_seven.input_guards import navigation_proof, navigation_arrived
 from driver_epic_seven.runtime import Runtime
 
 
@@ -185,3 +185,42 @@ def test_reference_is_loaded_before_fresh_observe_overwrites_same_filename(tmp_p
     with pytest.raises(ValueError,match='outra janela'):
         runtime.primitive('click',point=(934,645),observation=path,from_state='unknown')
     assert not any(c[0]=='click' for c in calls)
+
+
+def test_episode_navigation_accepts_stable_labels_and_requires_current_destination():
+    data=lobby();previous,current=frames(data)
+    accepted=proof(data,data,previous,current,point=(1110,175))
+    assert accepted['status']=='accepted' and accepted['control']=='episode'
+    assert accepted['destinations']==[{'view':'prequel_ready_map'}]
+    assert not navigation_arrived({'ui_tree':build_tree(data)},accepted)
+    for label in ('Side Story','Battle','Arena','Summon','Shop'):
+        row=next(r for r in data['text'] if r['text']==label)
+        x,y,w,h=row['box']
+        assert proof(data,data,previous,current,point=(x+w//2,y+h//2))['status']=='not_applicable'
+    for mutation in ('dim','covered','missing','moved','window','overlay'):
+        now=deepcopy(data);pixels=current.copy()
+        row=next(r for r in now['text'] if r['text']=='Episode')
+        if mutation=='dim':pixels=(pixels*.5).astype(np.uint8)
+        elif mutation=='covered':pixels[160:190,1045:1175]=0
+        elif mutation=='missing':now['text'].remove(row)
+        elif mutation=='moved':row['box'][0]+=30
+        elif mutation=='window':now['window']['pid']=99
+        elif mutation=='overlay':now['text'].append({'text':'Confirm','box':[630,400,120,35],'score':.99})
+        assert proof(data,now,previous,pixels,point=(1110,175))['status']=='rejected',mutation
+
+
+@pytest.mark.fixtures
+def test_episode_current_lobby_glyphs_and_observed_map_arrival():
+    lobby_file=ROOT/'var/admin-campaign-20261030w/lobby-navigation.json'
+    map_file=ROOT/'var/runs/20261030T090525Z_45b0562b/agent_000004.json'
+    if not all(p.exists() for p in (lobby_file,lobby_file.with_suffix('.png'),map_file)):
+        pytest.skip('Private daily-reset lobby and Episode arrival unavailable.')
+    data=json.loads(lobby_file.read_text(encoding='utf-8'))
+    pixels=np.asarray(Image.open(lobby_file.with_suffix('.png')).convert('RGB'))[:,:,::-1].copy()
+    changed=pixels.copy()
+    changed[250:550,300:700]=0
+    result=proof(data,data,pixels,changed,point=(1118,175))
+    assert result['status']=='accepted',result
+    arrived=json.loads(map_file.read_text(encoding='utf-8'))['result']
+    assert navigation_arrived({'ui_tree':build_tree(arrived)},result)
+    assert proof(data,data,pixels,(pixels*.5).astype(np.uint8),point=(1118,175))['status']=='rejected'

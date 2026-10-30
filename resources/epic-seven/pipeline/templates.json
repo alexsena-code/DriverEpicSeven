@@ -345,6 +345,20 @@
     ],
     "action": "DoNothing"
   },
+  "Template.StoryHistoryTown": {
+    "recognition": "TemplateMatch",
+    "template": "story_history_town.png",
+    "roi": [1000, 10, 90, 60],
+    "threshold": 0.92,
+    "action": "DoNothing"
+  },
+  "Template.FriendPromptCurrent": {
+    "recognition": "TemplateMatch",
+    "template": "friend_prompt_current.png",
+    "roi": [390, 210, 430, 75],
+    "threshold": 0.92,
+    "action": "DoNothing"
+  },
   "Template.FriendCancel": {
     "recognition": "TemplateMatch",
     "template": "friend_cancel.png",
@@ -388,6 +402,14 @@
     ],
     "model": "en_us",
     "expected": "[Tt]ap to close[.]?",
+    "threshold": 0.9,
+    "action": "DoNothing"
+  },
+  "OCR.SideAlertBody": {
+    "recognition": "OCR",
+    "roi": [345, 200, 525, 65],
+    "model": "en_us",
+    "expected": "^(?:The following Side Stories have been unlocked|You can check unlocked Side Stories on the Side Story List)[.]?$",
     "threshold": 0.9,
     "action": "DoNothing"
   },
@@ -463,17 +485,21 @@
       65
     ],
     "model": "en_us",
-    "expected": "Select Supporter",
+    "expected": [
+      "Select Supporter",
+      "Select Supnorter"
+    ],
     "threshold": 0.9,
     "action": "DoNothing"
   },
   "OCR.ClearHeading": {
     "recognition": "OCR",
+    "only_rec": true,
     "roi": [
-      440,
-      380,
-      340,
-      90
+      450,
+      390,
+      310,
+      65
     ],
     "model": "en_us",
     "expected": "C\\s*L\\s*E\\s*A\\s*R",
@@ -763,6 +789,17 @@
       400
     ],
     "threshold": 0.94,
+    "action": "DoNothing"
+  },
+  "Template.MapEpisode2PlainHeader": {
+    "recognition": "TemplateMatch",
+    "template": "map_episode2_plain_header.png",
+    "roi": [
+      55,
+      8,
+      140,
+      48
+    ],
     "action": "DoNothing"
   }
 }

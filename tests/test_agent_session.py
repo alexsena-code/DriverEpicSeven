@@ -163,7 +163,7 @@ def test_pipeline_transitions_reported_and_next_command_stays_in_same_session(tm
     assert report["operation"]["completed"] and report["state"] == "lobby"
     assert any(e.get("after_state") == "orbis_guide" for e in report["events"])
     assert any(e["kind"] == "routine_completed" for e in report["events"])
-    assert messages[2]["events"] == []
+    assert [event['kind'] for event in messages[2]['events']] == ['execution_started', 'execution_finished']
 
 
 def test_expired_and_changed_window_remain_invalid_without_extra_capture(tmp_path):
@@ -211,3 +211,223 @@ def test_requests_cannot_reconnect_change_config_or_evaluate_shell(payload):
 def test_independent_snapshot_still_requires_explicit_file():
     with pytest.raises(ValueError, match="exige --file"):
         execute(parser().parse_args(["snapshot"]))
+
+
+def test_async_jsonl_consults_and_cancels_during_blocked_application(tmp_path, monkeypatch):
+    from threading import Event
+    from driver_epic_seven.application import Application
+    from driver_epic_seven.contracts import Identity
+    runtime = FakeRuntime(tmp_path)
+    started, release = Event(), Event()
+    identity = Identity().as_dict()
+    def blocking_execute(self, request, rt):
+        runtime.execution_dispatched = True
+        started.set()
+        assert release.wait(3)
+        return {'completed': False, 'execution': {'status': 'uncertain', 'identity': request.identity.as_dict()}}
+    monkeypatch.setattr(Application, 'execute', blocking_execute)
+    runtime.cancel_execution = release.set
+    original_guard = runtime.guard
+    def guard(**kwargs):
+        assert not started.is_set() or release.is_set(), 'Consultation called window guard while busy'
+        return original_guard(**kwargs)
+    runtime.guard = guard
+    def requests():
+        yield json.dumps({'id': 'long', 'args': ['run', 'orbis_roundtrip'], 'identity': identity, 'async': True})
+        assert started.wait(1)
+        yield json.dumps({'id': 'status', 'args': ['status']})
+        yield json.dumps({'id': 'events', 'args': ['events', '--after-sequence', '0']})
+        yield json.dumps({'id': 'snapshot', 'args': ['snapshot']})
+        yield json.dumps({'id': 'second', 'args': ['observe'], 'async': True})
+        yield json.dumps({'id': 'cancel', 'args': ['cancel']})
+        yield json.dumps({'id': 'end', 'args': ['disconnect']})
+    output = StringIO()
+    serve({}, requests(), output, lambda config: runtime)
+    messages = {m['id']: m for m in map(json.loads, output.getvalue().splitlines()) if 'id' in m}
+    assert messages['long']['session_execution']['identity'] == identity
+    assert messages['status']['session_execution']['running']
+    assert messages['status']['session_execution']['request_id'] == 'long'
+    assert any(e['kind'] == 'execution_started' and e['identity'] == identity for e in messages['events']['events'])
+    assert messages['snapshot']['metrics']['driver_captures'] == 0
+    assert not messages['second']['ok'] and messages['second']['execution_error']['status'] == 'precondition_blocked'
+    final = json.loads((runtime.evidence.path / 'execution.json').read_text(encoding='utf-8'))
+    assert final['status'] == 'uncertain' and final['error']['proof']['replay_authorized'] is False
+    assert runtime.closed == 1 and messages['end']['type'] == 'disconnected'
+
+
+def test_async_disconnect_waits_before_runtime_close(tmp_path, monkeypatch):
+    from threading import Event
+    from driver_epic_seven.application import Application
+    runtime = FakeRuntime(tmp_path)
+    started, release, finished = Event(), Event(), Event()
+    def execute_blocked(self, request, rt):
+        started.set()
+        assert release.wait(3)
+        assert runtime.closed == 0
+        finished.set()
+        return {'completed': False}
+    monkeypatch.setattr(Application, 'execute', execute_blocked)
+    runtime.cancel_execution = release.set
+    def requests():
+        yield json.dumps({'args': ['observe'], 'async': True})
+        assert started.wait(1)
+        yield json.dumps({'args': ['disconnect']})
+    output = StringIO()
+    serve({}, requests(), output, lambda config: runtime)
+    assert finished.is_set() and runtime.closed == 1
+
+
+def test_event_cursor_loss_and_invalid_cursor_are_explicit(tmp_path):
+    runtime = FakeRuntime(tmp_path)
+    for i in range(70):
+        runtime.observer.event('test', index=i)
+    messages = session(runtime, [{'args': ['events', '--after-sequence', '0']},
+                                 {'args': ['events', '--after-sequence', '-1']}])
+    assert messages[1]['history_lost'] and len(messages[1]['events']) == 64
+    assert messages[1]['events'][0]['sequence'] == 7
+    assert not messages[2]['ok']
+
+
+def test_cli_readonly_status_and_events_use_saved_contract_without_runtime(tmp_path, monkeypatch):
+    import driver_epic_seven.runtime as runtime_module
+    monkeypatch.setattr(runtime_module, 'Runtime', lambda *a: pytest.fail('Unexpected connection'))
+    runtime = FakeRuntime(tmp_path)
+    status = {'running': True, 'status': 'running', 'identity': {'operation_id': 'offline'}}
+    runtime.evidence.write('execution', status)
+    runtime.observer.event('execution_started', identity=status['identity'])
+    assert execute(parser().parse_args(['status', '--file', str(runtime.evidence.path / 'execution.json')])) == status
+    result = execute(parser().parse_args(['events', '--file', str(runtime.evidence.path / 'observer.json')]))
+    assert result['events'][0]['identity'] == status['identity']
+    with pytest.raises(ValueError, match='conexão agent'):
+        execute(parser().parse_args(['cancel']))
+
+
+def test_capabilities_consultation_does_not_replace_running_identity(tmp_path, monkeypatch):
+    from threading import Event
+    from driver_epic_seven.application import Application
+    runtime = FakeRuntime(tmp_path)
+    started, release = Event(), Event()
+    def execute_mock(self, request, rt=None):
+        if request.operation == 'capabilities':
+            assert rt is None
+            return {'mapped_families_are_executors': False, 'account_access': None}
+        started.set()
+        assert release.wait(3)
+        return {'completed': False}
+    monkeypatch.setattr(Application, 'execute', execute_mock)
+    runtime.cancel_execution = release.set
+    def requests():
+        yield json.dumps({'id': 'long', 'args': ['observe'], 'async': True})
+        assert started.wait(1)
+        yield json.dumps({'id': 'caps', 'args': ['capabilities']})
+        yield json.dumps({'args': ['disconnect']})
+    output = StringIO()
+    serve({}, requests(), output, lambda config: runtime)
+    messages = list(map(json.loads, output.getvalue().splitlines()))
+    assert messages[2]['capabilities']['mapped_families_are_executors'] is False
+    assert messages[2]['session_execution']['request_id'] == 'long'
+    assert messages[2]['session_execution']['running']
+
+
+def test_status_projects_async_failure_with_original_execution_correlation(tmp_path, monkeypatch):
+    from threading import Event
+    from driver_epic_seven.application import Application
+    runtime = FakeRuntime(tmp_path)
+    failed = Event()
+    def execute_failed(self, request, rt):
+        failed.set()
+        raise RuntimeError('original async failure')
+    monkeypatch.setattr(Application, 'execute', execute_failed)
+    def requests():
+        yield json.dumps({'id': 'original-request', 'args': ['observe'], 'async': True})
+        assert failed.wait(1)
+        # synchronize on the worker's terminal lifecycle publication
+        for _ in range(100):
+            saved = json.loads((runtime.evidence.path / 'execution.json').read_text(encoding='utf-8'))
+            if not saved['running']:
+                break
+            time.sleep(.001)
+        assert not saved['running']
+        yield json.dumps({'id': 'query-request', 'args': ['status']})
+    output = StringIO()
+    serve({}, requests(), output, lambda config: runtime)
+    response = list(map(json.loads, output.getvalue().splitlines()))[-1]
+    assert response['id'] == 'query-request' and response['ok'] is False
+    assert response['error'] == 'original async failure'
+    assert response['execution_error']['request_id'] == 'original-request'
+    assert response['execution_error']['identity'] == response['session_execution']['identity']
+
+
+def test_transport_disk_failure_preserves_rejection_and_closes_without_dispatch(tmp_path):
+    runtime = FakeRuntime(tmp_path)
+    def fail_write(*args, **kwargs):
+        raise OSError('disk unavailable')
+    runtime.evidence.write = fail_write
+    runtime.observer._writer = fail_write
+    output = StringIO()
+    # FakeRuntime.close also writes; isolate shutdown from its test-only writer.
+    def close():
+        runtime.closed += 1
+    runtime.close = close
+    serve({}, StringIO(json.dumps({'id': 'disk', 'args': ['observe']})+'\n'), output,
+          lambda config: runtime)
+    response = list(map(json.loads, output.getvalue().splitlines()))[-1]
+    assert response['id'] == 'disk' and not response['ok']
+    assert 'disk unavailable' in response['error']
+    assert response['execution_error']['proof']['input_attempted'] is False
+    assert response['persistence_errors'] and response['evidence']['response_file'] is None
+    assert runtime.calls == [] and runtime.closed == 1
+
+
+def test_cli_explicit_identity_and_plan_budget_match_common_request():
+    from driver_epic_seven.cli import request_from_args
+    from driver_epic_seven.contracts import Identity
+    identity = Identity()
+    budget = {'max_attempts': 2, 'max_starts': 2, 'max_total_energy': 16, 'max_actions': 100}
+    args = parser().parse_args(['--execution-identity', json.dumps(identity.as_dict()),
+                                '--plan-budget', json.dumps(budget), 'observe'])
+    request = request_from_args(args)
+    assert request.identity == identity and json.loads(request.parameters['plan_budget']) == budget
+    assert 'execution_identity' not in request.parameters
+    assert request_from_args(args, identity).identity == identity
+    with pytest.raises(ValueError, match='conflita'):
+        request_from_args(args, Identity())
+
+
+@pytest.mark.parametrize('encoded', ['{}', 'null', '[]', 'bad json', '{"objective_id":"x"}'])
+def test_cli_identity_requires_four_explicit_ids(encoded):
+    from driver_epic_seven.cli import request_from_args
+    with pytest.raises(ValueError, match='quatro IDs'):
+        request_from_args(parser().parse_args(['--execution-identity', encoded, 'observe']))
+
+
+def test_jsonl_explicit_identity_rejects_cli_conflict_before_dispatch(tmp_path):
+    from driver_epic_seven.contracts import Identity
+    runtime = FakeRuntime(tmp_path)
+    explicit, conflicting = Identity(), Identity()
+    responses = session(runtime, [{'identity': explicit.as_dict(), 'args': [
+        '--execution-identity', json.dumps(conflicting.as_dict()), 'observe']}])
+    assert not responses[1]['ok'] and 'conflita' in responses[1]['error']
+    assert runtime.calls == []
+
+
+def test_cli_and_jsonl_execute_same_identity_and_plan_budget(tmp_path, monkeypatch):
+    from driver_epic_seven.application import Application
+    from driver_epic_seven.cli import execute_live
+    from driver_epic_seven.contracts import Identity
+    identity = Identity()
+    budget = {'max_attempts': 2, 'max_starts': 2, 'max_total_energy': 16, 'max_actions': 100}
+    argv = ['--execution-identity', json.dumps(identity.as_dict()), '--plan-budget', json.dumps(budget), 'observe']
+    requests = []
+    def execute_mock(self, request, runtime):
+        requests.append(request)
+        return {'completed': True}
+    monkeypatch.setattr(Application, 'execute', execute_mock)
+    runtime = FakeRuntime(tmp_path)
+    runtime.config = {}
+    execute_live(parser().parse_args(argv), runtime)
+    session(runtime, [{'identity': identity.as_dict(), 'args': argv}])
+    assert len(requests) == 2
+    assert requests[0].identity == requests[1].identity == identity
+    assert requests[0].operation == requests[1].operation == 'observe'
+    assert dict(requests[0].parameters) == dict(requests[1].parameters)

@@ -21,4 +21,7 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-markers = ["fixtures: reconhecimento em capturas locais do jogo"]
+markers = ["fixtures: reconhecimento em capturas locais do jogo",
+           "native: dependência direta ou transitiva de execução nativa Maa/OCR",
+           "fast: seleção auditada sem execução nativa Maa/OCR",
+           "temporal: mede duração real de gesto; não remover o contrato temporal"]

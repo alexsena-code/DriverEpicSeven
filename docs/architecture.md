@@ -32,7 +32,233 @@ flowchart TD
 
 As projeções (`screen_state`, `stage_view`, `quest_view`, `navigation_view`, `text_rows`) são leituras da árvore, não caches nem novos motores de interpretação. A compatibilidade de entradas antigas fica concentrada em `tree_for`; uma árvore já presente tem precedência sobre aliases antigos. Reconhecedores/adaptadores podem ler seus resultados brutos para produzir a árvore; fluxos e ações usam o contrato comum. Os pipelines JSON e seus limites continuam canônicos para sequências.
 
+<a id="nucleo-local"></a>
+
+## Núcleo local compartilhado — Wave 1
+
+Extração de ALE-206 a ALE-209, autorizada em 28/10/2026. A sequência é
+observação → operação → plano → execução → interface, no mesmo host/processo,
+com sessão sob demanda. O transporte não possui regras próprias de gasto,
+reserva ou resolução de operação.
+
+| Camada | Fonte em uso | Responsabilidade |
+| --- | --- | --- |
+| Observação | `reading.py`, `observed_ui.py` e adaptadores existentes | Uma captura/árvore; busca, unicidade, proveniência e campos parciais. Não reserva nem envia entrada. `operational_stove.ReadContext` conserva o alias. |
+| Contratos | `contracts.py` | `Request(operation, parameters, identity)`, `Identity`, `Outcome` e `Status`, sem argparse ou escolha de executável. Parâmetros diretos são explícitos; defaults de comandos pertencem ao adaptador. |
+| Aplicação | `application.py` | Decide a operação e suas guardas; CLI e JSONL chamam a mesma classe. `cli.execute_live` permanece como adaptador de compatibilidade. |
+| Plano | Construtores existentes e `composition.py` | Copia/prefixa fragmentos e fecha referências antes de postar o grafo finito. Não interpreta cliques, reconhecimento ou retries. |
+| Execução | `execution.py`, `attempts.py`, `Runtime.post_task` | Fronteira anterior ao envio, prova vinculada à observação/janela/diário, ação nativa única no mesmo Context/Tasker/controlador Maa. |
+| Interfaces | `cli.py`, `agent_session.py` | Argumentos, correlação, projeção textual e saída. Nenhuma conexão adicional ou captura em paralelo. |
+
+O inventário de reutilização continua nos registros existentes, sem um segundo
+catálogo de maturidade:
+
+| Área existente | Tratamento nesta wave | Limite conservado |
+| --- | --- | --- |
+| Janela, perfil, observador, árvore, eventos e primitivas | Reutilizar | Mouse 4; fallback 64 explícito; identidade, validade e STOP. |
+| CLI/JSONL e construtores de capítulo/grupo/prólogo | Integrar por extração | Aliases e formatos anteriores; regras comuns na aplicação e no compositor. |
+| Campanha/prólogo, Abyss e altar | Operações/guardas comuns | Identidades/custos/equipe específicos permanecem nos consumidores; contrato da Wave 2 abaixo. |
+| Equipamento e formação | Operações delimitadas na fronteira comum | Item, materiais, integrante/destino e aplicação comprovados; instâncias não lidas permanecem desconhecidas. |
+| Aparências de lobby, história, Auto e resultados | Reutilizar positivos/negativos; revalidar a variante atual | Não inferir outro painel por texto isolado nem habilitar controle desconhecido. |
+| Demais famílias do operation-map | Lacuna de execução explícita | Mapeamento não vira executor; descoberta consulta registry/mapa e aponta para o escopo de validação existente. |
+
+`ReadContext` é infraestrutura somente leitura sobre o OCR/matches recebidos.
+Preparação mantém custo, identidade e controles mesmo com CP ilegível. Rank
+ilegível no lobby também não elimina as seis legendas e a âncora nativa atuais.
+Esses campos desconhecidos não provam equipe, habilitação ou acesso. O overlay
+de integrante selecionado bloqueia a projeção da preparação subjacente.
+`query_operation_control` resolve filhos de um painel único, pode conferir o
+`observation_id`, e separa `observed` de `actionability.eligible=null`, com motivos.
+Uma legenda continua `text_anchor`; o recorte nativo é `template_extent`.
+
+### Fronteira de execução e compatibilidade do diário
+
+`ScreenTarget.analyze` apenas reconhece/adapta, retorna o alvo e registra
+evidência. A ação customizada `OperationBoundary` do Maa recebe exatamente o
+resultado desse reconhecimento, revalida janela/idade/STOP, persiste reserva e
+tentativa e só então chama `Context.run_action_direct` para uma ação nativa.
+Não chama reconhecimento, captura, `next`, outro controlador ou um scheduler
+Python. A falha da gravação retorna falso antes do envio; a falha posterior ao
+envio permanece conservadora e nunca autoriza replay. Os callbacks de eventos
+do Runtime apenas publicam invalidação/conclusão; não interpretam nomes de nós
+para atualizar regras de negócio.
+
+Preparações transitórias são atualizadas na fronteira de ação comprovada, não
+ao repetir leitura. Nós de prova declaram escopo/fase explicitamente; nomes de
+nó são diagnóstico. O ciclo distingue preparada, reservada, envio tentado,
+aceito, efeito, resultado, retorno/conclusão, bloqueio, derrota, cancelamento e
+incerteza. `dispatch_accepted` conserva `postcondition_verified=false` enquanto
+falta prova do destino. Timeout, queda de janela e falha de captura não são
+derrota. Retorno ao mapa/lobby sem resultado não elimina uma entrada pendente.
+
+O JSON existente mantém `stages`, chaves, custos, status e campos históricos.
+Acrescenta identidade explícita, `ledger_scope` e `events` com prova da
+observação/janela; não reescreve nem limpa entradas antigas. `save` grava e
+sincroniza o temporário antes da substituição. Outra conta continua exigindo
+outro diário configurado; não há inferência de identidade da conta pelo
+executável. Entradas antigas sem metadados novos permanecem legadas; não se
+inventam provas ausentes. Nova tentativa depois de derrota comprovada continua
+sujeita ao plano e teto existentes. Desde 29/10/2026 o usuário também autoriza
+até três entradas por fase com resultado anterior desconhecido: em `path
+campaign`, a política explícita específica da fase exige evento de reconciliação,
+observação atual, mesma janela, objetivo e limites finitos de custo e prazo.
+O resultado anterior permanece desconhecido; sem essa política, o Start fica
+bloqueado. Não há retry automático.
+
+### Composição e interrupções
+
+`composition.append_fragment` é usado em capítulos, grupos e recuperação do
+prólogo. Remapeia `next`, `on_error` e referências geométricas usadas; recusa
+arestas abertas e colisões. NodeAttr, `[JumpBack]`, anchors e formas legadas de
+interrupção não são promovidos: são recusados explicitamente por esse compositor.
+As retomadas comuns do prólogo são emitidas diretamente sem Start/Row/Ready/Back;
+a política explícita de nova tentativa desconhecida é uma exceção restrita à
+fase autorizada e validada na fronteira de execução.
+
+`interruptions.treatment` compartilha história click/hold, confirmação específica
+com estabilidade, avisos compostos, recompensas, cancelamento de amizade e Auto.
+Os tratamentos nativos reutilizam a definição calibrada de `battle_finish.json`;
+prólogo e resultados de Abyss/altar usam os mesmos construtores. Cada consumidor
+escolhe seus ramos, timeout, máximo de passagens e destinos. Auto exige desligado
+positivo e tem um clique máximo; Confirm isolado permanece recusado. Após cada
+tratamento o Maa reavalia os próximos alvos. Não existe aresta de retomada para
+Start/Again, nem tratamento automático de uma tela desconhecida.
+
+### Wave 2: operações parametrizadas e mudanças comprovadas
+
+ALE-210/211/212 usam o mesmo núcleo, a árvore canônica e a conexão Maa. As
+provas e os limites efetivamente exercitados ficam em
+[validation.md](validation.md#wave2-batalhas). ALE-213 a ALE-215 são cobertas
+pela Wave 3 abaixo; MCP permanece fora.
+
+`battle_operations.py` compartilha custo/saldo, janela, validade da preparação e
+presença de integrantes por níveis ou marcadores atuais `Story`. Campanha,
+prólogo, Abyss e altar conservam as diferenças de identidade/resultado. CP é
+opcional e não identifica integrantes. Alvo, custo, saldo e equipe continuam
+obrigatórios. Abyss recebe andar/modo normal/custo; Next Floor e preparação não
+contêm Start. `--scope` identifica um objetivo independente; os aliases
+`--task-id` e requisitos de missão são traduzidos na aplicação/plano.
+
+A reserva bloqueia entradas pendentes também sob outro objetivo. Resultado,
+derrota e retorno são persistidos na fronteira da prova, antes da captura
+adicional. Campanha só encadeia após vitória vinculada e retorno; se a vitória
+não tem prova atual de 3★, o checkpoint devolve `three_star_proof_missing` e para.
+Não interpreta isso como derrota. Timeout, desconexão e captura falha também não
+autorizam repetir Start. A verificação do crédito da missão é outra leitura.
+
+`retries.check_retry` aceita uma solicitação explícita do agente após derrota
+registrada com observação/janela. Exige mesmo objetivo/plano/escopo, nova
+`attempt_id`, vínculo com a anterior, `max_attempts` até três e até o teto do
+diário, `max_total_cost` e prazo futuro de até uma hora. A nova reserva ocorre
+antes de um único Start, sob as guardas normais atuais. Não há retry automático
+nem calibração/otimização durante uma run; capacidade indisponível encerra o trecho.
+
+`equipment_operations` escolhe `equip_all`/`enhance_weapon`, sem IDs de missão.
+Equip All compara Attack/Health atuais e candidatos; CP ausente ou menor não é
+barreira. A segunda confirmação exige a variante nativa de troca gratuita;
+custo desconhecido bloqueia. A melhoria exige item/slot contínuos, EXP antes,
+Auto Select delimitado, materiais/quantidades comprovados, custo/saldo e tetos
+explícitos. A leitura parcial conserva outros atributos mesmo se Defense falha.
+O badge de prévia é texto observado, não um nível final presumido. A prova da
+aplicação usa o item, EXP, débito exato e limpeza dos materiais. O diário preserva
+a aplicação se a saída falhar; `--finish-current` reconcilia sem Enhance/Change.
+`no_better_equipment` é um resultado explícito sem nova aplicação.
+
+`formation_view` projeta exclusivamente os nós `adapter=formation` da árvore.
+`upper/left/right/lower` são posições visuais; IDs de slot/instância permanecem
+nulos. O overlay/lista bloqueia a preparação subjacente, inclusive prepare/Start do
+`StageInspector` de campanha; os seletores da equipe
+sem overlay podem coexistir com a preparação. Selecionar um candidato não prova
+aplicação. Os grafos separam seleção, `+`, destino e leitura final. Reposição e
+substituição comprovam o nome no detalhe do integrante e o destino; remoção
+exige prova nativa do vazio, calibrada na esquerda. Cada mutação é única e tem
+escopo persistente; uma mudança incerta bloqueia outra sob novo escopo. Outros
+slots vazios, busca/rolagem arbitrária e instâncias duplicadas sem distinção
+permanecem fora da execução. Nomes das fixtures não são uma lista permitida.
+
+No altar, `quick_battle_active` vem dos dois estados confirmados pelo usuário.
+Ambos/nenhum deixam o campo desconhecido. A composição Quick mantém
+quantidade/custo próprios e não expõe Start normal. Não há executor ou toggle
+Quick. Rereads de OCR são delimitados à composição comprovada, no mesmo callback
+Maa; não reduzem confiança nem completam texto por semelhança. Templates dos
+espaços de material conservam MAE local; correlação foi calibrada contra animação,
+itens ocupados e sobreposições, sem alterar os limiares globais.
+
 <a id="preparacao-antes-da-calibracao"></a>
+
+<a id="wave3-planos"></a>
+
+## Wave 3: planos finitos e execução consultável
+
+`plans.py` acrescenta o contrato comum aos compiladores de capítulo, campanha
+do prólogo e grupo: unidades identificadas, dependências ordenadas, recursos,
+ações, Starts, tratamentos, recuperações, tentativas e prazo finitos.
+O contrato é compilado antes de enviar o grafo. Não cria um scheduler Python:
+Maa continua responsável por reconhecimento, `next`, retries de navegação,
+estabilidade e máximo de passagens. Ausência de progresso termina pelos limites
+de nós, orçamento e prazo; telas desconhecidas devolvem contexto ao agente.
+
+O checkpoint sincroniza e substitui atomicamente o arquivo antes do envio,
+preservando fingerprint do plano, identidade, prazo original, custos reservados,
+provas da observação e eventos. Reservar orçamento não comprova entrada aceita
+ou gasto efetivo. A fronteira `OperationCycle` confere o checkpoint, janela,
+idade e STOP, mantém o diário consumidor e revalida a guarda antes da ação nativa.
+Falha de persistência impede novo envio; falha posterior conserva incerteza.
+O default admite uma tentativa por unidade. `plan_budget` explícito desde a
+primeira execução pode reservar tetos adicionais de Starts, energia, ações e
+tentativas; não é inferido de saldo sobrando. O CLI aceita `--plan-budget` e
+`--execution-identity`; JSONL transporta a mesma identidade/contrato. Após derrota,
+o agente ainda precisa fornecer a política `retry_policy` com vínculo à tentativa
+anterior. O restante é recompilado sem reiniciar unidades concluídas.
+
+Retomar significa compilar o restante em um único grafo. Unidades retornadas/
+verificadas são omitidas; consumidores pendentes recebem somente continuação
+de resultado/retorno. Reabrir lobby→Orbis→Path of Heir reutiliza os grafos
+calibrados e exige o grupo/contador atual antes de avançar. Resultado ausente
+no lobby não vira vitória nem permite outro Start. Equipamento sem contexto
+persistido suficiente exige a reconciliação específica; uma lacuna não autoriza
+calibrar durante uma run. Ajuste após derrota continua decisão do agente sob
+`retries.check_retry`, nova identidade de tentativa e limites restantes.
+
+Após derrota comprovada, `retry_policy.kind=defeat_new_plan` permite ao agente
+autorizar um novo trecho finito, inclusive quando o prazo do trecho encerrado
+venceu. Exige `previous_plan_id`, `previous_attempt_id` e `stage_id` iguais
+ao plano/tentativa/fase da prova de derrota, objetivo preservado, IDs novos de
+plano/tentativa, janela atual compatível, custo total contando todas as reservas
+anteriores e prazo novo de até uma hora. O diário da fase continua limitado a
+três entradas e é conferido antes do envio; trocar o plano não o reinicia.
+O checkpoint anterior, seus custos e prazo permanecem intocados. A retomada
+do mesmo plano conserva seu prazo original. Essa política não aceita resultado
+incerto ou vitória e não dispara retries automaticamente.
+
+`execution_session.py` mantém um worker local por Runtime. JSONL `async:true`
+submete uma operação da mesma `Application`; o transporte pode responder
+`status/events/snapshot/capabilities/cancel` enquanto ela executa. Um segundo
+pedido de entrada é recusado. Pedidos legados sem `async` permanecem síncronos.
+Consultas durante execução leem `SharedObserver` e arquivos atômicos de plano/
+diário; não chamam descoberta de janela, captura, OCR ou outro Tasker. Validade
+vencida/tempo de captura desconhecido permanecem explícitos, inclusive nos frames
+dos callbacks Maa. Não se promete acessibilidade nativa ou atualização contínua.
+
+Cancelamento apenas sinaliza o worker; o próprio dono da execução pede a parada
+ao Maa. O resultado diferencia cancelado sem entrada de incerto após entrada,
+sem apagar reservas, reverter efeitos ou autorizar replay. Lifecycle e eventos
+conservam identidade e `request_id`; falhas de disco não deixam `running` preso,
+não iniciam entrada sem registro e não ocultam o erro original. `close` aguarda
+o worker antes da restauração normal do perfil da janela. Não há daemon, IPC,
+serviço sobrevivente ao chat ou segunda conexão.
+
+O status JSONL mostra unidades, progresso com prova de diário, limites restantes
+e operação/tentativa pendente. `execution.json` registra lifecycle; a consulta CLI
+por arquivo é somente leitura desse registro. `ui.controls` referencia a árvore
+canônica e separa observado de acionável, com região/validade/impedimentos.
+`enabled:null` nunca é completado pelo catálogo. `image.required` permanece
+válido para desconhecidos, dúvida, falha e conferência.
+
+O aceite de 29/10/2026 é offline por manutenção: nenhum acesso ao jogo. A prova
+do grupo legítimo ao vivo fica adiada; contrato, oráculo de reconhecimento,
+fixtures históricas e motor Maa em memória têm escopos distintos documentados
+em [validation.md](validation.md#wave3-offline).
 
 ## Preparação antes da calibração
 
@@ -41,11 +267,74 @@ Ordem aceita pelo usuário após a retrospectiva de ALE-179 e refinada em 27/10/
 1. **Preparação offline:** resolver requisito → entidade → texto/ícone → controle e ancestralidade → variante → resultado observável. Consultar os dados existentes antes de escolher novos recortes ou pontos. Registrar o que falta no extrator e o que só a sessão pode mostrar. Para um atalho, preparar origem, binding candidato, destino, retorno, contextos proibidos e evidência necessária. Não considerar uma tela `unknown` como prova de atalho indisponível.
 2. **Calibração unitária:** obter positivos e negativos relevantes, incluindo composição/fundo e variantes. Testar uma entrada nativa delimitada e confirmar o destino; separar erro de reconhecimento, envio, duração, conteúdo ainda carregando e erro do próprio instrumento. Duração e regiões estáveis são medidas no perfil atual, não deduzidas da presença de uma animação no pacote.
 3. **Integração curta:** confirmar ida/volta e repetição curta, preparação idempotente e retorno seguro. O cliente confere o ID do pedido, a resposta, o diretório da conexão, o ID da observação e a presença dos arquivos. Uma nova execução não pode herdar silenciosamente processo, contadores ou relatório anterior. Estado incompatível encerra o trecho com evidência.
-4. **Fechamento integrado:** com os testes focados e o fluxo relevante estabilizados, executar a suíte completa uma vez sobre a versão consolidada, registrando condições e tentativas anteriores. Uma falha deve ser reproduzida e corrigida no conjunto focado antes de outra execução completa. Repetir a suíte completa somente após mudança relevante, falha ou risco de regressão identificado, registrando a justificativa. Não editar comportamento durante essa execução. Alterações somente em documentação não exigem pytest. Percursos longos autorizados e calibração ao vivo não devem concorrer com testes pesados; evitar comparar medidas sob cargas diferentes ou atribuir causalidade à concorrência sem evidência.
+4. **Fechamento integrado:** com os testes focados e o fluxo relevante estabilizados, executar a suíte completa uma vez no fechamento da wave ou de uma entrega independente, conforme a [estratégia de testes](#estrategia-de-testes). Conferir antes da entrega/integração se o resultado cobre a versão funcional atual. Uma falha deve ser reproduzida e corrigida no conjunto focado antes de outra execução completa. Repetir somente após mudança relevante, falha ou risco de regressão novo, registrando a justificativa. Não editar comportamento durante essa execução, inclusive por outra sessão no mesmo checkout. Alterações somente em documentação não exigem pytest. Percursos longos autorizados e calibração ao vivo não devem concorrer com testes pesados; evitar comparar medidas sob cargas diferentes ou atribuir causalidade à concorrência sem evidência.
 
 Isso não cria um novo motor de rotinas: reconhecimento, ação, `next`, esperas e limites continuam nos pipelines Maa. Primitivas exploratórias continuam disponíveis dentro do escopo autorizado.
 
 Na expansão das famílias, a decisão posterior do usuário é fechar primeiro o mapeamento das operações e capacidades compartilhadas, e depois implementar os novos campos/controles na `ui_tree`. O levantamento associa requisito, entidade, fontes, sequência candidata, variantes, custo/guardas, prova e lacunas; não exige executar todas as transações nem completar formatos opacos. A árvore existente continua sendo usada normalmente durante essa fase. A matriz está em [mission-operations.md](mission-operations.md#expansao-operacional). Antes de uma operação ou teste, localizar as fontes pela [consulta por operação](assets.md#consulta-por-operacao), em vez de redescobrir por tentativa na janela.
+
+<a id="estrategia-de-testes"></a>
+
+### Estratégia e custo dos testes
+
+As regras de execução ficam em AGENTS.md. Para uma wave com várias issues, há três pontos de verificação:
+
+| Momento | Verificação |
+| --- | --- |
+| Ajuste de função, operação ou leitor | Caso que reproduz a falha, positivos/negativos e consumidores vizinhos; selecionar arquivos/node IDs ou `-k`. Rodar `validate` quando reconhecimento, pipeline ou composição forem afetados. |
+| Integração curta dentro da wave | Conjunto focado das fronteiras modificadas e ida/volta relevante autorizada. Concluir uma subissue não exige outra suíte completa. |
+| Wave/entrega estabilizada, antes de entregar ou integrar | Uma suíte completa sobre o conjunto funcional consolidado. Reutilizar resultado que ainda cubra esse conjunto; mudanças apenas de documentação, outra sessão ou passagem de tempo não invalidam sozinhas a execução. |
+
+Não usar a suíte inteira para descobrir o próximo erro enquanto ainda se implementa. Se o fechamento falhar, reproduzir e corrigir no menor conjunto pertinente, testar consumidores afetados e justificar a nova execução completa. Durante uma suíte completa, nenhuma sessão deve alterar o comportamento que está sendo validado. Reservar uma janela sem outro pytest pesado, profiling ou calibração ao vivo; consultar o estado de outras sessões antes de iniciar a medição.
+
+Em cada execução, registrar em `var/` objetivo/seleção, revisão e alterações funcionais não commitadas, ambiente/modelos/fixtures, comando, contagens, skips, duração e motivo da repetição quando houver. No fechamento usar, por exemplo, `python -m pytest --durations=20 --durations-min=0.1 --junitxml=var/tests/fechamento-01/pytest.xml`; escolher um diretório novo por tentativa. `--maxfail=1` é útil no diagnóstico selecionado; uma execução interrompida por falha não comprova o restante da suíte. [Seleção e durações no pytest 8.4](https://docs.pytest.org/en/8.4.x/how-to/usage.html).
+
+O marcador `fixtures` identifica capturas privadas e permanece independente do custo nativo. `tests/native_tiers.py` audita chamadas e dependências transitivas de fixtures/helpers durante a coleta, incluindo `stage_engine`; atribui `fast` ou `native`. Use `--test-tier=fast` para regras/adaptadores sem execução Maa/OCR, ou `--test-tier=native` para integrações. A seleção rápida instala uma guarda que falha se uma dependência nativa não classificada tentar construir Resource/Tasker/controlador. `--test-audit=<arquivo.json>` registra a classificação e suas razões. `-m "not fixtures"` continua sem esse significado. O comando padrão não filtra casos; skips/xfails e capturas/modelos ausentes permanecem visíveis.
+
+Para reduzir custo, medir primeiro os replays lentos selecionados: tempo de criação/carregamento de Vision/Resource/modelos, número e tempo de chamadas nativas por nó e imagem, OCR, preparação da árvore e esperas dos grafos. O tempo `call` de um teste que constrói Resource dentro da função inclui também essa preparação; não atribuí-lo integralmente ao reconhecimento. `--durations` é uma triagem, não essa decomposição.
+
+Em candidatos de Skip/hold e confirmação de história, o Runtime omite o OCR
+completo apenas quando o estado visual atual já não satisfaz a guarda desse
+candidato. A análise registra `text_scope=skipped_incompatible_story_candidate`;
+nenhum alvo pode ser aceito nesse ramo. No estado compatível permanecem OCR,
+adaptadores, guardas, gestos e esperas anteriores. A observação parcial não
+comprova ausência de conteúdo textual ou de outras sobreposições.
+
+Antes dessa análise, `candidate_matcher` pode recusar um candidato por ausência
+das âncoras necessárias do estado solicitado. Usa os mesmos leitores Maa de
+template/OCR, candidatos filtrados, pixels, variantes e `source_nodes` da Vision;
+um positivo passa pela classificação completa, OCR, árvore e alvo anteriores.
+O filtro cobre estados explícitos e os caminhos de história, CLEAR, derrota e
+apoiador cujas guardas já exigem esse estado. Na história também confere o gesto
+cinza já mapeado, evitando ler toda a tela para um hold incompatível com clique.
+Âncora não interpretada e operação sem mapeamento não autorizam recusa rápida.
+Observações explícitas, sessão e leitura de missão mantêm a leitura completa.
+
+Resultados nativos usados na triagem são reutilizados apenas dentro do mesmo
+callback e sobre sua imagem imutável; não há cache entre capturas, callbacks,
+ações ou configurações, nem transporte do cache de fixtures para o Runtime.
+Uma recusa rápida retorna sem publicar outra árvore: não é uma observação de
+tela desconhecida nem prova de ausência de sobreposição. Os contadores
+`candidate_rejections` e `candidate_rejection_wall_ms` separam esse custo do
+reconhecimento completo. O observador continua sem captura concorrente.
+O mesmo filtro recusa Auto-on quando falta uma prova positiva de desligado
+(HUD legado ou habilidades manuais + controle desbloqueado); conflito/overlay
+continua sendo decidido pelo leitor completo. Retorno ao mapa e conclusão de
+história gratuita exigem âncoras de pelo menos uma das composições de mapa já
+mapeadas antes de executar OCR completo. Uma falta de mapeamento nessa união
+mantém o caminho completo, em vez de supor uma tela ausente.
+
+`tests/fixture_cache.py` reutiliza somente valores imutáveis de reconhecimento de fixtures offline, em memória durante um processo pytest. Resource, Tasker, callbacks, overrides e logs continuam sob responsabilidade de cada teste/fixture; o cache não amplia seu escopo nem compartilha esses objetos entre motores independentes. A fixture `stage_engine` mantém seu Resource de módulo e cria um Tasker por leitura/simulação. O profiling mostrou que carregar o bundle custava milissegundos na amostra, contra dezenas de segundos de reconhecimento; não foi introduzido um Resource global compartilhado. [Escopos e limpeza de fixtures no pytest 8.4](https://docs.pytest.org/en/8.4.x/how-to/fixtures.html).
+
+O cache é limitado a 256 MiB de valores serializados, devolve cópias independentes e usa pixels exatos/shape/dtype, configuração e pixels dos templates do Vision, definição efetiva do nó consultada no Context atual, bytes de pipelines/templates/modelos e versão/configuração de inferência do SDK. Apenas TemplateMatch/OCR com geometria fixa são elegíveis. CustomRecognition, erros sem resultado, geometria dependente de outro nó e overrides enviados diretamente na chamada não são reutilizados. O callback externo, a validação de pixels, a árvore e todos os asserts continuam sendo executados. IDs internos do resultado conservam somente proveniência da consulta original e não são usados para enviar ações. O cache anterior de `stage_engine`, limitado aos pixels, foi removido em favor dessa fronteira.
+
+`--fixture-cache=off` força replays independentes para diagnóstico. Nenhum arquivo de cache é persistido ou usado pelo Runtime; a instalação do cache de testes recusa construir um controlador Win32 ao vivo. Alteração de arquivo/modelo exige nova carga/binding de recurso; seu hash de conteúdo é recalculado nessa fronteira. Mudanças de nó no Context e mutações de configuração/pixels são conferidas na consulta corrente. Não compartilhar estado mutável de fixtures para obter um hit.
+
+As simulações de transições usam `transition_overrides`, que reduz timeouts e retira esperas de preparação/estabilidade entre quadros sintéticos. Mantém ações, destinos, alvos, contagens, duração, repeat e repeat_delay. O teste marcado `temporal` ainda mede o hold real de 1500 ms e exige ao menos 1,3 s entre pressionar e soltar; não foi substituído por um assert sobre configuração.
+
+`--test-profile=<arquivo.json>` registra setup/call/teardown, criação versus wrappers de handles, espera de bundle/tarefa/reconhecimento, chamadas por nó/quadro, Vision/árvore, CPU, memória e threads. Tempos instrumentados podem ser aninhados; não somá-los como parcelas independentes. O residual identifica asserts e Python não instrumentado, sem atribuí-lo todo a assertions. Relatórios ficam em `var/`; usar os mesmos casos/corpus/modelos para comparar.
+
+Não trocar cobertura nativa por mocks, remover negativos, baixar limites de reconhecimento ou encurtar os gestos de produção para obter uma suíte menor. Compartilhar Resource/Tasker sem isolamento pode transportar overrides e estado entre casos. Paralelizar Maa/OCR antes de medir memória, threads e caminhos de log pode multiplicar o custo; avaliar apenas depois de identificar o gargalo, mantendo um fechamento completo verificável. Diagnóstico inicial e limites em [validation.md](validation.md#custo-suite-testes).
 
 ### Como usar os dados e o SDK
 
@@ -379,9 +668,9 @@ Os contratos genéricos de combate/história/próxima fase em `battle.draft.json
 
 `path_planning.py` é somente leitura e não cria Runtime. `path_execution.py` e `prequel.py` geram grafos Maa finitos; a execução e os reconhecedores usam a mesma `ui_tree` e a mesma conexão `agent`. Não há loop Python de cliques. A resposta compacta de `agent` inclui grupo/contador, missões visíveis, quantidade de linhas não vistas, limites e checkpoint; o artefato referenciado conserva o plano completo.
 
-`prequel_start` exige localização, título de história, energia, saldo, CP positivo e prova recente de uma linha disponível no mesmo PID/HWND/classe/tamanho. A prova nasce no reconhecimento do Ready, vence em 30 segundos e não transforma conteúdo estático em acesso. Títulos do prólogo são resolvidos por `mission_data.area_enter_id`, pois a legenda antiga em `level_enter_adventure` pode diferir do título atual.
+`prequel_start` exige localização, título de história, energia, saldo, composição/evidência atual de integrantes e prova recente de uma linha disponível no mesmo PID/HWND/classe/tamanho. CP é opcional. A prova transitória nasce na fronteira de ação do Ready reconhecido, vence em 30 segundos e não transforma conteúdo estático em acesso. Títulos do prólogo são resolvidos por `mission_data.area_enter_id`, pois a legenda antiga em `level_enter_adventure` pode diferir do título atual.
 
-O diário indicado por `config.path_ledger` reserva antes do envio. O perfil único usa `var/current-account/path-actions.json`, com o histórico atual migrado e os anteriores preservados em `var/`. Outra conta exige um diário próprio; o nome do executável não identifica conta nem apaga reservas. Outro pedido não pode repetir um início já registrado, mesmo após retorno; replay exige um plano separado. `path finish-stage` só aceita reserva pendente e remove os nós Start/Row/Ready/Back do grafo. Vitória e retorno são evidências diferentes. O resultado 3★ exige a exibição de três estrelas e os três checks atuais; resultado inferior ou ilegível não admite avanço.
+O diário indicado por `config.path_ledger` reserva antes do envio. O perfil único usa `var/current-account/path-actions.json`, com o histórico atual migrado e os anteriores preservados em `var/`. Outra conta exige um diário próprio; o nome do executável não identifica conta nem apaga reservas. Outro pedido não pode repetir um início já registrado, mesmo após retorno; replay exige um plano separado. `path finish-stage` só aceita reserva pendente e compila diretamente o grafo sem Start/Row/Ready/Back. Vitória e retorno são evidências diferentes. O resultado 3★ exige a exibição de três estrelas e os três checks atuais; resultado inferior ou ilegível não admite avanço.
 
 História tem duas variantes calibradas: Skip comum e cabeçalho cinza com gesto de segurar 1500 ms. O par nativo Skip + histórico identifica a variante; o campo `skip_gesture` tem proveniência na árvore. Não usar o nome de quem fala para escolher o leitor. A confirmação continua exigindo pergunta e botão atuais. Avisos informativos têm lista limitada de painéis compostos; Abyss exige título, mensagem de desbloqueio específica e Tap to close simultaneamente.
 

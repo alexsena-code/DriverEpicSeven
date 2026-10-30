@@ -10,6 +10,12 @@ O cruzamento com layouts, imagens e DBs está em [apoio estático às famílias]
 
 ## Estrutura comum
 
+A Wave 1 extrai a aplicação, leitura, fronteira persistente e composição comuns,
+descritas em [architecture.md](architecture.md#nucleo-local).
+Os executores e seus limites específicos continuam sendo os existentes; esse
+incremento não promove as famílias propostas abaixo. A demonstração reversível
+usa navegação do Orbis, sem evoluir a conta para produzir uma preparação de Abyss.
+
 A implementação inicial desta base está em [primitivas de missão](mission-operations.md#primitivas-de-missao): leitor, navegação pontual, resgate e comparação, calibrados inicialmente no Path of Heir. As famílias abaixo continuam propostas e não executadas automaticamente por esse leitor.
 
 Missão observada → requisito normalizado → escolha de capacidade → conferência de alvo/custo → unidade de ação → resultado → contador da missão → resgate individual → resgate de grupo.
@@ -94,6 +100,17 @@ Apoiadores, equipamentos e crescimento podem começar como primitivas. Batalhas 
 Essa sequência é uma proposta. Não foram lidas as pendências atuais da conta, criados novos pipelines, agendadas ações ou executadas transações nesta etapa.
 
 ## Critério para promover uma capacidade
+
+O fechamento offline autorizado da Wave 3 em 29/10/2026 não promove um grupo
+ao vivo. `run-group` compõe capacidades existentes sob o contrato/checkpoint
+comum, com um grupo por bloco. Condição satisfeita, crédito/resgate, recibo da
+recompensa final e próximo grupo são provas separadas. Um próximo grupo sem
+recibo vinculado à mesma janela não prova o resgate final. Retomada preserva
+o objetivo e não reapresenta Start/Receive/aplicação incerta como recuperação;
+contexto insuficiente encerra para revisão. Testes com recibos/contadores
+simulados são identificados como tais. Contratos em
+[architecture.md](architecture.md#wave3-planos); cobertura, medições e validação
+ao vivo adiada em [validation.md](validation.md#wave3-offline).
 
 Mapeada → telas calibradas → ação unitária autorizada → resultado observado → contador confirmado → rotina registrada com escopo. Um fluxo desenhado ou um teste offline não recebe o status de validação ao vivo.
 
@@ -278,3 +295,14 @@ A política em `data/missions/adventurer-policy.json` define um grupo por bloco,
 
 O primeiro grupo observado tinha 3/6 resgatadas. Covenant, capítulo 3 e Altar foram coletados conjuntamente, chegando a 6/6; o resgate final abriu o grupo 2. O checkpoint releu Arby 42/50, equipamento CP 24400 e Marco saldo 73/custo 60, sem nova compra ou melhoria. Isso não equivale a um ciclo autônomo ininterrupto: houve calibração e confirmação posterior ao aviso de Rank. Steam/STOVE usam a equivalência assumida pelo usuário para preparação; as novas operações foram testadas no STOVE. Escopo e limites em [validation.md](validation.md#fechamento-altar-resgates).
 
+
+
+A Wave 2 integra as operações delimitadas de batalha, equipamento e formação ao
+núcleo comum; [contrato](architecture.md#nucleo-local) e
+[provas/limites](validation.md#wave2-batalhas). A missão fornece o requisito e
+confere o crédito depois; não escolhe um executor por ID dentro da capacidade.
+Formação separa candidato, destino, identidade no detalhe e retorno. Reposição
+foi exercitada ao vivo em Spirit Altar; remoção/vazio e substituição conservam os
+positivos históricos delimitados. Um ajuste após derrota usa somente capacidades
+já disponíveis e uma nova tentativa explicitamente limitada. Mapeamento das 33
+famílias continua sem promoção automática a executores.

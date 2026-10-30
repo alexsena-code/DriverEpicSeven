@@ -1,10 +1,22 @@
 # Assets, layouts e dados
 
+Na Wave 3 de 29/10/2026, fontes, templates e fixtures privadas existentes são
+reutilizados offline, sem descobrir/conectar/capturar a janela durante manutenção.
+Observações sintéticas declaram origem de simulação; um oráculo de reconhecimento
+testa composição/execução e não prova reconhecimento de pixels. Replays de imagens
+históricas conservam sua proveniência e não descrevem a conta atual. Nenhum novo
+template ou vínculo de asset é promovido apenas pelo fluxo simulado. A matriz e
+os limites dessas camadas ficam em [validation.md](validation.md#wave3-offline).
+
 A consolidação STOVE usa os mapas privados por operação em `var/stove-session/` e os layouts já interpretados. A auditoria `final-adapter-source-audit.json` confere existência das referências estáticas; isso não comprova o vínculo de uma variante com o cliente atual. Em particular, nível usa `unit_level_up.csb` e `dlg_promote_levelup.csb`, despertar usa `unit_zodiac2_renewal.csb` e `dlg_zodiac_reward_stat.csb`, opções usa `option.csb` e a página de Summon usa `gacha_renew.csb`. Caminhos estáticos não viram seletores de entrada.
 
 As três variantes visuais de apresentação de baú têm recortes pequenos em `resources/epic-seven/image/coreloop_chest_presentation_*.png`, com origem, hashes, limites e calibração em `assets/template-provenance.json`. São arte do jogo recortada para reconhecimento local; não foram extraídas como textura nem identificam raridade/conteúdo. O layout exato dessa apresentação, do hub Recruit e do recibo de equipamento permanece sem vínculo comprovado, portanto esses nós não inventam uma referência de layout. Capturas completas e dados da conta continuam privados em `var/`.
 
 Na navegação com animação, os layouts de lobby, `unit_detail.csb`, `unit_zodiac2_renewal.csb`, `unit_list.csb` e os bindings/opções foram cruzados com capturas atuais. `btn_zodiac` e `btn_lv_up` declaram 95 × 97 e ficam separados das legendas; os marcadores Maa existentes fornecem um recorte interno atual, sem transformar coordenadas CSB em posições globais. A reutilização desses glifos foi conferida no Arby. O selo de despertar acompanha a constelação (Leão/Virgem observadas), portanto sua região de leitura não é fixa na posição da Tieria. Mapa privado: `var/ui-readers-live/animation-guard-source-map.json`.
+
+Na progressão de 29/10/2026, o mesmo lobby ilustrado foi observado com iluminação diurna. `lobby_stained_window_day.png` e `lobby_idle_upper_left_day.png` são alternativas dos dois recortes de fundo existentes; conservam ROIs, limiares e exclusões de HUD/avisos. A recuperação do HUD diurno foi validada com uma entrada mouse 4 e destino `lobby`; não representa calibração de outras ações. Proveniência e hashes em `assets/template-provenance.json`; [prova e limites](validation.md#lobby-ilustrado-diurno--29102026).
+
+Em `wnd/inbattle_target_guide.csb`, cada `/base/n_l/n_btn_N` e `/base/n_r/n_btn_N` compõe `btn` (Button, 170 × 192) e `num` (Sprite, 26 × 34) na mesma origem local e âncora central. Isso explica o centro candidato do marcador numérico observado; não fornece coordenada global nem identidade da instância. No combate de `dap002` em `20261029T103345Z_fab80d9d`, a escolha do marcador atual de Victorika como aliada da S2 de Ruele foi seguida de mudança de turno. O mapa privado `var/heir-progression-mvtc17zn/target-guide-controls.json` conserva a referência; não há executor genérico novo de alvo.
 
 Para o apoio do pacote às 33 famílias de missão, consulte a [análise antes das medições](assets.md#apoio-as-familias). A amostra adicional de 32 layouts, 25 DBs e nove mapas de foco permanece em `assets/local/static-family-study/`, com síntese em `data/missions/static-family-evidence.json`; ela não é um conjunto de reconhecedores calibrados.
 
@@ -81,7 +93,7 @@ Consulta estática em 26/10/2026, no pacote identificado em `assets/local/full-p
 
 Não foi encontrado binding contendo `coreloop` em `db/key_binding.db`; isso não prova ausência de atalho. Nenhuma abertura, gasto ou coleta do Marco foi validada nesta consulta.
 
-**Estrelas de aventura:** `db/level_enter_adventure.db.mission1..3` → `db/mission_data.db.id` → `condition`/`value` e texto localizado. A projeção pequena e pesquisável está em [star-requirements.json](../data/stages/star-requirements.json): 382 entradas do catálogo de campanha, 1.092 condições resolvidas e 18 entradas sem as três referências. Ausência de referência permanece lacuna; não significa três estrelas, fase gratuita ou ausência de objetivo. O arquivo mantém parâmetros brutos e não contém progresso da conta.
+**Estrelas de aventura:** `db/level_enter_adventure.db.mission1..3` → `db/mission_data.db.id` → `condition`/`value` e texto localizado. A projeção pequena e pesquisável está em [star-requirements.json](../data/stages/star-requirements.json): 414 entradas do catálogo de campanha, 1.146 condições resolvidas e 30 entradas sem as três referências. Ausência de referência permanece lacuna; não significa três estrelas, fase gratuita ou ausência de objetivo. O arquivo mantém parâmetros brutos e não contém progresso da conta.
 
 Para composição, `db/character_player.db` tem 730 linhas estáticas, com `id`, `ch_attribute`, `role` e `grade`, mas não cobre sozinho os heróis jogáveis. A definição virtual `db/character.db` inclui também `character_player_grade2` e `character_player_grade3`, além de tabelas de monstros e testes. Muwi (`c3132`, texto `chrn_c3132`) foi localizado em `character_player_grade3.db`; referências do mesmo texto em variantes de monstro não identificam o jogador. Seguir a composição e preservar os candidatos, sem tratar a definição virtual como inventário vazio. Cruzar com heróis efetivamente possuídos, instâncias, níveis/equipamentos e equipe observada; o pacote não comprova posse ou aptidão para vencer. Layouts candidatos de preparação/resultados incluem `wnd/battle_ready.csb` e `wnd/result_base.csb`; conferir os nomes reais no inventário antes de ampliar os adaptadores. A lógica proposta e os limites estão em [campaign.md](campaign.md#planejamento-de-tres-estrelas).
 
@@ -113,6 +125,25 @@ Para habilidades, seguir os campos `skill1/2/3` do personagem até `skill_player
 
 **Otherworld Breach:** `level_battlemenu_chaosgate` liga a temporada ao título e a `chaosgate_stage`; esta liga Normal/Hard/Hell a `hcsc001..003`. Em `level_enter_battle`, as três entradas usam `type=hunt`, `contents_type/sub_type=chaosgate`, `type_enterpoint=to_chaosgatekey` e custo estático 1. Essa distinção evita confundir o token com energia ou tratar uma entrada de Hunt comum como a mesma operação. O texto antigo `help_infoadve1_10_1_desc` descreve Crack in the World em regiões opcionais, apesar do título Otherworld Breach; seu conteúdo não descreve o menu atual. Conferir versão, entidade e contexto antes de usar um texto de ajuda como contrato.
 
+<a id="altar-quick-battle"></a>
+
+### Spirit Altar: variante Quick Battle
+
+O shell `battle_ready.csb` declara `RIGHT/clipper/_/n_content/n_btn_quick0/btn_quick_on`
+e `n_btn_quick1/{btn_go_quick_battle,btn_quick_off}`, sob
+`/base/n_window_ready`. `slide_content_quick_battle` contém configuração e
+contagem. O nome on/off representa a ação candidata do botão; não prova o estado
+atual. Em 28/10, o usuário forneceu referências: fundo claro significa ativo;
+fundo escuro, desativado, à direita de Start. A leitura atual conferiu Easy
+desativado após intervenção do usuário. Os recortes nativos `altar_quick_on/off`
+vieram das capturas locais, com fontes/hashes no catálogo de proveniência.
+
+A variante ativa mostrou quantidade 10/10 e custo 90/959, enquanto Easy normal
+mostrou Start 9/959; são preparações distintas. Dark Normal mostrou Start 10/959.
+Isso não autoriza Quick Battle ou consumo. Os reconhecedores são de leitura,
+com positivos, estado oposto, tela de outra família e imagens escurecidas como
+negativos. Transição automática do toggle e execução Quick permanecem sem prova.
+
 <a id="abyss-arena-fontes"></a>
 
 ### Abyss e Arena: seleção, preparação e entrada consumidora
@@ -132,6 +163,16 @@ O binding `gladiator` declara `KEY_4`, evento `quick_menu_renew`, `btn_gladiator
 <a id="consulta-por-operacao"></a>
 
 ### Consulta por operação
+
+O assunto `notifications` também encaminha Side Story Alert a
+`wnd/result_story_unlocked.csb` e à chave
+`systemsubstory_unlock_popup_desc2` em `text/en/text.db`. A chave resolve
+as duas linhas observadas, mas não tem ligação no índice de referências;
+o CSB declara `/base/btn_close` e `window_frame/txt_desc` com outro texto
+placeholder. A correspondência da variante atual continua parcial e a
+entrada depende de corpo e controle reconhecidos na captura, nunca das
+posições locais declaradas. `key_substory` é navegação no sistema de
+opções; não foi encontrado binding de fechamento em `key_binding.db`.
 
 O ponto de entrada é `tools/query_sources.py`, com roteamento em `data/catalogs/source-index.json`. Há assuntos para formação, Otherworld, Abyss, Arena, Auto de combate, melhoria de item/artefato, reforja, habilidades, crescimento, estrelas, missões, navegação, notificações e Marco Brilhante. As 33 famílias são consultadas diretamente de `operation-map.json` e `static-family-evidence.json`, somando fontes, referências e lacunas dos assuntos especializados relacionados; não há uma segunda cópia do catálogo de famílias.
 
@@ -163,6 +204,25 @@ O assunto `equipment_selection` encaminha `equipar todos`/`desequipar` aos contr
 `tools/inspect_csb_layout.py` lê um CSB salvo. `tools/audit_pack.py` inventaria/extrai/verifica e interpreta, com destino vinculado ao hash do pacote e retomada que confere os arquivos já verificados; `--repair` revisita casos pendentes e `--reinterpret --extensions .csb` limita uma expansão de campos ao formato pertinente. `tools/inspect_db_table.py` lê células de um contêiner já decodificado. `tools/index_pack_references.py` reconstrói apenas os índices estáticos derivados.
 
 Instale o extra local `.[audit]` para LZ4. O adaptador de entrada/chaves continua sendo o `e7_db_reader` da análise anterior, fornecido por `--reader-dir`; as chaves não foram copiadas para este repositório. Um novo pacote exige destino próprio. Os formatos reconhecidos têm validação de limites; formatos/campos desconhecidos preservam a origem e a lacuna. O histórico por arquivo em `interpretation_attempts` começa na expansão final; totais anteriores permanecem nos logs, sem alegar histórico individual completo desde a primeira tentativa.
+
+### Calibrações da Wave 2
+
+`assets/template-provenance.json` conserva os recortes e hashes de origem.
+Quick Battle separa o ícone claro ativo e escuro inativo, sem executor alternativo.
+Os espaços vazios da melhoria foram calibrados em cinco posições com animação,
+slots ocupados e sobreposições como negativos; a correlação local é 0,75 e o MAE
+continua 10. Não houve alteração de limiares globais. A confirmação de Equip All
+só informa custo zero com o botão gratuito atual reconhecido na região calibrada.
+
+As setas de reposição e os controles `+` de formação vêm dos renders históricos
+de Otherworld de 26/10; a máscara verde exclui o fundo e conserva os glifos
+amarelos. A janela atual de Spirit Altar foi usada para a ida/volta de Arbiter
+Vildred em 28/10. O ponto superior (330,347) pertence à base visível, comprovado
+por seleção nativa e detalhe do integrante; não foi deduzido do CSB. Posições
+visuais, candidato destacado, integrante aplicado e ID de instância são conceitos
+distintos. O vazio nativo está comprovado na esquerda; outros vazios continuam
+lacunas. `formation.csb`, `unit_list.csb`, bindings e variantes da composição
+continuam referências reutilizadas, sem uma lista de nomes obrigatórios.
 
 ## O que já está no repositório
 
@@ -300,3 +360,5 @@ Uma boa primeira candidata continua sendo a produção na floresta, pela ligaç�
 Os novos recortes de Path of Heir, Covenant grátis, linha disponível e cabeçalho cinza de história têm origem e transformações em `assets/template-provenance.json`. São recortes do jogo, sem autoria atribuída ao projeto. A variante cinza depende do par Skip/histórico e não exige nome do personagem. Os resultados dos replays ficam em `var/`, e a [validação](validation.md#caminho-inicial-stove) distingue reconhecimento, envio e destino. A revisão posterior confirmou que `CHAPTER COMPLETE` já havia transitado ao capítulo 4; não há prova de que exigia controle de fechamento. Não atribuir o fechamento de `result_story_unlocked.csb` a esse aviso por semelhança de nome.
 
 O assunto `spirit_altar` agora aponta para `wnd/dungeon.csb`, a composição observada do Altar, junto a preparação/formação e resultado comum. `dungeon_home.csb` permanece como fonte de outra composição, sem substituir o Altar. `data/stages/spirit-altars.json` liga 20 candidatos estáticos de elemento/dificuldade a rótulo, custo e proveniência; apenas Dark Easy cmon001 teve uma unidade validada neste bloco. Recortes de Receive, tick de resgate, CLEAR/rodapé e recompensa do grupo estão no mesmo catálogo de proveniência. Saldo, custo e nome de personagem são conteúdo atual e não devem virar âncoras fixas de composição.
+
+A extensão estática do episódio 6 em campaign.json usa `adventure_ma`, mission_id `ma_N_M`, pais `machN`, textos e referências literais `ep6_ch*`. Foram examinadas 49 linhas: 32 fases principais e 17 subentradas tile sem missão/capítulo/ordinal próprios. História com tipo story e custo declarado 0 conserva esse custo; tile com 0 permanece null, sem inferir gratuidade. Hashes e limites da extração estão em episode6_extraction no catálogo; relatório privado var/admin-episode4-20261030af/episode6-extraction.json.

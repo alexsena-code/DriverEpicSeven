@@ -1,6 +1,7 @@
 """Limite persistente de entradas; uma reserva não é declaração de derrota."""
 
 import json
+import os
 from pathlib import Path
 import time
 
@@ -16,8 +17,50 @@ class AttemptLedger:
     def save(self,data):
         self.path.parent.mkdir(parents=True,exist_ok=True)
         temporary=self.path.with_suffix(".tmp")
-        temporary.write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-        temporary.replace(self.path)
+        with temporary.open('w',encoding='utf-8') as stream:
+            stream.write(json.dumps(data,ensure_ascii=False,indent=2)+"\n")
+            stream.flush()
+            os.fsync(stream.fileno())
+        # Windows readers/scanners can briefly hold the destination without
+        # FILE_SHARE_DELETE. Retry only this durable write, never game input.
+        for attempt in range(4):
+            try:
+                temporary.replace(self.path)
+                break
+            except PermissionError:
+                if attempt==3:
+                    raise
+                time.sleep(0.1*(attempt+1))
+
+    def record(self, stage_id, key, phase, *, identity, proof, status=None):
+        """Add evidence without replacing history or conflating dispatch/result."""
+        data = self.read()
+        found = [row for row in data['stages'].get(stage_id,[]) if row['key']==key]
+        if len(found)!=1:
+            raise ValueError('Reserva ausente ou ambígua no diário.')
+        row = found[0]
+        if status in ('victory','defeat') and row.get('result_status') not in (None,status):
+            raise ValueError('Resultado contraditório para a mesma tentativa; reconciliar a prova.')
+        events = row.setdefault('events',[])
+        if any(e['phase']==phase and e.get('proof')==proof for e in events):
+            return
+        if row.get('identity') and row['identity'] != identity:
+            raise ValueError('Identidade incompatível com a reserva existente.')
+        row['identity'] = identity
+        row['ledger_scope'] = str(self.path.resolve())
+        events.append({'phase':phase,'epoch_seconds':time.time(),'proof':proof})
+        if status in ('victory','defeat'):
+            row['result_status']=status
+        if status:
+            terminal = row['status'] in ('victory','returned','verified','applied','defeat','cancelled')
+            return_without_result=(status=='returned' and row['status'] not in ('victory','defeat','applied','returned')
+                                   and row.get('result_status') not in ('victory','defeat'))
+            if not return_without_result and (not terminal or status in ('returned','verified','applied')):
+                row['status'] = status
+                row[status+'_at'] = time.time()
+        if phase in ('result_verified','defeat') and proof.get('window'):
+            row['verification_window'] = proof['window']
+        self.save(data)
 
     def reserve(self,stage_id,key,cost):
         data=self.read()
@@ -46,6 +89,6 @@ class AttemptLedger:
                         (first["episode"],first["chapter"]-1)]
             previous=max(candidates,key=lambda s:s["ordinal"]) if candidates else None
         entries=self.read()["stages"].get(previous["id"],[]) if previous else []
-        if entries and entries[-1]["status"] in ("reserved","sent","entered"):
+        if entries and entries[-1]["status"] in ("reserved","sent","entered","victory"):
             return previous["id"],entries[-1]["key"]
         return None

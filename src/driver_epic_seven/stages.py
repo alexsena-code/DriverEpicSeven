@@ -20,6 +20,7 @@ def parse_energy(results):
 
 
 def check_start(stage, observed, max_energy, allow_replay=False):
+    from .battle_operations import team_verified
     if not observed.get("identity_verified"):
         raise ValueError("A identidade da fase na preparação não foi confirmada.")
     if observed.get("already_cleared") and not allow_replay:
@@ -31,6 +32,8 @@ def check_start(stage, observed, max_energy, allow_replay=False):
         raise ValueError("O custo excede o limite de energia informado para esta entrada.")
     if energy["available"] < energy["cost"]:
         raise ValueError("Energia insuficiente; o driver não fará recarga.")
+    if not team_verified(observed):
+        raise ValueError('A composição/equipe atual não foi comprovada; CP não autoriza Start.')
 
 
 def load_stages(path):
@@ -172,6 +175,15 @@ class StageInspector:
                 energy = self._ocr(recognize, (912,602,110,50))
                 report["ocr"]["energy"] = energy
                 report["energy"] = parse_energy(energy)
+                members=self._ocr(recognize,(180,110,430,260))
+                levels=[int(row['text'].strip()) for row in members
+                        if row['score']>=.90 and re.fullmatch(r'[1-9]|[1-5]\d|60',row['text'].strip())]
+                stories=[row for row in members if row['score']>=.90 and row['text'].strip()=='Story']
+                report.update(preparation_composition_verified=bool(report['identity_verified']
+                              and any(analysis.get('matches',{}).get(k,{}).get('hit')
+                                      for k in ('start_quest_label','start_regular_label'))),
+                              visible_hero_levels=levels or None,visible_story_member_markers=len(stories) or None)
+                report['ocr']['members']=members
             else:
                 team = self._ocr(recognize, (925,598,235,65))
                 report["ocr"]["select_team"] = team
@@ -183,8 +195,9 @@ class StageInspector:
         return report
 
     def target(self, analysis, params):
-        from .observed_ui import tree_for, screen_state, stage_view, target_box
+        from .observed_ui import tree_for, screen_state, stage_view, target_box, preparation_blocked
         tree = tree_for(analysis)
+        if preparation_blocked({'ui_tree':tree}):return None
         info = stage_view({"ui_tree": tree})
         stage = self.get(info["requested_id"])
         target = params.get("target")
@@ -238,4 +251,7 @@ def compile_pipeline(stage_id, operation, max_energy=None, allow_replay=False):
     if operation=="start":
         override["Stage.CheckReady"].update(action="Click",target=True,max_hit=1,
                                            next=["Stage.EnteredStory","Stage.EnteredIntro","Stage.EnteredBattle"],timeout=90000)
+        for name,state in (('Stage.EnteredStory','story'),('Stage.EnteredIntro','story_intro'),('Stage.EnteredBattle','battle_running')):
+            override[name] = {'custom_recognition_param':{'state':state,'execution':{
+                'ledger':'campaign','scope':stage_id,'phase':'effect_verified','status':'entered'}}}
     return override

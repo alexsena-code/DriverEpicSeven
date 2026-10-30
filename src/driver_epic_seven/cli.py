@@ -9,6 +9,9 @@ from .pipelines import executable_routine, registry, validate
 def parser():
     root = argparse.ArgumentParser(description="Driver Epic Seven: primitivas e pipelines Maa")
     root.add_argument("--config", help="Override JSON local; caminhos relativos ao repositório")
+    root.add_argument('--retry-policy',help='JSON de nova tentativa limitada e explicitamente autorizada; não faz retry automático')
+    root.add_argument('--plan-budget', help='JSON de tetos finitos autorizados desde a primeira execução do plano')
+    root.add_argument('--execution-identity', help='JSON com objective_id, plan_id, operation_id e attempt_id explícitos')
     commands = root.add_subparsers(dest="command", required=True)
     commands.add_parser("doctor", help="Verificar dependências e descobrir a janela, sem enviar entrada")
     commands.add_parser("validate", help="Validar recursos e contratos sem interagir com o jogo")
@@ -22,6 +25,13 @@ def parser():
     ui_query.add_argument('--view', required=True)
     ui_query.add_argument('--control', required=True)
     commands.add_parser("agent", help="Manter uma conexão e receber comandos JSONL; árvore e eventos primeiro")
+    status = commands.add_parser('status', help='Consultar execução da sessão; --file lê evidência sem conectar')
+    status.add_argument('--file')
+    events = commands.add_parser('events', help='Consultar eventos existentes; nunca captura')
+    events.add_argument('--file')
+    events.add_argument('--after-sequence', type=int, default=0)
+    events.add_argument('--max-age-ms', type=int, default=500)
+    commands.add_parser('cancel', help='Solicitar cancelamento da execução na conexão agent')
     path = commands.add_parser('path', help='Roteiro por nível e checkpoint do Caminho do Herdeiro')
     paths = path.add_subparsers(dest='path_operation', required=True)
     road = paths.add_parser('roadmap', help='Roteiro estático; não contém progresso da conta')
@@ -63,25 +73,43 @@ def parser():
     altar_path=paths.add_parser('altar',help='Uma unidade identificada do Spirit Altar; nunca repetir Start')
     altar_path.add_argument('stage_id')
     altar_path.add_argument('--task-id',default='guide_01_004_001')
+    altar_path.add_argument('--scope',help='Objetivo persistente explícito; dispensa alias de missão')
     altar_path.add_argument('--max-energy',type=int,default=0)
     altar_path.add_argument('--timeout',type=int,default=240)
     altar_mode=altar_path.add_mutually_exclusive_group()
     altar_mode.add_argument('--prepare',action='store_true')
     altar_mode.add_argument('--finish-current',action='store_true')
-    abyss_path=paths.add_parser('abyss',help='Uma unidade Abyss 1 do grupo 2; nunca repete Start')
+    abyss_path=paths.add_parser('abyss',help='Uma entrada parametrizada de Abyss normal; nunca repete Start')
+    abyss_path.add_argument('--floor',type=int,default=1)
+    abyss_path.add_argument('--mode',choices=['normal'],default='normal')
+    abyss_path.add_argument('--expected-energy',type=int,default=10)
     abyss_path.add_argument('--task-id',default='guide_02_005_001')
+    abyss_path.add_argument('--scope',help='Objetivo persistente explícito; dispensa alias de missão')
     abyss_path.add_argument('--max-energy',type=int,default=0)
     abyss_path.add_argument('--timeout',type=int,default=300)
+    abyss_path.add_argument('--next-floor',action='store_true',help='Navegar do resultado para o andar alvo; exige --prepare, sem Start')
     abyss_mode=abyss_path.add_mutually_exclusive_group()
     abyss_mode.add_argument('--prepare',action='store_true')
     abyss_mode.add_argument('--finish-current',action='store_true')
-    equipment_path=paths.add_parser('equipment',help='Uma operação de equipamento do grupo 2, com alvo atual e envio único')
-    equipment_path.add_argument('task_id',choices=['guide_02_004_001','guide_02_003_001'])
+    equipment_path=paths.add_parser('equipment',help='Uma operação de equipamento com alvo atual, orçamento e envio único')
+    equipment_path.add_argument('task_id',nargs='?')
+    equipment_path.add_argument('--operation',dest='equipment_action',choices=['equip_all','enhance_weapon'])
+    equipment_path.add_argument('--scope')
     equipment_path.add_argument('--hero-name',required=True)
     equipment_path.add_argument('--max-gold',type=int,default=0)
+    equipment_path.add_argument('--auto-level',type=int,choices=[3,6,9,12,15],default=3)
+    equipment_path.add_argument('--material-limits',help='Objeto JSON com tetos de quantidade por nome observado de material')
     equipment_mode=equipment_path.add_mutually_exclusive_group()
     equipment_mode.add_argument('--preview',action='store_true')
     equipment_mode.add_argument('--apply-preview',action='store_true')
+    equipment_mode.add_argument('--finish-current',action='store_true')
+    formation_path=paths.add_parser('formation',help='Seleção e mudança finita de formação com prova do integrante e destino')
+    formation_path.add_argument('formation_action',choices=['select','reposition','remove','assign','substitute'])
+    formation_path.add_argument('--scope',required=True)
+    formation_path.add_argument('--source',choices=['upper','left','right','lower'])
+    formation_path.add_argument('--destination',choices=['upper','left','right','lower'])
+    formation_path.add_argument('--member-name')
+    formation_path.add_argument('--finish-current',action='store_true',help='Comprovar destino de mudança registrada, sem nova mutação')
     for claim_command in ('collect','collect-group'):
         collect_path=paths.add_parser(claim_command,help='Coletar uma recompensa atual e conferir o resultado; sem repetir')
         collect_path.add_argument('--level',type=int,required=True)
@@ -185,6 +213,18 @@ def parser():
 
 def execute(args):
     config = load_config(args.config)
+    if args.command in ('status', 'events'):
+        if not args.file:
+            raise ValueError('Fora da sessão agent, '+args.command+' exige --file.')
+        if args.command == 'status':
+            from pathlib import Path
+            return json.loads(Path(args.file).read_text(encoding='utf-8'))
+        from .observer import read_snapshot_file
+        if args.after_sequence < 0:
+            raise ValueError('after-sequence não pode ser negativo.')
+        return read_snapshot_file(args.file, args.max_age_ms, args.after_sequence)
+    if args.command == 'cancel':
+        raise ValueError('cancel exige a conexão agent existente; não abre outra conexão.')
     if args.command == "capabilities":
         from .application import Application
         return Application(config).execute(request_from_args(args))
@@ -262,6 +302,19 @@ def request_from_args(args, identity=None):
     """Legacy command aliases terminate here; contracts never import argparse."""
     from .contracts import Request, Identity
     values = vars(args).copy()
+    encoded_identity = values.pop('execution_identity', None)
+    if encoded_identity is not None:
+        try:
+            decoded_identity = json.loads(encoded_identity)
+            if not isinstance(decoded_identity, dict) or set(decoded_identity) != {
+                    'objective_id', 'plan_id', 'operation_id', 'attempt_id'}:
+                raise ValueError('incomplete identity')
+            cli_identity = Identity(**decoded_identity)
+        except (ValueError, TypeError) as exc:
+            raise ValueError('--execution-identity exige JSON com quatro IDs não vazios.') from exc
+        if identity is not None and identity != cli_identity:
+            raise ValueError('identity JSONL conflita com --execution-identity; informe uma identidade única.')
+        identity = cli_identity
     family = values.pop('command')
     values.pop('config', None)
     operation = values.pop(family+'_operation', None)
@@ -284,5 +337,7 @@ def main(argv=None):
             print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0 if result.get("valid", True) else 1
     except (RuntimeError, ValueError, OSError, ImportError) as exc:
-        print(json.dumps({"ok": False, "error": str(exc)}, ensure_ascii=False))
+        from .contracts import ApplicationError
+        details={'execution_error':exc.as_dict()} if isinstance(exc,ApplicationError) else {}
+        print(json.dumps({"ok": False, "error": str(exc),**details}, ensure_ascii=False))
         return 1

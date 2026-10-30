@@ -39,7 +39,16 @@
     "map_episode_header": {
       "node": "Template.MapEpisodeHeader",
       "template": "map_episode_header.png",
-      "max_pixel_mae": 18
+      "max_pixel_mae": 18,
+      "glyph_min": 190,
+      "alternatives": [
+        {
+          "node": "Template.MapEpisode2PlainHeader",
+          "template": "map_episode2_plain_header.png",
+          "max_pixel_mae": 18,
+          "glyph_min": 190
+        }
+      ]
     },
     "map_ready_label": {
       "node": "Stove.Template.MapReadyLabel",
@@ -76,10 +85,12 @@
       "template": [
         "story_skip.png",
         "story_skip_light_room.png",
-        "story_skip_dialogue_gray.png"
+        "story_skip_dialogue_gray.png",
+        "story_skip_dialogue_roof.png",
+        "story_skip_dialogue_market.png",
+        "story_skip_dialogue_market_motion.png"
       ],
       "max_pixel_mae": 18,
-      "green_mask": true,
       "alternatives": [
         {
           "node": "Template.StorySkip",
@@ -87,14 +98,18 @@
           "max_pixel_mae": 28,
           "glyph_min": 170
         }
-      ]
+      ],
+      "glyph_min": 190
     },
     "story_history": {
       "node": "Stove.Template.StoryHistory",
       "template": [
         "story_history.png",
         "story_history_camp.png",
-        "story_history_dialogue_gray.png"
+        "story_history_dialogue_gray.png",
+        "story_history_dialogue_roof.png",
+        "story_history_dialogue_market.png",
+        "story_history_dialogue_market_motion.png"
       ],
       "max_pixel_mae": 18,
       "green_mask": true,
@@ -104,6 +119,11 @@
           "template": "classic_story_history.png",
           "max_pixel_mae": 22,
           "glyph_min": 110
+        },
+        {
+          "node": "Template.StoryHistoryTown",
+          "template": "story_history_town.png",
+          "max_pixel_mae": 18
         }
       ]
     },
@@ -269,7 +289,14 @@
     "friend_prompt": {
       "node": "Template.FriendPrompt",
       "template": "friend_prompt.png",
-      "max_pixel_mae": 18
+      "max_pixel_mae": 18,
+      "alternatives": [
+        {
+          "node": "Template.FriendPromptCurrent",
+          "template": "friend_prompt_current.png",
+          "max_pixel_mae": 18
+        }
+      ]
     },
     "friend_cancel": {
       "node": "Template.FriendCancel",
@@ -422,12 +449,18 @@
     },
     "lobby_stained_window": {
       "node": "Stove.Template.LobbyStainedWindow",
-      "template": "lobby_stained_window.png",
+      "template": [
+        "lobby_stained_window.png",
+        "lobby_stained_window_day.png"
+      ],
       "max_pixel_mae": 10
     },
     "lobby_idle_upper_left": {
       "node": "Stove.Template.LobbyIdleUpperLeft",
-      "template": "lobby_idle_upper_left.png",
+      "template": [
+        "lobby_idle_upper_left.png",
+        "lobby_idle_upper_left_day.png"
+      ],
       "max_pixel_mae": 8
     },
     "lobby_menu_grid": {
@@ -935,18 +968,34 @@
           "template": "path_prequel_boss_available.png",
           "max_pixel_mae": 8,
           "glyph_min": 210
+        },
+        {
+          "node": "Path.Template.PrequelPortalAvailable",
+          "template": "path_prequel_portal_available.png",
+          "max_pixel_mae": 8,
+          "glyph_min": 210
         }
       ]
     },
     "path_story_skip_gray": {
       "node": "Path.Template.StorySkipGray",
-      "template": "story_skip_dialogue_gray.png",
+      "template": [
+        "story_skip_dialogue_gray.png",
+        "story_skip_dialogue_roof.png",
+        "story_skip_dialogue_market.png",
+        "story_skip_dialogue_market_motion.png"
+      ],
       "max_pixel_mae": 18,
       "green_mask": true
     },
     "path_story_history_gray": {
       "node": "Path.Template.StoryHistoryGray",
-      "template": "story_history_dialogue_gray.png",
+      "template": [
+        "story_history_dialogue_gray.png",
+        "story_history_dialogue_roof.png",
+        "story_history_dialogue_market.png",
+        "story_history_dialogue_market_motion.png"
+      ],
       "max_pixel_mae": 18,
       "green_mask": true
     },
@@ -1012,6 +1061,87 @@
       "template": "equip_all_control.png",
       "max_pixel_mae": 14,
       "glyph_min": 210
+    },
+    "altar_quick_on": {
+      "node": "Altar.Template.QuickOn",
+      "template": "altar_quick_on.png",
+      "max_pixel_mae": 10
+    },
+    "altar_quick_off": {
+      "node": "Altar.Template.QuickOff",
+      "template": "altar_quick_off.png",
+      "max_pixel_mae": 10
+    },
+    "equipment_material_empty_1": {
+      "node": "Equipment.Template.EmptyMaterial1",
+      "template": "equipment_material_empty_1.png",
+      "max_pixel_mae": 10
+    },
+    "equipment_material_empty_2": {
+      "node": "Equipment.Template.EmptyMaterial2",
+      "template": "equipment_material_empty_2.png",
+      "max_pixel_mae": 10
+    },
+    "equipment_material_empty_3": {
+      "node": "Equipment.Template.EmptyMaterial3",
+      "template": "equipment_material_empty.png",
+      "max_pixel_mae": 10
+    },
+    "equipment_material_empty_4": {
+      "node": "Equipment.Template.EmptyMaterial4",
+      "template": "equipment_material_empty_4.png",
+      "max_pixel_mae": 10
+    },
+    "equipment_material_empty_5": {
+      "node": "Equipment.Template.EmptyMaterial5",
+      "template": "equipment_material_empty_5.png",
+      "max_pixel_mae": 10
+    },
+    "equipment_free_change": {
+      "node": "Equipment.Template.FreeChange",
+      "template": "equipment_free_change.png",
+      "max_pixel_mae": 12
+    },
+    "formation_swap_upper": {
+      "node": "Formation.Template.formation_swap_upper",
+      "template": "formation_swap_upper.png",
+      "max_pixel_mae": 12,
+      "green_mask": true
+    },
+    "formation_swap_left": {
+      "node": "Formation.Template.formation_swap_left",
+      "template": "formation_swap_left.png",
+      "max_pixel_mae": 12,
+      "green_mask": true
+    },
+    "formation_swap_right": {
+      "node": "Formation.Template.formation_swap_right",
+      "template": "formation_swap_right.png",
+      "max_pixel_mae": 12,
+      "green_mask": true
+    },
+    "formation_swap_lower": {
+      "node": "Formation.Template.formation_swap_lower",
+      "template": "formation_swap_lower.png",
+      "max_pixel_mae": 12,
+      "green_mask": true
+    },
+    "formation_assign_left": {
+      "node": "Formation.Template.formation_assign_left",
+      "template": "formation_assign_left.png",
+      "max_pixel_mae": 12,
+      "green_mask": true
+    },
+    "formation_candidate_add": {
+      "node": "Formation.Template.formation_candidate_add",
+      "template": "formation_candidate_add.png",
+      "max_pixel_mae": 12,
+      "green_mask": true
+    },
+    "formation_empty_left": {
+      "node": "Formation.Template.EmptyLeft",
+      "template": "formation_empty_left.png",
+      "max_pixel_mae": 12
     }
   },
   "states": {
@@ -1137,8 +1267,7 @@
             "tieria_dialogue_line"
           ],
           "source_nodes": {
-            "story_skip": "Stove.Template.StorySkip",
-            "story_history": "Stove.Template.StoryHistory"
+            "story_skip": "Stove.Template.StorySkip"
           }
         }
       ]
@@ -1201,15 +1330,50 @@
       ]
     },
     "story_reward": {
-      "all": [
-        "story_reward_header",
-        "story_reward_close"
+      "variants": [
+        {
+          "all": [
+            "story_reward_header",
+            "story_reward_close"
+          ]
+        },
+        {
+          "all": [
+            "story_clear_receipt_text",
+            "story_reward_close"
+          ],
+          "none": [
+            "story_confirm_question",
+            "received_reward_header"
+          ]
+        }
+      ],
+      "supersedes": [
+        "tap_to_close_notice"
       ]
     },
     "side_story_alert": {
-      "all": [
-        "side_alert_header",
-        "side_alert_close"
+      "variants": [
+        {
+          "all": [
+            "side_alert_header",
+            "side_alert_close"
+          ]
+        },
+        {
+          "all": [
+            "side_alert_close",
+            "side_alert_unlocked_text",
+            "side_alert_list_hint"
+          ],
+          "none": [
+            "story_confirm_question",
+            "received_reward_header"
+          ]
+        }
+      ],
+      "supersedes": [
+        "tap_to_close_notice"
       ]
     },
     "friend_request": {
@@ -1324,14 +1488,29 @@
       ]
     },
     "prequel_story_map": {
-      "all": [
-        "prequel_episode_header",
-        "prequel_view_story"
-      ],
-      "none": [
-        "story_confirm_question",
-        "story_reward_header",
-        "received_reward_header"
+      "variants": [
+        {
+          "all": [
+            "prequel_episode_header",
+            "prequel_view_story"
+          ],
+          "none": [
+            "story_confirm_question",
+            "story_reward_header",
+            "received_reward_header"
+          ]
+        },
+        {
+          "all": [
+            "map_episode_header",
+            "prequel_view_story"
+          ],
+          "none": [
+            "story_confirm_question",
+            "story_reward_header",
+            "received_reward_header"
+          ]
+        }
       ]
     },
     "battle_nightmare_keeper": {
@@ -1347,14 +1526,29 @@
       ]
     },
     "prequel_ready_map": {
-      "all": [
-        "prequel_episode_header",
-        "map_ready_label"
-      ],
-      "none": [
-        "story_reward_header",
-        "story_confirm_question",
-        "received_reward_header"
+      "variants": [
+        {
+          "all": [
+            "prequel_episode_header",
+            "map_ready_label"
+          ],
+          "none": [
+            "story_reward_header",
+            "story_confirm_question",
+            "received_reward_header"
+          ]
+        },
+        {
+          "all": [
+            "episode1_heading",
+            "map_ready_label"
+          ],
+          "none": [
+            "story_reward_header",
+            "story_confirm_question",
+            "received_reward_header"
+          ]
+        }
       ]
     },
     "prequel_preparation": {
@@ -1561,7 +1755,7 @@
         606,
         340
       ],
-      "source": "IntroduÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o sem Skip observada em sha002; gesto mantido informado pelo usuÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡rio."
+      "source": "IntroduÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â£o sem Skip observada em sha002; gesto mantido informado pelo usuÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡rio."
     }
   },
   "target_states": {
@@ -1670,6 +1864,34 @@
     ]
   },
   "ocr": {
+    "side_alert_unlocked_text": {
+      "node": "OCR.SideAlertBody",
+      "expected": "The following Side Stories have been unlocked[.]?",
+      "min_score": 0.9,
+      "bright_glyph_min": 110,
+      "min_bright_pixels": 20,
+      "require_unique": true
+    },
+    "side_alert_list_hint": {
+      "node": "OCR.SideAlertBody",
+      "expected": "You can check unlocked Side Stories on the Side Story List[.]?",
+      "min_score": 0.9,
+      "bright_glyph_min": 110,
+      "min_bright_pixels": 20,
+      "require_unique": true
+    },
+    "story_clear_receipt_text": {
+      "node": "OCR.StoryClearReceipt",
+      "expected": "You have received Story Clear Reward[.]?",
+      "min_score": 0.9,
+      "require_unique": true
+    },
+    "episode1_heading": {
+      "node": "OCR.Episode1Heading",
+      "expected": "Episode\\s+1",
+      "min_score": 0.9,
+      "require_unique": true
+    },
     "tap_close_text": {
       "node": "OCR.TapToClose",
       "expected": "tap to close[.]?",
@@ -1700,7 +1922,7 @@
     },
     "supporter_caption": {
       "node": "OCR.SelectSupporter",
-      "expected": "Select Supporter",
+      "expected": "Select Sup[pn]orter",
       "min_score": 0.9
     },
     "clear_heading": {
@@ -1838,6 +2060,9 @@
   },
   "profile_scope": "One Epic Seven Windows profile, 1212x682; screen variants retain their calibrated native evidence, independently of client executable.",
   "ocr_triggers": [
+    [
+      "side_alert_close"
+    ],
     [
       "prequel_ready_header",
       "dap005_preparation_identity"

@@ -26,6 +26,12 @@ def altar_nodes(c):
     altar_team=c.one(r'Spirit Altar\s*-?',(5,65,135,65))
     enemies=c.one(r'(?:[Xx]\s*)?Enemies',(875,245,300,65))
     rewards=c.one('Obtainable Rewards',(870,410,330,70))
+    quick=c.one('Quick Battling',(875,415,300,55))
+    quick_remaining=c.one("Today's Remaining Quick Battling",(870,455,325,40))
+    quick_rewards=c.one('Obtainable Rewards',(870,155,330,60))
+    if all((ready,altar_team,quick,quick_remaining,quick_rewards)):
+        if c.find('Confirm|Cancel',(300,200,600,350)):return 'stove_overlay_unresolved'
+        return _preparation(c,ready,altar_team,quick,quick_rewards,quick=True)
     if ready and altar_team and enemies and rewards:
         if (c.find('Confirm|Cancel',(300,200,600,350))
                 or c.find(r'(?:[Xx×]\s*)?Tap\s*to\s*close[.]?',(350,400,600,282))):
@@ -56,7 +62,7 @@ def _clear_banner(c):
     # The persistent Abyss result also contains CLEAR and a dim HUD. Its
     # explicit footer belongs to the specific result reader, not tap-to-advance.
     if all((c.one('Abyss',(400,345,410,75)), c.one(r'Floor\s+\d+',(400,395,410,75)),
-            c.one('Conquer Reward',(400,435,410,80)), c.one('Back',(0,590,1212,92)),
+            c.one(r'Con[qg]uer Reward',(400,435,410,80)), c.one('Back',(0,590,1212,92)),
             c.one('Next Floor',(0,590,1212,92)))):
         return None
     heading=_bounded_marker(c,'path_battle_clear_heading',(450,220,310,110))
@@ -113,7 +119,7 @@ def _hub(c,battle,title,available,rows):
     return 'spirit_altar_hub'
 
 
-def _preparation(c,ready,altar_team,enemies,rewards):
+def _preparation(c,ready,altar_team,enemies,rewards,quick=False):
     short=c.one(r'[A-Za-z][A-Za-z ’\x27]+ Spirit Altar',(870,65,330,45))
     stage=c.one(_STAGE,(870,105,330,45))
     parts=_stage(stage)
@@ -126,7 +132,13 @@ def _preparation(c,ready,altar_team,enemies,rewards):
     cp=c.one(r'\d[\d,.]*',(210,610,190,65))
     teams=c.find(r'Team\s*\d+',(5,85,130,285))
     levels=c.find(r'\d{1,3}',(180,140,420,220))
-    p=c.panel('spirit_altar_preparation',[ready,altar_team,enemies,rewards], 'wnd/battle_ready.csb','spirit_altar')
+    view='spirit_altar_quick_preparation' if quick else 'spirit_altar_preparation'
+    p=c.panel(view,[ready,altar_team,enemies,rewards], 'wnd/battle_ready.csb','spirit_altar')
+    states={state:_bounded_marker(c,'altar_quick_'+state,(1135,585,77,87)) for state in ('on','off')}
+    positive=[state for state,box in states.items() if box]
+    active=(fact(positive[0]=='on',c.match_source('altar_quick_'+positive[0]),
+                 derived('/matches','native_quick_button_state_confirmed_by_user_references'))
+            if len(positive)==1 else fact())
     c.detail(p,altar_name=name,altar_label=c.value(short),stage_label=c.value(stage),difficulty=difficulty,
              identity_conflict=fact(conflict,c.source(short),c.source(stage)) if short and stage else fact(),
              cost=cost,team_cp=c.value(cp,lambda s:int(re.sub(r'[,.]','',s))),
@@ -134,6 +146,29 @@ def _preparation(c,ready,altar_team,enemies,rewards):
              visible_team_labels=fact([r['text'].strip() for _,r in teams],*(c.source(r) for r in teams)) if teams else fact(),
              visible_hero_levels=fact([int(r['text'].strip()) for _,r in levels],*(c.source(r) for r in levels)) if levels else fact(),
              preparation_composition_verified=fact(True,c.source(ready),c.source(altar_team),c.source(enemies),c.source(rewards)),
+             quick_battle_active=active,
+             quick_battle_count=(c.ratio(c.one(r'\d+\s*/\s*\d+',(980,510,120,60)),'selected','maximum')
+                                 if quick else fact()),
              entered=fact(),victory=fact())
-    c.control(p,'start',start,'wnd/battle_ready.csb',consuming=True)
-    return 'spirit_altar_preparation'
+    if not quick and active['value'] is not True:
+        c.control(p,'start',start,'wnd/battle_ready.csb',consuming=True)
+    return view
+
+
+def augment_text(analysis,recognize):
+    """Reread an unreadable difficulty label only on the proven current hub."""
+    from .reading import ReadContext
+    from .stages import StageInspector
+    c=ReadContext(analysis,'screen',lambda _:None)
+    if not (c.one('Battle',(40,5,220,60)) and c.one('Spirit Altar',(15,120,290,75))
+            and c.one('Available Altars',(970,75,235,65))):return
+    for index,row in c.find(_STAGE,(720,135,245,420)):
+        before=_stage((index,row))
+        if before[1] in _DIFFICULTIES:continue
+        x,y,w,h=row['box'];roi=[730,max(135,y-7),220,min(50,h+14)]
+        reads=StageInspector._ocr(recognize,roi,only_rec=True)
+        valid=[r for r in reads if r.get('score',0)>=.90 and _stage((0,r))
+               and _stage((0,r))[0]==before[0] and _stage((0,r))[1] in _DIFFICULTIES]
+        if len(valid)==1:
+            analysis.setdefault('ocr_rereads',[]).append({'original':row,'roi':roi,'method':'Maa/OCR only_rec','replacement':valid[0]})
+            analysis['text'][index]=valid[0]

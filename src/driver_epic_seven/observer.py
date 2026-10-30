@@ -22,7 +22,8 @@ class SharedObserver:
         self._writer = writer
         self.metrics = {"driver_captures": 0, "recognitions": 0, "publications": 0,
                         "cache_hits": 0, "refreshes": 0, "analysis_wall_ms": 0,
-                        "analysis_cpu_ms": 0, "publication_wall_ms": 0}
+                        "analysis_cpu_ms": 0, "publication_wall_ms": 0,
+                        "candidate_rejections": 0, "candidate_rejection_wall_ms": 0}
 
     def count(self, key, amount=1):
         with self._lock:

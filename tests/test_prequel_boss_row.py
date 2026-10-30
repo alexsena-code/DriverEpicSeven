@@ -12,13 +12,17 @@ from driver_epic_seven.prequel import target
 
 
 @pytest.mark.fixtures
-def test_boss_badge_alternative_preserves_native_candidates_and_row_identity(tmp_path):
+@pytest.mark.parametrize('source_name,stage_id,next_id',[
+    ('var/runs/20261028T095702Z_2f558826/path_failure_after.json','ijp007','ijp008'),
+    ('var/runs/20261030T202253Z_f3164114/path_failure_after.json','trd009','trd010'),
+])
+def test_boss_badge_alternative_preserves_native_candidates_and_row_identity(tmp_path,source_name,stage_id,next_id):
     from maa.resource import Resource
     from maa.tasker import Tasker
     from maa.library import Library
     from maa.pipeline import JTemplateMatch
     from maa.define import LoggingLevelEnum
-    source=ROOT/'var/runs/20261028T095702Z_2f558826/path_failure_after.json'
+    source=ROOT/source_name
     image=source.with_suffix('.png')
     if not source.exists() or not image.exists():pytest.skip('Private independent boss row unavailable.')
     original=json.loads(source.read_text(encoding='utf-8'))
@@ -43,7 +47,7 @@ def test_boss_badge_alternative_preserves_native_candidates_and_row_identity(tmp
         data=deepcopy(original);data['matches']['path_prequel_available']=observed;data['ui_tree']=build_tree(data)
         view=operation_view(data)
         if wanted:
-            assert target(view,{'kind':'prequel_row','stage_id':'ijp007'},data,{}) is not None
-            assert target(view,{'kind':'prequel_row','stage_id':'ijp008'},data,{}) is None
+            assert target(view,{'kind':'prequel_row','stage_id':stage_id},data,{}) is not None
+            assert target(view,{'kind':'prequel_row','stage_id':next_id},data,{}) is None
         else:
-            assert target(view,{'kind':'prequel_row','stage_id':'ijp007'},data,{}) is None
+            assert target(view,{'kind':'prequel_row','stage_id':stage_id},data,{}) is None

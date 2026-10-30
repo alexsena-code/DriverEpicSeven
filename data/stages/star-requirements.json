@@ -6,15 +6,17 @@
     "text/en/text.db"
   ],
   "pack_sha256": "96baeaebdd9c368351eb876c03d9957c09da907efcf8f09c3858cb6228e769c5",
-  "scope": "Static mission1..3 references for 382 campaign catalog entries; not account progress, current visibility, team eligibility or guaranteed three-star completion. Raw conditions/parameters preserve package semantics pending live verification.",
+  "scope": "Static mission1..3 references for 414 campaign catalog entries through Episode 6; not account progress, current visibility, team eligibility or guaranteed three-star completion. Raw conditions/parameters preserve package semantics pending live verification. Absent references remain partial.",
   "summary": {
-    "stages": 382,
+    "stages": 414,
     "condition_counts": {
-      "clear_enter_count": 379,
+      "clear_enter_count": 397,
       "show_storyid_count": 76,
-      "party_enter_aliverole_count": 165,
-      "clearnocontinue_enter_count": 273,
-      "party_enter_attribute_count": 199
+      "party_enter_aliverole_count": 180,
+      "clearnocontinue_enter_count": 274,
+      "party_enter_attribute_count": 202,
+      "party_enter_role_count": 3,
+      "clearnotrialchar_enter_count": 14
     },
     "all_three_refs_absent": [
       "mel005",
@@ -34,7 +36,19 @@
       "skn006",
       "crs003",
       "pab001",
-      "pab008"
+      "pab008",
+      "ma1001",
+      "ma1004",
+      "ma1008",
+      "ma2001",
+      "ma2004",
+      "ma2006",
+      "ma3001",
+      "ma3003",
+      "ma3006",
+      "ma4001",
+      "ma4005",
+      "ma4008"
     ],
     "missing_entries": []
   },
@@ -16246,6 +16260,1238 @@
         "supporter_preselected": null,
         "auto_swap_type": null,
         "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "ma1001": {
+      "status": "partial",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": null,
+          "status": "absent_reference"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": null,
+          "status": "absent_reference"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": null,
+          "status": "absent_reference"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": null,
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": null,
+        "show_mission_ready": null
+      }
+    },
+    "ma1002": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_ma1002_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=ma1002,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_ma1002_2",
+          "status": "static_resolved",
+          "condition": "party_enter_attribute_count",
+          "parameters": "enter=ma1002,attribute=dark,count=1",
+          "text_key": "smis_name_attribute_dark_1",
+          "text": "Have 1 Dark Hero in the Team"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_ma1002_3",
+          "status": "static_resolved",
+          "condition": "party_enter_role_count",
+          "parameters": "enter=ma1002,role=warrior,count=1",
+          "text_key": "smis_name_role_warrior_1",
+          "text": "Have 1 Warrior in the Team"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": null,
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "ma1003": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_ma1003_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=ma1003,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_ma1003_2",
+          "status": "static_resolved",
+          "condition": "party_enter_aliverole_count",
+          "parameters": "enter=ma1003,aliverole=all,count=3",
+          "text_key": "smis_name_aliverole_all_3",
+          "text": "Have 3 or more Heroes survive"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_ma1003_3",
+          "status": "static_resolved",
+          "condition": "clearnotrialchar_enter_count",
+          "parameters": "enter=ma1003,count=1",
+          "text_key": "smis_name_clearnotrialchar",
+          "text": "Progression Heroes, Continue Unused"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": "adv_ma_c1039,adv_ma_c1091,adv_ma_c1014,adv_ma_c2184",
+        "supporter": "user",
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "ma1004": {
+      "status": "partial",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": null,
+          "status": "absent_reference"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": null,
+          "status": "absent_reference"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": null,
+          "status": "absent_reference"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": null,
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": null,
+        "show_mission_ready": null
+      }
+    },
+    "ma1005": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_ma1005_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=ma1005,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_ma1005_2",
+          "status": "static_resolved",
+          "condition": "party_enter_aliverole_count",
+          "parameters": "enter=ma1005,aliverole=all,count=3",
+          "text_key": "smis_name_aliverole_all_3",
+          "text": "Have 3 or more Heroes survive"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_ma1005_3",
+          "status": "static_resolved",
+          "condition": "clearnotrialchar_enter_count",
+          "parameters": "enter=ma1005,count=1",
+          "text_key": "smis_name_clearnotrialchar",
+          "text": "Progression Heroes, Continue Unused"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": "adv_ma_c1039,adv_ma_c1091,adv_ma_c1014,adv_ma_c2184",
+        "supporter": "user",
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "ma1006": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_ma1006_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=ma1006,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_ma1006_2",
+          "status": "static_resolved",
+          "condition": "party_enter_aliverole_count",
+          "parameters": "enter=ma1006,aliverole=all,count=3",
+          "text_key": "smis_name_aliverole_all_3",
+          "text": "Have 3 or more Heroes survive"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_ma1006_3",
+          "status": "static_resolved",
+          "condition": "clearnotrialchar_enter_count",
+          "parameters": "enter=ma1006,count=1",
+          "text_key": "smis_name_clearnotrialchar",
+          "text": "Progression Heroes, Continue Unused"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": "adv_ma_c1039,adv_ma_c1091,adv_ma_c1014",
+        "supporter": "user",
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "ma1007": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_ma1007_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=ma1007,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_ma1007_2",
+          "status": "static_resolved",
+          "condition": "party_enter_attribute_count",
+          "parameters": "enter=ma1007,attribute=dark,count=1",
+          "text_key": "smis_name_attribute_dark_1",
+          "text": "Have 1 Dark Hero in the Team"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_ma1007_3",
+          "status": "static_resolved",
+          "condition": "party_enter_role_count",
+          "parameters": "enter=ma1007,role=warrior,count=1",
+          "text_key": "smis_name_role_warrior_1",
+          "text": "Have 1 Warrior in the Team"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": null,
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "ma1008": {
+      "status": "partial",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": null,
+          "status": "absent_reference"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": null,
+          "status": "absent_reference"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": null,
+          "status": "absent_reference"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": null,
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": null,
+        "show_mission_ready": null
+      }
+    },
+    "ma2001": {
+      "status": "partial",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": null,
+          "status": "absent_reference"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": null,
+          "status": "absent_reference"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": null,
+          "status": "absent_reference"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": null,
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": null,
+        "show_mission_ready": null
+      }
+    },
+    "ma2002": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_ma2002_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=ma2002,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_ma2002_2",
+          "status": "static_resolved",
+          "condition": "party_enter_aliverole_count",
+          "parameters": "enter=ma2002,aliverole=all,count=3",
+          "text_key": "smis_name_aliverole_all_3",
+          "text": "Have 3 or more Heroes survive"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_ma2002_3",
+          "status": "static_resolved",
+          "condition": "clearnotrialchar_enter_count",
+          "parameters": "enter=ma2002,count=1",
+          "text_key": "smis_name_clearnotrialchar",
+          "text": "Progression Heroes, Continue Unused"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": "adv_ma_c1039,adv_ma_c1091,adv_ma_c1014,adv_ma_c2184",
+        "supporter": "user",
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "ma2003": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_ma2003_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=ma2003,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_ma2003_2",
+          "status": "static_resolved",
+          "condition": "party_enter_aliverole_count",
+          "parameters": "enter=ma2003,aliverole=all,count=3",
+          "text_key": "smis_name_aliverole_all_3",
+          "text": "Have 3 or more Heroes survive"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_ma2003_3",
+          "status": "static_resolved",
+          "condition": "clearnotrialchar_enter_count",
+          "parameters": "enter=ma2003,count=1",
+          "text_key": "smis_name_clearnotrialchar",
+          "text": "Progression Heroes, Continue Unused"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": "adv_ma_c1039,adv_ma_c1091,adv_ma_c2184",
+        "supporter": null,
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "ma2004": {
+      "status": "partial",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": null,
+          "status": "absent_reference"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": null,
+          "status": "absent_reference"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": null,
+          "status": "absent_reference"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": null,
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": null,
+        "show_mission_ready": null
+      }
+    },
+    "ma2005": {
+      "status": "partial",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_ma2005_1",
+          "status": "partial",
+          "condition": null,
+          "parameters": null,
+          "text_key": "",
+          "text": null
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_ma2005_2",
+          "status": "partial",
+          "condition": null,
+          "parameters": null,
+          "text_key": "",
+          "text": null
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_ma2005_3",
+          "status": "partial",
+          "condition": null,
+          "parameters": null,
+          "text_key": "",
+          "text": null
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": null,
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": null,
+        "show_mission_ready": null
+      }
+    },
+    "ma2006": {
+      "status": "partial",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": null,
+          "status": "absent_reference"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": null,
+          "status": "absent_reference"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": null,
+          "status": "absent_reference"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": null,
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": null,
+        "show_mission_ready": null
+      }
+    },
+    "ma2007": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_ma2007_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=ma2007,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_ma2007_2",
+          "status": "static_resolved",
+          "condition": "party_enter_aliverole_count",
+          "parameters": "enter=ma2007,aliverole=all,count=3",
+          "text_key": "smis_name_aliverole_all_3",
+          "text": "Have 3 or more Heroes survive"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_ma2007_3",
+          "status": "static_resolved",
+          "condition": "clearnotrialchar_enter_count",
+          "parameters": "enter=ma2007,count=1",
+          "text_key": "smis_name_clearnotrialchar",
+          "text": "Progression Heroes, Continue Unused"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": "adv_ma_c1182_ma,adv_ma_c1039,adv_ma_c2184,adv_ma_c1183",
+        "supporter": "user",
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "ma2008": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_ma2008_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=ma2008,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_ma2008_2",
+          "status": "static_resolved",
+          "condition": "party_enter_aliverole_count",
+          "parameters": "enter=ma2008,aliverole=all,count=3",
+          "text_key": "smis_name_aliverole_all_3",
+          "text": "Have 3 or more Heroes survive"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_ma2008_3",
+          "status": "static_resolved",
+          "condition": "clearnotrialchar_enter_count",
+          "parameters": "enter=ma2008,count=1",
+          "text_key": "smis_name_clearnotrialchar",
+          "text": "Progression Heroes, Continue Unused"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": "adv_ma_c1091,adv_ma_c2184,adv_ma_c1183",
+        "supporter": null,
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "ma3001": {
+      "status": "partial",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": null,
+          "status": "absent_reference"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": null,
+          "status": "absent_reference"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": null,
+          "status": "absent_reference"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": null,
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": null,
+        "show_mission_ready": null
+      }
+    },
+    "ma3002": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_ma3002_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=ma3002,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_ma3002_2",
+          "status": "static_resolved",
+          "condition": "party_enter_aliverole_count",
+          "parameters": "enter=ma3002,aliverole=all,count=3",
+          "text_key": "smis_name_aliverole_all_3",
+          "text": "Have 3 or more Heroes survive"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_ma3002_3",
+          "status": "static_resolved",
+          "condition": "clearnotrialchar_enter_count",
+          "parameters": "enter=ma3002,count=1",
+          "text_key": "smis_name_clearnotrialchar",
+          "text": "Progression Heroes, Continue Unused"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": "adv_ma_c1182_ma,adv_ma_c1039,adv_ma_c2184,adv_ma_c1183",
+        "supporter": "user",
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "ma3003": {
+      "status": "partial",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": null,
+          "status": "absent_reference"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": null,
+          "status": "absent_reference"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": null,
+          "status": "absent_reference"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": null,
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": null,
+        "show_mission_ready": null
+      }
+    },
+    "ma3004": {
+      "status": "partial",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_ma3004_1",
+          "status": "partial",
+          "condition": null,
+          "parameters": null,
+          "text_key": "",
+          "text": null
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_ma3004_2",
+          "status": "partial",
+          "condition": null,
+          "parameters": null,
+          "text_key": "",
+          "text": null
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_ma3004_3",
+          "status": "partial",
+          "condition": null,
+          "parameters": null,
+          "text_key": "",
+          "text": null
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": null,
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": null,
+        "show_mission_ready": null
+      }
+    },
+    "ma3005": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_ma3005_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=ma3005,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_ma3005_2",
+          "status": "static_resolved",
+          "condition": "party_enter_attribute_count",
+          "parameters": "enter=ma3005,attribute=ice,count=1",
+          "text_key": "smis_name_attribute_ice_1",
+          "text": "Have 1 Ice Hero in the Team"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_ma3005_3",
+          "status": "static_resolved",
+          "condition": "party_enter_role_count",
+          "parameters": "enter=ma3005,role=mage,count=1",
+          "text_key": "smis_name_role_mage_1",
+          "text": "Have 1 Mage in the Team"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": null,
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "ma3006": {
+      "status": "partial",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": null,
+          "status": "absent_reference"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": null,
+          "status": "absent_reference"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": null,
+          "status": "absent_reference"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": null,
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": null,
+        "show_mission_ready": null
+      }
+    },
+    "ma3007": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_ma3007_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=ma3007,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_ma3007_2",
+          "status": "static_resolved",
+          "condition": "party_enter_aliverole_count",
+          "parameters": "enter=ma3007,aliverole=all,count=3",
+          "text_key": "smis_name_aliverole_all_3",
+          "text": "Have 3 or more Heroes survive"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_ma3007_3",
+          "status": "static_resolved",
+          "condition": "clearnotrialchar_enter_count",
+          "parameters": "enter=ma3007,count=1",
+          "text_key": "smis_name_clearnotrialchar",
+          "text": "Progression Heroes, Continue Unused"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": "adv_ma_c1182_ma",
+        "supporter": "user",
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "ma3008": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_ma3008_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=ma3008,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_ma3008_2",
+          "status": "static_resolved",
+          "condition": "party_enter_aliverole_count",
+          "parameters": "enter=ma3008,aliverole=all,count=3",
+          "text_key": "smis_name_aliverole_all_3",
+          "text": "Have 3 or more Heroes survive"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_ma3008_3",
+          "status": "static_resolved",
+          "condition": "clearnotrialchar_enter_count",
+          "parameters": "enter=ma3008,count=1",
+          "text_key": "smis_name_clearnotrialchar",
+          "text": "Progression Heroes, Continue Unused"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": "adv_ma_c1182_ma,adv_ma_c1039,adv_ma_c2184,adv_ma_c1183,adv_ma_c5069_ma",
+        "supporter": "user",
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "ma4001": {
+      "status": "partial",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": null,
+          "status": "absent_reference"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": null,
+          "status": "absent_reference"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": null,
+          "status": "absent_reference"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": null,
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": null,
+        "show_mission_ready": null
+      }
+    },
+    "ma4002": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_ma4002_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=ma4002,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_ma4002_2",
+          "status": "static_resolved",
+          "condition": "party_enter_aliverole_count",
+          "parameters": "enter=ma4002,aliverole=all,count=3",
+          "text_key": "smis_name_aliverole_all_3",
+          "text": "Have 3 or more Heroes survive"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_ma4002_3",
+          "status": "static_resolved",
+          "condition": "clearnotrialchar_enter_count",
+          "parameters": "enter=ma4002,count=1",
+          "text_key": "smis_name_clearnotrialchar",
+          "text": "Progression Heroes, Continue Unused"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": "adv_ma_c1182_ma,adv_ma_c1039,adv_ma_c2184,adv_ma_c1183,adv_ma_c5069_ma",
+        "supporter": "user",
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "ma4003": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_ma4003_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=ma4003,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_ma4003_2",
+          "status": "static_resolved",
+          "condition": "party_enter_aliverole_count",
+          "parameters": "enter=ma4003,aliverole=all,count=3",
+          "text_key": "smis_name_aliverole_all_3",
+          "text": "Have 3 or more Heroes survive"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_ma4003_3",
+          "status": "static_resolved",
+          "condition": "clearnotrialchar_enter_count",
+          "parameters": "enter=ma4003,count=1",
+          "text_key": "smis_name_clearnotrialchar",
+          "text": "Progression Heroes, Continue Unused"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": null,
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "ma4004": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_ma4004_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=ma4004,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_ma4004_2",
+          "status": "static_resolved",
+          "condition": "party_enter_aliverole_count",
+          "parameters": "enter=ma4004,aliverole=all,count=3",
+          "text_key": "smis_name_aliverole_all_3",
+          "text": "Have 3 or more Heroes survive"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_ma4004_3",
+          "status": "static_resolved",
+          "condition": "clearnotrialchar_enter_count",
+          "parameters": "enter=ma4004,count=1",
+          "text_key": "smis_name_clearnotrialchar",
+          "text": "Progression Heroes, Continue Unused"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": "adv_ma_c1039,adv_ma_c2184,adv_ma_c1183,adv_ma_c5069_ma",
+        "supporter": "user",
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "ma4005": {
+      "status": "partial",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": null,
+          "status": "absent_reference"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": null,
+          "status": "absent_reference"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": null,
+          "status": "absent_reference"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": null,
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": null,
+        "show_mission_ready": null
+      }
+    },
+    "ma4006": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_ma4006_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=ma4006,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_ma4006_2",
+          "status": "static_resolved",
+          "condition": "party_enter_aliverole_count",
+          "parameters": "enter=ma4006,aliverole=all,count=3",
+          "text_key": "smis_name_aliverole_all_3",
+          "text": "Have 3 or more Heroes survive"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_ma4006_3",
+          "status": "static_resolved",
+          "condition": "clearnotrialchar_enter_count",
+          "parameters": "enter=ma4006,count=1",
+          "text_key": "smis_name_clearnotrialchar",
+          "text": "Progression Heroes, Continue Unused"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": "adv_ma_c1169,adv_ma_c1182_ma,adv_ma_c2184,adv_ma_c1183",
+        "supporter": "user",
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "ma4007": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_ma4007_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=ma4007,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_ma4007_2",
+          "status": "static_resolved",
+          "condition": "party_enter_aliverole_count",
+          "parameters": "enter=ma4007,aliverole=all,count=3",
+          "text_key": "smis_name_aliverole_all_3",
+          "text": "Have 3 or more Heroes survive"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_ma4007_3",
+          "status": "static_resolved",
+          "condition": "clearnocontinue_enter_count",
+          "parameters": "enter=ma4007,count=1",
+          "text_key": "smis_name_clearnocontinue",
+          "text": "Clear with No Continues"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": null,
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "ma4008": {
+      "status": "partial",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": null,
+          "status": "absent_reference"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": null,
+          "status": "absent_reference"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": null,
+          "status": "absent_reference"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": null,
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": null,
         "show_mission_ready": null
       }
     }

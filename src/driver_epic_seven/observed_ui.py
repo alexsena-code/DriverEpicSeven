@@ -285,13 +285,18 @@ def field_value(item, name):
     return item["fields"].get(name, {}).get("value")
 
 
+def preparation_blocked(observation):
+    """The current formation surface takes precedence over its preparation."""
+    tree = tree_for(observation)
+    return any(n['kind'] == 'panel' and field_value(n, 'adapter') == 'formation'
+           and field_value(n,'blocks_preparation') is not False
+           for n in tree['nodes'].values())
+
+
 def operation_view(observation):
     """Disposable projection of a uniquely identified operational panel."""
     tree = tree_for(observation)
-    # A selected-member overlay blocks the preparation beneath it. Its own
-    # controls remain readable through their canonical formation panel.
-    if any(n['kind'] == 'panel' and field_value(n, 'adapter') == 'formation'
-           for n in tree['nodes'].values()):
+    if preparation_blocked({'ui_tree':tree}):
         return {}
     panels = [n for n in tree['nodes'].values() if n['kind'] == 'panel'
               and field_value(n, 'adapter') == 'operations']
@@ -304,6 +309,17 @@ def operation_view(observation):
                        for i in panel['children'] if tree['nodes'][i]['kind'] == 'item']
     result['controls'] = [{k: v['value'] for k, v in tree['nodes'][i]['fields'].items()}
                           for i in panel['children'] if tree['nodes'][i]['kind'] == 'control']
+    return result
+
+
+def formation_view(observation):
+    tree=tree_for(observation)
+    panels=[n for n in tree['nodes'].values() if n['kind']=='panel' and field_value(n,'adapter')=='formation']
+    if len(panels)!=1:return {}
+    p=panels[0]
+    result={k:v['value'] for k,v in p['fields'].items() if k in ('view','selected_position')}
+    for kind,key in (('item','items'),('control','controls')):
+        result[key]=[{k:v['value'] for k,v in tree['nodes'][i]['fields'].items()} for i in p['children'] if tree['nodes'][i]['kind']==kind]
     return result
 
 

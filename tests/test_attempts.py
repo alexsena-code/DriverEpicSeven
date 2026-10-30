@@ -41,4 +41,39 @@ def test_resume_attributes_pending_victory_across_chapter_boundary(tmp_path):
     ledger.mark("old","old-task","entered")
     assert ledger.pending_before(catalog,"next")==("old","old-task")
     ledger.mark("old","old-task","victory")
+    assert ledger.pending_before(catalog,"next")==("old","old-task")
+    ledger.mark("old","old-task","returned")
     assert ledger.pending_before(catalog,"next") is None
+
+
+def test_transient_windows_lock_retries_only_replace(tmp_path,monkeypatch):
+    from pathlib import Path
+    from driver_epic_seven import attempts
+    ledger=AttemptLedger(tmp_path/'attempts.json');calls=[];sleeps=[]
+    replace=Path.replace
+    def locked(path,destination):
+        calls.append(path.read_bytes())
+        if len(calls)<3:raise PermissionError('sharing lock')
+        return replace(path,destination)
+    monkeypatch.setattr(Path,'replace',locked)
+    monkeypatch.setattr(attempts.time,'sleep',sleeps.append)
+    ledger.reserve('stage','one-input',8)
+    assert len(calls)==3 and len(set(calls))==1 and sleeps==[.1,.2]
+    assert len(ledger.read()['stages']['stage'])==1
+
+
+def test_persistent_write_lock_fails_finitely_preserving_previous_ledger(tmp_path,monkeypatch):
+    from pathlib import Path
+    from driver_epic_seven import attempts
+    ledger=AttemptLedger(tmp_path/'attempts.json');ledger.reserve('stage','one-input',8)
+    original=ledger.path.read_bytes();calls=[];sleeps=[]
+    def locked(path,destination):
+        calls.append(destination)
+        raise PermissionError('persistent lock')
+    monkeypatch.setattr(Path,'replace',locked)
+    monkeypatch.setattr(attempts.time,'sleep',sleeps.append)
+    with pytest.raises(PermissionError,match='persistent lock'):
+        ledger.mark('stage','one-input','sent')
+    assert len(calls)==4 and len(sleeps)==3
+    assert ledger.path.read_bytes()==original
+    assert ledger.path.with_suffix('.tmp').exists()

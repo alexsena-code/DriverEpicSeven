@@ -24,6 +24,10 @@ def test_lobby_and_idle_require_positive_theme_anchors_and_reject_overlays(tmp_p
     paths=[(run/f'agent_{n:06}.png','lobby' if n==3 else 'lobby_idle')
            for n in (3,6,7,8,9,10,11,12)]
     paths += [(other/f'agent_{n:06}.png','unknown') for n in (3,7,13,17,20,22,24,25,27)]
+    day=ROOT/'var/runs/20261029T092057Z_aa9a2d96'
+    paths += [(day/f'agent_{n:06}.png','lobby' if n==162 else 'lobby_idle')
+              for n in (162,163,164,165,166,167,168,169,170,171)]
+    paths += [(day/f'agent_{n:06}.png','unknown') for n in (153,155,157,159,160)]
     if not all(p.exists() for p,_ in paths):
         pytest.skip('Private STOVE lobby calibration frames are not installed.')
     bundle=ROOT/'resources/epic-seven'
@@ -49,7 +53,8 @@ def test_lobby_and_idle_require_positive_theme_anchors_and_reject_overlays(tmp_p
     for path,state in paths:
         frame=np.asarray(Image.open(path).convert('RGB'))[:,:,::-1].copy()
         cases.append((str(path),frame,state))
-        if path.parent==run and path.name in ('agent_000003.png','agent_000007.png'):
+        if ((path.parent==run and path.name in ('agent_000003.png','agent_000007.png'))
+                or (path.parent==day and path.name in ('agent_000162.png','agent_000167.png'))):
             cases.append((path.name+'/dimmed',(frame*.55).astype(np.uint8),'unknown'))
             boxes=[(742,72,838,133)]
             if state=='lobby_idle':boxes.append((22,12,98,68))
