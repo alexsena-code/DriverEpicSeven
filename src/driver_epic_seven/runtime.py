@@ -118,13 +118,20 @@ class Runtime:
                         runtime.observer.count('candidate_rejection_wall_ms',
                             (time.perf_counter() - analysis_started) * 1000)
                         return None
-                    analysis = runtime.vision.inspect(argv.image, matcher)
+                    from .operational_theater import fast_analysis
+                    def theater_ocr(roi):
+                        from .stages import StageInspector
+                        return StageInspector._ocr(lambda kind,args:context.run_recognition_direct(kind,args,argv.image),roi)
+                    analysis = fast_analysis(runtime.vision, argv.image, matcher, params, theater_ocr)
+                    if analysis is None:
+                        analysis = runtime.vision.inspect(argv.image, matcher)
                     if params.get("stage_id"):
                         analysis["stage"] = runtime.stage_inspector.inspect(params["stage_id"], analysis,
                             lambda kind, args: context.run_recognition_direct(kind,args,argv.image))
                     from .story_performance import needs_story_text
                     wants_text = params.get("read_text") or params.get("session")
                     read_text = wants_text and (params.get('session') or needs_story_text(params, analysis['state']))
+                    read_text = read_text and analysis.get('text_scope') not in ('theater_dialogue_anchors_only','theater_dialogue_roi','theater_intro_roi')
                     if read_text:
                         from .stages import StageInspector
                         analysis["text"] = StageInspector._ocr(
@@ -137,8 +144,8 @@ class Runtime:
                         from .operational_altar import augment_text as augment_altar
                         augment_altar(analysis,lambda kind,args:context.run_recognition_direct(kind,args,argv.image))
                     elif wants_text:
-                        analysis['text'] = []
-                        analysis['text_scope'] = 'skipped_incompatible_story_candidate'
+                        analysis.setdefault('text', [])
+                        analysis.setdefault('text_scope', 'skipped_incompatible_story_candidate')
                     if params.get("session"):
                         from .session import CheckboxReader, inspect_session
                         from maa.pipeline import JTemplateMatch

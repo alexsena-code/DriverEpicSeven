@@ -362,3 +362,43 @@ Os novos recortes de Path of Heir, Covenant grátis, linha disponível e cabeça
 O assunto `spirit_altar` agora aponta para `wnd/dungeon.csb`, a composição observada do Altar, junto a preparação/formação e resultado comum. `dungeon_home.csb` permanece como fonte de outra composição, sem substituir o Altar. `data/stages/spirit-altars.json` liga 20 candidatos estáticos de elemento/dificuldade a rótulo, custo e proveniência; apenas Dark Easy cmon001 teve uma unidade validada neste bloco. Recortes de Receive, tick de resgate, CLEAR/rodapé e recompensa do grupo estão no mesmo catálogo de proveniência. Saldo, custo e nome de personagem são conteúdo atual e não devem virar âncoras fixas de composição.
 
 A extensão estática do episódio 6 em campaign.json usa `adventure_ma`, mission_id `ma_N_M`, pais `machN`, textos e referências literais `ep6_ch*`. Foram examinadas 49 linhas: 32 fases principais e 17 subentradas tile sem missão/capítulo/ordinal próprios. História com tipo story e custo declarado 0 conserva esse custo; tile com 0 permanece null, sem inferir gratuidade. Hashes e limites da extração estão em episode6_extraction no catálogo; relatório privado var/admin-episode4-20261030af/episode6-extraction.json.
+
+
+Repetição pelo rodapé (2026-11-01, somente preparo offline): consultado o índice
+por “repetir fase try again” e o interpretado de `wnd/result_base.csb` (SHA-256
+`ef5d2886d91e8df3cab4bc7578485f27c14394e6bf5b693841ee3d33c9101e0e`).
+Há `btn_again`, `btn_next`, `btn_back` e `btn_lobby` em
+`/Layer/n_buttons/CENTER/n_right_btns` e `n_left_btns`, além de nomes repetidos
+sob `n_chaos` e variantes de derrota. A ação candidata usa o texto atual
+Try again, junto ao template atual de Lobby, Leave e razão custo/saldo; as
+posições declaradas não são usadas como coordenadas globais. A imagem fornecida
+pelo usuário mostra a variante sem Next Difficulty, ainda sem captura nativa
+calibrada desta sessão. O custo é numérico; a moeda e a identidade da fase
+permanecem desconhecidas. `key_binding.db`/catálogo de hotkeys não fornecem
+binding de Try again; a consulta `system_option.db --find auto` não encontrou
+candidato (71 linhas, campos/plataformas preservados). Auto reutiliza apenas o
+leitor visual e o gesto existentes. SDK local identificado: Maa v5.14.3; o novo
+grafo reutiliza `ScreenTarget`, `LongPress` e `OperationBoundary` do driver.
+
+
+Theater (02/11/2026): os recortes `theater_story_*` foram acrescentados ao
+catálogo `assets/template-provenance.json`, com fonte, hash, caixa e máscara.
+Há composições com Speed/History/Pause e com Play/History/Pause. As variantes
+plain/forest usam máscara verde nos pixels externos aos glifos e TemplateMatch
+método 3, threshold 0,85, seguido de MAE 18. A máscara plain também exclui
+pixels que mudaram entre duas capturas do fundo animado. Positivos incluem
+cenário normal, preto, personagem animado e floresta; negativos incluem menu,
+confirmação, combate e CLEAR, além de escurecimento artificial dos positivos.
+São assets do jogo recortados localmente; não há atribuição de autoria própria.
+As capturas completas permanecem privadas em `var/`.
+
+
+Theater, reconhecimento genérico (02/11): os novos nós nativos `*Shape` reutilizam
+os glifos mascarados plain, sem novos recortes por cenário. Forma filtrada,
+visibilidade/contraste e OCR atual da região compõem o reconhecimento; os antigos
+matches de cor permanecem como evidência separada. Falhas reais de abertura do
+ato 9 e diálogo em `var/runs/20261102T163949Z_29cd54d0` e
+`20261102T170612Z_959b2b60` entraram nos positivos privados. A consulta ao assunto
+theater foi preservada em `var/theater-generic-20261102/source-query.json`;
+`wnd/story_theater_intro.csb` não consta no inventário consultado. A ancestralidade
+da abertura continua desconhecida, sem atribuir a ela o layout do painel main.

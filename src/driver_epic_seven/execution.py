@@ -179,6 +179,10 @@ class OperationCycle:
         if not path and entries and entries[-1]['status'] in ('reserved','sent','entered','cancelled'):
             raise ValueError('Entrada anterior sem resultado comprovado; reconciliar sem novo Start.')
         cost=path.get('energy',0) if path else r.stage_inspector.get(params['stage_id'])['energy']
+        if kind=='theater_confirm':
+            cost=1
+            proof['resource_cost']={'currency':'theater_ticket','amount':1}
+            proof['operation_context']=deepcopy(r.path_prepared.get('theater:'+scope,{}))
         if kind=='equipment_enhance':
             contexts=[i for i in operation_view(analysis).get('items',[]) if i.get('semantic_id')=='context']
             cost=contexts[0]['gold_cost'] if len(contexts)==1 else None
@@ -316,6 +320,9 @@ class OperationCycle:
     def _prepare(self, path, analysis):
         r=self.runtime; kind=path.get('kind'); stage=path.get('stage_id')
         ticket={'epoch_seconds':time.time(),'window':deepcopy(analysis['window'])}
+        if str(kind).startswith('theater_'):
+            from .theater import prepare
+            prepare(r.path_prepared,path,analysis)
         if kind=='abyss_prepared':r.path_prepared['abyss:'+stage]=ticket
         if kind=='prequel_ready':r.path_prepared[stage]=ticket
         if kind in ('altar_open','altar_prepared'):r.path_prepared['altar:'+stage]=ticket

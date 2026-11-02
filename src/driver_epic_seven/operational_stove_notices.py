@@ -195,7 +195,7 @@ def notice_nodes(c):
         body = c.one('You have received Story Clear Reward[.]?', (350, 210, 520, 70))
         if not (body and close):return 'stove_overlay_unresolved'
         p = c.panel('story_reward', [story, body, close], None, 'receipt')
-        c.detail(p, receipt_announced=fact(True, c.source(body)), chapter_text=c.value(c.one(r'Chapter\s+\d+[.]?', (540, 280, 400, 50))),
+        c.detail(p, receipt_announced=fact(True, c.source(body)), chapter_text=c.value(c.one(r'Chapter\s+\d+S?[.]?', (540, 280, 400, 50))),
                  story_lines=c.lines((540, 320, 520, 85)), rewards=fact(), stage_id=fact())
         c.control(p, 'close', close, consuming=False)
         return 'story_reward'

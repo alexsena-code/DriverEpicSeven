@@ -4019,9 +4019,17 @@
       "title": "Jailbreak",
       "location": "6th District Camp",
       "description": "Eventually, the three adventurers are arrested and soon find themselves beginning to plot an escape.",
-      "energy": null,
+      "energy": 0,
       "mission_id": "ep5_1_6",
-      "story_id": null
+      "story_id": "EP5_CH1_006_1",
+      "source_type": "story",
+      "energy_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "sks006",
+        "type": "story",
+        "use_enterpoint": "0",
+        "live_basis": "Episode 5 Chapter 1, row 6/title/description and View Story confirmed; no energy-bearing Start Quest"
+      }
     },
     "sks007": {
       "id": "sks007",
@@ -4747,9 +4755,17 @@
       "title": "Negotiations with the Sovran",
       "location": "Sovran's Space",
       "description": "The Shadow Elves of Natalon finally meet the sovran of the Shadow Elves. She seems to show an interest in her kin from foreign lands, but...",
-      "energy": null,
+      "energy": 0,
       "mission_id": "ep5_8_6",
-      "story_id": null
+      "story_id": "EP5_CH8_006_1",
+      "source_type": "story",
+      "energy_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "skn006",
+        "type": "story",
+        "use_enterpoint": "0",
+        "live_basis": "Episode 5 Chapter 8, row 6/title/description and View Story confirmed; no energy-bearing Start Quest"
+      }
     },
     "skn007": {
       "id": "skn007",
@@ -4781,209 +4797,397 @@
       "id": "crs001",
       "episode": 5,
       "chapter": 9,
-      "chapter_title": "The Debt",
+      "chapter_title": "The Final Stretch of the Plan",
       "ordinal": 1,
       "title": "A Greater Cause 1",
-      "location": "8S-1. Royal Training Ground",
+      "location": "Royal Training Ground",
       "description": "Brieg visits Cradle of Shadows, a royal family-exclusive resort, for special military training. The sovran's persistent demand for success weighs heavily on his mind.",
       "energy": 8,
       "mission_id": "ep5_9_1",
-      "story_id": null
+      "story_id": null,
+      "map_chapter": "8S",
+      "chapter_source": {
+        "source": "db/level_enter_adventure.db",
+        "basis": "crs001 requires skn008; crs003 story EP5_CH8S_003_1; current Episode5 Chapter8S header and A Greater Cause rows observed",
+        "catalog_group_index": 9
+      },
+      "location_source": {
+        "catalog_label": "8S-1. Royal Training Ground",
+        "live_basis": "BCagent000004 supporter selection shows Royal Training Ground and A Greater Cause 1, cost8, before Start"
+      }
     },
     "crs002": {
       "id": "crs002",
       "episode": 5,
       "chapter": 9,
-      "chapter_title": "The Debt",
+      "chapter_title": "The Final Stretch of the Plan",
       "ordinal": 2,
       "title": "A Greater Cause 2",
-      "location": "8S-2. Divine Shelter of Darkness",
+      "location": "Divine Shelter of Darkness",
       "description": "Seeing Brieg overcame his despair and lightened up, Harsetti approaches him with a proposal for their next step to progress.",
       "energy": 8,
       "mission_id": "ep5_9_2",
-      "story_id": null
+      "story_id": null,
+      "map_chapter": "8S",
+      "chapter_source": {
+        "source": "db/level_enter_adventure.db",
+        "basis": "crs001 requires skn008; crs003 story EP5_CH8S_003_1; current Episode5 Chapter8S header and A Greater Cause rows observed",
+        "catalog_group_index": 9
+      },
+      "location_source": {
+        "catalog_label": "8S-2. Divine Shelter of Darkness",
+        "live_basis": "BCagent000016 current Supporter shows Divine Shelter of Darkness and A Greater Cause 2, cost8, before Start"
+      }
     },
     "crs003": {
       "id": "crs003",
       "episode": 5,
       "chapter": 9,
-      "chapter_title": "The Debt",
+      "chapter_title": "The Final Stretch of the Plan",
       "ordinal": 3,
       "title": "A Greater Cause 3",
       "location": "8S-3. Great Hall of the Royal Palace",
       "description": "Harsetti encounters an unexpected visitor but remains composed, exchanging a secret conversation with them.",
-      "energy": null,
+      "energy": 0,
       "mission_id": "ep5_9_3",
-      "story_id": null
+      "story_id": "EP5_CH8S_003_1",
+      "map_chapter": "8S",
+      "chapter_source": {
+        "source": "db/level_enter_adventure.db",
+        "basis": "crs001 requires skn008; crs003 story EP5_CH8S_003_1; current Episode5 Chapter8S header and A Greater Cause rows observed",
+        "catalog_group_index": 9
+      },
+      "source_type": "story",
+      "energy_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "crs003",
+        "type": "story",
+        "use_enterpoint": "0",
+        "live_basis": "BCagent000022 chapter8S row3 title description and ViewStory confirmed; no energy-bearing StartQuest"
+      }
     },
     "crs004": {
       "id": "crs004",
       "episode": 5,
       "chapter": 9,
-      "chapter_title": "The Debt",
+      "chapter_title": "The Final Stretch of the Plan",
       "ordinal": 4,
       "title": "A Greater Cause 4",
-      "location": "8S-4. Shadow Sovran's Chamber",
+      "location": "Shadow Sovran's Chamber",
       "description": "As the king prepares for a meeting, he grappels with concerns over the current political instability and the prince's attitude, unaware of the shocking turn of events that awaits him.",
       "energy": 8,
       "mission_id": "ep5_9_4",
-      "story_id": null
+      "story_id": null,
+      "map_chapter": "8S",
+      "chapter_source": {
+        "source": "db/level_enter_adventure.db",
+        "basis": "crs001 requires skn008; crs003 story EP5_CH8S_003_1; current Episode5 Chapter8S header and A Greater Cause rows observed",
+        "catalog_group_index": 9
+      },
+      "location_source": {
+        "catalog_label": "8S-4. Shadow Sovran's Chamber",
+        "live_basis": "BCagent000027 currentSupporter Shadow Sovran's Chamber / A Greater Cause 4 cost8 beforeStart"
+      }
     },
     "crs005": {
       "id": "crs005",
       "episode": 5,
       "chapter": 9,
-      "chapter_title": "The Debt",
+      "chapter_title": "The Final Stretch of the Plan",
       "ordinal": 5,
       "title": "A Greater Cause 5",
-      "location": "8S-5. Shaded Trail",
+      "location": "Shaded Trail",
       "description": "The continued turmoil in the country despite the successful revolution makes Brieg question whether he made the right choice in the past.",
       "energy": 8,
       "mission_id": "ep5_9_5",
-      "story_id": null
+      "story_id": null,
+      "map_chapter": "8S",
+      "chapter_source": {
+        "source": "db/level_enter_adventure.db",
+        "basis": "crs001 requires skn008; crs003 story EP5_CH8S_003_1; current Episode5 Chapter8S header and A Greater Cause rows observed",
+        "catalog_group_index": 9
+      },
+      "location_source": {
+        "catalog_label": "8S-5. Shaded Trail",
+        "live_basis": "BCagent000036 Supporter shows Shaded Trail / A Greater Cause 5, cost8, beforeStart"
+      }
     },
     "crs006": {
       "id": "crs006",
       "episode": 5,
       "chapter": 9,
-      "chapter_title": "The Debt",
+      "chapter_title": "The Final Stretch of the Plan",
       "ordinal": 6,
       "title": "Dreams, Regrets, and Truth 1",
-      "location": "8S-6. Frozen Mist Trail",
+      "location": "Frozen Mist Trail",
       "description": "Led by Fumyr, Fenris visits Cradle of Shadows to search for his mother's belongings. During the journey, he learns about the adventures of his mother he never had a chance to meet.",
       "energy": 8,
       "mission_id": "ep5_9_6",
-      "story_id": null
+      "story_id": null,
+      "map_chapter": "8S",
+      "chapter_source": {
+        "source": "db/level_enter_adventure.db",
+        "basis": "crs001 requires skn008; crs003 story EP5_CH8S_003_1; current Episode5 Chapter8S header and A Greater Cause rows observed",
+        "catalog_group_index": 9
+      },
+      "location_source": {
+        "catalog_label": "8S-6. Frozen Mist Trail",
+        "live_basis": "BCagent000045 Supporter currentFrozen Mist Trail; phase6 maptitle/description observed, cost8 beforeStart"
+      }
     },
     "crs007": {
       "id": "crs007",
       "episode": 5,
       "chapter": 9,
-      "chapter_title": "The Debt",
+      "chapter_title": "The Final Stretch of the Plan",
       "ordinal": 7,
       "title": "Dreams, Regrets, and Truth 2",
-      "location": "8S-7. Forest of Pondering",
+      "location": "Forest of Pondering",
       "description": "While listening to Fumyr recounting tales of her and Fenris's mother, Fenris begins to question her true motives and agenda.",
       "energy": 20,
       "mission_id": "ep5_9_7",
-      "story_id": null
+      "story_id": null,
+      "map_chapter": "8S",
+      "chapter_source": {
+        "source": "db/level_enter_adventure.db",
+        "basis": "crs001 requires skn008; crs003 story EP5_CH8S_003_1; current Episode5 Chapter8S header and A Greater Cause rows observed",
+        "catalog_group_index": 9
+      },
+      "location_source": {
+        "catalog_label": "8S-7. Forest of Pondering",
+        "live_basis": "BDagent000013 ownteam currentForest of Pondering / DreamsRegretsTruth2 visually, cost20 beforeStart; supporterlocationhadtransienttooltip, navigationonlytoownteam"
+      }
     },
     "crs008": {
       "id": "crs008",
       "episode": 5,
       "chapter": 9,
-      "chapter_title": "The Debt",
+      "chapter_title": "The Final Stretch of the Plan",
       "ordinal": 8,
       "title": "Dreams, Regrets, and Truth 3",
-      "location": "8S-8. Forbidden Western Harbor",
+      "location": "Forbidden Western Harbor",
       "description": "Tracking down Fumyr and Fenris, Ragnvald finds Fenris who has managed to escape. Together, they seek refuge, attempting to evade Fumyr's pursuit.",
       "energy": 8,
       "mission_id": "ep5_9_8",
-      "story_id": null
+      "story_id": null,
+      "map_chapter": "8S",
+      "chapter_source": {
+        "source": "db/level_enter_adventure.db",
+        "basis": "crs001 requires skn008; crs003 story EP5_CH8S_003_1; current Episode5 Chapter8S header and A Greater Cause rows observed",
+        "catalog_group_index": 9
+      },
+      "location_source": {
+        "catalog_label": "8S-8. Forbidden Western Harbor",
+        "live_basis": "BDagent000025 currentownteam Forbidden Western Harbor / DreamsRegretsTruth3 visual,cost8,beforeStart; supporterhadBossEncountertooltip, onlySelectTeamnavigation"
+      }
     },
     "pab001": {
       "id": "pab001",
       "episode": 5,
       "chapter": 10,
-      "chapter_title": "Meaning of Imperfection",
+      "chapter_title": "The Debt",
       "ordinal": 1,
       "title": "Final Request",
       "location": "Frozen Heart",
       "description": "Eligos recalls Friedrich, who was willing to pay any price for a greater cause.",
-      "energy": null,
+      "energy": 0,
       "mission_id": "ep5_10_1",
-      "story_id": null
+      "story_id": "EP5_CH9_001_1",
+      "map_chapter": "9",
+      "source_type": "story",
+      "chapter_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "pab001",
+        "chapter_no": "9",
+        "catalog_group_index": 10,
+        "live_basis": "BD030 Episode5 Chapter9.TheDebt FinalRequest selected description/ViewStory after crs008returned"
+      },
+      "energy_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "pab001",
+        "type": "story",
+        "use_enterpoint": "0",
+        "live_basis": "BD030 current Story/Final Request/description/View Story; BB exact source rows type story EP5_CH9_001_1 reqcrs008"
+      }
     },
     "pab002": {
       "id": "pab002",
       "episode": 5,
       "chapter": 10,
-      "chapter_title": "Meaning of Imperfection",
+      "chapter_title": "The Debt",
       "ordinal": 2,
       "title": "The Passage I",
       "location": "Passage of Division",
       "description": "Following Kane's traces, Dagger Sicar steps into the Passage of Beginnings. However...",
       "energy": 8,
       "mission_id": "ep5_10_2",
-      "story_id": null
+      "story_id": null,
+      "map_chapter": "9",
+      "chapter_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "pab002",
+        "chapter_no": "9",
+        "catalog_group_index": 10,
+        "live_basis": "BD033 map9TheDebt row2 access, BD036 Supporter exactThePassageI PassageOfDivision cost8 and threeobjectives"
+      },
+      "location_source": {
+        "source": "current_supporter",
+        "live_basis": "BD036 exact Passage of Division, The Passage I, cost8; catalog location unchanged"
+      }
     },
     "pab003": {
       "id": "pab003",
       "episode": 5,
       "chapter": 10,
-      "chapter_title": "Meaning of Imperfection",
+      "chapter_title": "The Debt",
       "ordinal": 3,
       "title": "Elvira",
       "location": "Passage of Confinement",
       "description": "Elvira looked back on her life from past to present, then asks herself a critical question.",
       "energy": 8,
       "mission_id": "ep5_10_3",
-      "story_id": null
+      "story_id": null,
+      "map_chapter": "9",
+      "chapter_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "pab003",
+        "chapter_no": "9",
+        "catalog_group_index": 10,
+        "live_basis": "BD043 map9TheDebt access3;BD048 ownprep exactElvira PassageOfConfinement cost8 objectives"
+      },
+      "location_source": {
+        "source": "current_preparation",
+        "live_basis": "BD048 Passage of Confinement/Elvira/cost8;catalog location unchanged"
+      }
     },
     "pab004": {
       "id": "pab004",
       "episode": 5,
       "chapter": 10,
-      "chapter_title": "Meaning of Imperfection",
+      "chapter_title": "The Debt",
       "ordinal": 4,
       "title": "The Passage II",
       "location": "Passage of Grief",
       "description": "While carrying Melissa's coffin, Haste and Pyllis have an unexpected encounter.",
       "energy": 8,
       "mission_id": "ep5_10_4",
-      "story_id": null
+      "story_id": null,
+      "map_chapter": "9",
+      "chapter_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "pab004",
+        "chapter_no": "9",
+        "catalog_group_index": 10,
+        "live_basis": "BD063 map9TheDebt access4 description, BD066SupporterThePassageII PassageOfGrief cost8 objectives"
+      },
+      "location_source": {
+        "source": "current_supporter",
+        "live_basis": "BD066 Passage of Grief cost8; catalog location unchanged"
+      }
     },
     "pab005": {
       "id": "pab005",
       "episode": 5,
       "chapter": 10,
-      "chapter_title": "Meaning of Imperfection",
+      "chapter_title": "The Debt",
       "ordinal": 5,
       "title": "Abigail",
       "location": "Passage of Despair",
       "description": "Filled with self-reproach, hatred, and despair, Abigail ends up attacking Haste.",
       "energy": 8,
       "mission_id": "ep5_10_5",
-      "story_id": null
+      "story_id": null,
+      "map_chapter": "9",
+      "chapter_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "pab005",
+        "chapter_no": "9",
+        "catalog_group_index": 10,
+        "live_basis": "BD072map9TheDebt access5,BD077ownprep exactAbigail PassageOfDespair cost8 objectives"
+      },
+      "location_source": {
+        "source": "current_preparation",
+        "live_basis": "BD077 Passage of Despair/Abigail/cost8;catalog location unchanged"
+      }
     },
     "pab006": {
       "id": "pab006",
       "episode": 5,
       "chapter": 10,
-      "chapter_title": "Meaning of Imperfection",
+      "chapter_title": "The Debt",
       "ordinal": 6,
       "title": "The Passage III",
       "location": "Passage of Settlement",
       "description": "Realizing Eligos is after him alone, Kane decides to face him on his own.",
       "energy": 20,
       "mission_id": "ep5_10_6",
-      "story_id": null
+      "story_id": null,
+      "map_chapter": "9",
+      "chapter_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "pab006",
+        "chapter_no": "9",
+        "catalog_group_index": 10,
+        "live_basis": "BD083map9access6;BD088/098ownprep exactThePassageIII PassageOfSettlement cost20 objectives"
+      },
+      "location_source": {
+        "source": "current_preparation",
+        "live_basis": "BD088/098 Passage of Settlement, cost20;cataloglocationunchanged"
+      }
     },
     "pab007": {
       "id": "pab007",
       "episode": 5,
       "chapter": 10,
-      "chapter_title": "Meaning of Imperfection",
+      "chapter_title": "The Debt",
       "ordinal": 7,
       "title": "It's Nothing Personal",
       "location": "Passage of Retribution",
       "description": "A fight that will determine the destiny of two men who have survived countless struggles now begins.",
       "energy": 8,
       "mission_id": "ep5_10_7",
-      "story_id": null
+      "story_id": null,
+      "map_chapter": "9",
+      "chapter_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "pab007",
+        "chapter_no": "9",
+        "catalog_group_index": 10,
+        "live_basis": "BF008map9TheDebt access7;BF013ownprep exactItsNothingPersonal PassageOfRetribution cost8 objectives"
+      },
+      "location_source": {
+        "source": "current_preparation",
+        "live_basis": "BF013 Passage of Retribution cost8;cataloglocationunchanged"
+      }
     },
     "pab008": {
       "id": "pab008",
       "episode": 5,
       "chapter": 10,
-      "chapter_title": "Meaning of Imperfection",
+      "chapter_title": "The Debt",
       "ordinal": 8,
       "title": "The Passage IV",
       "location": "Passage of Origin",
       "description": "Amidst a mixture of curiosity, indifference, and desires, a hidden passage comes into view.",
-      "energy": null,
+      "energy": 0,
       "mission_id": "ep5_10_8",
-      "story_id": null
+      "story_id": "EP5_CH9_008_1",
+      "map_chapter": "9",
+      "source_type": "story",
+      "chapter_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "pab008",
+        "chapter_no": "9",
+        "catalog_group_index": 10,
+        "live_basis": "BF020 currentmap9TheDebt line8ThePassageIV descriptionStoryViewStory"
+      },
+      "energy_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "pab008",
+        "type": "story",
+        "use_enterpoint": "0",
+        "live_basis": "BF020Story/row8description/ViewStory;exactDBstoryEP5_CH9_008_1reqpab007nomissions"
+      }
     },
     "ma1001": {
       "id": "ma1001",
@@ -5496,6 +5700,287 @@
       "source_type": "story",
       "static_episode_binding": "adventure_ma; ep6_ch references; mission mach4",
       "live_calibration": "not yet observed; static identity does not prove access or UI compatibility"
+    },
+    "nog001": {
+      "id": "nog001",
+      "episode": 5,
+      "chapter": 11,
+      "chapter_title": "Meaning of Imperfection",
+      "ordinal": 1,
+      "title": "Toward Solidarity",
+      "location": "Icewind Coast",
+      "description": "In their pursuit of Fumyr, Ran and his companions head towards the Garden of Noias, as the Skuggiheim royal court begins its journey to wake the Tree of Genesis.",
+      "energy": 8,
+      "mission_id": "ep5_11_1",
+      "story_id": null,
+      "map_chapter": "10",
+      "source_type": "quest",
+      "chapter_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "nog001",
+        "chapter_no": "10",
+        "catalog_group_index": 11,
+        "live_basis": "BF023actualChapter10MeaningOfImperfection0/24/access1Ready;BF026SupporterTowardSolidarityIcewindCoast"
+      },
+      "energy_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "nog001",
+        "use_enterpoint": "8",
+        "live_basis": "BF029ownprep currententry8/70 StartQuest;BF026Supporterobjectives/title/location"
+      },
+      "text_source": {
+        "source": "text/en/text.db",
+        "chapter": "mission_name2_ep5ch10",
+        "title": "mission_desc_ep5_10_1",
+        "location": "mission_name_ep5_10_1",
+        "description": "mission_desc2_ep5_10_1"
+      }
+    },
+    "nog002": {
+      "id": "nog002",
+      "episode": 5,
+      "chapter": 11,
+      "chapter_title": "Meaning of Imperfection",
+      "ordinal": 2,
+      "title": "The Truth of a Promise",
+      "location": "Slope of Promises",
+      "description": "Inside a secluded forest, Elvira nervously waits for someone, only to encounter an unexpected individual.",
+      "energy": 8,
+      "mission_id": "ep5_11_2",
+      "story_id": null,
+      "map_chapter": "10",
+      "source_type": "quest",
+      "chapter_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "nog002",
+        "chapter_no": "10",
+        "catalog_group_index": 11,
+        "live_basis": "BF035main10map3/24access2;BF038SupporterTheTruthOfAPromise/SlopeOfPromises"
+      },
+      "energy_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "nog002",
+        "use_enterpoint": "8",
+        "live_basis": "BF041currentownprep8/64StartQuest"
+      },
+      "text_source": {
+        "source": "text/en/text.db",
+        "chapter": "mission_name2_ep5ch10",
+        "title": "mission_desc_ep5_10_2",
+        "location": "mission_name_ep5_10_2",
+        "description": "mission_desc2_ep5_10_2"
+      }
+    },
+    "nog003": {
+      "id": "nog003",
+      "episode": 5,
+      "chapter": 11,
+      "chapter_title": "Meaning of Imperfection",
+      "ordinal": 3,
+      "title": "Righteous Cause",
+      "location": "The Garden of Noias, Main Gate",
+      "description": "After reuniting with Scilla, an old childhood friend and the grand priestess, Brieg reminisces about their good, old days together and tries to calm his mind.",
+      "energy": 8,
+      "mission_id": "ep5_11_3",
+      "story_id": null,
+      "map_chapter": "10",
+      "source_type": "quest",
+      "chapter_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "nog003",
+        "chapter_no": "10",
+        "catalog_group_index": 11,
+        "live_basis": "BF048main10map6/24access3;BF051SupporterRighteousCause/TheGardenOfNoiasMainGate"
+      },
+      "energy_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "nog003",
+        "use_enterpoint": "8",
+        "live_basis": "BF052pathpreparecompleted currentownprep8/57StartQuest"
+      },
+      "text_source": {
+        "source": "text/en/text.db",
+        "chapter": "mission_name2_ep5ch10",
+        "title": "mission_desc_ep5_10_3",
+        "location": "mission_name_ep5_10_3",
+        "description": "mission_desc2_ep5_10_3"
+      }
+    },
+    "nog004": {
+      "id": "nog004",
+      "episode": 5,
+      "chapter": 11,
+      "chapter_title": "Meaning of Imperfection",
+      "ordinal": 4,
+      "title": "New Final Study",
+      "location": "Entrance of Calling",
+      "description": "Upon reaching the Garden of Noias, Fumyr and Fenris take a familiar shortcut, then run into a strange, uninvited guest there.",
+      "energy": 8,
+      "mission_id": "ep5_11_4",
+      "story_id": null,
+      "map_chapter": "10",
+      "source_type": "quest",
+      "chapter_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "nog004",
+        "chapter_no": "10",
+        "catalog_group_index": 11,
+        "live_basis": "BF057main10map9/24access4;BF060SupporterNewFinalStudy/EntranceOfCalling"
+      },
+      "energy_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "nog004",
+        "use_enterpoint": "8",
+        "live_basis": "BF061pathpreparecompleted currentownprep8/50StartQuest"
+      },
+      "text_source": {
+        "source": "text/en/text.db",
+        "chapter": "mission_name2_ep5ch10",
+        "title": "mission_desc_ep5_10_4",
+        "location": "mission_name_ep5_10_4",
+        "description": "mission_desc2_ep5_10_4"
+      }
+    },
+    "nog005": {
+      "id": "nog005",
+      "episode": 5,
+      "chapter": 11,
+      "chapter_title": "Meaning of Imperfection",
+      "ordinal": 5,
+      "title": "Solemn Practice",
+      "location": "Prayer Room of Foundation",
+      "description": "We serve Noias for a greater cause to protect our kind.",
+      "energy": 20,
+      "mission_id": "ep5_11_5",
+      "story_id": null,
+      "map_chapter": "10",
+      "source_type": "quest",
+      "chapter_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "nog005",
+        "chapter_no": "10",
+        "catalog_group_index": 11,
+        "live_basis": "BF067main10map12/24access5;BF071SupporterSolemnPractice/PrayerRoomOfFoundation"
+      },
+      "energy_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "nog005",
+        "use_enterpoint": "20",
+        "live_basis": "BF072pathpreparecompleted currentownprep20/44StartQuest"
+      },
+      "text_source": {
+        "source": "text/en/text.db",
+        "chapter": "mission_name2_ep5ch10",
+        "title": "mission_desc_ep5_10_5",
+        "location": "mission_name_ep5_10_5",
+        "description": "mission_desc2_ep5_10_5"
+      }
+    },
+    "nog006": {
+      "id": "nog006",
+      "episode": 5,
+      "chapter": 11,
+      "chapter_title": "Meaning of Imperfection",
+      "ordinal": 6,
+      "title": "Reason of Obsession",
+      "location": "Hallway of Mission",
+      "description": "It's all up to me whether we make it out of here alive. So I'm not going to—I can't afford any more mistakes.",
+      "energy": 8,
+      "mission_id": "ep5_11_6",
+      "story_id": null,
+      "map_chapter": "10",
+      "source_type": "quest",
+      "chapter_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "nog006",
+        "chapter_no": "10",
+        "catalog_group_index": 11,
+        "live_basis": "BF077main10map15/24access6;BF080SupporterReasonOfObsession/HallwayOfMission"
+      },
+      "energy_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "nog006",
+        "use_enterpoint": "8",
+        "live_basis": "BF081pathpreparecompleted currentownprep8/25StartQuest"
+      },
+      "text_source": {
+        "source": "text/en/text.db",
+        "chapter": "mission_name2_ep5ch10",
+        "title": "mission_desc_ep5_10_6",
+        "location": "mission_name_ep5_10_6",
+        "description": "mission_desc2_ep5_10_6",
+        "limitation": "Source description contains replacement character; preserve exact source, map row exact title independently identifies stage."
+      }
+    },
+    "nog007": {
+      "id": "nog007",
+      "episode": 5,
+      "chapter": 11,
+      "chapter_title": "Meaning of Imperfection",
+      "ordinal": 7,
+      "title": "Final Step",
+      "location": "The Ground for the Mortals",
+      "description": "Unlike her usual lighthearted self, Fumyr cautiously approaches the Tree of Genesis for the final preparations.",
+      "energy": 8,
+      "mission_id": "ep5_11_7",
+      "story_id": null,
+      "map_chapter": "10",
+      "source_type": "quest",
+      "chapter_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "nog007",
+        "chapter_no": "10",
+        "catalog_group_index": 11,
+        "live_basis": "BF087main10map18/24access7;BF090SupporterFinalStep/TheGroundForTheMortals"
+      },
+      "energy_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "nog007",
+        "use_enterpoint": "8",
+        "live_basis": "BF091pathpreparecompleted currentownprep8/18StartQuest"
+      },
+      "text_source": {
+        "source": "text/en/text.db",
+        "chapter": "mission_name2_ep5ch10",
+        "title": "mission_desc_ep5_10_7",
+        "location": "mission_name_ep5_10_7",
+        "description": "mission_desc2_ep5_10_7"
+      }
+    },
+    "nog008": {
+      "id": "nog008",
+      "episode": 5,
+      "chapter": 11,
+      "chapter_title": "Meaning of Imperfection",
+      "ordinal": 8,
+      "title": "The End of Absolute Desire",
+      "location": "Genesis Hall",
+      "description": "Harsetti is so close to gaining absolute power, but then she's surrounded by a group of people wielding imperfect wills that somehow transcend perfection.",
+      "energy": 8,
+      "mission_id": "ep5_11_8",
+      "story_id": null,
+      "map_chapter": "10",
+      "source_type": "quest",
+      "chapter_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "nog008",
+        "chapter_no": "10",
+        "catalog_group_index": 11,
+        "live_basis": "BF098main10map21/24access8;BF101SupporterTheEndOfAbsoluteDesire/GenesisHall"
+      },
+      "energy_source": {
+        "source": "db/level_enter_adventure.db",
+        "row_id": "nog008",
+        "use_enterpoint": "8",
+        "live_basis": "BF102pathpreparecompleted;BF103freshcurrentownprep8/12StartQuest/locationafterbanner"
+      },
+      "text_source": {
+        "source": "text/en/text.db",
+        "chapter": "mission_name2_ep5ch10",
+        "title": "mission_desc_ep5_10_8",
+        "location": "mission_name_ep5_10_8",
+        "description": "mission_desc2_ep5_10_8"
+      }
     }
   },
   "episode6_extraction": {

@@ -12,6 +12,8 @@ def executable_routine(config: dict, name: str) -> dict:
         raise ValueError(f"Rotina desconhecida: {name}")
     routine = routines[name]
     if routine.get("parameterized"):
+        if routine.get("compiler")=="theater":
+            raise ValueError("Use theater com atos, limite de ingressos e prazo.")
         if routine.get("compiler")=="chapter":
             raise ValueError("Use o comando chapter com fase inicial e orçamento do trecho.")
         raise ValueError("Use o comando stage com o identificador da fase e seus parâmetros.")
@@ -56,6 +58,16 @@ def validate(config: dict) -> dict:
                 compiled_info[name]={"nodes":len(graph),"max_starts":plan["max_starts"],"energy_limit":plan["energy_limit"]}
             except (ValueError,OSError,KeyError) as exc:
                 errors.append(f"Não foi possível compilar {name}: {exc}")
+                continue
+        if routine.get("compiler")=="theater":
+            from .theater import compile_theater
+            try:
+                graph,_,_=compile_theater(config['resource_dir'],acts=1,max_tickets=1,timeout=300,
+                    act=1,series='static-validation-only',scope='theater:validation')
+                available={**nodes,**graph}
+                compiled_info[name]={'nodes':len(graph),'max_ticket_consumptions':1}
+            except (ValueError,OSError,KeyError) as exc:
+                errors.append('Não foi possível compilar theater: '+str(exc))
                 continue
         if routine["entry"] not in available:
             errors.append(f"Entrada ausente: {name}")

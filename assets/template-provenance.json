@@ -4030,6 +4030,207 @@
       "profile": "1212x682 mouse4",
       "transformation": "Neutral glyph core, min channel135, spread35; no dilation, other pixels native green mask; no scaling.",
       "purpose": "Paired gray story controls over market background; no global thresholds changed."
+    },
+    "theater_story_speed_normal": {
+      "source_file": "var/runs/20261102T141127Z_29c95ffa/agent_000009.png",
+      "crop_xyxy": [
+        979,
+        17,
+        1019,
+        58
+      ],
+      "source_sha256": "349954d97f346ff326a41f2689192a9c2c1123ee300f7f1d4a21bd4a6666d946",
+      "sha256": "5aeff960206b28af8215cbb22302c8fa3c82211915f836cd07bf2953de210fe1",
+      "purpose": "theater_story_composition_anchor",
+      "pack_texture": false,
+      "ownership": "Epic Seven game asset; local screen crop",
+      "validation": "normal/black positives; main/ticket-modal/combat negatives, see docs/validation.md"
+    },
+    "theater_story_history_normal": {
+      "source_file": "var/runs/20261102T141127Z_29c95ffa/agent_000009.png",
+      "crop_xyxy": [
+        1108,
+        17,
+        1145,
+        55
+      ],
+      "source_sha256": "349954d97f346ff326a41f2689192a9c2c1123ee300f7f1d4a21bd4a6666d946",
+      "sha256": "964f8a87d7f08d5d488af90699ac803d477a30072edd4dc7bf86c442d329f1a3",
+      "purpose": "theater_story_composition_anchor",
+      "pack_texture": false,
+      "ownership": "Epic Seven game asset; local screen crop",
+      "validation": "normal/black positives; main/ticket-modal/combat negatives, see docs/validation.md"
+    },
+    "theater_story_pause_normal": {
+      "source_file": "var/runs/20261102T141127Z_29c95ffa/agent_000009.png",
+      "crop_xyxy": [
+        1163,
+        18,
+        1190,
+        53
+      ],
+      "source_sha256": "349954d97f346ff326a41f2689192a9c2c1123ee300f7f1d4a21bd4a6666d946",
+      "sha256": "bda05240f36f9c557214bc0abea904e2b541bfbfc3c407aeb58b0fd422cef2c0",
+      "purpose": "theater_story_composition_anchor",
+      "pack_texture": false,
+      "ownership": "Epic Seven game asset; local screen crop",
+      "validation": "normal/black positives; main/ticket-modal/combat negatives, see docs/validation.md"
+    },
+    "theater_story_speed_black": {
+      "source_file": "var/runs/20261102T142013Z_37b36da0/path_failure_after.png",
+      "crop_xyxy": [
+        979,
+        17,
+        1019,
+        58
+      ],
+      "source_sha256": "dc9893fa801607544c4688d354f72a7dc103753a19be6699de19f23233d5d8b8",
+      "sha256": "55c4a1e01f0d7349cabe9c6507fbfa4b70feee73b10017cb73817cd243cb9bf0",
+      "purpose": "theater_story_composition_anchor",
+      "pack_texture": false,
+      "ownership": "Epic Seven game asset; local screen crop",
+      "validation": "normal/black positives; main/ticket-modal/combat negatives, see docs/validation.md"
+    },
+    "theater_story_history_black": {
+      "source_file": "var/runs/20261102T142013Z_37b36da0/path_failure_after.png",
+      "crop_xyxy": [
+        1108,
+        17,
+        1145,
+        55
+      ],
+      "source_sha256": "dc9893fa801607544c4688d354f72a7dc103753a19be6699de19f23233d5d8b8",
+      "sha256": "de389babce5899fc4a36da0ef0c0609d9e3360342723860922f156f8dc42a54f",
+      "purpose": "theater_story_composition_anchor",
+      "pack_texture": false,
+      "ownership": "Epic Seven game asset; local screen crop",
+      "validation": "normal/black positives; main/ticket-modal/combat negatives, see docs/validation.md"
+    },
+    "theater_story_pause_black": {
+      "source_file": "var/runs/20261102T142013Z_37b36da0/path_failure_after.png",
+      "crop_xyxy": [
+        1163,
+        18,
+        1190,
+        53
+      ],
+      "source_sha256": "dc9893fa801607544c4688d354f72a7dc103753a19be6699de19f23233d5d8b8",
+      "sha256": "c51a33ed2021b0bf48513c453e856118fa1c835faa5b324532dd69dd4b6afe1d",
+      "purpose": "theater_story_composition_anchor",
+      "pack_texture": false,
+      "ownership": "Epic Seven game asset; local screen crop",
+      "validation": "normal/black positives; main/ticket-modal/combat negatives, see docs/validation.md"
+    },
+    "theater_story_play_plain": {
+      "source_file": "var\\theater-routine-20261102\\act6-story-variant.png",
+      "source_sha256": "5815b27ad72aa5daa0bb5c9df44fa1d1ffe35e561521babe827dbf0ee26a2c7d",
+      "crop_xyxy": [
+        1047,
+        17,
+        1090,
+        57
+      ],
+      "sha256": "30e5ef96fdb9c9f3dfdc8c5f32463cf26be6a1669f26c3517cee071b943e933a",
+      "purpose": "theater_story_composition_anchor",
+      "pack_texture": false,
+      "mask": "neutral bright glyphs >=130, RGB spread<30, stable MAE<=8 between two current frames; other pixels green",
+      "ownership": "Epic Seven game asset; local screen crop",
+      "motion_source": "var\\theater-routine-20261102\\act6-story-motion.png",
+      "motion_source_sha256": "e8484a9678326c814db2e246e0df6aed997b9ea979668e6726a9d6980a919c60",
+      "native_method": 3,
+      "additional_native_nodes": [
+        "Theater.Template.PlayShape"
+      ],
+      "additional_validation": "Filtered geometry and visible contrast combined with current dialogue/intro OCR; no backdrop-specific scene authority."
+    },
+    "theater_story_history_plain": {
+      "source_file": "var\\theater-routine-20261102\\act6-story-variant.png",
+      "source_sha256": "5815b27ad72aa5daa0bb5c9df44fa1d1ffe35e561521babe827dbf0ee26a2c7d",
+      "crop_xyxy": [
+        1108,
+        17,
+        1145,
+        55
+      ],
+      "sha256": "4cf3bf3f9d715f835615e58f448c67b6a174cfb18985fc0966d4ea6bdc26fac4",
+      "purpose": "theater_story_composition_anchor",
+      "pack_texture": false,
+      "mask": "neutral bright glyphs >=130, RGB spread<30, stable MAE<=8 between two current frames; other pixels green",
+      "ownership": "Epic Seven game asset; local screen crop",
+      "motion_source": "var\\theater-routine-20261102\\act6-story-motion.png",
+      "motion_source_sha256": "e8484a9678326c814db2e246e0df6aed997b9ea979668e6726a9d6980a919c60",
+      "native_method": 3,
+      "additional_native_nodes": [
+        "Theater.Template.HistoryShape"
+      ],
+      "additional_validation": "Filtered geometry and visible contrast combined with current dialogue/intro OCR; no backdrop-specific scene authority."
+    },
+    "theater_story_pause_plain": {
+      "source_file": "var\\theater-routine-20261102\\act6-story-variant.png",
+      "source_sha256": "5815b27ad72aa5daa0bb5c9df44fa1d1ffe35e561521babe827dbf0ee26a2c7d",
+      "crop_xyxy": [
+        1163,
+        18,
+        1190,
+        53
+      ],
+      "sha256": "e3895067de646ad211800dbb6081901e36a8c88e5b493f68cc13acc2a5af3309",
+      "purpose": "theater_story_composition_anchor",
+      "pack_texture": false,
+      "mask": "neutral bright glyphs >=130, RGB spread<30, stable MAE<=8 between two current frames; other pixels green",
+      "ownership": "Epic Seven game asset; local screen crop",
+      "motion_source": "var\\theater-routine-20261102\\act6-story-motion.png",
+      "motion_source_sha256": "e8484a9678326c814db2e246e0df6aed997b9ea979668e6726a9d6980a919c60",
+      "native_method": 3,
+      "additional_native_nodes": [
+        "Theater.Template.PauseShape"
+      ],
+      "additional_validation": "Filtered geometry and visible contrast combined with current dialogue/intro OCR; no backdrop-specific scene authority."
+    },
+    "theater_story_play_forest": {
+      "source_file": "var\\theater-routine-20261102\\act6-story-forest.png",
+      "source_sha256": "8a495964f7d984c0d08c33d042029912f6a7aeff3799f36d719ca78d7b949257",
+      "crop_xyxy": [
+        1047,
+        17,
+        1090,
+        57
+      ],
+      "sha256": "6b947f56e323a8912f2e39387e5725f5f020d69af70cb5cc9ad5eb16b8186612",
+      "purpose": "theater_story_composition_anchor",
+      "pack_texture": false,
+      "mask": "neutral glyphs>=100 RGB spread<30, other pixels green",
+      "ownership": "Epic Seven game asset; local screen crop"
+    },
+    "theater_story_history_forest": {
+      "source_file": "var\\theater-routine-20261102\\act6-story-forest.png",
+      "source_sha256": "8a495964f7d984c0d08c33d042029912f6a7aeff3799f36d719ca78d7b949257",
+      "crop_xyxy": [
+        1108,
+        17,
+        1145,
+        55
+      ],
+      "sha256": "f764d60fae83f25e108cc9c4bae09c99cbbbf73e9fc23669906ea01f0fd72ff2",
+      "purpose": "theater_story_composition_anchor",
+      "pack_texture": false,
+      "mask": "neutral glyphs>=100 RGB spread<30, other pixels green",
+      "ownership": "Epic Seven game asset; local screen crop"
+    },
+    "theater_story_pause_forest": {
+      "source_file": "var\\theater-routine-20261102\\act6-story-forest.png",
+      "source_sha256": "8a495964f7d984c0d08c33d042029912f6a7aeff3799f36d719ca78d7b949257",
+      "crop_xyxy": [
+        1163,
+        18,
+        1190,
+        53
+      ],
+      "sha256": "5ddf23ba7e6bbc9c217a600e7a392c5134eafe12b3b7aeabc0efc4b9b449d632",
+      "purpose": "theater_story_composition_anchor",
+      "pack_texture": false,
+      "mask": "neutral glyphs>=100 RGB spread<30, other pixels green",
+      "ownership": "Epic Seven game asset; local screen crop"
     }
   },
   "scope": "Shared Epic Seven bundle. Original run/client labels are historical provenance, not runtime profiles."

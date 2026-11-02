@@ -1,0 +1,142 @@
+{
+  "$description": "Theater unit: Watch -> ticket confirmation -> dialogue/battle -> CLEAR -> next act; bound by compiler.",
+  "Entry": {
+    "recognition": "DirectHit",
+    "action": "DoNothing",
+    "next": [
+      "Watch"
+    ]
+  },
+  "Watch": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "read_text": true,
+      "path": {
+        "kind": "theater_watch"
+      }
+    },
+    "action": "Click",
+    "max_hit": 1,
+    "post_delay": 400,
+    "next": [
+      "Confirm"
+    ]
+  },
+  "Confirm": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "read_text": true,
+      "path": {
+        "kind": "theater_confirm",
+        "consuming": true
+      }
+    },
+    "action": "Click",
+    "max_hit": 1,
+    "post_delay": 400,
+    "next": [
+      "Started"
+    ]
+  },
+  "Started": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "read_text": true,
+      "path": {
+        "kind": "theater_started"
+      }
+    },
+    "action": "DoNothing",
+    "max_hit": 1,
+    "next": [
+      "Done",
+      "Clear",
+      "Tap",
+      "Auto"
+    ]
+  },
+  "Tap": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "read_text": true,
+      "path": {
+        "kind": "theater_tap"
+      }
+    },
+    "action": "Click",
+    "max_hit": 600,
+    "post_delay": 100,
+    "next": [
+      "Done",
+      "Clear",
+      "Tap",
+      "Auto"
+    ]
+  },
+  "Clear": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "read_text": true,
+      "path": {
+        "kind": "theater_clear"
+      }
+    },
+    "action": "Click",
+    "max_hit": 1,
+    "post_delay": 500,
+    "next": [
+      "Done"
+    ]
+  },
+  "Auto": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "read_text": true,
+      "state": "battle_running",
+      "auto_state": false,
+      "target": "battle_auto"
+    },
+    "action": "Click",
+    "max_hit": 1,
+    "post_delay": 250,
+    "next": [
+      "AutoVerified"
+    ]
+  },
+  "AutoVerified": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "read_text": true,
+      "path": {
+        "kind": "theater_auto_on"
+      }
+    },
+    "action": "DoNothing",
+    "max_hit": 1,
+    "next": [
+      "Done",
+      "Clear",
+      "Tap",
+      "Auto"
+    ]
+  },
+  "Done": {
+    "recognition": "Custom",
+    "custom_recognition": "ScreenTarget",
+    "custom_recognition_param": {
+      "read_text": true,
+      "path": {
+        "kind": "theater_done"
+      }
+    },
+    "action": "DoNothing",
+    "max_hit": 1
+  }
+}

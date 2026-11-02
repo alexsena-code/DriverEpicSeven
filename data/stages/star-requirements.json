@@ -6,14 +6,14 @@
     "text/en/text.db"
   ],
   "pack_sha256": "96baeaebdd9c368351eb876c03d9957c09da907efcf8f09c3858cb6228e769c5",
-  "scope": "Static mission1..3 references for 414 campaign catalog entries through Episode 6; not account progress, current visibility, team eligibility or guaranteed three-star completion. Raw conditions/parameters preserve package semantics pending live verification. Absent references remain partial.",
+  "scope": "Static mission1..3 references for 422 campaign catalog entries through Episode 6; not account progress, current visibility, team eligibility or guaranteed three-star completion. Raw conditions/parameters preserve package semantics pending live verification. Absent references remain partial.",
   "summary": {
-    "stages": 414,
+    "stages": 422,
     "condition_counts": {
-      "clear_enter_count": 397,
+      "clear_enter_count": 405,
       "show_storyid_count": 76,
-      "party_enter_aliverole_count": 180,
-      "clearnocontinue_enter_count": 274,
+      "party_enter_aliverole_count": 188,
+      "clearnocontinue_enter_count": 282,
       "party_enter_attribute_count": 202,
       "party_enter_role_count": 3,
       "clearnotrialchar_enter_count": 14
@@ -17492,6 +17492,350 @@
         "supporter_preselected": null,
         "auto_swap_type": null,
         "continue": null,
+        "show_mission_ready": null
+      }
+    },
+    "nog001": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_nog001_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=nog001,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_nog001_2",
+          "status": "static_resolved",
+          "condition": "clearnocontinue_enter_count",
+          "parameters": "enter=nog001,count=1",
+          "text_key": "smis_name_clearnocontinue",
+          "text": "Clear with No Continues"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_nog001_3",
+          "status": "static_resolved",
+          "condition": "party_enter_aliverole_count",
+          "parameters": "enter=nog001,aliverole=all,count=3",
+          "text_key": "smis_name_aliverole_all_3",
+          "text": "Have 3 or more Heroes survive"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": "user",
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "nog002": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_nog002_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=nog002,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_nog002_2",
+          "status": "static_resolved",
+          "condition": "clearnocontinue_enter_count",
+          "parameters": "enter=nog002,count=1",
+          "text_key": "smis_name_clearnocontinue",
+          "text": "Clear with No Continues"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_nog002_3",
+          "status": "static_resolved",
+          "condition": "party_enter_aliverole_count",
+          "parameters": "enter=nog002,aliverole=all,count=3",
+          "text_key": "smis_name_aliverole_all_3",
+          "text": "Have 3 or more Heroes survive"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": "user",
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "nog003": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_nog003_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=nog003,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_nog003_2",
+          "status": "static_resolved",
+          "condition": "clearnocontinue_enter_count",
+          "parameters": "enter=nog003,count=1",
+          "text_key": "smis_name_clearnocontinue",
+          "text": "Clear with No Continues"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_nog003_3",
+          "status": "static_resolved",
+          "condition": "party_enter_aliverole_count",
+          "parameters": "enter=nog003,aliverole=all,count=3",
+          "text_key": "smis_name_aliverole_all_3",
+          "text": "Have 3 or more Heroes survive"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": "all;user",
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "nog004": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_nog004_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=nog004,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_nog004_2",
+          "status": "static_resolved",
+          "condition": "clearnocontinue_enter_count",
+          "parameters": "enter=nog004,count=1",
+          "text_key": "smis_name_clearnocontinue",
+          "text": "Clear with No Continues"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_nog004_3",
+          "status": "static_resolved",
+          "condition": "party_enter_aliverole_count",
+          "parameters": "enter=nog004,aliverole=all,count=3",
+          "text_key": "smis_name_aliverole_all_3",
+          "text": "Have 3 or more Heroes survive"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": "all;user",
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "nog005": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_nog005_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=nog005,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_nog005_2",
+          "status": "static_resolved",
+          "condition": "clearnocontinue_enter_count",
+          "parameters": "enter=nog005,count=1",
+          "text_key": "smis_name_clearnocontinue",
+          "text": "Clear with No Continues"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_nog005_3",
+          "status": "static_resolved",
+          "condition": "party_enter_aliverole_count",
+          "parameters": "enter=nog005,aliverole=all,count=3",
+          "text_key": "smis_name_aliverole_all_3",
+          "text": "Have 3 or more Heroes survive"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": "user",
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "nog006": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_nog006_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=nog006,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_nog006_2",
+          "status": "static_resolved",
+          "condition": "clearnocontinue_enter_count",
+          "parameters": "enter=nog006,count=1",
+          "text_key": "smis_name_clearnocontinue",
+          "text": "Clear with No Continues"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_nog006_3",
+          "status": "static_resolved",
+          "condition": "party_enter_aliverole_count",
+          "parameters": "enter=nog006,aliverole=all,count=3",
+          "text_key": "smis_name_aliverole_all_3",
+          "text": "Have 3 or more Heroes survive"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": "all;user",
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "nog007": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_nog007_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=nog007,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_nog007_2",
+          "status": "static_resolved",
+          "condition": "clearnocontinue_enter_count",
+          "parameters": "enter=nog007,count=1",
+          "text_key": "smis_name_clearnocontinue",
+          "text": "Clear with No Continues"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_nog007_3",
+          "status": "static_resolved",
+          "condition": "party_enter_aliverole_count",
+          "parameters": "enter=nog007,aliverole=all,count=3",
+          "text_key": "smis_name_aliverole_all_3",
+          "text": "Have 3 or more Heroes survive"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": "all;user",
+        "supporter_preselected": null,
+        "auto_swap_type": null,
+        "continue": "y",
+        "show_mission_ready": null
+      }
+    },
+    "nog008": {
+      "status": "static_resolved",
+      "missions": [
+        {
+          "slot": 1,
+          "source_field": "mission1",
+          "mission_id": "smis_nog008_1",
+          "status": "static_resolved",
+          "condition": "clear_enter_count",
+          "parameters": "enter=nog008,count=1",
+          "text_key": "smis_name_clear_first",
+          "text": "Initial Clear"
+        },
+        {
+          "slot": 2,
+          "source_field": "mission2",
+          "mission_id": "smis_nog008_2",
+          "status": "static_resolved",
+          "condition": "clearnocontinue_enter_count",
+          "parameters": "enter=nog008,count=1",
+          "text_key": "smis_name_clearnocontinue",
+          "text": "Clear with No Continues"
+        },
+        {
+          "slot": 3,
+          "source_field": "mission3",
+          "mission_id": "smis_nog008_3",
+          "status": "static_resolved",
+          "condition": "party_enter_aliverole_count",
+          "parameters": "enter=nog008,aliverole=all,count=3",
+          "text_key": "smis_name_aliverole_all_3",
+          "text": "Have 3 or more Heroes survive"
+        }
+      ],
+      "entry_constraints": {
+        "trial_chr": null,
+        "supporter": "user",
+        "supporter_preselected": null,
+        "auto_swap_type": "1",
+        "continue": "y",
         "show_mission_ready": null
       }
     }

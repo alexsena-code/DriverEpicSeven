@@ -1272,3 +1272,261 @@ Relatórios e logs ficam em var/tests/github-closure/, var/github-clean-bootstra
 e var/github-clean-fast-output.txt. A auditoria dos 419 arquivos candidatos não
 encontrou os padrões de credenciais pesquisados, arquivos privados proibidos ou
 arquivos acima de 10 MB; é uma verificação por padrões, não garantia universal.
+
+## Fechamento da retomada do episódio 5 — 01/11/2026
+
+O percurso autorizado desde o capítulo 8 exercitou os mapas 8, 8S e 9 e as
+primeiras sete fases do mapa 10 real, usando FramePool 2, mouse 4, teclado 4 e
+1212 × 682. A evidência distingue capítulo de mapa e índice de agrupamento do
+catálogo: `crs` pertence a 8S, `pab` a 9 e `nog` a 10. Histórias gratuitas foram
+resolvidas individualmente pelas fontes e pela tela atual; custo ausente não foi
+convertido genericamente em zero. A preparação exigiu título, local e custo
+atuais, mantendo Watcher Schuri. Vitórias parciais permitiram avançar sem replay;
+contadores finais não observados e estrelas individuais permaneceram desconhecidos.
+
+O reconhecimento compartilhado preserva o código 8S, a continuação numérica
+observada e os limites do campo de título na preparação e na seleção de apoiador.
+O recorte adjacente No Record e os limites do local foram preservados. A última
+verificação funcional compartilhada teve 78 testes passando, zero skips, em
+17,71 s (`var/admin-episode5-20261031be/pab006-supporter-focused-tests.xml`).
+A ampliação individual até `nog008`, incluindo negativos de mapa, título,
+local, custo e banners que cobrem o local, teve 59 testes passando, zero skips,
+em 4,12 s (`var/admin-episode5-20261031bf/nog008-focused-tests.xml`).
+
+A condição de parada foi atingida em `nog008`, The End of Absolute Desire /
+Genesis Hall, contra Transcendence Empowered Harsetti: exatamente três entradas,
+com três telas FAILED e três eventos de derrota no diário. As provas são
+`agent_000108`, `agent_000115` e `agent_000122` do runtime
+`var/runs/20261101T045221Z_39499700/`; os retries mantiveram objetivo, plano,
+operação e prazo original, com novas tentativas vinculadas. Não houve quarta
+entrada, Continue ou Try again. Leave retornou ao mapa em `agent_000123`;
+o bridge foi desconectado normalmente e a automação foi excluída. O episódio 5
+não foi concluído; `nog009` e o episódio 6 não foram iniciados.
+
+Após a desconexão e a confirmação de ausência do processo do bridge, a suíte
+completa da versão funcional atual passou: **860 testes, zero falhas, erros ou
+skips, em 721,10 s** (722,04 s de processo). Os hashes permaneceram iguais
+durante a execução. Comando, Python, revisão, hashes e resultados ficam em
+`var/admin-episode5-20261031bf/closure-full-suite.json`, com XML/log adjacentes.
+`closure-validate.json` confirma pacote válido, 282 nós e nenhum erro. Essa prova
+substitui a pendência de suíte completa deste conjunto; não amplia o escopo live
+para outra conta, equipe, fase ou episódio. O registro canônico foi acrescentado
+depois dos testes, sem nova alteração funcional.
+
+
+### Try again parametrizado — 2026-11-01
+
+Implementação experimental: `repeat-stage` e `repetir_fase.bat`. A seleção é
+manual no jogo; a rotina começa no resultado atual e compila novos inícios
+unitários em um único grafo Maa, sem loop Python de captura/entrada. Testes
+focados: **70 passed, 0 skipped, 47,34 s**, comando
+`.venv/Scripts/python.exe -m pytest tests/test_repeat_stage.py tests/test_battle_end_ui.py tests/test_operation_cycle.py tests/test_application.py tests/test_stove_auto_unlocked.py -q --junitxml=var/repeat-focused.xml`.
+Cobrem composição sintética de rodapé (inclusive sem Next Difficulty), negativos
+de modal/derrota/custo, limites e arestas do grafo, fronteira compartilhada de
+reserva e prova de entrada no HUD com/sem painel manual. A cobertura nova do
+rodapé é sintética, sem alegação de positivo nativo da imagem anexada.
+`validate`: recursos válidos, sem erros, em `var/repeat-validate.json`.
+
+O primeiro fechamento completo foi interrompido após a revisão identificar que
+`battle_skill_selection` precisava ser aceito como combate em andamento; a
+correção e dois positivos foram verificados antes da nova suíte. Evidência da
+interrupção e justificativa: `var/repeat-stage-validation/summary.json`. O
+fechamento definitivo é registrado em `var/repeat-stage-validation/final/`.
+
+**Live bloqueado antes de entrada:** `read-screen` retornou
+`WinError 5: Access is denied`. `doctor` descobriu EpicSeven.exe, título Epic
+Seven, classe GLFW30, cliente 1018 × 573; o perfil exige 1212 × 682. Não houve
+captura calibrada nem envio de Try again. Não se alterou o perfil ou método de
+entrada para contornar o bloqueio. Logs: `var/repeat-initial.json` e
+`var/repeat-doctor.json`. Permanecem pendentes a calibração nativa do alvo e o
+ciclo Try again → combate → resultado; a rotina não é promovida a validada.
+
+
+Fechamento completo da implementação: **876 passed, 0 skipped, 1173,57 s**
+(19 min 33 s), comando `.venv/Scripts/python.exe -m pytest -q
+--junitxml=var/repeat-stage-validation/final/full.xml`, sem concorrência com
+calibração ou outra suíte. Saída, duração do processo (1175,375 s), hashes de
+todos os módulos Python e confirmação de que não mudaram durante o teste em
+`var/repeat-stage-validation/final/summary.json`. Após a suíte, somente o
+registro documental e o resumo de validação foram atualizados. Esse fechamento
+não promove a rotina experimental a validada ao vivo.
+
+
+### Moonlight Theater: ensaio manual de Watch e avanço — 2026-11-02
+
+Teste live limitado ao ato 5 de Fallen Land, Season 1. Watch mostrou 1/33;
+a confirmação Use Theater Ticket foi observada e enviada uma vez. A imagem
+final mostrou 1/32, ato 5 com Rewards Available e ato 6 selecionado pelo próprio
+jogo. Nenhuma recompensa foi coletada e o ato 6 não foi iniciado. O título
+Cause and Effect I cruza `theater1_s1_e05_title` no texto com
+`theater1_s1_e05` / `vms01a005` em `ml_theater_story.db`.
+
+Um toque manual na área observada de diálogo avançou a fala. O protótipo de
+calibração em `var/theater-calibration-20261102/probe.py` compila blocos finitos
+Maa, reconhecendo três âncoras atuais (velocidade/histórico/pausa) antes de cada
+toque; Python não interpreta um loop de história. Capturas positivas de duas
+variantes e negativos de menu, confirmação e combate foram confrontados sem
+alterar limiares globais. É um probe privado, sem novo executor ou adaptador de
+produção. Não foi criado `.bat` para Theater.
+
+Medição pelos eventos de envio: 20 toques com pausa Maa de 300 ms tiveram média
+real de **644,9 ms** (631,4–670,1); com pausa de 100 ms, 10 toques tiveram média
+real de **439,0 ms** (427,6–451,3), antes de o bloco parar ao entrar em combate.
+Houve 31 envios de toque no diálogo ao todo, incluindo a primitiva inicial.
+São intervalos desse probe, incluindo reconhecimento, evidência, captura e
+entrada; não constituem benchmark do framework nem duração de um ato.
+
+O combate intercala diálogos, inclusive sobre fundo preto: voltar a diálogo
+não prova que a luta terminou. `battle-auto on` foi recusado quando a tela já
+era diálogo, sem enviar entrada. Os snapshots do combate não comprovaram
+Auto On/Off; a luta avançou sem intervenção, mas isso não prova Auto ligado.
+A ativação e verificação do Auto continuam pendentes nessa modalidade.
+
+CLEAR foi observado e o avanço por controle reconhecido retornou diretamente
+ao Theater com o próximo ato selecionado. O grafo de navegação esperava
+`battle_rewards` e terminou em timeout, embora o destino real prove o avanço;
+não se repetiu o clique. O fluxo futuro precisa conferir Theater como destino,
+além de tratar diálogo intercalado e HUD antes de automatizar o ciclo inteiro.
+
+FramePool 2, mouse/teclado 4, cliente 1212 × 682; conexão com administrador foi
+necessária após WinError 5 na conexão normal. Encerramento normal por
+`disconnect`. Resumo, contagens, referências, lacunas e evidências:
+`var/theater-calibration-20261102/summary.json`. Sessões principais:
+`var/runs/20261102T141127Z_29c95ffa`, `20261102T141730Z_f60b661d`,
+`20261102T141841Z_2269f868` e `20261102T142310Z_95fe0ddc`.
+Somente ensaios locais e documentação foram acrescentados nesta entrega; sem
+mudança funcional de produção, não se executou pytest ou suíte pesada durante
+a calibração ao vivo.
+
+
+### Theater: rotina e lançador — fechamento de 02/11/2026
+
+Entregues `moonlight_theater.bat`, lançador com elevação de administrador e
+rotina CLI/JSONL `theater`, com atos/ingressos/prazo/toques finitos. O registry
+permanece draft: a ativação do Auto nessa modalidade e o lote novo multiato
+ininterrupto ainda não têm prova live. O Auto reutiliza as guardas positivas
+existentes e exige verificação de ligado após um clique máximo por unidade.
+
+Após a queda de energia, a janela foi redescoberta (EpicSeven.exe, Epic Seven,
+GLFW30, cliente 1212 × 682). Não havia reserva de Theater pendente naquele
+momento. O usuário colocou novamente o jogo no Theater. A tarefa composta
+Watch → Confirm foi exercitada no ato 6 de Fallen Land Season 1 e reservou
+**um ingresso** antes da confirmação. Novas variantes de diálogo exigiram
+pausas de calibração: sem Speed, personagem com fundo animado e floresta.
+Cada pausa foi diagnosticada em capturas e testes focados. Não houve nova
+reserva ou repetição de Watch/Confirm nas continuações.
+
+A continuação final comprovou diálogo → combate → diálogo → CLEAR → Theater,
+com ato 6 em Rewards Available, ato 7 selecionado e saldo **32 → 31**. O diário
+original ficou `verified`, com uma única reserva de custo 1. As continuações
+usaram `--finish-current --acts 1 --max-tickets 0`, sem nós consumidores, na
+mesma identidade de janela. A luta avançou com Auto desconhecido, sem entrada
+no toggle; isso não prova Auto ligado. A captura inicial da continuação e a
+prova final estão em `var/runs/20261102T161506Z_7e6151df`; Watch/Confirm em
+`var/runs/20261102T160008Z_5bef6f8b`. Resumo e limitações completas em
+`var/theater-routine-20261102/live-summary.json`.
+
+Os 13 intervalos consecutivos de envio de toque preservados na última
+continuação tiveram média **537 ms** e mediana **526 ms**, para pausa configurada
+de 100 ms. Excluíram-se intervalos de espera de cena/combate maiores que 2 s.
+Incluem reconhecimento/captura/registro/entrada desse caminho; não são duração
+de ato nem benchmark geral. MAE 18 e candidatos filtrados foram preservados;
+variantes plain/forest usam glifos mascarados e método nativo 3 local, sem
+alterar limiares globais. Negativos incluem menu, popup, combate, CLEAR e
+escurecimento artificial; versões antes/depois da animação foram positivas.
+
+Testes focados finais: **98 passed, 0 skipped, 3,92 s**, comando
+`.venv/Scripts/python.exe -m pytest tests/test_theater.py tests/test_operation_cycle.py tests/test_application.py tests/test_battle_end_ui.py tests/test_agent_session.py -q --junitxml=var/theater-routine-20261102/focused-final.xml`.
+Incluem também continuação sem consumidores, identidade de janela, cotas,
+proveniência, contexto da confirmação e encaminhamento do lançador. Recursos
+válidos em `var/theater-routine-20261102/validate-final.json`.
+
+Suíte completa estabilizada: **900 passed, 0 skipped, 717,03 s (11 min 57 s)**,
+com `.venv/Scripts/python.exe -m pytest -q --junitxml=var/theater-routine-20261102/full-suite/pytest.xml`.
+Foi executada após disconnect normal e sem calibração live ou outra suíte em
+paralelo. Hashes dos módulos/recursos permaneceram iguais até o término.
+Comando, versões por hash, tempos e justificativa desse fechamento em
+`var/theater-routine-20261102/full-suite/summary.json`. Após a suíte, somente
+este registro documental foi acrescentado.
+
+
+### Theater: reconhecimento genérico de diálogo e abertura — 02/11/2026
+
+As execuções `20261102T163949Z_29cd54d0` e `20261102T170612Z_959b2b60`
+mostraram dois bloqueios diferentes: abertura Act 9 sem Pause e diálogo cujo
+fundo/animação alterava a verificação absoluta da cor dos ícones. A manutenção
+parou a rotina ativa com um STOP próprio, preservou a evidência e retirou apenas
+esse STOP após conferir a liberação da conexão. Nenhum STOP do usuário foi
+apagado e o lançador continua sem limpeza automática desse arquivo.
+
+O novo fallback combina candidatos nativos filtrados de Play/History/Pause,
+visibilidade/contraste dos glifos e OCR atual de fala/narração com tinta branca.
+A abertura usa Play/History, Act N e aviso explícito de toque, conferindo o número
+do ato com o contexto pendente. As trincas plain/forest mascaradas deixaram de
+ser prova suficiente de diálogo sem essa composição. Não se adicionou recorte
+por fundo nem se afrouxou MAE global, Watch, Confirm ou Auto. A árvore recebe
+os matches e linhas OCR parciais com proveniência, pela mesma captura Maa.
+
+O ensaio `var/runs/20261102T172226Z_15de6369` continuou o ato pendente sem
+novos ingressos e registrou 12 snapshots de avanço com `theater_dialogue_roi`.
+A tela depois saiu do Theater para Moonlight's Blessing/lista de heróis: os
+toques pararam, a tarefa foi cancelada e houve disconnect normal. Não se
+atribuiu conclusão ao ato. Após esse ensaio, acrescentou-se a rejeição de
+controles cobertos/sem contraste e a versão final foi reexecutada nas fixtures.
+Resumo e escopos em `var/theater-generic-20261102/summary.json`.
+
+Positivos nativos incluem os dois bloqueios reais, fundo preto, floresta e
+personagem animado. Negativos incluem menu principal, ingresso, combate, CLEAR,
+a tela fora do Theater, escurecimentos 30/50/70% e controles cobertos por cinza
+uniforme. Um teste impede uso de melhor candidato não filtrado; outro confere
+o número do ato e o contexto confirmado antes de tocar na abertura.
+
+Focados: **101 passed, 0 skipped, 7,12 s**, comando
+`.venv/Scripts/python.exe -m pytest tests/test_theater.py tests/test_operation_cycle.py tests/test_application.py tests/test_agent_session.py tests/test_battle_end_ui.py -q --junitxml=var/theater-generic-20261102/focused-final.xml`.
+Recursos válidos em `var/theater-generic-20261102/validate.json`.
+Suíte completa estabilizada: **903 passed, 0 skipped, 878,48 s (14 min 38 s)**,
+com `.venv/Scripts/python.exe -m pytest -q --junitxml=var/theater-generic-20261102/full-suite/pytest.xml`,
+após disconnect e verificação do lock livre, sem calibração live concorrente.
+Comando, justificativa e hashes estáveis dos módulos/recursos em
+`var/theater-generic-20261102/full-suite/summary.json`. Depois da suíte, somente
+este registro e o resumo privado foram atualizados.
+
+
+### Theater: acompanhamento no terminal — 02/11/2026
+
+O lançador ganhou `tools/theater_terminal.py`, um consumidor somente de leitura
+sobre a árvore/eventos já exportados. Cada invocação usa uma pasta exclusiva
+`runs_dir/terminal_<id>/`, com um snapshot privado do perfil efetivo mudando
+apenas `runs_dir`; um teste compara todas as demais opções depois de passar
+novamente por `load_config`. Não há outra captura, OCR, Runtime ou entrada no
+leitor de acompanhamento. O CLI e o JSONL mantêm suas saídas originais.
+
+O terminal mostra mudanças de etapa e resumos a cada 5 s: tempo da invocação,
+ato alvo, atos confirmados, tentativas de avanço e idade da disponibilização
+da análise. Auto preserva ligado/desligado/desconhecido. Solicitações de Watch,
+Confirm e Auto não são descritas como gasto ou clique executado. A falta de
+leitura recente e a perda de eventos são explícitas; contagens finais vêm do
+resultado verificado. O texto é preservado no `progresso.log` da invocação.
+
+Focados: **74 passed, 0 skipped, 6,03 s**, com
+`.venv/Scripts/python.exe -m pytest tests/test_theater_terminal.py tests/test_theater.py tests/test_agent_session.py -q --junitxml=var/theater-terminal-focused.xml`.
+Cobrem startup/heartbeat, fases, Auto desconhecido, deduplicação, perda de
+histórico, leitura desatualizada, isolamento de execução, perfil preservado,
+JSON parcial, encerramento do thread e preservação do erro do driver. Houve
+simulação textual de abertura/diálogo; nenhuma fase foi iniciada para validar
+o console. `validate` permanece válido em `var/theater-terminal-validate.json`.
+
+Os hashes dos módulos do driver e dos recursos de reconhecimento/pipelines
+foram comparados com o fechamento anterior e permaneceram iguais; somente o
+lançador e seu leitor de apresentação mudaram. O fechamento completo desta
+entrega está em `var/theater-terminal-20261102/`.
+
+
+Fechamento completo do acompanhamento: **918 passed, 0 skipped, 825,90 s
+(13 min 45 s)**, com `.venv/Scripts/python.exe -m pytest -q
+--junitxml=var/theater-terminal-20261102/pytest.xml`. O lock do driver foi
+conferido livre antes da execução; não houve calibração ou teste pesado
+concorrente. Os módulos/recursos monitorados permaneceram iguais durante a
+suíte. Comando, motivo, duração do processo e hashes estão em
+`var/theater-terminal-20261102/summary.json`. Depois da suíte, somente este
+registro documental foi acrescentado.

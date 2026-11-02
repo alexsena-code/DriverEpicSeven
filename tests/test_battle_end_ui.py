@@ -52,3 +52,18 @@ def test_unproven_or_occluded_footer_cannot_expose_result_navigation(mutation):
     elif mutation=='wrong_window':data['window']['process_name']='Other.exe'
     else:data['text'].append({'text':'X Tap to close','box':[550,645,110,24],'score':.99})
     assert view(data).get('view')!='battle_exit'
+
+
+def test_single_button_footer_has_no_next_difficulty_and_does_not_invent_victory():
+    data=footer();data['text']=[r for r in data['text'] if r['text'] not in ('Next Difficulty','10/837')]
+    current=view(data)
+    assert current['view']=='battle_exit'
+    assert current['items'][0]['next_difficulty_cost'] is None
+    assert current['items'][0]['outcome'] is None
+    assert {c['semantic_id'] for c in current['controls']}=={'leave','lobby','try_again'}
+
+
+@pytest.mark.parametrize('label',['FAILED','FAIVLED','Confirm','Cancel'])
+def test_footer_rejects_defeat_and_modal(label):
+    data=footer();data['text'].append({'text':label,'box':[500,200,120,40],'score':.99})
+    assert view(data).get('view')!='battle_exit'

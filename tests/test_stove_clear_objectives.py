@@ -22,6 +22,8 @@ def test_native_clear_heading_survives_result_animation_and_missing_anchors_are_
     sources.append(ROOT/'tests/fixtures/local/26_stage_clear.png')
     current=ROOT/'var/runs/20261030T033722Z_e29bdbc1/observation.png'
     if current.exists():sources.append(current)
+    partial=ROOT/'var/admin-episode5-20261031aw/lae005-partial-clear-live.png'
+    if partial.exists():sources.append(partial)
     if not all(p.exists() for p in sources):pytest.skip('Private animated CLEAR calibration frames unavailable.')
     v=Vision(ROOT/'resources/epic-seven/vision.json',ROOT/'resources/epic-seven')
     v.spec['states']={'stage_clear':v.spec['states']['stage_clear']}
@@ -45,6 +47,14 @@ def test_native_clear_heading_survives_result_animation_and_missing_anchors_are_
             assert tasker.post_recognition('Custom',JCustomRecognition(custom_recognition='ClearAnimation'),image).wait().succeeded
             a=found[-1]
             assert (a['state']=='stage_clear') is positive,(path.name,label,a['matches'])
+            from driver_epic_seven.prequel import target
+            a.update(window={'process_name':'EpicSeven.exe','client_size':[1212,682]},text=[])
+            a['ui_tree']=build_tree(a,v.spec)
+            view=operation_view(a)
+            assert bool(target(view,{'kind':'prequel_clear','stage_id':'lae005'},a)) is positive
+            if path==partial and positive:
+                assert view['items'][0]['earned_stars'] is None
+                assert view['items'][0]['objectives_complete'] is None
             if positive and index<3:
                 a.update(window={'process_name':'EpicSeven.exe','client_size':[1212,682]},text=[])
                 view=operation_view({'ui_tree':build_tree(a,v.spec)})
@@ -129,6 +139,28 @@ def test_result_context_is_scoped_and_marker_must_be_in_calibrated_slot():
         assert result(data)[1]=={}
     data=sample_observation();data['matches']['clear_objective_check_3']['box']=[209,532,27,21]
     assert result(data)[2]['earned_stars'] is None
+
+
+def test_victory_return_does_not_require_optional_stars_or_weaken_start():
+    from driver_epic_seven.prequel import target, campaign_graph
+    spec=json.loads((ROOT/'resources/epic-seven/vision.json').read_text())
+    data=sample_observation()
+    data['matches']['clear_continue']['box']=[1165,630,25,25]
+    data['matches']['clear_three_stars']['hit']=False
+    data['matches']['clear_objective_check_3']['hit']=False
+    data['ui_tree']=build_tree(data,spec)
+    view=operation_view(data)
+    assert view['items'][0]['earned_stars'] is None
+    assert target(view,{'kind':'prequel_clear','stage_id':'lae005'},data)==[1165,630,25,25]
+    assert target(view,{'kind':'prequel_start','stage_id':'lae005','max_energy':8},data,{}) is None
+    for anchor in ('clear_initial','clear_continue','clear_heading'):
+        wrong=deepcopy(data);wrong['matches'][anchor]['hit']=False
+        wrong['ui_tree']=build_tree(wrong,spec)
+        assert target(operation_view(wrong),{'kind':'prequel_clear','stage_id':'lae005'},wrong) is None
+    wrong=deepcopy(view);wrong['mode']='preparation'
+    assert target(wrong,{'kind':'prequel_clear','stage_id':'lae005'},data) is None
+    meta,_=campaign_graph('lae006','lae008',36)
+    assert meta['requires_three_stars'] is False and meta['max_starts']==3
 
 
 @pytest.mark.fixtures

@@ -4,6 +4,15 @@ import math
 from .observed_ui import fact, derived, node
 
 
+def is_preparation_time_record(row):
+    """Exclude the current right-hand timing badge, not arbitrary title text."""
+    box = row.get('box')
+    return bool(isinstance(box, (list, tuple)) and len(box) == 4
+                and 1080 <= box[0] and 100 <= box[1]
+                and box[0] + box[2] <= 1210 and box[1] + box[3] <= 155
+                and re.fullmatch(r'(?:[e©]\s*)?No\s+Record', row.get('text', '').strip(), re.I))
+
+
 class ReadContext:
     def __init__(self, observation, parent, add):
         self.observation, self.parent, self.add = observation, parent, add
@@ -31,6 +40,22 @@ class ReadContext:
     def one(self, pattern, area=(0, 0, 1212, 682)):
         rows = self.find(pattern, area)
         return rows[0] if len(rows) == 1 else None
+
+    def preparation_title_rows(self):
+        """Current title lines, including an aligned number-only continuation."""
+        candidates=sorted((row for row in self.find(r'.+', (870,100,330,55))
+                           if not is_preparation_time_record(row[1])),
+                          key=lambda row:(row[1]['box'][1],row[1]['box'][0]))
+        lines=[]
+        for row in candidates:
+            text=row[1]['text'].strip();box=row[1]['box']
+            if any(char.isalpha() for char in text):
+                lines.append(row)
+            elif (re.fullmatch(r'\d{1,3}',text) and lines
+                  and abs(box[0]-lines[0][1]['box'][0])<=12
+                  and -3<=box[1]-lines[-1][1]['box'][1]-lines[-1][1]['box'][3]<=22):
+                lines.append(row)
+        return lines
 
     def label(self, area):
         """Read an unambiguous text field without a content/name allowlist."""

@@ -22,6 +22,10 @@ def capabilities(config):
             'mapped_families_are_executors': False,
             'validation_scope': 'docs/validation.md', 'account_access': None,
             'operations': {
+                'theater': {'parameters':['acts','max_tickets','timeout','taps_per_act','finish_current'],
+                            'defaults':{'timeout':1800,'taps_per_act':600,'finish_current':False},'scope':'draft_paid_watch_dialogue_battle_clear_next_act'},
+                'repeat-stage': {'parameters':['count','max_resource','timeout'],
+                                 'defaults':{'timeout':1800},'scope':'draft_current_result_try_again'},
                 'chapter': {'parameters':['from_stage','max_energy','timeout','finish_current'],
                             'defaults':{'timeout':600,'finish_current':False},'scope':'finite_chapter'},
                 'path.campaign': {'parameters':['from_stage','to_stage','max_energy','timeout'],
@@ -123,6 +127,12 @@ class Application:
 
 def _execute_operation(args, runtime):
     """The same guarded operations for one-shot CLI and persistent sessions."""
+    if args.command == 'theater':
+        from .theater import run
+        return run(runtime, acts=args.acts, max_tickets=args.max_tickets, timeout=args.timeout, taps_per_act=args.taps_per_act, finish_current=args.finish_current)
+    if args.command == 'repeat-stage':
+        from .repeat_stage import run
+        return run(runtime, args.count, args.max_resource, args.timeout)
     if args.command=='path' and args.path_operation=='formation':
         from .formation_operations import graph
         from .path_execution import run_graph

@@ -18,7 +18,7 @@ def battle_end_nodes(observation,parent,add):
     x,y,w,h=box
     if not (w>0 and h>0 and 175<=x and x+w<=335 and 585<=y and y+h<=667):
         return None
-    if (c.find('Confirm|Cancel|Received Reward|Story Clear|Auto Assign',(300,120,650,450))
+    if (c.find('Confirm|Cancel|Received Reward|Story Clear|Auto Assign|FAILED|FAIVLED',(0,0,1212,682))
             or c.find(r'(?:[Xx×]\s*)?Tap\s*to\s*close[.]?',(350,400,600,282))):
         return None
     leave=c.one('Leave',(70,590,100,70))
@@ -27,14 +27,16 @@ def battle_end_nodes(observation,parent,add):
     again=c.one(r'Try\s*again',(1050,595,155,65))
     next_ratio=c.one(r'\d[\d,]*\s*/\s*\d[\d,]*',(935,530,115,55))
     repeat_ratio=c.one(r'\d[\d,]*\s*/\s*\d[\d,]*',(935,600,115,55))
-    if not all((leave,lobby,next_label,again,next_ratio,repeat_ratio)):
+    # Both upper controls absent is the single-button variant. A partial
+    # upper row is ambiguous and must not be treated as that variant.
+    if not all((leave,lobby,again,repeat_ratio)) or bool(next_label) != bool(next_ratio):
         return None
     def cost(row):
         ratio=c.ratio(row,'cost','available')
         return fact({'currency':None,**ratio['value']},*ratio['sources'],
                     derived('/text','current_footer_numeric_cost_currency_unidentified'))
-    next_cost,repeat_cost=cost(next_ratio),cost(repeat_ratio)
-    anchors=[leave,lobby,next_label,again,next_ratio,repeat_ratio]
+    next_cost,repeat_cost=cost(next_ratio) if next_ratio else fact(),cost(repeat_ratio)
+    anchors=[r for r in (leave,lobby,next_label,again,next_ratio,repeat_ratio) if r]
     p=c.panel('battle_exit',anchors,'wnd/result_base.csb',match_keys=('path_battle_exit_lobby',))
     c.detail(p,outcome=fact(),mode_identity=fact(),stage_id=fact(),battle_id=fact(),
              next_difficulty_cost=next_cost,repeat_cost=repeat_cost,
@@ -46,6 +48,8 @@ def battle_end_nodes(observation,parent,add):
     for key,row,current_cost,path in (
             ('next_difficulty',next_label,next_cost,'/Layer/n_buttons/CENTER/n_right_btns/btn_next'),
             ('try_again',again,repeat_cost,'/Layer/n_buttons/CENTER/n_right_btns/btn_again')):
+        if row is None:
+            continue
         source=c.source(row)
         c.add(node(p+'/'+key,'control',p,semantic_id=fact(key,source),adapter=fact('operations',source),
                    text=c.value(row),box=fact(row[1]['box'],source),box_role=fact('text_anchor',source),

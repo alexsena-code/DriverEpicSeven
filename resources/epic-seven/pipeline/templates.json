@@ -348,14 +348,24 @@
   "Template.StoryHistoryTown": {
     "recognition": "TemplateMatch",
     "template": "story_history_town.png",
-    "roi": [1000, 10, 90, 60],
+    "roi": [
+      1000,
+      10,
+      90,
+      60
+    ],
     "threshold": 0.92,
     "action": "DoNothing"
   },
   "Template.FriendPromptCurrent": {
     "recognition": "TemplateMatch",
     "template": "friend_prompt_current.png",
-    "roi": [390, 210, 430, 75],
+    "roi": [
+      390,
+      210,
+      430,
+      75
+    ],
     "threshold": 0.92,
     "action": "DoNothing"
   },
@@ -407,7 +417,12 @@
   },
   "OCR.SideAlertBody": {
     "recognition": "OCR",
-    "roi": [345, 200, 525, 65],
+    "roi": [
+      345,
+      200,
+      525,
+      65
+    ],
     "model": "en_us",
     "expected": "^(?:The following Side Stories have been unlocked|You can check unlocked Side Stories on the Side Story List)[.]?$",
     "threshold": 0.9,
@@ -801,5 +816,203 @@
       48
     ],
     "action": "DoNothing"
+  },
+  "Theater.Template.SpeedNormal": {
+    "recognition": "TemplateMatch",
+    "template": "theater_story_speed_normal.png",
+    "roi": [
+      979,
+      17,
+      40,
+      41
+    ],
+    "threshold": 0.85,
+    "action": "DoNothing"
+  },
+  "Theater.Template.HistoryNormal": {
+    "recognition": "TemplateMatch",
+    "template": "theater_story_history_normal.png",
+    "roi": [
+      1108,
+      17,
+      37,
+      38
+    ],
+    "threshold": 0.85,
+    "action": "DoNothing"
+  },
+  "Theater.Template.PauseNormal": {
+    "recognition": "TemplateMatch",
+    "template": "theater_story_pause_normal.png",
+    "roi": [
+      1163,
+      18,
+      27,
+      35
+    ],
+    "threshold": 0.85,
+    "action": "DoNothing"
+  },
+  "Theater.Template.SpeedBlack": {
+    "recognition": "TemplateMatch",
+    "template": "theater_story_speed_black.png",
+    "roi": [
+      979,
+      17,
+      40,
+      41
+    ],
+    "threshold": 0.85,
+    "action": "DoNothing"
+  },
+  "Theater.Template.HistoryBlack": {
+    "recognition": "TemplateMatch",
+    "template": "theater_story_history_black.png",
+    "roi": [
+      1108,
+      17,
+      37,
+      38
+    ],
+    "threshold": 0.85,
+    "action": "DoNothing"
+  },
+  "Theater.Template.PauseBlack": {
+    "recognition": "TemplateMatch",
+    "template": "theater_story_pause_black.png",
+    "roi": [
+      1163,
+      18,
+      27,
+      35
+    ],
+    "threshold": 0.85,
+    "action": "DoNothing"
+  },
+  "Theater.Template.PlayPlain": {
+    "recognition": "TemplateMatch",
+    "template": "theater_story_play_plain.png",
+    "roi": [
+      1047,
+      17,
+      43,
+      40
+    ],
+    "threshold": 0.85,
+    "green_mask": true,
+    "action": "DoNothing",
+    "method": 3
+  },
+  "Theater.Template.HistoryPlain": {
+    "recognition": "TemplateMatch",
+    "template": "theater_story_history_plain.png",
+    "roi": [
+      1108,
+      17,
+      37,
+      38
+    ],
+    "threshold": 0.85,
+    "green_mask": true,
+    "action": "DoNothing",
+    "method": 3
+  },
+  "Theater.Template.PausePlain": {
+    "recognition": "TemplateMatch",
+    "template": "theater_story_pause_plain.png",
+    "roi": [
+      1163,
+      18,
+      27,
+      35
+    ],
+    "threshold": 0.85,
+    "green_mask": true,
+    "action": "DoNothing",
+    "method": 3
+  },
+  "Theater.Template.PlayForest": {
+    "recognition": "TemplateMatch",
+    "template": "theater_story_play_forest.png",
+    "roi": [
+      1047,
+      17,
+      43,
+      40
+    ],
+    "threshold": 0.85,
+    "green_mask": true,
+    "method": 3,
+    "action": "DoNothing"
+  },
+  "Theater.Template.HistoryForest": {
+    "recognition": "TemplateMatch",
+    "template": "theater_story_history_forest.png",
+    "roi": [
+      1108,
+      17,
+      37,
+      38
+    ],
+    "threshold": 0.85,
+    "green_mask": true,
+    "method": 3,
+    "action": "DoNothing"
+  },
+  "Theater.Template.PauseForest": {
+    "recognition": "TemplateMatch",
+    "template": "theater_story_pause_forest.png",
+    "roi": [
+      1163,
+      18,
+      27,
+      35
+    ],
+    "threshold": 0.85,
+    "green_mask": true,
+    "method": 3,
+    "action": "DoNothing"
+  },
+  "Theater.Template.PlayShape": {
+    "recognition": "TemplateMatch",
+    "template": "theater_story_play_plain.png",
+    "roi": [
+      1047,
+      17,
+      43,
+      40
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing",
+    "method": 3
+  },
+  "Theater.Template.HistoryShape": {
+    "recognition": "TemplateMatch",
+    "template": "theater_story_history_plain.png",
+    "roi": [
+      1108,
+      17,
+      37,
+      38
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing",
+    "method": 3
+  },
+  "Theater.Template.PauseShape": {
+    "recognition": "TemplateMatch",
+    "template": "theater_story_pause_plain.png",
+    "roi": [
+      1163,
+      18,
+      27,
+      35
+    ],
+    "threshold": 0.94,
+    "green_mask": true,
+    "action": "DoNothing",
+    "method": 3
   }
 }

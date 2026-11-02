@@ -197,6 +197,34 @@
         "single_task": true,
         "evidence": "var/runs/20261026T015611Z_7e9079d7/chapter_result.json"
       }
+    },
+    "theater": {
+      "status": "draft",
+      "parameterized": true,
+      "compiler": "theater",
+      "entry": "Theater.Entry",
+      "success_node": "Theater.Done",
+      "initial_states": [
+        "theater_main"
+      ],
+      "final_state": "theater_main",
+      "max_seconds": 1800,
+      "description": "Watch, confirmar um ingresso, avancar dialogos e CLEAR para o proximo ato, com limites finitos.",
+      "pending": [
+        "Lote novo sem interrupção com todas as variantes finais e sequência de vários atos",
+        "Ativação de Auto: prova positiva desligado -> clique -> ligado no HUD do Theater"
+      ],
+      "validation_scope": {
+        "manual_act": "Fallen Land Season 1 Act 5",
+        "compiled_act_with_calibration_continuations": "Fallen Land Season 1 Act 6 -> Act 7 selected",
+        "ticket_limit": 1,
+        "ticket_balance": [
+          32,
+          31
+        ],
+        "resume_has_no_watch_or_confirmation": true,
+        "evidence": "var/theater-routine-20261102/live-summary.json"
+      }
     }
   }
 }

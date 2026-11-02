@@ -6,6 +6,62 @@ from driver_epic_seven.observed_ui import build_tree, operation_view
 from driver_epic_seven.prequel import stage, campaign_graph, target
 
 
+def test_timing_badge_filter_is_confined_to_the_current_right_hand_field():
+    from driver_epic_seven.reading import is_preparation_time_record
+    assert is_preparation_time_record({'text':'e No Record','box':[1084,112,102,20]})
+    assert is_preparation_time_record({'text':'No Record','box':[1100,112,85,20]})
+    assert not is_preparation_time_record({'text':'No Record','box':[878,112,85,20]})
+    assert not is_preparation_time_record({'text':'Another No Record','box':[1084,112,102,20]})
+    assert not is_preparation_time_record({'text':'e No Record','box':[1084,200,102,20]})
+
+
+@pytest.mark.fixtures
+def test_sks007_timing_badge_does_not_replace_title_or_relax_start_guards(tmp_path):
+    import time
+    import numpy as np
+    from PIL import Image
+    from maa.resource import Resource
+    from maa.tasker import Tasker
+    from maa.library import Library
+    from maa.define import LoggingLevelEnum
+    from driver_epic_seven.prequel import augment_title
+    folder=ROOT/'var/admin-episode5-20261031as'
+    source=folder/'sks007-preparation-observation.json'
+    if not source.exists():pytest.skip('Private timing-badge preparation unavailable.')
+    original=json.loads(source.read_text(encoding='utf-8'))
+    image=np.asarray(Image.open(folder/'sks007-preparation.png').convert('RGB'))[:,:,::-1].copy()
+    Tasker.set_stdout_level(LoggingLevelEnum.Off);Tasker.set_log_dir(tmp_path/'maa')
+    resource=Resource();resource.set_cpu()
+    assert resource.post_bundle(ROOT/'resources/epic-seven').wait().succeeded
+    tasker=Tasker();assert Library.framework().MaaTaskerBindResource(tasker._handle,resource._handle)
+    def recognize(kind,args):
+        return tasker.post_recognition(kind,args,image).wait().get().nodes[-1].recognition
+    args={'kind':'prequel_start','stage_id':'sks007','max_energy':20}
+    good=deepcopy(original);augment_title(good,args,recognize)
+    assert good['campaign_title_reread']['accepted'] is True
+    current=operation_view({'ui_tree':build_tree(good)})
+    assert current['items'][0]['story_title']=='Reality, Ideals, and Struggle'
+    ticket={'sks007':{'epoch_seconds':time.time(),'window':good['window']}}
+    assert target(current,args,good,ticket)
+    assert target(current,args,good,{}) is None
+    assert target(current,{**args,'stage_id':'sks008'},good,ticket) is None
+    for field,bad in [('location','Another Exit'),('cost',{'currency':'energy','cost':8,'available':287})]:
+        wrong=deepcopy(current);wrong['items'][0][field]=bad
+        assert target(wrong,args,good,ticket) is None
+    for filename in ('sks007-supporter-merged.json','sks007-supporter-glued.json'):
+        merged=folder/filename
+        if not merged.exists():continue
+        supporter=json.loads(merged.read_text(encoding='utf-8'))
+        assert any('No Record' in r['text'] for r in supporter['text'])
+        image=np.asarray(Image.open(merged.with_suffix('.png')).convert('RGB'))[:,:,::-1].copy()
+        args={'kind':'prequel_supporter','stage_id':'sks007'}
+        augment_title(supporter,args,recognize)
+        assert supporter['campaign_title_reread']['accepted'] is True
+        assert supporter['campaign_title_reread']['roi']==[875,110,225,30]
+        assert target({},args,supporter)
+        assert target({},{**args,'stage_id':'sks008'},supporter) is None
+
+
 @pytest.mark.fixtures
 def test_native_title_strip_recovers_roman_suffix_without_accepting_wrong_stage(tmp_path):
     import numpy as np

@@ -47,22 +47,44 @@ def augment_title(observation, params, recognize):
         return
     if params.get('kind') not in ('prequel_supporter', 'prequel_start', 'prequel_prepared') or not identity:
         return
-    from .reading import ReadContext
+    from .reading import ReadContext, is_preparation_time_record
     from .stages import StageInspector
     reader = ReadContext(observation, 'screen', lambda n: None)
     if not observation.get('matches', {}).get('prequel_ready_header', {}).get('hit'):
         return
     expected = stage(identity)
+    # A wrapped final number can be omitted by the detector. Read only its
+    # current continuation pixels after the exact prefix and location agree.
+    numeric_title=re.fullmatch(r'(.+)\s+(\d{1,3})',expected['title'])
+    title_lines=reader.preparation_title_rows()
+    location_lines=reader.find(r'.+',(870,65,340,45))
+    if (numeric_title and len(title_lines)==1 and len(location_lines)==1
+            and normalize(location_lines[0][1]['text'])==normalize(expected['location'])
+            and normalize(title_lines[0][1]['text'])==normalize(numeric_title[1])):
+        box=title_lines[0][1]['box'];top=math.ceil(box[1]+box[3])-1
+        roi=[max(875,math.floor(box[0]-4)),top,50,min(28,155-top)]
+        if roi[3]>=12:
+            candidates=StageInspector._ocr(recognize,roi,only_rec=True)
+            accepted=(len(candidates)==1 and candidates[0]['score']>=.90
+                      and candidates[0]['text'].strip()==numeric_title[2])
+            observation['campaign_numeric_title_reread']={'roi':roi,
+                'original_rows':[r for _,r in title_lines],'candidates':candidates,
+                'accepted':accepted,'method':'Maa/en_us/only_rec'}
+            if accepted:
+                observation['text'].append({**candidates[0],'source':'campaign_numeric_title_reread'})
     for field, area, roi in (
             ('location', (870,65,340,45), [875,70,320,30]),
             ('title', (870,100,340,55), [875,110,320,30])):
         rows = reader.find(r'.+', area)
+        if field == 'title':
+            rows = [(i, r) for i, r in rows if not is_preparation_time_record(r)]
         if not rows:
             # Low-confidence detector output may locate the line, but cannot
             # prove its content. A new native OCR score must still reach .90.
             x,y,w,h=area
             rows=[(i,r) for i,r in enumerate(observation.get('text',[]))
                   if isinstance(r.get('text'),str) and r['text'].strip()
+                  and (field != 'title' or not is_preparation_time_record(r))
                   and isinstance(r.get('box'),(list,tuple)) and len(r['box'])==4
                   and all(type(v) in (int,float) and math.isfinite(v) for v in r['box'])
                   and min(r['box'][2:])>0 and x<=r['box'][0] and y<=r['box'][1]
@@ -70,11 +92,23 @@ def augment_title(observation, params, recognize):
         compare = title_match if field == 'title' else lambda a,b: normalize(a)==normalize(b)
         if len(rows) != 1 or (rows[0][1].get('score',0)>=.90 and compare(rows[0][1]['text'], expected[field])):
             continue
-        # A line outside this strip may be multi-line: do not clip it.
+        # Keep the detected line inside the canonical field. A title can
+        # extend a pixel below the first OCR strip; its tight reread must
+        # contain the whole current line, never a clipped Roman suffix.
         box = rows[0][1]['box']
-        if box[1] < roi[1] or box[1]+box[3] > roi[1]+roi[3]:
+        field_bottom = area[1]+area[3] if field == 'title' else roi[1]+roi[3]
+        if box[1] < roi[1] or box[1]+box[3] > field_bottom:
             continue
-        candidates = StageInspector._ocr(recognize, roi, only_rec=True)
+        # The timed-stage badge can be merged into the same detected line.
+        # Re-read its adjacent title pixels, never remove words from OCR text.
+        timing_badge = field == 'title' and any(
+            isinstance(r.get('text'), str) and re.search(r'No\s*Record\s*$', r['text'], re.I)
+            and isinstance(r.get('box'), (list, tuple)) and len(r['box']) == 4
+            and 100 <= r['box'][1] and r['box'][1]+r['box'][3] <= 155
+            and 1150 <= r['box'][0]+r['box'][2] <= 1210
+            for r in observation.get('text', []))
+        current_roi = [875,110,225,30] if timing_badge else roi
+        candidates = StageInspector._ocr(recognize, current_roi, only_rec=True)
         accepted = (len(candidates) == 1 and candidates[0]['score'] >= .90
                     and compare(candidates[0]['text'], expected[field]))
         selected = candidates[0] if accepted else None
@@ -82,17 +116,17 @@ def augment_title(observation, params, recognize):
         if not accepted:
             # Short titles lose detail when the OCR strip contains mostly
             # empty pixels. One bounded retry uses the current detected line.
-            left=max(875, math.floor((box[0]-2)/5)*5)
-            top=max(roi[1], math.floor((box[1]-4)/2)*2)
+            left=max(area[0] if field == 'title' else 875, math.floor((box[0]-2)/5)*5)
+            top=max(area[1] if field == 'title' else roi[1], math.floor((box[1]-4)/2)*2)
             tight_roi = [left, top, min(box[2]+8,1195-left),
-                         min(math.ceil((box[3]+9)/2)*2,roi[1]+roi[3]-top)]
+                         min(math.ceil((box[3]+9)/2)*2,field_bottom-top)]
             tight_candidates = StageInspector._ocr(recognize, tight_roi, only_rec=True)
             tight = {'roi':tight_roi, 'candidates':tight_candidates}
             accepted = (len(tight_candidates)==1 and tight_candidates[0]['score']>=.90
                         and compare(tight_candidates[0]['text'],expected[field]))
             if accepted:selected=tight_candidates[0]
         evidence_key = 'campaign_'+field+'_reread'
-        observation[evidence_key] = {'roi': roi, 'original_rows': [r for _,r in rows],
+        observation[evidence_key] = {'roi': current_roi, 'original_rows': [r for _,r in rows],
             'candidates': candidates, 'tight':tight, 'accepted': bool(accepted), 'method': 'Maa/en_us/only_rec'}
         if accepted:
             observation['text'][rows[0][0]] = {**selected, 'source': evidence_key}
@@ -109,7 +143,7 @@ def augment_map_row(observation, params, recognize):
     box = available.get('box')
     if (current.get('view') != 'prequel_ready_map' or len(contexts) != 1
             or contexts[0].get('episode_label') != episode_label(expected)
-            or contexts[0].get('chapter_number') != expected['chapter']
+            or not chapter_matches(contexts[0], expected)
             or not available.get('hit') or not box
             or target(current, params, observation)):
         return
@@ -170,6 +204,16 @@ def episode_label(stage_record):
     return 'Episode ' + str(stage_record['episode'])
 
 
+def chapter_matches(context, stage_record):
+    """Keep the visible chapter code separate from the catalog grouping index."""
+    actual = context.get('chapter_code')
+    if actual is None:
+        # Existing numeric observations remain compatible; a suffixed chapter
+        # always requires its explicit current code.
+        actual = str(context.get('chapter_number'))
+    return actual == str(stage_record.get('map_chapter', stage_record['chapter']))
+
+
 def corrected_team_retry(entries):
     """One explicitly reconciled blocked entry, never an automatic retry rule."""
     if len(entries)!=1 or entries[0].get('status')!='blocked_team':return False
@@ -202,6 +246,7 @@ def target(current, params, observation=None, prepared=None):
     expected=stage(params['stage_id'])
     if params['kind']=='prequel_supporter':
         from .observed_ui import screen_state
+        from .reading import ReadContext
         if screen_state(observation or {}) != 'supporter_selection':
             return None
         rows = (observation or {}).get('text', [])
@@ -212,10 +257,7 @@ def target(current, params, observation=None, prepared=None):
                     and (box := r.get('box')) and len(box) == 4
                     and x <= box[0] and y <= box[1]
                     and box[0]+box[2] <= x+w and box[1]+box[3] <= y+h]
-        title_rows=sorted((r for r in rows if r.get('score',0)>=.90
-            and r.get('text','').strip()!='No Record' and any(c.isalpha() for c in r.get('text',''))
-            and (b:=r.get('box')) and len(b)==4 and 870<=b[0] and 100<=b[1]
-            and b[0]+b[2]<=1210 and b[1]+b[3]<=155),key=lambda r:(r['box'][1],r['box'][0]))
+        title_rows=[r for _,r in ReadContext(observation or {},'screen',lambda n:None).preparation_title_rows()]
         # The preparation reader already joins up to three non-overlapping
         # title lines. Apply that same field boundary before Select Team.
         title_valid=(1<=len(title_rows)<=3 and not any(
@@ -237,7 +279,7 @@ def target(current, params, observation=None, prepared=None):
         labels={normalize(s) for s in info.get('story_lines',[])}
         if (expected['energy']!=0 or current.get('view')!='story_reward' or info.get('receipt_announced') is not True
                 or normalize(expected['title']) not in labels or normalize(expected['location']) not in labels
-                or normalize(info.get('chapter_text') or '')!=normalize('Chapter '+str(expected['chapter'])+'.')
+                or normalize(info.get('chapter_text') or '')!=normalize('Chapter '+str(expected.get('map_chapter',expected['chapter']))+'.')
                 or len(controls)!=1):return None
         return controls[0].get('box')
     if params['kind']=='prequel_story_start':
@@ -245,7 +287,7 @@ def target(current, params, observation=None, prepared=None):
         info=contexts[0] if len(contexts)==1 else {}
         labels=[i for i in current.get('items',[]) if i.get('semantic_id')=='view_story_label']
         if (expected['energy']!=0 or current.get('view')!='prequel_story_map'
-                or info.get('chapter_number')!=expected['chapter'] or info.get('episode_label')!=episode_label(expected)
+                or not chapter_matches(info, expected) or info.get('episode_label')!=episode_label(expected)
                 or info.get('selected_kind_label')!='Story'
                 or normalize(info.get('selected_description') or '')!=normalize(expected['map_description'])
                 or len(labels)!=1 or labels[0].get('text')!='View Story'):
@@ -260,7 +302,7 @@ def target(current, params, observation=None, prepared=None):
         contexts=[i for i in current.get('items',[]) if i.get('semantic_id')=='context']
         info=contexts[0] if len(contexts)==1 else {}
         if (current.get('view') not in ('prequel_ready_map','prequel_story_map')
-                or info.get('chapter_number')!=expected['chapter']
+                or not chapter_matches(info, expected)
                 or info.get('episode_label')!=episode_label(expected)):
             return None
         rows=[i for i in current.get('items',[]) if i.get('semantic_id')=='stage_row'
@@ -294,7 +336,9 @@ def target(current, params, observation=None, prepared=None):
     if params['kind']=='prequel_clear':
         from .observed_ui import target_box
         contexts=[i for i in current.get('items',[]) if i.get('semantic_id')=='context']
-        if current.get('view')!='campaign_result' or len(contexts)!=1 or contexts[0].get('earned_stars')!=3:
+        # The current CLEAR composition proves victory independently of its
+        # optional objectives. Missing stars stay unknown, never a replay gate.
+        if current.get('view')!='campaign_result' or current.get('mode')!='current_clear' or len(contexts)!=1:
             return None
         return target_box(observation['ui_tree'],'clear_continue')
     contexts=[i for i in current.get('items',[]) if i.get('semantic_id')=='context']
@@ -303,7 +347,7 @@ def target(current, params, observation=None, prepared=None):
     info=contexts[0]
     if params['kind']=='prequel_row':
         if (current.get('view') not in ('prequel_ready_map','prequel_story_map')
-                or info.get('chapter_number')!=expected['chapter']
+                or not chapter_matches(info, expected)
                 or info.get('episode_label')!=episode_label(expected)):
             return None
         description_matches=normalize(info.get('selected_description') or '')==normalize(expected['map_description'])
@@ -313,7 +357,7 @@ def target(current, params, observation=None, prepared=None):
               and i.get('available') is True]
         return rows[0].get('box') if len(rows)==1 else None
     if params['kind']=='prequel_ready':
-        if (current.get('view')!='prequel_ready_map' or info.get('chapter_number')!=expected['chapter']
+        if (current.get('view')!='prequel_ready_map' or not chapter_matches(info, expected)
                 or info.get('episode_label')!=episode_label(expected)):
             return None
         description_matches=normalize(info.get('selected_description') or '')==normalize(expected['map_description'])
@@ -498,7 +542,7 @@ def campaign_graph(first, last, max_energy, *, resume=False, victory_observed=Fa
     validate_graph(graph,'Path.Campaign.Entry',['Path.Campaign.Done'],resume=resume)
     from .plans import contract, sequential_units
     finite=contract('path.campaign',sequential_units([s['id'] for s in plan],prefix='prequel:'),graph,energy=0 if resume else cost)
-    return {'finite_plan':finite,'stage_ids':[s['id'] for s in plan],'energy_limit':0 if resume else cost,'max_starts':0 if resume else len(plan),'requires_three_stars':True},graph
+    return {'finite_plan':finite,'stage_ids':[s['id'] for s in plan],'energy_limit':0 if resume else cost,'max_starts':0 if resume else len(plan),'requires_three_stars':False},graph
 
 
 def finish_graph(identity, victory_observed=False):

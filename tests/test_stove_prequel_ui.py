@@ -78,8 +78,9 @@ def test_native_prequel_pair_is_read_only_and_rejects_other_screens(tmp_path):
     data=saved_map()
     run=ROOT/'var/runs/20261027T005115Z_8d1b189a'
     bundle=ROOT/'resources/epic-seven';vision=Vision(bundle/'vision.json',bundle)
-    names={n for clause in ('all','any','none')
-           for n in vision.spec['states']['prequel_story_map'].get(clause,[])}
+    state_spec=vision.spec['states']['prequel_story_map']
+    names={n for variant in [state_spec]+state_spec.get('variants',[])
+           for clause in ('all','any','none') for n in variant.get(clause,[])}
     vision.spec['templates']={k:v for k,v in vision.spec['templates'].items() if k in names}
     vision.spec['states']={'prequel_story_map':vision.spec['states']['prequel_story_map']}
     vision.spec['ocr']={};results=[]

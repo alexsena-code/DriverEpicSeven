@@ -546,3 +546,93 @@ A verificação automática no GitHub instala o projeto no Windows com Python
 3.11 e 3.12, valida os recursos e executa a seleção rápida auditada. Não controla
 o jogo e não substitui testes nativos nem calibração ao vivo. Testes que dependem
 das evidências privadas podem informar `skipped` em um clone novo.
+
+
+### Repetir a fase escolhida pelo Try again (experimental)
+
+Abra `repetir_fase.bat` na raiz. Escolha a fase e a equipe **no jogo**, termine
+uma batalha manualmente e deixe o rodapé com **Leave**, **Lobby** e **Try again**
+visível antes de continuar no terminal. O lançador pergunta a quantidade de
+**novas batalhas**, o teto total do recurso exibido no botão e o prazo total
+(até 30 minutos). Por exemplo, 10 repetições com custo 8 exigem teto de pelo
+menos 80. A primeira batalha manual não entra nessa contagem.
+
+Também disponível em `.venv/Scripts/python.exe -m driver_epic_seven repeat-stage --count 10 --max-resource 80 --timeout 1800` (em uma única linha).
+
+O grafo Maa usa um envio por repetição e comprova entrada em combate antes de
+aceitar outro resultado. Mantém o mouse 4 do perfil, ativa Auto apenas quando
+comprovadamente desligado e reaproveita os tratamentos de história/avisos já
+existentes. Não recarrega recurso; custo divergente, saldo insuficiente,
+derrota ou tela sem tratamento impedem a próxima repetição e encerram por
+prazo finito. Pare com **Ctrl+C** ou criando `var/STOP`; o arquivo não é apagado
+pelo lançador. O rodapé não comprova vitória nem identidade da fase: a escolha
+permanece vinculada ao botão atual, sem nomes ou progresso inventados.
+
+Cada novo início fica registrado antes da entrada. Um lote interrompido com
+início pendente bloqueia outro lote até conferir/reconciliar sua evidência;
+não há retomada automática. Evidências ficam em `var/runs/`.
+
+**Validação:** testes offline; percurso ao vivo pendente. Nesta sessão a conexão
+recebeu `WinError 5: Access is denied`, antes de capturar ou enviar entrada.
+Não há prova de que o clique desta nova rotina foi aceito pelo jogo.
+
+
+### Moonlight Theater por `.bat`
+
+Abra **`moonlight_theater.bat`** na raiz. O Windows solicitará permissão de
+administrador quando necessária. Deixe Moonlight Theater aberto no ato que
+quer assistir, com **Watch** disponível; informe quantos atos, o limite de
+ingressos e o prazo total. O lançador aceita 1–20 atos, até 100 ingressos e até
+30 minutos. Este escopo usa **um ingresso por ato**; Watch gratuito não está
+habilitado pelo fluxo de confirmação calibrado.
+
+A rotina toca Watch, confirma o ingresso específico, avança diálogos com
+pausa configurada de 100 ms, suspende os toques diante de combate e avança o
+CLEAR até o próximo ato selecionado pelo jogo. Não coleta recompensas nem
+compra ingressos. Auto só recebe um clique se o HUD comprovar desligado, e o
+próximo passo exige comprovar ligado. Ausência ou ambiguidade nunca alterna o
+botão. Na calibração do Theater, a luta avançou sem esse clique; a ativação
+nessa variante permanece pendente.
+
+Pare com **Ctrl+C** ou criando `var/STOP`. O lançador não apaga STOP. Uma
+confirmação incerta bloqueia outro Watch. Havendo um único ato pendente, o
+lançador tenta **somente sua conclusão, sem Watch, Confirm ou novo ingresso**.
+Essa continuação exige a mesma identidade de janela registrada; após reiniciar
+o jogo ou trocar de conta, o contexto deve ser conferido antes de reconciliar
+o diário. Não há descarte automático de entradas pendentes.
+
+CLI: `.venv/Scripts/python.exe -m driver_epic_seven theater --acts 2 --max-tickets 2 --timeout 1800`.
+Continuação sem novo gasto: `theater --acts 1 --max-tickets 0 --timeout 600 --finish-current`.
+Também é aceito na conexão `agent`. Capturas, plano, resultado e diário ficam
+em `var/`; o lançador imprime a pasta de evidência ao terminar.
+
+**Estado experimental:** Watch/confirmar e a conclusão com continuação foram
+exercitados no ato 6 de Fallen Land, Season 1, com saldo 32 → 31 e ato 7
+selecionado. Durante a calibração houve pausas para incluir variantes visuais;
+o lote novo sem interrupção, vários atos em uma tarefa, fim de temporada e
+ativação do Auto nessa modalidade ainda precisam de prova própria. Telas sem
+tratamento, limite de toques ou prazo encerram a tarefa para revisão.
+
+
+Atualização do reconhecimento do Theater (02/11): além das composições rápidas,
+a rotina reconhece a forma dos controles com OCR localizado de fala/narração,
+e a abertura com `Act N` e aviso de toque. A cor do fundo deixa de ser o único
+caminho para reconhecer essas cenas. O `.bat` não mudou; feche uma execução
+antiga e abra novamente para carregar a atualização. Isso não habilita toque
+contínuo em telas sem reconhecimento nem altera gastos ou o toggle de Auto.
+
+
+O `.bat` do Theater agora mostra acompanhamento no próprio terminal. Mudanças
+de etapa aparecem assim que forem lidas; um resumo é repetido a cada 5 segundos,
+com tempo decorrido, ato alvo, atos confirmados, tentativas de avanço e idade
+da última leitura disponível. Combate informa Auto ligado/desligado/desconhecido;
+ausência de leitura recente ou de reconhecimento também fica visível. A
+confirmação de ingresso é descrita como solicitação, sem antecipar gasto ou
+sucesso do clique. O total final vem do resultado verificado da tarefa.
+
+O texto é salvo em `progresso.log`, na pasta exclusiva de cada abertura do
+lançador: `var/runs/terminal_<id>/`. As evidências do driver ficam em uma
+subpasta dessa pasta. O perfil efetivo é preservado, alterando somente o destino
+das evidências para isolar o acompanhamento de execuções anteriores. O leitor
+consulta apenas a árvore/eventos existentes: não captura, não executa OCR e
+não envia comandos ao jogo. Reabra o `.bat` para carregar essa atualização.

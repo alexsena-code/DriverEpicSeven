@@ -1,5 +1,96 @@
 # Campanha até um bloqueio
 
+`pab006` forneceu um título romano com linha detectada de y=117 a141,
+abaixo do primeiro recorte que terminava em140. A releitura conserva o
+recorte adjacente ao No Record e limita a linha ao campo canônico até155;
+o segundo recorte deriva da caixa atual inteira, sem cortar o sufixo.
+Na imagem BD098, o recorte calculado `[880,112,128,34]` leu The Passage III
+com confiança acima de0,90; título cortado/errado, caixa fora do campo,
+ticket ausente e custo máximo menor continuam recusados. Essa correção
+foi preparada offline antes de qualquer entrada em6. A seleção de apoiador
+forneceu a linha x874/y112, cuja margem superior/lateral era cortada pelo
+limite do primeiro recorte. O tight derivado da caixa usa os limites do campo
+canônico do título (870/100), preservando a margem original inteira;
+`[870,108,128,34]` leu o sufixo III com score≥0,90 na imagem BE005.
+A regra de equivalência romana já existente aceita Ill/III, sem inferência.
+Localização mantém seus limites anteriores; testes nativos cobrem ambos
+os painéis, posição fora do campo, título errado/oculto e guardas de Start.
+
+
+Após `crs008` returned/victory, o mapa abriu **Chapter 9. The Debt**,
+com a história Final Request selecionada e View Story reconhecido (BD030).
+`pab001` conserva o índice de agrupamento 10, mas usa `map_chapter: "9"`.
+Somente essa identidade foi resolvida como história de custo 0, com
+`EP5_CH9_001_1`, a partir da linha exata `level_enter_adventure.db`
+(`chapter_no: 9`, `type: story`, `use_enterpoint: 0`, requisito `crs008`)
+e da descrição atual. `pab008` também foi resolvida individualmente como história0/EP5_CH9_008_1
+após BF020 linha8/descrição/ViewStory e DBexato chapter_no9/story/use_enterpoint0,
+reqpab007/semmission. As entradas pab001..008 usam map_chapter9;
+a presença do grupo10 no catálogo não representa o capítulo10 exibido.
+Após a história `pab008` retornada sem custo, BF023 comprovou acesso ao capítulo 10 real,
+Meaning of Imperfection, com 0/24. A primeira identidade `nog001` (Toward Solidarity /
+Icewind Coast) foi acrescentada individualmente a partir de level_enter_adventure.db
+(chapter_no10, reqpab008, quest8) e textos exatos. O índice de agrupamento11 segue
+mission_id ep5_11_1; map_chapter10 preserva o capítulo exibido. BF026/029 comprovam
+título, local, custo8 e objetivos. A segunda identidade nog002 (The Truth of a Promise / Slope of Promises),
+quest8/reqnog001, foi confirmada em BF038Supporter e BF041ownprep.
+A terceira nog003 (Righteous Cause / The Garden of Noias, Main Gate), quest8/reqnog002,
+foi confirmada em BF051Supporter/BF052ownprep. A quarta nog004 (New Final Study / Entrance of Calling), quest8/reqnog003,
+foi confirmada em BF060Supporter/BF061ownprep. A quinta nog005 (Solemn Practice / Prayer Room of Foundation), quest20/reqnog004,
+foi confirmada em BF071Supporter/BF072ownprep. BF070 tinha banner sobre o local,
+que permaneceu recusado até desaparecer; No Record não integra o título.
+A sexta nog006 (Reason of Obsession / Hallway of Mission), quest8/reqnog005,
+foi confirmada em BF080Supporter/BF081ownprep. O texto fonte da descrição contém
+caractere de substituição preservado; a linha atual com ordinal e título exatos
+identifica a fase de forma independente. A sétima nog007 (Final Step / The Ground for the Mortals), quest8/reqnog006,
+foi confirmada em BF090Supporter/BF091ownprep. A oitava nog008 (The End of Absolute Desire / Genesis Hall), quest8/reqnog007,
+foi confirmada em BF101Supporter/BF103ownprep após banner ocultar o local em BF102.
+O campo estático auto_swap_type1 é preservado nos requisitos e não comprova troca atual.
+A história nog009 ainda exige resolução
+individual e prova de acesso; terminar o agrupamento pab não prova fim do E5.
+
+
+Títulos da preparação podem terminar com um número isolado na segunda
+linha. `crs006` forneceu essa composição atual: Dreams, Regrets, and Truth
+seguido de 1. A leitura compartilhada conserva uma continuação numérica
+apenas dentro da faixa de título, alinhada à esquerda e abaixo de uma linha
+textual, com o mesmo mínimo de confiança. Quando o detector omite essa
+linha, o callback pode reler somente seus pixels atuais, após o prefixo e
+local exatos. A prova preserva candidatos e OCR original em
+`campaign_numeric_title_reread`; número ausente/incorreto, posição distante,
+baixa confiança e local errado continuam recusados. A imagem de origem e
+diagnóstico offline estão em `var/admin-episode5-20261031bc/crs006-supporter-before.*`
+e `crs006-offline-suffix-diagnostic.json`. A navegação/início ainda dependem
+das guardas de título completo, local, equipe, energia e ticket atuais.
+
+O mapa do episódio 5 inclui o capítulo **8S, The Final Stretch of the Plan**
+entre 8 e 9. O índice de agrupamento do catálogo (`chapter: 9` nas entradas
+`crs001..008`) não é o código exibido: `map_chapter: "8S"` conserva essa
+distinção. A árvore expõe `chapter_code` com proveniência do cabeçalho e
+mantém `chapter_number: 8`; a seleção confere o código completo, de modo
+que 8, 8S e 9 não se substituem. As fontes exatas estão em
+`var/admin-episode5-20261031bb/chapter8S-source-rows.json`: `crs001` depende
+de `skn008`, e a história `crs003` referencia `EP5_CH8S_003_1`. A presença
+estática não comprova entrada, desbloqueio ou conclusão. `crs003` foi resolvida
+individualmente como história de energia 0 e `EP5_CH8S_003_1` após a prova
+atual de linha 3, descrição e View Story (`BC/agent_000022` no runtime
+`20261101T033009Z_b42fe540`). O catálogo mantém proveniência por campo.
+Os locais de `crs001` e `crs002` foram conferidos na seleção de apoiador e
+resolvidos sem o prefixo do rótulo estático, respectivamente Royal Training
+Ground e Divine Shelter of Darkness; os demais locais continuam sujeitos
+à conferência individual. Os testes de recibo 8S positivos/negativos são
+casos sintéticos de OCR/árvore, sem alegação de recibo live antecipado.
+
+Após a vitória 3★ de `skn008`, o jogo avançou ao 8S. O retorno aguardou
+porque esse cabeçalho ainda não era adaptado. A execução foi cancelada com
+worker parado; uma navegação observada voltou ao mapa 8 (20/21), e a mesma
+identidade/plano encerrou a reserva pendente com zero novos Starts. As duas
+entradas finais permaneceram únicas e returned/victory. Evidências em
+`var/runs/20261101T025717Z_fb41d1e8/agent_000030.json` até `agent_000040.json`.
+Os testes focados da leitura/código/identidade e consumidores estão em
+`var/admin-episode5-20261031bb/chapter8S-*-tests.xml`; a suíte completa fica
+para o fechamento estabilizado após a desconexão da campanha.
+
 Na seleção de apoiador, títulos quebrados em linhas seguem a mesma prova
 de campo já usada na preparação: até três linhas atuais, dentro da faixa
 do título, cada uma com score ≥0,90, sem sobreposição vertical ambígua.
@@ -105,6 +196,72 @@ não contém início de combate; nove testes focados passaram em 0,24 s. Provas
 em `var/admin-episode4-20261030aj/story-map-tests.xml` e
 `var/admin-episode4-20261030ak/story-cost-tests.xml`.
 
+No episódio 5, capítulo 1, `sks006` (Jailbreak) também foi resolvida
+individualmente: a linha íntegra de `level_enter_adventure.db` declara
+`type=story`, `use_enterpoint=0` e `story_stage_link=EP5_CH1_006_1`.
+O mapa atual confirmou episódio, capítulo, linha 6, descrição e View Story em
+`var/runs/20261031T071814Z_960a6132/agent_000019.json`. O catálogo preserva
+essa proveniência; a compilação usa o fluxo de história sem início de combate.
+Os dez testes focados passaram em 0,29 s, e `validate` confirmou 282 nós.
+Provas em `var/admin-episode5-20261031as/sks006-source-query.json` e
+`var/admin-episode5-20261031as/sks006-focused-tests.xml`.
+O fluxo ao vivo de `sks006` retornou ao mapa com a fase 7 disponível, energia
+286→287 por regeneração e gemas 16200→16215; o diário registra uma entrada
+de história de custo zero e retorno comprovado. Evidência:
+`var/runs/20261031T071814Z_960a6132/agent_000022.json`.
+
+No capítulo 8 do episódio 5, `skn006` (Negotiations with the Sovran) foi
+resolvida individualmente pelo mesmo contrato. A linha íntegra declara
+`type=story`, `use_enterpoint=0` e `story_stage_link=EP5_CH8_006_1`; consulta em
+`var/admin-episode5-20261031ba/skn006-source-query.json`. O mapa atual confirmou
+episódio, capítulo, título da linha 6, descrição e View Story em
+`var/runs/20261101T025717Z_fb41d1e8/agent_000013.json`. A proveniência fica no
+catálogo somente nessa entrada; custos nulos de outras fases continuam
+desconhecidos. A regressão de história verifica custo zero e ausência de
+início de combate também para essa identidade. Validação e resultado ao vivo
+ficam em `var/admin-episode5-20261031bb/`.
+
+Em `sks007`, o indicador de tempo No Record foi lido com o glifo do relógio
+como `e No Record` e confundido com uma linha do título. A exclusão agora é
+restrita ao campo direito de tempo observado; o texto bruto e os limites de
+confiança são preservados. A releitura nativa do título continua exigindo
+correspondência com a fase e localização atuais. Quando o OCR une título e
+indicador, uma releitura nativa da faixa de título adjacente ao indicador
+fornece novamente os pixels; não se removem palavras do texto reconhecido.
+Cinco testes focados, incluindo os dois replays positivos, títulos antigos
+e guardas negativas de início, passaram em 1,20 s;
+28 testes vizinhos passaram em 1,11 s. O teste antigo do par de templates foi
+atualizado para consultar também as variantes de composição já existentes,
+restaurando sua cobertura nativa. A preparação ao vivo confirmou o destino
+sem Start em `var/runs/20261031T073851Z_81b07dff/agent_000002.json`.
+Fontes e testes em `var/admin-episode5-20261031as/sks007-*-query.json`,
+`sks007-focused-tests.xml` e `sks007-neighbor-tests-fixed.xml`. A suíte completa
+foi reservada ao fechamento estabilizado, sem concorrência com a campanha ao vivo.
+As provas finais estão em `sks007-final-title-tests.xml`,
+`sks007-final-neighbor-tests.xml` e na preparação sem Start em
+`var/runs/20261031T074146Z_13e14cd2/agent_000002.json`.
+A variante em que o OCR omite o espaço antes de No Record também foi
+reproduzida e incluída no mesmo teste nativo. O replay final manteve cinco
+testes de título (1,22 s), 28 vizinhos (1,14 s) e `validate` válidos; provas
+em `var/admin-episode5-20261031as/sks007-glued-title-tests.xml` e
+`sks007-glued-neighbor-tests.xml`.
+
+O capítulo 1 do episódio 5 foi concluído ao vivo em 31/10/2026: mapa
+**21/21**, sete vitórias com 3★ na primeira entrada e `sks006` como história
+gratuita, sem derrotas. Watcher Schuri foi mantido. O capítulo 2 abriu por
+transição do jogo; nenhum Start foi enviado nele. O aviso da Árvore da Gênese
+e seu tutorial foram fechados por controles observados antes da conferência
+final e da desconexão normal. FramePool 2, teclado 4, mouse 64 como fallback
+explicitamente anunciado após falha de navegação com mouse 4, cliente 1212×682.
+Provas finais: `var/runs/20261031T074349Z_75bbc49f/agent_000007.json`
+(resultado de `sks008`, três objetivos), `agent_000017.json` (mapa 21/21) e
+`var/admin-episode5-20261031av/monitor-state.json` (desconexão e exclusão do
+acompanhamento). A autorização encerrou-se no capítulo 1.
+Após a desconexão, a suíte completa passou: **814 testes, zero skips**, em
+698,55 s; `validate` havia confirmado 282 nós na mesma versão funcional.
+Comando, versão, hashes e duração do processo (699,39 s) estão em
+`var/admin-episode5-20261031av/full-suite-summary.json`, com XML e log adjacentes.
+
 Em `kae004`, o histórico cinza sobre o mercado voltou a impedir a composição
 de história; uma recuperação por coordenada também foi recusada pela animação.
 Foram acrescentadas duas variantes do par Skip/histórico, com máscara verde
@@ -187,7 +344,9 @@ O acompanhamento conserva Auto, vitória/3★, derrota e interrupções; isso n�
 promove ausência de Skip ou Auto a prova de que o combate continua ativo.
 
 O fechamento CLEAR admite até três cliques no total por fase, sem `repeat`:
-cada passagem Maa reconhece novamente o resultado com 3★ e o controle atual.
+cada passagem Maa reconhece novamente a composição CLEAR e o controle atual.
+Desde a autorização de 31/10/2026, estrelas opcionais incompletas não bloqueiam
+o retorno de uma vitória no fluxo `path campaign`.
 O retry permanece acessível após avisos e na retomada de uma vitória pendente.
 Recompensas mantêm os limites próprios; nenhum desses fechamentos retorna ao
 Start. Durações, estabilidade e método de entrada foram preservados. Essa
@@ -219,7 +378,7 @@ avanço, podia ler `LEAR`/`YLEAR` e bloquear os retries. Texto exato e confianç
 
 O usuário autorizou avançar a campanha até não conseguir progredir, com no máximo três entradas por fase; depois disso, pesquisar e testar outros tipos de quests dos caminhos e produzir um HTML enxuto. O limite não é autorização para repetir uma batalha de resultado desconhecido. Não há recargas ou compras automáticas.
 
-Use o perfil explícito `--config config/campaign.json`. O catálogo `data/stages/campaign.json` deriva do pacote e inclui 414 fases de episódios 2 a 6. Isso não comprova que todas estejam acessíveis na demo. Custo `null` significa desconhecido; a compilação recusa esses trechos até haver calibração, em vez de supor entrada gratuita.
+Use o perfil explícito `--config config/campaign.json`. O catálogo `data/stages/campaign.json` deriva do pacote e inclui 422 fases de episódios 2 a 6. Isso não comprova que todas estejam acessíveis na demo. Custo `null` significa desconhecido; a compilação recusa esses trechos até haver calibração, em vez de supor entrada gratuita.
 
 ```powershell
 driver-epic-seven --config config/campaign.json chapter --from-stage ake001 --max-energy 84 --timeout 900
@@ -258,8 +417,10 @@ Na Wave 3 (29/10/2026), capítulo e campanha do prólogo passam pelo contrato
 finito e checkpoint comuns de [architecture.md](architecture.md#wave3-planos).
 Uma retomada conserva objetivo, orçamento e prazo, omite fases retornadas e
 conclui entradas pendentes sem Start. Histórias, confirmação específica, avisos,
-Auto e resultado continuam em grafos Maa. Vitória sem prova de 3★ mantém o
-checkpoint de revisão. Derrota só admite nova tentativa sob a política explícita
+Auto e resultado continuam em grafos Maa. Na implementação original desta wave,
+vitória sem prova de 3★ mantinha o checkpoint de revisão. A regra de 31/10/2026
+permite seguir após vitória parcial no prólogo, preservando o resultado das
+estrelas e sem replay. Derrota só admite nova tentativa sob a política explícita
 existente; timeout e captura falha permanecem incertos. Esta wave é verificada
 offline durante manutenção e não registra nova progressão da conta.
 
@@ -436,7 +597,7 @@ Acompanhamento: [ALE-190](https://linear.app/akxl/issue/ALE-190), parte da [ALE-
 
 ### Fontes e diagnóstico
 
-[star-requirements.json](../data/stages/star-requirements.json) cruza `level_enter_adventure.mission1..3`, `mission_data` e textos para as 414 entradas de `campaign.json`. São 1146 ocorrências de condições, com parâmetros brutos preservados; 30 entradas sem as três referências permanecem parciais. A inclusão do episódio 6 acrescenta condições de classe e exploração; isso não prova equipe elegível nem execução do modo.
+[star-requirements.json](../data/stages/star-requirements.json) cruza `level_enter_adventure.mission1..3`, `mission_data` e textos para as 422 entradas de `campaign.json`. São 1170 ocorrências de condições, com parâmetros brutos preservados; 30 entradas sem as três referências permanecem parciais. A inclusão do episódio 6 acrescenta condições de classe e exploração; isso não prova equipe elegível nem execução do modo.
 
 - `lfs001`: conclusão + sem Continue + ao menos um herói Fire (`attribute=fire,count=1`).
 - `dis003`: conclusão + sem Continue + ao menos três heróis sobreviventes (`aliverole=all,count=3`). A vitória de duas estrelas é evidência histórica; investigar ou repetir essa fase não faz parte do objetivo atual.
@@ -451,7 +612,7 @@ Conferência pontual em 26/10/2026: a seleção de apoiador de `epi009` (Hidden 
 3. **Ler o elenco real e propor a menor troca de equipe.** Cruzar IDs e `ch_attribute`/`role` de `character_player` com instâncias possuídas e observadas. Preferir preservar o núcleo capaz de vencer e trocar poucos slots; satisfazer elemento/classe não prova força ou sobrevivência. Sem candidato conhecido, retornar o requisito faltante; não invocar, melhorar ou equipar automaticamente.
 4. **Preparar e conferir antes do início.** Registrar equipe anterior, aplicar apenas alterações autorizadas, reler slots/elementos/classes, custo e fase e então admitir uma entrada. Calibrar a seleção de equipe e o apoiador separadamente. O atual `check_start` verifica identidade/custo/repetição, mas ainda não valida esse plano de estrelas.
 5. **Conferir cada objetivo depois da batalha.** Ler estrelas e condições no resultado e/ou preparação/mapa após o retorno. Três estrelas exigem prova vinculada à mesma fase; CLEAR isolado não basta. Registrar o resultado por objetivo e só marcar a fase como concluída no percurso de 3★ quando as três estrelas estiverem comprovadas.
-6. **Tratar desvio antes de continuar.** Se uma próxima fase terminar com menos de 3★ ou resultado desconhecido, pausar o encadeamento e registrar a causa observada para decisão; não transformar vitória em sucesso de 3★ nem iniciar replay automático. Manter o diário de entradas, custo e limites. Não criar fila de reparo das fases anteriores. O orçamento da futura execução é de progressão planejada, sem reparo retroativo incluído.
+6. **Tratar desvio antes de continuar.** Registrar a causa observada se uma fase terminar com menos de 3★; não transformar vitória em sucesso de 3★ nem iniciar replay automático. Autorização de 31/10/2026: vitória com duas estrelas por morte permite avançar à próxima fase, sem reparo. Resultado de vitória/derrota desconhecido continua exigindo revisão, sem repetir Start. Manter o diário de entradas, custo e limites; não criar fila de reparo das fases anteriores.
 
 Implementar como extensão da `ui_tree`, do catálogo e das primitivas/pipelines Maa existentes, com eventos de equipe e objetivos; sem segundo loop de captura ou modelo paralelo de progresso. Começar por testes offline de interpretação e seleção de candidatos, positivos/negativos de leitura e preparação sem combate; validar uma unidade ao vivo somente dentro do plano autorizado. Esta sessão fez análise offline e documentação, sem alterar equipe ou iniciar batalhas.
 
@@ -500,7 +661,27 @@ desconhecida no diário; o êxito posterior não reclassifica sua causa.
 
 `data/stages/adventurer-prequel.json` resolve 30 identidades estáticas por `mission_data` e preserva títulos/localizações e proveniência. Por exemplo, tar007 usa a localização A Rift in the Frustration e título One Last Strike; tar008 usa Fate's Crossroads e Failed to Protect. A preparação precisa provar os dois textos e o custo atual. Histórias gratuitas conhecidas têm um ramo próprio: capítulo, descrição atual, linha e View Story antes de uma entrada; Skip/hold e confirmação compartilhados, recibo identificado e retorno ao mapa. Custo desconhecido continua recusado.
 
-`path campaign` compila um trecho contíguo do mesmo capítulo com orçamento total, um Start máximo por fase, Auto somente diante de HUD positivamente desligado e resultado 3★ antes do retorno. `path finish-stage` retoma somente uma entrada pendente, sem nós de início. A trava persistente recusa repetir uma fase registrada por um pedido novo. Não existe reparo retroativo ou replay automático.
+`path campaign` compila um trecho contíguo do mesmo capítulo com orçamento total, um Start máximo por fase, Auto somente diante de HUD positivamente desligado e composição CLEAR verificada antes do retorno. `path finish-stage` retoma somente uma entrada pendente, sem nós de início. A trava persistente recusa repetir uma fase registrada por um pedido novo. Não existe reparo retroativo ou replay automático.
+
+Em 31/10/2026, `lae005` venceu sua primeira entrada com duas estrelas por morte
+e o fechamento ficou bloqueado pela exigência de 3★. `prequel_clear` agora
+consome a composição `campaign_result/current_clear` da árvore, que exige as
+âncoras nativas Initial Clear, CLEAR e continuar. A contagem de estrelas é
+independente: sem três estrelas e os três checks, `earned_stars` permanece
+desconhecido; o driver não inventa uma contagem menor nem registra 3★.
+Os testes repetem o frame parcial real, os resultados anteriores, escurecimento,
+âncoras cobertas e preparação negativa. Foram 76 testes focados em 31,64 s,
+com `validate` válido (282 nós). Fontes, mapeamento e XML/log estão em
+`var/admin-episode5-20261031aw/partial-clear-*`.
+A reconexão AX encontrou navegação manual em outros painéis, e o usuário pediu
+pausa antes da validação ao vivo do ajuste. AW e AX foram desconectados
+normalmente; o diário pendente de `lae005` foi preservado sem fabricar retorno
+ou enviar novo Start. A validação de retorno e próxima fase no jogo fica pendente
+de nova autorização; o checkpoint antigo não terá seu prazo ampliado.
+No fechamento offline, após a pausa e a desconexão AX, a suíte completa passou:
+815 testes, zero skips, em 744,39 s. Versão, hashes, comando e duração do processo
+(745,95 s) estão em `var/admin-episode5-20261031ax/full-suite-summary.json`,
+com XML/log adjacentes. Esse replay não comprova aceitação de clique no jogo.
 
 Na Wave 1, o grafo de retomada passou a emitir diretamente apenas os ramos de conclusão, sem gerar seleção, preparação ou Start. O compositor verifica suas arestas fechadas; uma recusa Maa (`job_id=0`) falha imediatamente, sem consultar um job inexistente até o timeout. A entrada sem ação pode aguardar um combate já em Auto dentro do prazo finito do pedido. A preparação de ijp007 observada apenas com Genesis Ras convidado não iniciou; acrescentar um herói possuído resolveu aquele caso. Isso não estabelece uma exigência de quatro integrantes. O retry autorizado foi reconciliado individualmente no diário com prova da equipe corrigida, energia e identidade da janela; não é recuperação automática de Start incerto.
 
@@ -519,3 +700,23 @@ Timeout ou captura falha preservam a reserva, sem novo Start. O planejador geral
 Na calibracao de win002 (episodio 3, capitulo 9), o Ready/Select Supporter atual mostra `Path of a Fierce Fight`, enquanto a fonte estatica declara `The Path of a Fierce Fight`. Apenas essa entrada do catalogo usa o rotulo observado, com `location_source_text` e proveniencia preservados. O comparador permanece exato; nao retirar artigos globalmente nem preencher campos a partir do titulo solicitado.
 
 A leitura de episódio usa o número atual com as âncoras do mapa, sem lista fixa de episódios no compilador. A fase pedida ainda precisa existir no catálogo e coincidir em episódio, capítulo, título/descrição e custo; ler outro episódio não autoriza a fase solicitada. O pacote acrescentou 32 fases principais de `adventure_ma` (referências `ep6_ch*`), quatro capítulos, com 12 histórias/18 combates/2 explorações tile. As 17 subentradas tile não foram convertidas em fases principais, e as duas entradas tile mantêm energia null. Os controles e percursos do episódio 6 ainda precisam de observação própria ao chegar.
+
+
+### Repetição pelo resultado atual
+
+`repeat-stage --count N --max-resource B --timeout S` compila um único grafo Maa
+finito (1–100 novos inícios, até 1800 s), iniciado exclusivamente no rodapé
+`battle_exit`. Cada `Try again` tem identidade própria e `max_hit=1`, custo
+atual igual ao previsto e saldo suficiente; a soma máxima é `N × custo <= B`.
+A moeda permanece desconhecida no leitor: `B` limita unidades do recurso
+exibido, sem presumir energia ou autorizar recarga. A seleção é manual no jogo;
+o rodapé não identifica fase, modalidade, vitória ou crédito de missão.
+
+O leitor aceita a variante com apenas Try again quando **ambos** os campos da
+linha Next Difficulty estão ausentes. Uma linha superior parcialmente lida,
+modal ou derrota rejeita a composição. Cada início exige depois HUD de combate
+sem rodapé antes de aguardar o próximo resultado. O resultado final permanece
+aberto. Tratamentos copiados do pipeline de conclusão não incluem retorno ao
+mapa, Next Difficulty ou confirmação genérica de recompensa. O diário reserva
+cada envio e registra entrada/rodapé separadamente; um envio incerto bloqueia
+outro lote. A rotina permanece experimental, com calibração ao vivo pendente.

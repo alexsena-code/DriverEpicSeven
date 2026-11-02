@@ -306,3 +306,25 @@ foi exercitada ao vivo em Spirit Altar; remoção/vazio e substituição conserv
 positivos históricos delimitados. Um ajuste após derrota usa somente capacidades
 já disponíveis e uma nova tentativa explicitamente limitada. Mapeamento das 33
 famílias continua sem promoção automática a executores.
+
+
+#### Theater: sequência candidata calibrada parcialmente
+
+Watch do ato escolhido → confirmação específica de ingresso, se presente →
+toques limitados na área de diálogo enquanto a composição de história estiver
+comprovada → diante do HUD, suspender toques e conferir Auto (ativar só com
+positivo de desligado) → retomar nos diálogos intercalados → CLEAR → Theater
+com próximo ato selecionado. O ensaio de 2026-11-02 concluiu um ato com custo
+observado de um ingresso e mediu os toques; Auto On/Off e execução contínua do
+ciclo permanecem pendentes. Não usar `battle_rewards` como único destino após
+CLEAR neste modo. [Evidência e limites](validation.md#moonlight-theater-ensaio-manual-de-watch-e-avanco--2026-11-02).
+
+
+O comando `theater` e `moonlight_theater.bat` materializam a sequência candidata
+em um grafo Maa finito. `--acts`, `--max-tickets`, `--timeout` e
+`--taps-per-act` delimitam a execução. `--finish-current` exige um único ato
+pendente, `--acts 1 --max-tickets 0` e a mesma janela; seu grafo não contém
+Watch nem confirmação consumidora. Validação atual: um ingresso no ato 6 de
+Fallen Land e continuação até o ato 7 selecionado, com pausas de calibração.
+A execução multiato ininterrupta e o positivo de Auto no Theater permanecem
+pendentes; o registry conserva `draft` e os limites estão no README.

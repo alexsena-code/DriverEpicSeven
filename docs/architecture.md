@@ -670,7 +670,7 @@ Os contratos genéricos de combate/história/próxima fase em `battle.draft.json
 
 `prequel_start` exige localização, título de história, energia, saldo, composição/evidência atual de integrantes e prova recente de uma linha disponível no mesmo PID/HWND/classe/tamanho. CP é opcional. A prova transitória nasce na fronteira de ação do Ready reconhecido, vence em 30 segundos e não transforma conteúdo estático em acesso. Títulos do prólogo são resolvidos por `mission_data.area_enter_id`, pois a legenda antiga em `level_enter_adventure` pode diferir do título atual.
 
-O diário indicado por `config.path_ledger` reserva antes do envio. O perfil único usa `var/current-account/path-actions.json`, com o histórico atual migrado e os anteriores preservados em `var/`. Outra conta exige um diário próprio; o nome do executável não identifica conta nem apaga reservas. Outro pedido não pode repetir um início já registrado, mesmo após retorno; replay exige um plano separado. `path finish-stage` só aceita reserva pendente e compila diretamente o grafo sem Start/Row/Ready/Back. Vitória e retorno são evidências diferentes. O resultado 3★ exige a exibição de três estrelas e os três checks atuais; resultado inferior ou ilegível não admite avanço.
+O diário indicado por `config.path_ledger` reserva antes do envio. O perfil único usa `var/current-account/path-actions.json`, com o histórico atual migrado e os anteriores preservados em `var/`. Outra conta exige um diário próprio; o nome do executável não identifica conta nem apaga reservas. Outro pedido não pode repetir um início já registrado, mesmo após retorno; replay exige um plano separado. `path finish-stage` só aceita reserva pendente e compila diretamente o grafo sem Start/Row/Ready/Back. Vitória e retorno são evidências diferentes. O resultado 3★ exige a exibição de três estrelas e os três checks atuais. No fluxo `path campaign`, a composição atual CLEAR, Initial Clear e continuar prova vitória independentemente de estrelas opcionais incompletas; uma vitória parcial pode retornar e seguir conforme a autorização de 31/10/2026. A ausência da prova de 3★ mantém `earned_stars` desconhecido, sem inferir uma contagem menor. Resultado sem composição/controle atuais não autoriza entrada, retorno nem novo Start.
 
 História tem duas variantes calibradas: Skip comum e cabeçalho cinza com gesto de segurar 1500 ms. O par nativo Skip + histórico identifica a variante; o campo `skip_gesture` tem proveniência na árvore. Não usar o nome de quem fala para escolher o leitor. A confirmação continua exigindo pergunta e botão atuais. Avisos informativos têm lista limitada de painéis compostos; Abyss exige título, mensagem de desbloqueio específica e Tap to close simultaneamente.
 
@@ -698,3 +698,88 @@ Composições específicas comprovadas podem declarar `supersedes` sobre seu she
 Para Auto ligado, a prova completa dos quatro checks permanece em `auto_hud_on`. O recorte antigo de um único check está em `auto_single_check_hint`, sem alvo nem valor Auto: as capturas antigas 76/267 agora ficam desconhecidas, pois o sinal parcial também aceitava negativos com um check removido. As capturas 27/297 preservam a prova completa. Isso é um limite explícito de cobertura, sem alternância automática ou branch por cliente.
 
 
+
+
+### Theater: observação e execução finitas
+
+`operational_theater` adapta o painel principal, a confirmação específica de
+Theater Ticket e as composições de diálogo à `ui_tree`. O conteúdo atual
+(título, ato, saldo e linhas de conclusão) tem proveniência de OCR; season e
+stage_id continuam desconhecidos. O alvo de diálogo é um ponto calibrado
+associado às âncoras atuais, sem coordenada CSB tratada como seletor global.
+As ancestralidades de diálogo e popup ainda não resolvidas ficam sem layout
+reference; o painel principal referencia `story_theater_main.csb`.
+
+Nos nós `theater_*`, o mesmo callback `ScreenTarget` tenta primeiro somente as
+âncoras nativas de diálogo, com candidatos Maa filtrados e verificação de pixels.
+Um positivo gera a árvore comum sem OCR de fala; as falas não são necessárias
+para escolher o toque. Falha desse filtro volta ao leitor completo da mesma
+imagem, antes de qualquer entrada. Não há segundo capturador, loop Python de
+história ou cache entre capturas. `text_scope=theater_dialogue_anchors_only`
+delimita a ausência de conteúdo textual. Demais pedidos mantêm o caminho
+existente. Variantes com máscara verde excluem fundo animado e preservam
+MAE 18; não alteram limiares ou gestos globais.
+
+`theater.py` compila o fragmento Maa `pipeline/theater.json` por ato, com
+Watch/Confirm unitários, toques finitos, Auto desligado → verificar ligado e
+CLEAR → painel principal. A confirmação consumidora reserva um ingresso no
+diário antes do envio e conserva o contexto de Watch/janela/saldo. A conclusão
+exige o ato anterior na lista de concluídos, próximo ato selecionado, mesma
+série e saldo reduzido em um. Cada nova unidade está encadeada após essa prova.
+
+A continuação usa o contexto persistido na reserva e a mesma janela. Seu grafo
+remove Watch e Confirm, pode reconciliar diretamente um resultado já observado
+e não contém consumidor. Não recompila inícios de atos subsequentes. O lançador
+reconhece pendência e oferece esse escopo por padrão, com zero novos ingressos;
+janela trocada ou contexto incompleto bloqueiam. O prazo e os toques da
+continuação são novamente finitos; a reserva original nunca é repetida.
+
+
+### Theater: forma e conteúdo como alternativa às cores do cenário
+
+O caminho `theater_*` mantém as composições históricas não mascaradas
+normal/black como leitura rápida. As trincas mascaradas plain/forest deixaram
+de autorizar diálogo sozinhas: são fontes de glifos para candidatos de forma.
+A alternativa genérica consulta os nós nativos `Theater.Template.*Shape`,
+com candidatos filtrados (método 3, threshold 0,94), posição/dimensão calibradas,
+glifos neutros visíveis e contraste com os pixels externos ao glifo. Não usa
+um candidato bruto ausente de `filtered_results` nem promove um antigo match
+reprovado por MAE; registra correspondências de composição próprias.
+
+A forma, sozinha, também não autoriza toque. Play/History/Pause exigem OCR atual
+na região do diálogo, confiança >=0,90 e tinta branca visível na caixa da fala.
+Isso inclui narração sem nome de personagem. A abertura do ato, que pode omitir
+Pause, exige Play/History, título `Act N` e o aviso explícito de toque para pular;
+o número observado deve conferir com o ato pendente. O ponto de avanço continua
+não consumidor e exige ingresso/contexto já confirmados e mesma janela.
+
+As análises usam a mesma imagem/callback Maa e alimentam `ui_tree`; os escopos
+`theater_dialogue_roi` e `theater_intro_roi` preservam as linhas OCR parciais,
+sem reexecutar OCR de tela inteira nem alegar leitura de outras regiões. Não há
+lista de personagens ou cenários. Os limiares globais e os consumidores Watch,
+Confirm e Auto não foram relaxados. Menu, combate, confirmação, tinta apagada
+e controles cobertos continuam negativos nas fixtures de calibração.
+
+
+### Acompanhamento do Theater no terminal
+
+`tools/theater_terminal.py` é um consumidor somente de leitura de
+`observer.json`, `theater_plan.json` e do resultado da chamada existente. O
+lançador isola cada invocação em `runs_dir/terminal_<uuid>/`, persistindo um
+snapshot privado do perfil efetivo com apenas `runs_dir` alterado; recursos,
+janela, métodos, diários, STOP e parâmetros de execução permanecem iguais.
+Assim, o acompanhamento não adivinha a execução pela pasta global mais recente.
+
+Um thread de apresentação consulta os arquivos a cada 500 ms. Mudanças de etapa
+são mostradas imediatamente; os demais resumos têm intervalo de 5 s. Cursor de
+eventos impede duplicar tentativas; perda de histórico é explicitada, e o total
+final é obtido do resultado verificado. `operation_dispatch` é descrito como
+tentativa/solicitação, pois precede o envio nativo. Estado e Auto vêm da árvore
+canônica, preservando desconhecidos. A idade exibida refere-se à disponibilização
+da análise, sem prometer timestamp da captura, atualização contínua ou FPS.
+
+Leituras parciais ou arquivos temporariamente indisponíveis não interferem no
+driver. Saída normal, erro e Ctrl+C encerram o thread de apresentação. O CLI e o
+JSONL fora do lançador não ganham mensagens extras nem outro capturador ou
+interpretador de fluxo. Logs de texto ficam no `progresso.log` privado de cada
+invocação. O acompanhamento não modifica decisões, orçamento ou recuperação.

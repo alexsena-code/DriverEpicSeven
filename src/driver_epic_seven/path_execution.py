@@ -13,6 +13,12 @@ def current_view(observation):
 
 def path_target(observation, params, frame, prepared=None):
     """A box is returned only for a mapped current target in this Maa frame."""
+    if str(params.get('kind', '')).startswith('repeat_'):
+        from .repeat_stage import target
+        return target(observation, params)
+    if str(params.get('kind', '')).startswith('theater_'):
+        from .theater import target
+        return target(observation, params, prepared)
     tree = observation['ui_tree']
     current = current_view(observation)
     if str(params.get('kind','')).startswith('formation_'):

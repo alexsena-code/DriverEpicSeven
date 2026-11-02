@@ -18,6 +18,16 @@ def parser():
     commands.add_parser("capabilities", help="Consultar capacidades e escopo nas fontes existentes; sem conectar")
     commands.add_parser("list", help="Listar primitivas e rotinas disponíveis")
     commands.add_parser("observe", help="Capturar e reconhecer a janela, sem enviar entrada")
+    repeat = commands.add_parser('repeat-stage', help='Experimental: repetir a fase escolhida pelo Try again atual')
+    repeat.add_argument('--count', type=int, required=True, help='Novos inícios; não inclui a batalha manual inicial')
+    repeat.add_argument('--max-resource', type=int, required=True, help='Teto do recurso exibido no botão; sem recarga')
+    repeat.add_argument('--timeout', type=int, default=1800)
+    theater = commands.add_parser('theater', help='Watch e avanço limitado do Moonlight Theater')
+    theater.add_argument('--acts', type=int, required=True)
+    theater.add_argument('--max-tickets', type=int, required=True)
+    theater.add_argument('--timeout', type=int, default=1800)
+    theater.add_argument('--taps-per-act', type=int, default=600)
+    theater.add_argument('--finish-current', action='store_true', help='Concluir um ato pendente, com zero Watch/Confirm/ingressos novos')
     auto = commands.add_parser('battle-auto', help='Ativar Auto somente se o HUD comprovar desligado; nunca inicia batalha')
     auto.add_argument('desired', choices=['on'])
     ui_query = commands.add_parser('ui-query', help='Consultar controle de painel operacional em árvore salva; somente leitura')
@@ -335,6 +345,8 @@ def main(argv=None):
         result = execute(args)
         if args.command != "agent":
             print(json.dumps(result, ensure_ascii=False, indent=2))
+        if args.command in ('repeat-stage','theater') and result.get('completed') is not True:
+            return 1
         return 0 if result.get("valid", True) else 1
     except (RuntimeError, ValueError, OSError, ImportError) as exc:
         from .contracts import ApplicationError

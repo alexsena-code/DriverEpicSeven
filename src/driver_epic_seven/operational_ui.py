@@ -18,6 +18,9 @@ def operational_nodes(observation, parent, add):
     result_view=battle_end_nodes(observation,parent,add)
     if result_view:
         return result_view
+    from .operational_theater import theater_nodes
+    theater_view=theater_nodes(observation,parent,add)
+    if theater_view:return theater_view
     from .operational_stove import stove_nodes
     stove_view = stove_nodes(observation, parent, add)
     if stove_view:
@@ -228,7 +231,7 @@ def operational_nodes(observation, parent, add):
         # The current chapter label can include its left navigation arrow in
         # one OCR box (x41). Preserve the text; the arrow is not a stage ID.
         chapter_area = (35, 75, 245, 55)
-        chapter = one(r'<?\s*Chapter\s*\d+\s*[.].+', chapter_area)
+        chapter = one(r'<?\s*Chapter\s*\d+S?\s*[.].+', chapter_area)
         chapter_rows = find(r'.+', chapter_area)
         if not all((episode, view_story, story_kind, map_content, chapter)):
             return None
@@ -242,6 +245,7 @@ def operational_nodes(observation, parent, add):
         detail(p, episode_label=value(episode),
                chapter_label=joined(chapter_rows, 'aligned_chapter_header_lines'),
                chapter_number=value(chapter, lambda s: int(re.search(r'Chapter\s*(\d+)', s, re.I)[1])),
+               chapter_code=value(chapter, lambda s: re.search(r'Chapter\s*(\d+S?)\s*[.]', s, re.I)[1].upper()),
                selected_kind_label=value(story_kind),
                selected_description=joined(find(r'.+', (835, 125, 360, 85)),
                                            'aligned_story_description_lines'),
@@ -358,9 +362,7 @@ def operational_nodes(observation, parent, add):
         if search:
             return None
         location = reader.label((870, 65, 330, 45))
-        title_rows = [r for r in find(r'.+', (870, 100, 330, 55))
-                      if any(char.isalpha() for char in r[1]['text'])]
-        title_rows = [row for row in title_rows if row[1]['text'].strip()!='No Record']
+        title_rows = reader.preparation_title_rows()
         title_rows.sort(key=lambda row: row[1]['box'][1])
         title_ambiguous = (len(title_rows) > 3 or any(
             a[1]['box'][1]+a[1]['box'][3] > b[1]['box'][1]+3

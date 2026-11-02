@@ -12,7 +12,7 @@ from .observed_ui import screen_state, operation_view, quest_view, formation_vie
 
 
 LIVE_COMMANDS = {"observe", "read-screen", "session", "quest", "swipe", "hold", "skill-double-tap",
-                 "key", "click", "wait-state", "stage", "run", "finish-battle", "chapter", "battle-auto", "path", "capabilities"}
+                 "key", "click", "wait-state", "stage", "run", "finish-battle", "chapter", "battle-auto", "path", "theater", "capabilities"}
 ERRORS = (RuntimeError, ValueError, OSError, ImportError)
 
 
