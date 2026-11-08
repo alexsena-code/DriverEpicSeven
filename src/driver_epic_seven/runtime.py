@@ -536,7 +536,9 @@ class Runtime:
     def finish_battle(self, timeout=240):
         if not 1 <= timeout <= 600:
             raise ValueError("Limite de batalha deve estar entre 1 e 600 segundos.")
-        before=self.observe("battle_finish_before")
+        # Result overlays can require OCR to establish the CLEAR composition.
+        # Use the same read-only evidence as the guarded finish pipeline.
+        before=self.observe("battle_finish_before",read_text=True)
         if screen_state(before) not in ("story","story_intro","story_confirmation","battle_running","stage_clear","battle_rewards","story_reward","side_story_alert","friend_request","received_reward","tap_to_close_notice","rank_up","connection_unlocked","battle_failed"):
             raise ValueError("Conclusão de batalha exige história, combate ou resultado reconhecido.")
         self.guard(input_active=True)
@@ -579,13 +581,20 @@ class Runtime:
                 current={name.removeprefix('Chapter.Current.'):node for name,node in graph.items()
                          if name.startswith('Chapter.Current.')}
                 annotate_campaign_result(current,*pending,require_three_stars=True)
-                graph['Chapter.Current.Finish.CriteriaUnverified']=current['Finish.CriteriaUnverified']
-                for node in graph.values():
+                for name in ('Finish.ResultSettle','Finish.CriteriaUnverified'):
+                    node=deepcopy(current[name])
+                    if 'next' in node:
+                        node['next']=['Chapter.Current.'+n for n in node['next']]
+                    graph['Chapter.Current.'+name]=node
+                clear='Chapter.Current.Finish.Clear'
+                gate='Chapter.Current.Finish.ResultSettle'
+                checkpoint='Chapter.Current.Finish.CriteriaUnverified'
+                for name,node in graph.items():
                     following=node.get('next',[])
-                    clear='Chapter.Current.Finish.Clear'
-                    checkpoint='Chapter.Current.Finish.CriteriaUnverified'
-                    if clear in following and checkpoint not in following:
-                        following.insert(following.index(clear),checkpoint)
+                    if name != gate and clear in following:
+                        following.insert(following.index(clear),gate)
+                        if checkpoint not in following:
+                            following.append(checkpoint)
             else:raise ValueError("Não há tentativa anterior vinculada para concluir antes do trecho.")
         self.guard(input_active=True)
         self.evidence.write("chapter_plan",{**plan,"graph":graph})

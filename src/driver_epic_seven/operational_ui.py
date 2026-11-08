@@ -14,6 +14,10 @@ from .profile import supports_reading
 def operational_nodes(observation, parent, add):
     if observation.get('window', {}).get('client_size', [1212, 682]) != [1212, 682]:
         return None
+    from .operational_energy import energy_nodes
+    energy_view = energy_nodes(observation, parent, add)
+    if energy_view:
+        return energy_view
     from .operational_battle_end import battle_end_nodes
     result_view=battle_end_nodes(observation,parent,add)
     if result_view:

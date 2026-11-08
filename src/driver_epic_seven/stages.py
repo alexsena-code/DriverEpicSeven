@@ -69,6 +69,11 @@ class StageInspector:
     @classmethod
     def _story_title(cls,rows,expected):
         if cls._exact(rows,expected):return "exact"
+        # OCR can join the title to the adjacent record badge. Compare the
+        # complete observed line, without deleting or guessing any words.
+        if any(row['score']>=.95 and 875<=row['box'][0]<1000 and 105<=row['box'][1]<150
+               and normalize(row['text'])==normalize(expected+' No Record') for row in rows):
+            return 'exact_with_no_record_badge'
         lines=sorted((row for row in rows if row["box"][1]>=99 and row["score"]>=.90
             and normalize(row["text"])!="norecord"
             and not re.fullmatch(r"\d{1,2}:\d{2}(?:[.]\d+)?",row["text"].strip())),key=lambda row:row["box"][1])

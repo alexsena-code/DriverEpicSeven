@@ -1,4 +1,11 @@
 {
+  "Template.EnergyLeafSelected": {
+    "recognition": "TemplateMatch",
+    "template": "energy_leaf_selected.png",
+    "roi": [355, 287, 230, 105],
+    "action": "DoNothing",
+    "threshold": 0.99
+  },
   "Template.OrbisButton": {
     "recognition": "TemplateMatch",
     "template": "orbis_button.png",
@@ -108,6 +115,13 @@
       170,
       65
     ],
+    "action": "DoNothing",
+    "order_by": "Score"
+  },
+  "Template.StartQuestCurrent": {
+    "recognition": "TemplateMatch",
+    "template": "start_quest_current.png",
+    "roi": [1020, 596, 170, 65],
     "action": "DoNothing",
     "order_by": "Score"
   },

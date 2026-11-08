@@ -27,9 +27,20 @@ def annotate_campaign_result(nodes, scope, key=None, *, require_three_stars=Fals
             'custom_recognition_param':{'state':'stage_clear','read_text':True,'three_star_checkpoint':True,
                 'execution':{'ledger':'campaign','scope':scope,'key':key,'phase':'result_verified','status':'victory'}},
             'action':'DoNothing','max_hit':1}
-        for node in nodes.values():
-            if 'Finish.Clear' in node.get('next',[]) and 'Finish.CriteriaUnverified' not in node['next']:
-                node['next'].insert(node['next'].index('Finish.Clear'),'Finish.CriteriaUnverified')
+        # The result animation can show CLEAR before all objective checks are
+        # drawn. Re-read after a bounded settling interval before deciding that
+        # proof is missing; the gate itself never clicks or records a result.
+        nodes['Finish.ResultSettle']={'recognition':'Custom','custom_recognition':'ScreenTarget',
+            'custom_recognition_param':{'state':'stage_clear','read_text':True},
+            'action':'DoNothing','max_hit':1,'post_delay':2000,
+            'next':['Finish.Clear','Finish.CriteriaUnverified']}
+        for name,node in nodes.items():
+            if name == 'Finish.ResultSettle':
+                continue
+            if 'Finish.Clear' in node.get('next',[]):
+                node['next'].insert(node['next'].index('Finish.Clear'),'Finish.ResultSettle')
+                if 'Finish.CriteriaUnverified' not in node['next']:
+                    node['next'].append('Finish.CriteriaUnverified')
 
 
 def wrap_graph(graph):
@@ -228,7 +239,10 @@ class OperationCycle:
         proof['target']={k:deepcopy(path[k]) for k in ('kind','stage_id','task_id','group_id','mission_id','hero_name') if k in path}
         if str(path.get('kind','')).startswith('formation_'):
             proof['target'].update({k:deepcopy(path[k]) for k in ('source','destination','member_name') if k in path})
-        if not path:proof['target']={k:params[k] for k in ('stage_id','target','state') if k in params}
+        if not path:
+            proof['target']={k:params[k] for k in ('stage_id','target','state') if k in params}
+            if params.get('execution',{}).get('ledger')=='campaign':
+                proof['target'].setdefault('stage_id',params['execution']['scope'])
         if node in r.path_group_actions:
             if r.path_group_action_count>=r.path_group_action_limit:
                 raise RuntimeError('Limite de ações do grupo atingido; revisar antes de continuar.')

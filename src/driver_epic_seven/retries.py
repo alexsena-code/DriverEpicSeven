@@ -17,6 +17,19 @@ def check_retry(entries, identity, policy, cost, window, *, limit=3, now=None):
     new_plan = policy.get('kind') == 'defeat_new_plan'
     if new_plan:
         stage_id=proof.get('target',{}).get('stage_id')
+        if not stage_id:
+            # Older campaign result events carry the phase in their compiled
+            # Maa node, while the confirmed entry carries the stage target.
+            # Require both independent links; do not rewrite the ledger.
+            candidate=policy.get('stage_id')
+            events=previous.get('events',[])
+            entered=any(e.get('phase')=='effect_verified' for e in events)
+            reserved=[e for e in events if e.get('phase')=='reserved']
+            node=proof.get('node','')
+            if (candidate and node in (f'Chapter.{candidate}.Finish.Defeat',
+                                       f'Resume.{candidate}.Finish.Defeat')
+                    and entered and any(e.get('proof',{}).get('target',{}).get('stage_id')==candidate for e in reserved)):
+                stage_id=candidate
         if (same_plan or not old.get('plan_id') or policy.get('previous_plan_id')!=old['plan_id']
                 or not stage_id or policy.get('stage_id')!=stage_id):
             raise ValueError('Novo plano após derrota exige fase e plano anterior explicitamente vinculados.')

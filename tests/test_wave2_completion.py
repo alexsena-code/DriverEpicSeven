@@ -31,6 +31,18 @@ def test_three_star_checkpoint_records_victory_and_stops_before_next_stage():
     assert checkpoints and all('next' not in v and v['action']=='DoNothing' for _,v in checkpoints)
     assert all(v['custom_recognition_param']['execution']['status']=='victory' for _,v in checkpoints)
     assert all(v['custom_recognition_param']['require_three_stars'] is True for k,v in g.items() if k.endswith('Finish.Clear'))
+    gates=[(k,v) for k,v in g.items() if k.endswith('Finish.ResultSettle')]
+    assert len(gates)==len(checkpoints)
+    for name,gate in gates:
+        prefix=name.removesuffix('Finish.ResultSettle')
+        assert gate['action']=='DoNothing' and gate['max_hit']==1
+        assert gate['post_delay']==2000
+        assert gate['next']==[prefix+'Finish.Clear',prefix+'Finish.CriteriaUnverified']
+        assert 'execution' not in gate['custom_recognition_param']
+        for other,node in g.items():
+            following=node.get('next',[])
+            if other!=name and prefix+'Finish.Clear' in following:
+                assert following.index(name)<following.index(prefix+'Finish.Clear')
 
 
 def test_apply_preview_enters_guarded_non_action_entry(tmp_path,monkeypatch):

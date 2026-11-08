@@ -1,5 +1,60 @@
 # Validação
 
+### Campanha: estabilização de resultado e preparação — 03/11/2026
+
+Na conta atual, `for008` venceu em uma entrada, mas `Finish.CriteriaUnverified`
+interrompeu o capítulo enquanto o segundo check ainda aparecia na animação
+(`var/runs/20261103T154705Z_1c89e667/058_Chapter.for008.Finish.CriteriaUnverified`).
+O grafo agora aguarda 2 s numa etapa Maa sem entrada e relê o resultado: três
+estrelas comprovadas seguem para Clear; prova incompleta continua encerrando
+o trecho. `finish-battle` também lê OCR antes de conferir o estado. No percurso
+`var/runs/20261103T161246Z_55091484`, `for009` e `for010` venceram e o grafo
+retornou ao mapa, com avanço automático após o resultado. Isso não comprova
+todas as variantes ou tempos de animação.
+
+Uma nova variante local de `Start Quest`, recortada da preparação atual de
+`poe007` em `var/runs/20261103T173243Z_2704a4c0/observation.png`, usa candidatos
+nativos filtrados e comparação dos glifos claros, sem alterar limiares globais.
+Replay positivo de duas capturas, negativo escurecido e painel de apoiador;
+`poe007` foi identificado e iniciado uma vez ao vivo em
+`var/runs/20261103T175641Z_1310e932`, seguido de `poe008`. A validação não
+amplia coordenadas para outros controles.
+
+O vínculo de derrota em novos planos agora registra a fase na prova e aceita
+o formato anterior apenas quando reserva, entrada comprovada e nó Maa da mesma
+fase concordam. `win006` teve duas derrotas e vitória na terceira entrada em
+`var/runs/20261103T170409Z_ebb23114`; o histórico foi mantido. `poe010` teve
+três derrotas e foi abandonada; o usuário havia autorizado mudar de episódio.
+No episódio 4, `trd008` teve envio aceito sem transição comprovada e continuou
+na preparação: resultado desconhecido, sem outra entrada. A retomada incerta
+implementada está delimitada a `path campaign`, não ao `chapter` usado aqui.
+Captura FramePool 2, mouse/teclado 4, cliente 1212×682. Testes focados e
+`validate` registrados em `var/story-glyph-focused-20261103.xml` e
+`var/story-fix-focused-20261103.xml`.
+
+Fechamento anterior à correção adicional do título: `.venv/Scripts/python.exe -m
+pytest -q --junitxml=var/story-full-20261103.xml`, **920 passed, zero skips**, em
+709,38 s; processo 710,25 s, sem percurso live concorrente. Saída e resumo em
+`var/story-full-20261103.log` e `var/story-full-20261103-summary.json`.
+
+Na retomada seguinte, o OCR de `sks007` uniu o título completo a `No Record`.
+A leitura agora aceita apenas a linha completa exata com o indicador, posição
+e confiança restritas, mantendo a localização exata como prova independente.
+O replay positivo e negativos de título/posição/confiança passaram; o título e
+local foram confirmados ao vivo em `var/runs/20261103T200748Z_ca629550`, e
+`sks007` venceu com uma entrada. Testes focados: 61 passed em 13,72 s,
+`var/story-title-focused-20261103.xml`; `validate` válido, 307 nós.
+Após essa mudança funcional, a suíte completa foi repetida sem execução live:
+**922 passed, zero skips**, em 2648,54 s; processo 2649,34 s. Comando:
+`.venv/Scripts/python.exe -m pytest -q --junitxml=var/story-final-full-20261103.xml`.
+Saída e duração em `var/story-final-full-20261103.log` e
+`var/story-final-full-20261103-summary.json`.
+
+O episódio 5 abriu no capítulo 2. Após vitórias em `lae001..006`, o envio de
+`lae007` foi aceito, mas a captura seguinte permaneceu na preparação, sem
+prova de entrada ou resultado. Não houve segunda entrada. O episódio 4 tem
+`trd008` na mesma condição incerta; os históricos não foram apagados.
+
 ### Capítulo 2 ao vivo e falhas de fechamento — 29/10/2026
 
 Execuções `20261029T163456Z_d5250004` e `20261029T164550Z_b18bd1fc`:
@@ -1530,3 +1585,40 @@ concorrente. Os módulos/recursos monitorados permaneceram iguais durante a
 suíte. Comando, motivo, duração do processo e hashes estão em
 `var/theater-terminal-20261102/summary.json`. Depois da suíte, somente este
 registro documental foi acrescentado.
+# Leitura inicial da compra de energia — 04/11/2026
+
+O painel Purchase Energy foi observado em 1212×682 com folha e cristais
+selecionados separadamente, sem compra na seleção de cristais. As capturas
+`var/runs/20261104T181328Z_8933bce0/agent_000007.png` e `agent_000004.png`
+registram, respectivamente, as duas seleções. A compra manual de uma folha
+evidenciou energia 4→84; a seleção anterior de cristais não comprou recursos.
+
+O adaptador é apenas leitura: identifica o diálogo, valores e controles. O recorte
+`energy_leaf_selected.png` cobre folha, custo 1, ganho 80 e borda de seleção; sua
+detecção nativa e filtragem por pixels passaram em duas capturas positivas e
+negativas com cristais selecionados, imagem escurecida e borda coberta. Sem essa
+prova, moeda e custo permanecem desconhecidos. Nenhuma recarga automática foi
+habilitada; faltam orçamento persistente, reserva antes do envio e prova de
+resultado. As variantes de posição do rodapé foram observadas em sessões distintas.
+Os testes de leitura e reconhecimento nativo passaram (5 em 0,29 s); os testes
+anteriores de leitura e painéis vizinhos passaram (18 em 5,16 s). `validate`
+confirmou 308 nós. O processo ativo anterior à alteração não carregou a versão
+atualizada. A suíte completa foi executada no fechamento registrado abaixo.
+
+Na fase `sac005`, o título apareceu quebrado e a segunda linha teve OCR abaixo
+de 0,90; o nome do local também foi lido incorretamente em outra captura. A
+releitura limitada da linha continua exigindo localização exata, título inteiro
+e confiança mínima de 0,90. A área de releitura do local aceita a caixa inteira
+apenas dentro do campo de localização já calibrado. Dois quadros independentes,
+alterações negativas e a variante de caixa deslocada passaram nos testes nativos.
+Em jogo, a nova leitura permitiu uma única entrada em `sac005`, que terminou em
+vitória e retorno ao mapa. Os testes focados tiveram 21 aprovados e 19
+desselecionados em 52,61 s; `validate` permaneceu válido com 308 nós. Evidências
+privadas em `var/sac005-preparation*-20261104.*` e
+`var/runs/20261104T195614Z_31b81b5e/`.
+
+No fechamento de 08/11/2026, a suíte completa da versão funcional atual passou
+com **929 testes, sem skips**, em 692,65 s; o processo levou 694,81 s. Comando:
+`.venv/Scripts/python.exe -m pytest -q --junitxml=var/repository-update-20261108.xml`.
+O resumo e log locais estão em `var/repository-update-20261108-summary.json` e
+`var/repository-update-20261108.log`. `validate` confirmou 308 nós sem erros.

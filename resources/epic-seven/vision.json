@@ -4,6 +4,11 @@
     682
   ],
   "templates": {
+    "energy_leaf_selected": {
+      "node": "Template.EnergyLeafSelected",
+      "template": "energy_leaf_selected.png",
+      "max_pixel_mae": 5
+    },
     "orbis_button": {
       "node": "Template.OrbisButton",
       "template": "orbis_button.png",
@@ -73,7 +78,15 @@
         "start_quest_label.png",
         "start_quest_small.png"
       ],
-      "max_pixel_mae": 18
+      "max_pixel_mae": 18,
+      "alternatives": [
+        {
+          "node": "Template.StartQuestCurrent",
+          "template": "start_quest_current.png",
+          "max_pixel_mae": 14,
+          "glyph_min": 200
+        }
+      ]
     },
     "supporter_title": {
       "node": "Template.SupporterTitle",

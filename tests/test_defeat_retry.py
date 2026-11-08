@@ -16,6 +16,18 @@ def entries():
 def policy():return {'previous_attempt_id':'old','max_attempts':2,'max_total_cost':20,'deadline_epoch_seconds':time.time()+300}
 
 
+def test_legacy_campaign_defeat_requires_both_entry_and_compiled_phase_links():
+    rows=entries(); proof=rows[0]['events'][0]['proof']
+    proof.update(node='Chapter.lfs010.Finish.Defeat',target={'state':'battle_failed'})
+    rows[0]['events'].insert(0,{'phase':'reserved','proof':{'target':{'stage_id':'lfs010'}}})
+    rows[0]['events'].insert(1,{'phase':'effect_verified','proof':{'target':{'state':'story'}}})
+    p={**policy(),'kind':'defeat_new_plan','previous_plan_id':'plan','stage_id':'lfs010'}
+    identity=Identity('goal','new-plan','op','new')
+    assert check_retry(rows,identity,p,10,WINDOW)['stage_id']=='lfs010'
+    rows[0]['events'][0]['proof']['target']['stage_id']='lfs009'
+    with pytest.raises(ValueError):check_retry(rows,identity,p,10,WINDOW)
+
+
 def test_explicit_defeat_permit_is_new_finite_and_same_plan():
     result=check_retry(entries(),Identity('goal','plan','next-operation','new'),policy(),10,WINDOW)
     assert result['defeat_observation_id']=='defeat-image' and result['max_attempts']==2

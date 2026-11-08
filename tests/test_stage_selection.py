@@ -134,6 +134,45 @@ def test_ready_identity_and_cost_from_actual_capture(stage_engine):
     assert observed["already_cleared"] is False
 
 
+@pytest.mark.fixtures
+def test_current_ready_label_recognizes_stage_and_rejects_supporter(stage_engine):
+    current=ROOT/'var/runs/20261103T173243Z_2704a4c0/observation.png'
+    animated=ROOT/'var/runs/20261103T175641Z_1310e932/stage_before.png'
+    if not current.exists() or not animated.exists():
+        pytest.skip('Captura privada da variante atual indisponível.')
+    for frame in (current,animated):
+        result=stage_engine.inspect(frame,'poe007')
+        assert result['state']=='battle_ready'
+        assert result['stage']['identity_verified']
+        assert result['stage']['energy']['cost']==16
+    from driver_epic_seven.vision import pixel_error
+    template=np.asarray(Image.open(ROOT/'resources/epic-seven/image/start_quest_current.png').convert('RGB'))[:,:,::-1].copy()
+    dim=(np.asarray(Image.open(animated).convert('RGB'))[:,:,::-1]*.5).astype(np.uint8)
+    assert pixel_error(dim,template,[1031,610,110,28],glyph_min=200)>14
+    supporter=stage_engine.inspect('31_supporter_reread.png','pen001')
+    assert supporter['state']!='battle_ready'
+
+
+@pytest.mark.fixtures
+def test_episode5_title_is_read_without_adjacent_record_badge(stage_engine):
+    frame=ROOT/'var/runs/20261103T195417Z_b0e8fd86/stage_before.png'
+    if not frame.exists():
+        pytest.skip('Captura privada da fase indisponível.')
+    current=stage_engine.inspect(frame,'sks007')
+    assert current['state']=='supporter_selection'
+    assert current['stage']['identity_verified'], current['stage']['ocr']['title'][-1]
+    assert not stage_engine.inspect(frame,'sks008')['stage']['identity_verified']
+
+
+def test_joined_record_badge_requires_exact_title_position_and_confidence():
+    title='Reality, Ideals, and Struggle'
+    row={'text':title+' No Record','score':.97,'box':[877,112,323,28]}
+    assert StageInspector._story_title([row],title)=='exact_with_no_record_badge'
+    for change in ({'text':'Another story No Record'},{'score':.94},{'box':[600,112,323,28]},
+                   {'text':title+' No Record Extra'}):
+        assert StageInspector._story_title([{**row,**change}],title) is None
+
+
 def test_ready_energy_region_preserves_first_digit_of_two_digit_cost(stage_engine):
     observed=stage_engine.inspect("55_ready_energy_first_digit.png","dra007")["stage"]
     assert observed["identity_verified"]

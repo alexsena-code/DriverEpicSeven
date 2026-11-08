@@ -53,6 +53,46 @@ def augment_title(observation, params, recognize):
     if not observation.get('matches', {}).get('prequel_ready_header', {}).get('hit'):
         return
     expected = stage(identity)
+    # A wrapped title can have a strong first line and a weak continuation.
+    # Re-read only the continuation on the same frame; its detector result
+    # locates the pixels but never supplies the missing identity itself.
+    first_rows = reader.preparation_title_rows()
+    locations = reader.find(r'.+', (870, 65, 340, 45))
+    raw_continuations = [(i, r) for i, r in enumerate(observation.get('text', []))
+        if isinstance((b := r.get('box')), (list, tuple)) and len(b) == 4
+        and all(type(v) in (int, float) and math.isfinite(v) for v in b)
+        and min(b[2:]) > 0 and type(r.get('score')) in (int, float) and math.isfinite(r['score'])
+        and 0 <= r['score'] < .90 and isinstance(r.get('text'), str)
+        and 875 <= b[0] < b[0]+b[2] <= 1195 and 118 <= b[1] < b[1]+b[3] <= 155]
+    if (len(first_rows) == 1 and len(locations) == 1 and len(raw_continuations) == 1
+            and normalize(locations[0][1]['text']) == normalize(expected['location'])):
+        index, raw = raw_continuations[0]
+        first_box = first_rows[0][1]['box']; box = raw['box']
+        if abs(box[0]-first_box[0]) <= 12 and -3 <= box[1]-(first_box[1]+first_box[3]) <= 22:
+            left = max(875, math.floor((box[0]-2)/5)*5)
+            top = max(100, math.floor(box[1]-1))
+            roi = [left, top, min(1195-left, box[2]+13), min(155-top, box[3]+3)]
+            second_roi = [max(875, math.floor(box[0]-1)), max(100, math.floor(box[1]-2)),
+                          min(1195-max(875, math.floor(box[0]-1)), box[2]+7),
+                          min(155-max(100, math.floor(box[1]-2)), box[3]+5)]
+            third_roi = [max(875, math.floor((box[0]-2)/5)*5), max(100, math.floor(box[1]-3)),
+                         min(1195-max(875, math.floor((box[0]-2)/5)*5), box[2]+8),
+                         min(155-max(100, math.floor(box[1]-3)), box[3]+8)]
+            attempts = []
+            accepted = False
+            for current_roi in (roi, second_roi, third_roi):
+                candidates = StageInspector._ocr(recognize, current_roi, only_rec=True)
+                accepted = bool(len(candidates) == 1 and candidates[0]['score'] >= .90
+                                and title_match(first_rows[0][1]['text']+' '+candidates[0]['text'], expected['title']))
+                attempts.append({'roi': current_roi, 'candidates': candidates, 'accepted': accepted})
+                if accepted:
+                    break
+            observation['campaign_wrapped_title_reread'] = {'roi': current_roi, 'original': raw.copy(),
+                'candidates': candidates, 'attempts': attempts, 'accepted': accepted, 'method': 'Maa/en_us/only_rec'}
+            if accepted:
+                observation['text'][index] = {**candidates[0], 'box': box,
+                                              'source': 'campaign_wrapped_title_reread'}
+                reader = ReadContext(observation, 'screen', lambda n: None)
     # A wrapped final number can be omitted by the detector. Read only its
     # current continuation pixels after the exact prefix and location agree.
     numeric_title=re.fullmatch(r'(.+)\s+(\d{1,3})',expected['title'])
@@ -96,7 +136,9 @@ def augment_title(observation, params, recognize):
         # extend a pixel below the first OCR strip; its tight reread must
         # contain the whole current line, never a clipped Roman suffix.
         box = rows[0][1]['box']
-        field_bottom = area[1]+area[3] if field == 'title' else roi[1]+roi[3]
+        # The detected location may extend below the first OCR strip while
+        # remaining inside the independently calibrated location field.
+        field_bottom = area[1]+area[3]
         if box[1] < roi[1] or box[1]+box[3] > field_bottom:
             continue
         # The timed-stage badge can be merged into the same detected line.
